@@ -1,0 +1,118 @@
+﻿@page "/clienti"
+@using Blazored.SessionStorage
+
+@using BlazorApp.Shared
+
+@inject NavigationManager Navigation
+@inject ISessionStorageService sessionStorage
+
+@inject HttpClient Http
+
+@inject ClientiService ClientiService
+@inject NavigationManager Navigation
+
+<h3>Gestione Clienti</h3>
+
+@if (clienti == null)
+{
+    <p><em>Caricamento...</em></p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nome</th>
+                <th>Email</th>
+                <th>Azioni</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var cliente in clienti)
+            {
+                <tr>
+                    <td>@cliente.Id</td>
+                    <td>@cliente.Nome</td>
+                    <td>@cliente.Email</td>
+                    <td>
+                        <button @onclick="() => EditCliente(cliente.Id)">Modifica</button>
+                        <button @onclick="() => DeleteCliente(cliente.Id)">Elimina</button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <button @onclick="ShowAddCliente">Aggiungi Cliente</button>
+}
+
+@if (showAddEditCliente)
+{
+    <div>
+        <h5>@(isEditing ? "Modifica Cliente" : "Aggiungi Cliente")</h5>
+        <EditForm Model="currentCliente" OnValidSubmit="HandleSubmit">
+            <DataAnnotationsValidator />
+            <ValidationSummary />
+            <div>
+                <label for="nome">Nome:</label>
+                <InputText id="nome" @bind-Value="currentCliente.Nome" />
+            </div>
+            <div>
+                <label for="email">Email:</label>
+                <InputText id="email" @bind-Value="currentCliente.Email" type="email" />
+            </div>
+            <button type="submit">@((isEditing ? "Aggiorna" : "Aggiungi"))</button>
+        </EditForm>
+    </div>
+}
+
+
+@code {
+    private List<Clienti>? clienti;
+    private Clienti currentCliente = new Clienti();
+    private bool showAddEditCliente = false;
+    private bool isEditing = false;
+
+    protected override async Task OnInitializedAsync()
+    {
+        clienti = await ClientiService.GetClienti();
+    }
+
+    private void ShowAddCliente()
+    {
+        currentCliente = new Clienti();
+
+        isEditing = false;
+        
+        showAddEditCliente = true;
+    }
+
+    private async Task EditCliente(decimal id)
+    {
+        currentCliente = await ClientiService.GetCliente(id);
+        isEditing = true;
+        showAddEditCliente = true;
+    }
+
+    private async Task DeleteCliente(decimal id)
+    {
+        await ClientiService.DeleteCliente(id);
+        clienti = await ClientiService.GetClienti();
+    }
+
+    private async Task HandleSubmit()
+    {
+        if (isEditing)
+        {
+            await ClientiService.UpdateCliente(currentCliente);
+        }
+        else
+        {
+            await ClientiService.AddCliente(currentCliente);
+        }
+        currentCliente = new Clienti();
+        showAddEditCliente = false;
+        clienti = await ClientiService.GetClienti();
+    }
+}

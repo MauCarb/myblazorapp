@@ -1,0 +1,17 @@
+﻿@page "/auth/logout"
+@using Blazored.SessionStorage
+
+@inject NavigationManager Navigation
+@inject ISessionStorageService sessionStorage
+
+<h3>Logout</h3>
+
+@code {
+
+    protected override async Task OnInitializedAsync()
+    {
+        await sessionStorage.ClearAsync();
+
+        Navigation.NavigateTo("/auth/login");
+    }
+}

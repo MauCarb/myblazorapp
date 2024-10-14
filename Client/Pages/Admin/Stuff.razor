@@ -1,0 +1,2382 @@
+﻿@page "/admin/stuff"
+
+@using System.Globalization
+@using Syncfusion.Blazor.Notifications
+@using Syncfusion.Blazor.ProgressBar
+
+@using Syncfusion.Blazor.Navigations
+
+@using System.IO;
+@using System.Data;
+
+@using BlazorApp.Shared
+
+<h3>Stuff</h3>
+
+<hr />
+
+<div class="col-lg-12 control-section">
+    <SfTab CssClass="default-tab">
+        <TabItems>
+            <TabItem>
+                <ChildContent>
+                    <TabHeader Text="Buttons"></TabHeader>
+                </ChildContent>
+                <ContentTemplate>
+                    <div class="col-lg-12 control-section">
+                        <div class="row" style="margin-bottom:12px;">
+                            <div class="col-xs-3 col-sm-3 col-lg-3 col-md-3">
+                                <SfButton IsPrimary="true">Primary</SfButton>
+                            </div>
+                            <div class="col-xs-3 col-sm-3 col-lg-3 col-md-3">
+								<SfButton>Normal</SfButton>
+                            </div>
+                            <div class="col-xs-3 col-sm-3 col-lg-3 col-md-3">
+                                <SfButton IsPrimary="true" CssClass="e-outline">Outline</SfButton>
+                            </div>
+                            <div class="col-xs-3 col-sm-3 col-lg-3 col-md-3">
+                                <SfButton CssClass="e-flat" IsPrimary="true">Flat</SfButton>
+                            </div>
+                        </div>
+                        <div class="row" style="margin-bottom:12px;">
+                            <div class="col-xs-3 col-sm-3 col-lg-3 col-md-3">
+                                <SfButton CssClass="e-success">Success</SfButton>
+                            </div>
+                            <div class="col-xs-3 col-sm-3 col-lg-3 col-md-3">
+                                <SfButton CssClass="e-warning">Warning</SfButton>
+                            </div>
+                            <div class="col-xs-3 col-sm-3 col-lg-3 col-md-3">
+                                <SfButton CssClass="e-danger">Danger</SfButton>
+                            </div>
+                            <div class="col-xs-3 col-sm-3 col-lg-3 col-md-3">
+                                <SfButton CssClass="e-info">Info</SfButton>
+                            </div>
+                        </div>
+                        <div class="row" style="margin-bottom:12px;">
+                            <div class="col-xs-3 col-sm-3 col-lg-3 col-md-3">
+                                <SfButton IconCss="e-btn-sb-icons e-add-icon" CssClass="e-small e-round" IsPrimary="true"></SfButton>
+                            </div>
+                            <div class="col-xs-3 col-sm-3 col-lg-3 col-md-3">
+                                <SfButton CssClass="e-flat" IsToggle="true" IsPrimary="true" Content="@content" IconCss="@iconCss"></SfButton>
+                            </div>
+                            <div class="col-xs-3 col-sm-3 col-lg-3 col-md-3">
+                                <SfButton IsPrimary="true" IconCss="e-btn-sb-icons e-open-icon" IconPosition=@IconPosition.Right>Open</SfButton>
+                            </div>
+                            <div class="col-xs-3 col-sm-3 col-lg-3 col-md-3">
+                                <SfButton CssClass="e-small">Small</SfButton>
+                            </div>
+                        </div>
+                        <div class="row" style="margin-bottom:12px;">
+                            <div class="col-xs-3 col-sm-3 col-lg-3 col-md-3">
+                                <SfButton IconCss="e-icons e-circle-add icon-navy" CssClass="e-flat btn-light" Content="Inserisci paziente" style="color:green;"></SfButton>
+                            </div>
+                            <div class="col-xs-3 col-sm-3 col-lg-3 col-md-3">
+                                <SfButton IconCss="e-icons e-search icon-slategrey" CssClass="e-flat btn-light" Content="Cerca"></SfButton>
+                            </div>
+                            <div class="col-xs-3 col-sm-3 col-lg-3 col-md-3">
+                                <SfButton IconCss="e-icons e-repeat icon-green" CssClass="e-flat btn-light" Content="Ripristina">Open</SfButton>
+                            </div>
+                            <div class="col-xs-3 col-sm-3 col-lg-3 col-md-3">
+                                <SfButton IconCss="e-icons e-eye icon-darkcyan" CssClass="e-flat btn-light" Content=""></SfButton>
+                            </div>
+                        </div>
+                        <div class="row" style="margin-bottom:12px;">
+                            <div class="col-xs-3 col-sm-3 col-lg-3 col-md-3">
+                                <SfButton IconCss="e-icon icon-small e-circle-add icon-navy" CssClass="e-small e-flat btn-light" Content="Inserisci paziente"></SfButton>
+                            </div>
+                            <div class="col-xs-3 col-sm-3 col-lg-3 col-md-3">
+                                <SfButton IconCss="e-icons icon-small e-search icon-slategrey" CssClass="e-small e-flat btn-light" Content="Cerca"></SfButton>
+                            </div>
+                            <div class="col-xs-3 col-sm-3 col-lg-3 col-md-3">
+                                <SfButton IconCss="e-icons icon-small e-repeat icon-green" CssClass="e-small e-flat btn-light" Content="Ripristina">Open</SfButton>
+                            </div>
+                            <div class="col-xs-3 col-sm-3 col-lg-3 col-md-3">
+                                <SfButton IconCss="e-icons icon-small e-eye icon-darkcyan" CssClass="e-small e-flat btn-light" Content=""></SfButton>
+                            </div>
+                        </div>
+                    </div>
+                </ContentTemplate>
+            </TabItem>
+            <TabItem>
+                <ChildContent>
+                    <TabHeader Text="Toast"></TabHeader>
+                </ChildContent>
+                <ContentTemplate>
+                    <div class="col-lg-12 control-section toast-default-section">
+                        <SfToast ID="toast_type" @ref="ToastObj" Target="#GRex" Timeout="10000">
+                            <ToastEvents Created="@onCreate"></ToastEvents>
+                            <ToastPosition X="Right" Y="Bottom"></ToastPosition>
+                        </SfToast>
+                        <div class="col-lg-12 col-sm-12 col-md-12 center">
+                            <div id="toastBtnDefault" style="margin: auto;text-align: center">
+                                <button class="e-btn" @onclick="@ShowOnClick">Show Toasts</button>
+                                <button class="e-btn" @onclick="@HideOnClick">Hide All</button>
+                            </div>
+                        </div>
+                    </div>
+                </ContentTemplate>
+            </TabItem>
+            <TabItem>
+                <ChildContent>
+                    <TabHeader Text="Date"></TabHeader>
+                </ChildContent>
+                <ContentTemplate>
+                    <div class="form-row">
+                        <div class="form-group col-sm-1" style="padding-top: 4px; margin: 10px 0 10px 0; text-align: right;">
+                            Data aggiornamento:
+                        </div>
+                        <div class="form-group col-sm-10" style="margin: 10px 0 10px 0;">
+                            <div style="padding: 4px 6px 0 0; width: 40px; float: left; text-align: right;">
+                                dal:
+                            </div>
+                            <div style="width: 120px; float: left;">
+                                <SfDatePicker ID="rdaldatedal" TValue="DateTime?" Value="@RdALDateDal" Placeholder="Scegli una data" Format="dd/MM/yyyy" AllowEdit="true" @onblur="@SetLMinAlDate" Min='@LMinDalDate' Max='@LMaxDalDate' Locale="it-IT">
+                                    <DatePickerEvents TValue="DateTime?" ValueChange="@LDalChange"></DatePickerEvents>
+                                </SfDatePicker>
+                            </div>
+                            <div style="padding-top: 4px; padding-right: 6px; width: 50px; float: left; text-align: right;">
+                                al:
+                            </div>
+                            <div style="width: 120px; float: left;">
+                                <SfDatePicker ID="rdaldateal" TValue="DateTime?" Value="@RdALDateAl" Placeholder="Scegli una data" Format="dd/MM/yyyy" AllowEdit="true" Min='@LMinAlDate' Max='@LMaxAlDate' Locale="it-IT">
+                                    <DatePickerEvents TValue="DateTime?" ValueChange="@LAlChange"></DatePickerEvents>
+                                </SfDatePicker>
+                            </div>
+                            <div style="font-size:85%; padding-top: 6px; margin-left: 10px; width: 50px; float: left; text-align: right; color:#555;">
+                                (gg/mm/aaaa)
+                            </div>
+                        </div>
+                    </div>
+                </ContentTemplate>
+            </TabItem>
+            <TabItem>
+                <ChildContent>
+                    <TabHeader Text="ProgressBar"></TabHeader>
+                </ChildContent>
+                <ContentTemplate>
+                    <div class="form-group col-sm-12">
+                        <div class="row linear-parent">
+                            <div>
+                                <div class="col-lg-12 col-sm-12 progressbar-mode"></div>
+                                <SfProgressBar @ref="LinearInstance" Type="ProgressType.Linear" ID="LinearSegment"
+                                               Height="60" Width="90%" SegmentCount="10" GapWidth="5"
+                                               Value="@Value" Minimum="0" Maximum="100" CornerRadius="CornerType.Square"
+                                               Theme="0"
+                                               TrackThickness="15"
+                                               ProgressThickness="15"
+                                               TrackColor="@ColorTrack">
+                                    <ProgressBarAnimation Enable="true" Duration="2000" Delay="0" />
+                                </SfProgressBar>
+
+                                <SfProgressBar Type="ProgressType.Linear" Value="100" Height="60" Width="90%" TrackThickness="24" ProgressThickness="24" ShowProgressValue="true" Minimum="0" Maximum="100" Theme="0">
+                                    <ProgressBarAnimation Enable="true" Duration="2000" Delay="0" />
+                                </SfProgressBar>
+
+                                <SfProgressBar Type="ProgressType.Linear" Value="40" Height="60" SecondaryProgress="60" Minimum="0" Maximum="100">
+                                </SfProgressBar>
+
+                                <progress value="@progressValue" max="100" style="width: 100%">@(progressValue.ToString() + " %")</progress>
+
+                                <button @onclick="@startProgress">Start</button>
+                            </div>
+
+                            <div>
+                                <div class="col-lg-12 col-sm-12 progressbar-mode"></div>
+                                <SfProgressBar @ref="CircularInstance" Type="ProgressType.Circular" ID="CircularSegment"
+                                               Height="200px" Width="200px" TrackThickness="15" ProgressThickness="15"
+                                               Value="@Value" Minimum="0" Maximum="100" StartAngle="220"
+                                               EndAngle="140" SegmentCount="50" GapWidth="5"
+                                               CornerRadius="CornerType.Square"
+                                               Theme="0"
+                                               TrackColor="@ColorTrack">
+                                    <ProgressBarAnnotations>
+                                        <ProgressBarAnnotation>
+                                            <ContentTemplate>
+                                                @AnnotationContent
+                                            </ContentTemplate>
+                                        </ProgressBarAnnotation>
+                                    </ProgressBarAnnotations>
+                                    <ProgressBarAnimation Enable="true" Duration="2000" Delay="0" />
+                                </SfProgressBar>
+                            </div>
+
+                            <div>
+                                <div class="col-lg-12 col-sm-12 progressbar-mode"></div>
+                                <SfProgressBar @ref="CircularInstance1" Type="ProgressType.Circular" ID="CircularSegment1"
+                                               Height="200px" Width="200px" TrackThickness="15" ProgressThickness="15"
+                                               Value="@MyValue" Minimum="0" Maximum="100" StartAngle="220"
+                                               EndAngle="140" SegmentCount="50" GapWidth="5"
+                                               CornerRadius="CornerType.Square"
+                                               Theme="0"
+                                               TrackColor="@ColorTrack"
+                                               ShowProgressValue="true">
+                                    <ProgressBarEvents TextRender="TextHandler"></ProgressBarEvents>
+                                </SfProgressBar>
+
+                                <button @onclick="@KIProgress">Incrementa</button>
+                            </div>
+                        </div>
+                    </div>
+                </ContentTemplate>
+            </TabItem>
+            <TabItem>
+                <ChildContent>
+                    <TabHeader Text="Icone Material"></TabHeader>
+                </ChildContent>
+                <ContentTemplate>
+                    <div class="container-fluid">
+                        <!-- 1 -->
+                        <div class="row justify-content-center">
+                            <div class="col-sm-1 justify-content-center" style="border: solid 1px #d9d9d9; margin: 0 8px; padding: 8px 8px;">
+                                <span class="e-icons e-add"></span>&nbsp;<span class="e-icons icon-small e-add"></span>&nbsp;<span class="e-icons icon-normal e-add"></span>
+								<br />
+                                <span style="color:dodgerblue; padding: 4px 0;">add</span>
+								<br />
+                                <span style="color:teal; padding: 4px 0;">e-add</span>
+                                <br />
+								\e963
+							</div>
+                            <div class="col-sm-1 justify-content-center" style="border: solid 1px #d9d9d9; margin: 0 8px; padding: 8px 8px;">
+                                <span class="e-icons e-minus"></span>&nbsp;<span class="e-icons icon-small e-minus"></span>&nbsp;<span class="e-icons icon-normal e-minus"></span>
+                                <br />
+                                <span style="color:dodgerblue; padding: 4px 0;">minus</span>
+                                <br />
+                                <span style="color:teal; padding: 4px 0;">e-minus</span>
+                                <br />
+                                \e934
+                            </div>
+                            <div class="col-sm-1 justify-content-center" style="border: solid 1px #d9d9d9; margin: 0 8px; padding: 8px 8px;">
+								<span class="e-icons e-search"></span>&nbsp;<span class="e-icons icon-small e-search"></span>&nbsp;<span class="e-icons icon-normal e-search"></span>
+                                <br />
+                                <span style="color:dodgerblue; padding: 4px 0;">search</span>
+                                <br />
+                                <span style="color:teal; padding: 4px 0;">e-minus</span>
+                                <br />
+                                \e993
+                            </div>
+                            <div class="col-sm-1 justify-content-center" style="border: solid 1px #d9d9d9; margin: 0 8px; padding: 8px 8px;">
+								<span class="e-icons e-textsearch"></span>&nbsp;<span class="e-icons icon-small e-textsearch"></span>&nbsp;<span class="e-icons icon-normal e-textsearch"></span>
+								<br />
+                                <span style="color:dodgerblue; padding: 4px 0;">textsearch</span>
+                                <br />
+                                <span style="color:teal; padding: 4px 0;">e-textsearch</span>
+                                <br />
+                                \e275
+                            </div>
+                            <div class="col-sm-1 justify-content-center" style="border: solid 1px #d9d9d9; margin: 0 8px; padding: 8px 8px;">
+								<span class="e-icons e-uploads"></span>&nbsp;<span class="e-icons icon-small e-uploads"></span>&nbsp;<span class="e-icons icon-normal e-uploads"></span>
+								<br />
+                                <span style="color:dodgerblue; padding: 4px 0;">uploads</span>
+                                <br />
+                                <span style="color:teal; padding: 4px 0;">e-uploads</span>
+                                <br />
+                                \e60f
+                            </div>
+                            <div class="col-sm-1 justify-content-center" style="border: solid 1px #d9d9d9; margin: 0 8px; padding: 8px 8px;">
+								<span class="e-icons e-download"></span>&nbsp;<span class="e-icons icon-small e-download"></span>&nbsp;<span class="e-icons icon-normal e-download"></span>
+								<br />
+                                <span style="color:dodgerblue; padding: 4px 0;">download</span>
+                                <br />
+                                <span style="color:teal; padding: 4px 0;">e-download</span>
+                                <br />
+                                \e603
+                            </div>
+                            <div class="col-sm-1 justify-content-center" style="border: solid 1px #d9d9d9; margin: 0 8px; padding: 8px 8px;">
+								<span class="e-icons e-print"></span>&nbsp;<span class="e-icons icon-small e-print"></span>&nbsp;<span class="e-icons icon-normal e-print"></span>
+								<br />
+                                <span style="color:dodgerblue; padding: 4px 0;">print</span>
+                                <br />
+                                <span style="color:teal; padding: 4px 0;">e-print</span>
+                                <br />
+                                \e34b
+                            </div>
+                        </div>
+                        <br />
+                        <!-- 2 -->
+                        <div class="row justify-content-center">
+                            <div class="col-sm-1 justify-content-center" style="border: solid 1px #d9d9d9; margin: 0 8px; padding: 8px 8px;">
+                                <span class="e-icons e-font"></span>&nbsp;<span class="e-icons icon-small e-font"></span>&nbsp;<span class="e-icons icon-normal e-font"></span>
+                                <br />
+                                <span style="color:dodgerblue; padding: 4px 0;">font</span>
+                                <br />
+                                <span style="color:teal; padding: 4px 0;">e-font</span>
+                                <br />
+                                \e34c
+                            </div>
+                            <div class="col-sm-1 justify-content-center" style="border: solid 1px #d9d9d9; margin: 0 8px; padding: 8px 8px;">
+								<span class="e-icons e-preview"></span>&nbsp;<span class="e-icons icon-small e-preview"></span>&nbsp;<span class="e-icons icon-normal e-preview"></span>
+                                <br />
+                                <span style="color:dodgerblue; padding: 4px 0;">preview</span>
+                                <br />
+                                <span style="color:teal; padding: 4px 0;">e-preview</span>
+								<br />
+                                \e345
+							</div>
+                            <div class="col-sm-1 justify-content-center" style="border: solid 1px #d9d9d9; margin: 0 8px; padding: 8px 8px;">
+								<span class="e-icons e-remove"></span>&nbsp;<span class="e-icons icon-small e-remove"></span>&nbsp;<span class="e-icons icon-normal e-remove"></span>
+                                <br />
+                                <span style="color:dodgerblue; padding: 4px 0;">remove</span>
+                                <br />
+                                <span style="color:teal; padding: 4px 0;">e-remove</span>
+                                <br />
+                                \e974
+                            </div>
+                            <div class="col-sm-1 justify-content-center" style="border: solid 1px #d9d9d9; margin: 0 8px; padding: 8px 8px;">
+								<span class="e-icons e-delete"></span>&nbsp;<span class="e-icons icon-small e-delete"></span>&nbsp;<span class="e-icons icon-normal e-delete"></span>
+                                <br />
+                                <span style="color:dodgerblue; padding: 4px 0;">delete</span>
+                                <br />
+                                <span style="color:teal; padding: 4px 0;">e-delete</span>
+                                <br />
+                                \e94a
+							</div>
+                            <div class="col-sm-1 justify-content-center" style="border: solid 1px #d9d9d9; margin: 0 8px; padding: 8px 8px;">
+								<span class="e-icons e-recurrence"></span>&nbsp;<span class="e-icons icon-small e-recurrence"></span>&nbsp;<span class="e-icons icon-normal e-recurrence"></span>
+                                <br />
+                                <span style="color:dodgerblue; padding: 4px 0;">recurrence</span>
+                                <br />
+                                <span style="color:teal; padding: 4px 0;">e-recurrence</span>
+                                <br />
+                                \e308
+                            </div>
+                            <div class="col-sm-1 justify-content-center" style="border: solid 1px #d9d9d9; margin: 0 8px; padding: 8px 8px;">
+								<span class="e-icons e-editproperties"></span>&nbsp;<span class="e-icons icon-small e-editproperties"></span>&nbsp;<span class="e-icons icon-normal e-editproperties"></span>
+                                <br />
+                                <span style="color:dodgerblue; padding: 4px 0;">editproperties</span>
+                                <br />
+                                <span style="color:teal; padding: 4px 0;">e-editproperties</span>
+                                <br />
+                                \ea9a
+                            </div>
+							<div class="col-sm-1 justify-content-center" style="border: solid 1px #d9d9d9; margin: 0 8px; padding: 8px 8px;">
+								<span class="e-icons e-send"></span>&nbsp;<span class="e-icons icon-small e-send"></span>&nbsp;<span class="e-icons icon-normal e-send"></span>
+								<br />
+                                <span style="color:dodgerblue; padding: 4px 0;">send</span>
+                                <br />
+                                <span style="color:teal; padding: 4px 0;">e-send</span>
+								<br />
+                                \e816
+							</div>
+						</div>
+                        <br />
+                        <!-- 3 -->
+                        <div class="row justify-content-center">
+                            <div class="col-sm-1 justify-content-center" style="border: solid 1px #d9d9d9; margin: 0 8px; padding: 8px 8px;">
+								<span class="e-icons e-save"></span>&nbsp;<span class="e-icons icon-small e-save"></span>&nbsp;<span class="e-icons icon-normal e-save"></span>
+                                <br />
+                                <span style="color:dodgerblue; padding: 4px 0;">save</span>
+                                <br />
+                                <span style="color:teal; padding: 4px 0;">e-save</span>
+                                <br />
+                                \e98e
+							</div>
+                            <div class="col-sm-1 justify-content-center" style="border: solid 1px #d9d9d9; margin: 0 8px; padding: 8px 8px;">
+								<span class="e-icons e-savedraft"></span>&nbsp;<span class="e-icons icon-small e-savedraft"></span>&nbsp;<span class="e-icons icon-normal e-savedraft"></span>
+                                <br />
+                                <span style="color:dodgerblue; padding: 4px 0;">savedraft</span>
+                                <br />
+                                <span style="color:teal; padding: 4px 0;">e-savedraft</span>
+                                <br />
+                                \e735
+							</div>
+                            <div class="col-sm-1 justify-content-center" style="border: solid 1px #d9d9d9; margin: 0 8px; padding: 8px 8px;">
+								<span class="e-icons e-close"></span>&nbsp;<span class="e-icons icon-small e-close"></span>&nbsp;<span class="e-icons icon-normal e-close"></span>
+                                <br />
+                                <span style="color:dodgerblue; padding: 4px 0;">close</span>
+                                <br />
+                                <span style="color:teal; padding: 4px 0;">e-close</span>
+                                <br />
+                                \e208
+							</div>
+                            <div class="col-sm-1 justify-content-center" style="border: solid 1px #d9d9d9; margin: 0 8px; padding: 8px 8px;">
+								<span class="e-icons e-addcircle"></span>&nbsp;<span class="e-icons icon-small e-addcircle"></span>&nbsp;<span class="e-icons icon-normal e-addcircle"></span>
+                                <br />
+                                <span style="color:dodgerblue; padding: 4px 0;">addcircle</span>
+                                <br />
+                                <span style="color:teal; padding: 4px 0;">e-addcircle</span>
+                                <br />
+                                \ec0a
+							</div>
+                            <div class="col-sm-1 justify-content-center" style="border: solid 1px #d9d9d9; margin: 0 8px; padding: 8px 8px;">
+								<span class="e-icons e-minuscircle"></span>&nbsp;<span class="e-icons icon-small e-minuscircle"></span>&nbsp;<span class="e-icons icon-normal e-minuscircle"></span>
+                                <br />
+                                <span style="color:dodgerblue; padding: 4px 0;">minuscircle</span>
+                                <br />
+                                <span style="color:teal; padding: 4px 0;">e-minuscircle</span>
+                                <br />
+                                \ec09
+							</div>
+                            <div class="col-sm-1 justify-content-center" style="border: solid 1px #d9d9d9; margin: 0 8px; padding: 8px 8px;">
+								<span class="e-icons e-annulla"></span>&nbsp;<span class="e-icons icon-small e-annulla"></span>&nbsp;<span class="e-icons icon-normal e-annulla"></span>
+                                <br />
+                                <span style="color:dodgerblue; padding: 4px 0;">annulla</span>
+                                <br />
+                                <span style="color:teal; padding: 4px 0;">e-annulla</span>
+                                <br />
+                                \e22a
+							</div>
+                            <div class="col-sm-1 justify-content-center" style="border: solid 1px #d9d9d9; margin: 0 8px; padding: 8px 8px;">
+								<span class="e-icons e-reload"></span>&nbsp;<span class="e-icons icon-small e-reload"></span>&nbsp;<span class="e-icons icon-normal e-reload"></span>
+                                <br />
+                                <span style="color:dodgerblue; padding: 4px 0;">reload</span>
+                                <br />
+                                <span style="color:teal; padding: 4px 0;">e-reload</span>
+                                <br />
+                                \e99d
+							</div>
+                        </div>
+                        <br />
+                        <!-- 4 -->
+                        <div class="row justify-content-center">
+                            <div class="col-sm-1 justify-content-center" style="border: solid 1px #d9d9d9; margin: 0 8px; padding: 8px 8px;">
+								<span class="e-icons e-approve"></span>&nbsp;<span class="e-icons icon-small e-approve"></span>&nbsp;<span class="e-icons icon-normal e-approve"></span>
+                                <br />
+                                <span style="color:dodgerblue; padding: 4px 0;">approve</span>
+                                <br />
+                                <span style="color:teal; padding: 4px 0;">e-approve</span>
+                                <br />
+                                \e614
+							</div>
+                            <div class="col-sm-1 justify-content-center" style="border: solid 1px #d9d9d9; margin: 0 8px; padding: 8px 8px;">
+								<span class="e-icons e-ok"></span>&nbsp;<span class="e-icons icon-small e-ok"></span>&nbsp;<span class="e-icons icon-normal e-ok"></span>
+                                <br />
+                                <span style="color:dodgerblue; padding: 4px 0;">ok</span>
+                                <br />
+                                <span style="color:teal; padding: 4px 0;">e-ok</span>
+								<br />
+                                \ea84
+							</div>
+                            <div class="col-sm-1 justify-content-center" style="border: solid 1px #d9d9d9; margin: 0 8px; padding: 8px 8px;">
+								<span class="e-icons e-check-mark"></span>&nbsp;<span class="e-icons icon-small e-check-mark"></span>&nbsp;<span class="e-icons icon-normal e-check-mark"></span>
+                                <br />
+                                <span style="color:dodgerblue; padding: 4px 0;">check mark</span>
+                                <br />
+                                <span style="color:teal; padding: 4px 0;">e-check-mark</span>
+                                <br />
+                                \e7ff
+							</div>
+                            <div class="col-sm-1 justify-content-center" style="border: solid 1px #d9d9d9; margin: 0 8px; padding: 8px 8px;">
+								<span class="e-icons e-clear-form"></span>&nbsp;<span class="e-icons icon-small e-clear-form"></span>&nbsp;<span class="e-icons icon-normal e-clear-form"></span>
+                                <br />
+                                <span style="color:dodgerblue; padding: 4px 0;">clear-form</span>
+                                <br />
+                                <span style="color:teal; padding: 4px 0;">e-clear-form</span>
+                                <br />
+                                \e19a
+							</div>
+                            <div class="col-sm-1 justify-content-center" style="border: solid 1px #d9d9d9; margin: 0 8px; padding: 8px 8px;">
+								<span class="e-icons e-clear-all"></span>&nbsp;<span class="e-icons icon-small e-clear-all"></span>&nbsp;<span class="e-icons icon-normal e-clear-all"></span>
+                                <br />
+                                <span style="color:dodgerblue; padding: 4px 0;">clear all</span>
+                                <br />
+                                <span style="color:teal; padding: 4px 0;">e-clear-all</span>
+								<br />
+                                \e340
+							</div>
+                            <div class="col-sm-1 justify-content-center" style="border: solid 1px #d9d9d9; margin: 0 8px; padding: 8px 8px;">
+								<span class="e-icons e-excel icon-green"></span>&nbsp;<span class="e-icons icon-small e-excel icon-green"></span>&nbsp;<span class="e-icons icon-normal e-excel icon-green"></span>
+                                <br />
+                                <span style="color:dodgerblue; padding: 4px 0;">excel green</span>
+                                <br />
+                                <span style="color:teal; padding: 4px 0;">e-print icon-green</span>
+                                <br />
+                                \e700
+                            </div>
+                            <div class="col-sm-1 justify-content-center" style="border: solid 1px #ffffff; margin: 0 8px; padding: 8px 8px;">
+                                &nbsp;
+                            </div>
+                        </div>
+                        <br />
+                        <!-- 5 -->
+                        <div class="row justify-content-center">
+                            <div class="col-sm-1 justify-content-center" style="border: solid 1px #d9d9d9; margin: 0 8px; padding: 8px 8px;">
+								<span class="e-icons e-prev-icon"></span>&nbsp;<span class="e-icons icon-small e-prev-icon"></span>&nbsp;<span class="e-icons icon-normal e-prev-icon"></span>
+                                <br />
+                                <span style="color:dodgerblue; padding: 4px 0;">prev icon</span>
+                                <br />
+                                <span style="color:teal; padding: 4px 0;">e-prev-icon</span>
+                                <br />
+                                \e921
+							</div>
+							<div class="col-sm-1 justify-content-center" style="border: solid 1px #d9d9d9; margin: 0 8px; padding: 8px 8px;">
+								<span class="e-icons e-copy"></span>&nbsp;<span class="e-icons icon-small e-copy"></span>&nbsp;<span class="e-icons icon-normal e-copy"></span>
+								<br />
+                                <span style="color:dodgerblue; padding: 4px 0;">copy</span>
+                                <br />
+                                <span style="color:teal; padding: 4px 0;">e-copy</span>
+                                <br />
+                                \e70a
+							</div>
+							<div class="col-sm-1 justify-content-center" style="border: solid 1px #d9d9d9; margin: 0 8px; padding: 8px 8px;">
+								<span class="e-icons e-copydata"></span>&nbsp;<span class="e-icons icon-small e-copydata"></span>&nbsp;<span class="e-icons icon-normal e-copydata"></span>
+								<br />
+                                <span style="color:dodgerblue; padding: 4px 0;">copydata</span>
+                                <br />
+                                <span style="color:teal; padding: 4px 0;">e-copydata</span>
+                                <br />
+                                \e280
+							</div>
+							<div class="col-sm-1 justify-content-center" style="border: solid 1px #d9d9d9; margin: 0 8px; padding: 8px 8px;">
+                                <span class="e-icons e-MT_Backward">&nbsp;</span><span class="e-icons icon-small e-MT_Backward"></span>&nbsp;<span class="e-icons icon-normal e-MT_Backward"></span>
+                                <br />
+                                <span style="color:dodgerblue; padding: 4px 0;">MT_Backward</span>
+                                <br />
+                                <span style="color:teal; padding: 4px 0;">e-MT_Backward</span>
+                                <br />
+                                \e977
+                            </div>
+                            <div class="col-sm-1 justify-content-center" style="border: solid 1px #d9d9d9; margin: 0 8px; padding: 8px 8px;">
+								<span class="e-icons e-MT_copy"></span>&nbsp;<span class="e-icons icon-small e-MT_copy"></span>&nbsp;<span class="e-icons icon-normal e-MT_copy"></span>
+                                <br />
+                                <span style="color:dodgerblue; padding: 4px 0;">MT_copy</span>
+                                <br />
+                                <span style="color:teal; padding: 4px 0;">e-MT_copy</span>
+                                <br />
+                                \e33d
+                            </div>
+                            <div class="col-sm-1 justify-content-center" style="border: solid 1px #d9d9d9; margin: 0 8px; padding: 8px 8px;">
+								<span class="e-icons e-MT_List"></span>&nbsp;<span class="e-icons icon-small e-MT_List"></span>&nbsp;<span class="e-icons icon-normal e-MT_List"></span>
+                                <br />
+                                <span style="color:dodgerblue; padding: 4px 0;">MT_List</span>
+                                <br />
+                                <span style="color:teal; padding: 4px 0;">e-MT_List</span>
+                                <br />
+                                \e605
+							</div>
+                            <div class="col-sm-1 justify-content-center" style="border: solid 1px #d9d9d9; margin: 0 8px; padding: 8px 8px;">
+								<span class="e-icons e-MT_Grid"></span>&nbsp;<span class="e-icons icon-small e-MT_Grid"></span>&nbsp;<span class="e-icons icon-normal e-MT_Grid"></span>
+                                <br />
+                                <span style="color:dodgerblue; padding: 4px 0;">MT_Grid</span>
+                                <br />
+                                <span style="color:teal; padding: 4px 0;">e-MT_Grid</span>
+                                <br />
+                                \e600
+                            </div>
+                        </div>
+                        <br />
+                        <!-- 6 -->
+                        <div class="row justify-content-center">
+                            <div class="col-sm-1 justify-content-center" style="border: solid 1px #d9d9d9; margin: 0 8px; padding: 8px 8px;">
+								<span class="e-icons e-add icon-red"></span>&nbsp;<span class="e-icons icon-small e-add icon-red"></span>&nbsp;<span class="e-icons icon-normal e-add icon-red"></span>
+                                <br />
+                                <span style="color:dodgerblue; padding: 4px 0;">add red</span>
+                                <br />
+                                <span style="color:teal; padding: 4px 0;">e-add icon-red</span>
+                                <br />
+                                \e963
+							</div>
+                            <div class="col-sm-1 justify-content-center" style="border: solid 1px #d9d9d9; margin: 0 8px; padding: 8px 8px;">
+								<span class="e-icons e-add icon-green"></span>&nbsp;<span class="e-icons icon-small e-add icon-green"></span>&nbsp;<span class="e-icons icon-normal e-add icon-green"></span>
+                                <br />
+                                <span style="color:dodgerblue; padding: 4px 0;">add green</span>
+                                <br />
+                                <span style="color:teal; padding: 4px 0;">e-add icon-green</span>
+                                <br />
+                                \e963
+                            </div>
+                            <div class="col-sm-1 justify-content-center" style="border: solid 1px #d9d9d9; margin: 0 8px; padding: 8px 8px;">
+								<span class="e-icons e-add icon-navy"></span>&nbsp;<span class="e-icons icon-small e-add icon-navy"></span>&nbsp;<span class="e-icons icon-normal e-add icon-navy"></span>
+                                <br />
+                                <span style="color:dodgerblue; padding: 4px 0;">add navy</span>
+                                <br />
+                                <span style="color:teal; padding: 4px 0;">e-add icon-navy</span>
+                                <br />
+                                \e963
+							</div>
+                            <div class="col-sm-1 justify-content-center" style="border: solid 1px #d9d9d9; margin: 0 8px; padding: 8px 8px;">
+								<span class="e-icons e-add icon-orange"></span>&nbsp;<span class="e-icons icon-small e-add icon-orange"></span>&nbsp;<span class="e-icons icon-normal e-add icon-orange"></span>
+                                <br />
+                                <span style="color:dodgerblue; padding: 4px 0;">add orange</span>
+                                <br />
+                                <span style="color:teal; padding: 4px 0;">e-add icon-orange</span>
+                                <br />
+                                \e963
+							</div>
+                            <div class="col-sm-1 justify-content-center" style="border: solid 1px #d9d9d9; margin: 0 8px; padding: 8px 8px;">
+								<span class="e-icons e-add icon-purple"></span>&nbsp;<span class="e-icons icon-small e-add icon-purple"></span>&nbsp;<span class="e-icons icon-normal e-add icon-purple"></span>
+                                <br />
+                                <span style="color:dodgerblue; padding: 4px 0;">add purple</span>
+                                <br />
+                                <span style="color:teal; padding: 4px 0;">e-add icon-purple</span>
+                                <br />
+                                \e963
+                            </div>
+                            <div class="col-sm-1 justify-content-center" style="border: solid 1px #d9d9d9; margin: 0 8px; padding: 8px 8px;">
+								<span class="e-icons e-add icon-darkcyan"></span>&nbsp;<span class="e-icons icon-small e-add icon-darkcyan"></span>&nbsp;<span class="e-icons icon-normal e-add icon-darkcyan"></span>
+                                <br />
+                                <span style="color:dodgerblue; padding: 4px 0;">add darkcyan</span>
+                                <br />
+                                <span style="color:teal; padding: 4px 0;">e-add icon-darkcyan</span>
+                                <br />
+                                \e963
+                            </div>
+                            <div class="col-sm-1 justify-content-center" style="border: solid 1px #d9d9d9; margin: 0 8px; padding: 8px 8px;">
+								<span class="e-icons e-add icon-icon-slategrey"></span>&nbsp;<span class="e-icons icon-small e-add icon-icon-slategrey"></span>&nbsp;<span class="e-icons icon-normal e-add icon-icon-slategrey"></span>
+                                <br />
+                                <span style="color:dodgerblue; padding: 4px 0;">add icon-slategrey</span>
+                                <br />
+                                <span style="color:teal; padding: 4px 0;">e-add icon-icon-slategrey</span>
+                                <br />
+                                \e963
+                            </div>
+                        </div>
+                        <br />
+                        <!-- 7 -->
+                        <div class="row justify-content-center">
+                            <div class="col-sm-1 justify-content-center" style="border: solid 1px #d9d9d9; margin: 0 8px; padding: 8px 8px;">
+								<span class="e-icons e-circle-close"></span>&nbsp;<span class="e-icons icon-small e-circle-close"></span>&nbsp;<span class="e-icons icon-normal e-circle-close"></span>
+                                <br />
+                                <span style="color:dodgerblue; padding: 4px 0;">circle close</span>
+                                <br />
+                                <span style="color:teal; padding: 4px 0;">e-circle-close</span>
+                                <br />
+                                \e7e9
+                            </div>
+                            <div class="col-sm-1 justify-content-center" style="border: solid 1px #d9d9d9; margin: 0 8px; padding: 8px 8px;">
+								<span class="e-icons e-circle-remove"></span>&nbsp;<span class="e-icons icon-small e-circle-remove"></span>&nbsp;<span class="e-icons icon-normal e-circle-remove"></span>
+                                <br />
+                                <span style="color:dodgerblue; padding: 4px 0;">circle remove</span>
+                                <br />
+                                <span style="color:teal; padding: 4px 0;">e-circle-remove</span>
+                                <br />
+                                \e991
+                            </div>
+                            <div class="col-sm-1 justify-content-center" style="border: solid 1px #d9d9d9; margin: 0 8px; padding: 8px 8px;">
+								<span class="e-icons e-circle-check"></span>&nbsp;<span class="e-icons icon-small e-circle-check"></span>&nbsp;<span class="e-icons icon-normal e-circle-check"></span>
+                                <br />
+                                <span style="color:dodgerblue; padding: 4px 0;">circle check</span>
+                                <br />
+                                <span style="color:teal; padding: 4px 0;">e-circle-check</span>
+                                <br />
+                                \ea84
+                            </div>
+                            <div class="col-sm-1 justify-content-center" style="border: solid 1px #d9d9d9; margin: 0 8px; padding: 8px 8px;">
+								<span class="e-icons e-chart"></span>&nbsp;<span class="e-icons icon-small e-chart"></span>&nbsp;<span class="e-icons icon-normal e-chart"></span>
+                                <br />
+                                <span style="color:dodgerblue; padding: 4px 0;">chart</span>
+                                <br />
+                                <span style="color:teal; padding: 4px 0;">e-chart</span>
+                                <br />
+                                \e839
+                            </div>
+                            <div class="col-sm-1 justify-content-center" style="border: solid 1px #d9d9d9; margin: 0 8px; padding: 8px 8px;">
+								<span class="e-icons e-sqlchart"></span>&nbsp;<span class="e-icons icon-small e-sqlchart"></span>&nbsp;<span class="e-icons icon-normal e-sqlchart"></span>
+                                <br />
+                                <span style="color:dodgerblue; padding: 4px 0;">sqlchart</span>
+                                <br />
+                                <span style="color:teal; padding: 4px 0;">e-sqlchart</span>
+                                <br />
+                                \e838
+                            </div>
+                            <div class="col-sm-1 justify-content-center" style="border: solid 1px #ffffff; margin: 0 8px; padding: 8px 8px;">
+                                &nbsp;
+                            </div>
+                            <div class="col-sm-1 justify-content-center" style="border: solid 1px #ffffff; margin: 0 8px; padding: 8px 8px;">
+                                &nbsp;
+                            </div>
+                        </div>
+                        <br />
+                        <!-- 8 -->
+                        <div class="row justify-content-center">
+                            <div class="col-sm-1 justify-content-center" style="border: solid 1px #d9d9d9; margin: 0 8px; padding: 8px 8px;">
+								<span class="e-icons e-chevron-right-thin"></span>&nbsp;<span class="e-icons icon-small e-chevron-right-thin"></span>&nbsp;<span class="e-icons icon-normal e-chevron-right-thin"></span>
+                                <br />
+                                <span style="color:dodgerblue; padding: 4px 0;">chevron right thin</span>
+                                <br />
+                                <span style="color:teal; padding: 4px 0;">e-chevron-right-thin</span>
+                                <br />
+                                \e608
+                            </div>
+                            <div class="col-sm-1 justify-content-center" style="border: solid 1px #d9d9d9; margin: 0 8px; padding: 8px 8px;">
+								<span class="e-icons e-chevron-down-thin"></span>&nbsp;<span class="e-icons icon-small e-chevron-down-thin"></span>&nbsp;<span class="e-icons icon-normal e-chevron-down-thin"></span>
+                                <br />
+                                <span style="color:dodgerblue; padding: 4px 0;">chevron down thin</span>
+                                <br />
+                                <span style="color:teal; padding: 4px 0;">e-chevron-down-thin</span>
+                                <br />
+                                \e36a
+                            </div>
+                            <div class="col-sm-1 justify-content-center" style="border: solid 1px #d9d9d9; margin: 0 8px; padding: 8px 8px;">
+								<span class="e-icons e-chevron-down"></span>&nbsp;<span class="e-icons icon-small e-chevron-down"></span>&nbsp;<span class="e-icons icon-normal e-chevron-down"></span>
+                                <br />
+                                <span style="color:dodgerblue; padding: 4px 0;">chevron down</span>
+                                <br />
+                                <span style="color:teal; padding: 4px 0;">e-chevron-down</span>
+                                <br />
+                                \e916
+                            </div>
+                            <div class="col-sm-1 justify-content-center" style="border: solid 1px #d9d9d9; margin: 0 8px; padding: 8px 8px;">
+								<span class="e-icons e-chevron-up"></span>&nbsp;<span class="e-icons icon-small e-chevron-up"></span>&nbsp;<span class="e-icons icon-normal e-chevron-up"></span>
+                                <br />
+                                <span style="color:dodgerblue; padding: 4px 0;">chevron up</span>
+                                <br />
+                                <span style="color:teal; padding: 4px 0;">e-chevron-up</span>
+                                <br />
+                                \e910
+                            </div>
+                            <div class="col-sm-1 justify-content-center" style="border: solid 1px #ffffff; margin: 0 8px; padding: 8px 8px;">
+                                &nbsp;
+                            </div>
+                            <div class="col-sm-1 justify-content-center" style="border: solid 1px #ffffff; margin: 0 8px; padding: 8px 8px;">
+                                &nbsp;
+                            </div>
+                            <div class="col-sm-1 justify-content-center" style="border: solid 1px #ffffff; margin: 0 8px; padding: 8px 8px;">
+                                &nbsp;
+                            </div>
+                        </div>
+                        <br />
+                        <!-- 9 -->
+                        <div class="row justify-content-center">
+                            <div class="col-sm-1 justify-content-center" style="border: solid 1px #d9d9d9; margin: 0 8px; padding: 8px 8px;">
+                                <span class="e-icons e-first-page" style="margin-right:10px;"></span>&nbsp;<span class="e-icons icon-small e-first-page" style="margin-right:10px;"></span>&nbsp;<span class="e-icons icon-normal e-first-page"></span>
+                                <br />
+								<span style="color:dodgerblue; padding: 4px 0;">first page</span>
+                                <br />
+                                <span style="color:teal; padding: 4px 0;">e-first-page</span>
+                                <br />
+                                \e833
+                            </div>
+                            <div class="col-sm-1 justify-content-center" style="border: solid 1px #d9d9d9; margin: 0 8px; padding: 8px 8px;">
+                                <span class="e-icons e-chevron-left-double" style="margin-right:10px;"></span>&nbsp;<span class="e-icons icon-small e-chevron-left-double" style="margin-right:10px;"></span>&nbsp;<span class="e-icons icon-normal e-chevron-left-double"></span>
+                                <br />
+								<span style="color:dodgerblue; padding: 4px 0;">chevron left double</span>
+                                <br />
+                                <span style="color:teal; padding: 4px 0;">e-chevron-left-double</span>
+                                <br />
+                                \e744
+                            </div>
+                            <div class="col-sm-1 justify-content-center" style="border: solid 1px #d9d9d9; margin: 0 8px; padding: 8px 8px;">
+                                <span class="e-icons e-chevron-left" style="margin-right:10px;"></span>&nbsp;<span class="e-icons icon-small e-chevron-left" style="margin-right:10px;"></span><span class="e-icons icon-normal e-chevron-left"></span>
+                                <br />
+								<span style="color:dodgerblue; padding: 4px 0;">chevron left</span>
+                                <br />
+                                <span style="color:teal; padding: 4px 0;">e-chevron-left</span>
+                                <br />
+                                \e765
+                            </div>
+                            <div class="col-sm-1 justify-content-center" style="border: solid 1px #d9d9d9; margin: 0 8px; padding: 8px 8px;">
+                                <span class="e-icons e-chevron-right" style="margin-right:10px;"></span>&nbsp;<span class="e-icons icon-small e-chevron-right" style="margin-right:10px;"></span>&nbsp;<span class="e-icons icon-normal e-chevron-right"></span>
+                                <br />
+								<span style="color:dodgerblue; padding: 4px 0;">chevron right</span>
+                                <br />
+                                <span style="color:teal; padding: 4px 0;">e-chevron-right</span>
+                                <br />
+                                \e748
+                            </div>
+                            <div class="col-sm-1 justify-content-center" style="border: solid 1px #d9d9d9; margin: 0 8px; padding: 8px 8px;">
+                                <span class="e-icons e-chevron-right-double" style="margin-right:10px;"></span>&nbsp;<span class="e-icons icon-small e-chevron-right-double" style="margin-right:10px;"></span>&nbsp;<span class="e-icons icon-normal e-chevron-right-double"></span>
+                                <br />
+								<span style="color:dodgerblue; padding: 4px 0;">chevron right double</span>
+                                <br />
+                                <span style="color:teal; padding: 4px 0;">e-chevron-right-double</span>
+                                <br />
+                                \e7a9
+                            </div>
+                            <div class="col-sm-1 justify-content-center" style="border: solid 1px #d9d9d9; margin: 0 8px; padding: 8px 8px;">
+                                <span class="e-icons e-last-page" style="margin-right:10px;"></span>&nbsp;<span class="e-icons icon-small e-last-page" style="margin-right:10px;"></span>&nbsp;<span class="e-icons icon-normal e-last-page"></span>
+                                <br />
+								<span style="color:dodgerblue; padding: 4px 0;">last page</span>
+                                <br />
+                                <span style="color:teal; padding: 4px 0;">e-last-page</span>
+                                <br />
+                                \e818
+                            </div>
+                            <div class="col-sm-1 justify-content-center" style="border: solid 1px #ffffff; margin: 0 8px; padding: 8px 8px;">
+                                &nbsp;
+                            </div>
+                        </div>
+                    </div>
+                </ContentTemplate>
+            </TabItem>
+            <TabItem>
+                <ChildContent>
+                    <TabHeader Text="Icone Bootstrap 5"></TabHeader>
+                </ChildContent>
+                <ContentTemplate>
+                    <div class="container-fluid">
+                        <!-- 1 -->
+                        <div class="row justify-content-center">
+                            <div class="col-sm-1 justify-content-center" style="border: solid 1px #d9d9d9; margin: 0 8px; padding: 8px 8px;">
+                                <span class="e-icons e-plus"></span>&nbsp;<span class="e-icons icon-small e-plus"></span>&nbsp;<span class="e-icons icon-normal e-plus"></span>
+                                <br />
+                                <span style="color:dodgerblue; padding: 4px 0;">plus</span>
+                                <br />
+                                <span style="color:teal; padding: 4px 0;">e-add</span>
+                                <br />
+                                \e963
+                            </div>
+                            <div class="col-sm-1 justify-content-center" style="border: solid 1px #d9d9d9; margin: 0 8px; padding: 8px 8px;">
+                                <span class="e-icons e-minus"></span>&nbsp;<span class="e-icons icon-small e-minus"></span>&nbsp;<span class="e-icons icon-normal e-minus"></span>
+                                <br />
+                                <span style="color:dodgerblue; padding: 4px 0;">minus</span>
+                                <br />
+                                <span style="color:teal; padding: 4px 0;">e-minus</span>
+                                <br />
+                                \e934
+                            </div>
+                            <div class="col-sm-1 justify-content-center" style="border: solid 1px #d9d9d9; margin: 0 8px; padding: 8px 8px;">
+                                <span class="e-icons e-search"></span>&nbsp;<span class="e-icons icon-small e-search"></span>&nbsp;<span class="e-icons icon-normal e-search"></span>
+                                <br />
+                                <span style="color:dodgerblue; padding: 4px 0;">search</span>
+                                <br />
+                                <span style="color:teal; padding: 4px 0;">e-search</span>
+                                <br />
+                                \e754
+                            </div>
+                            <div class="col-sm-1 justify-content-center" style="border: solid 1px #d9d9d9; margin: 0 8px; padding: 8px 8px;">
+                                <span class="e-icons e-reset"></span>&nbsp;<span class="e-icons icon-small e-reset"></span>&nbsp;<span class="e-icons icon-normal e-reset"></span>
+                                <span class="e-icons e-reset" aria-label="resetbutton" role="button" tabindex="0" aria-hidden="false"></span>
+                                <span class="e-btn-icon e-reload-icon tb-icons e-icons"></span>
+                                <br />
+                                <span style="color:dodgerblue; padding: 4px 0;">reset</span>
+                                <br />
+                                <span style="color:teal; padding: 4px 0;">e-reset</span>
+                                <br />
+                                \e89b
+                            </div>
+                            <div class="col-sm-1 justify-content-center" style="border: solid 1px #d9d9d9; margin: 0 8px; padding: 8px 8px;">
+                                <span class="e-icons e-upload-1"></span>&nbsp;<span class="e-icons icon-small e-upload-1"></span>&nbsp;<span class="e-icons icon-normal e-upload-1"></span>
+                                <br />
+                                <span style="color:dodgerblue; padding: 4px 0;">upload-1</span>
+                                <br />
+                                <span style="color:teal; padding: 4px 0;">e-upload-1</span>
+                                <br />
+                                \e712
+                            </div>
+                            <div class="col-sm-1 justify-content-center" style="border: solid 1px #d9d9d9; margin: 0 8px; padding: 8px 8px;">
+                                <span class="e-icons e-download"></span>&nbsp;<span class="e-icons icon-small e-download"></span>&nbsp;<span class="e-icons icon-normal e-download"></span>
+                                <br />
+                                <span style="color:dodgerblue; padding: 4px 0;">download</span>
+                                <br />
+                                <span style="color:teal; padding: 4px 0;">e-download</span>
+                                <br />
+                                \e7a1
+                            </div>
+                            <div class="col-sm-1 justify-content-center" style="border: solid 1px #d9d9d9; margin: 0 8px; padding: 8px 8px;">
+                                <span class="e-icons e-print"></span>&nbsp;<span class="e-icons icon-small e-print"></span>&nbsp;<span class="e-icons icon-normal e-print"></span>
+                                <br />
+                                <span style="color:dodgerblue; padding: 4px 0;">print</span>
+                                <br />
+                                <span style="color:teal; padding: 4px 0;">e-print</span>
+                                <br />
+                                \e75d
+                            </div>
+                        </div>
+                        <br />
+                        <!-- 2 -->
+                        <div class="row justify-content-center">
+                            <div class="col-sm-1 justify-content-center" style="border: solid 1px #d9d9d9; margin: 0 8px; padding: 8px 8px;">
+                                <span class="e-icons e-font-color"></span>&nbsp;<span class="e-icons icon-small e-font-color"></span>&nbsp;<span class="e-icons icon-normal e-font-color"></span>
+                                <br />
+                                <span style="color:dodgerblue; padding: 4px 0;">font-color</span>
+                                <br />
+                                <span style="color:teal; padding: 4px 0;">e-font-color</span>
+                                <br />
+                                \e79f
+                            </div>
+                            <div class="col-sm-1 justify-content-center" style="border: solid 1px #d9d9d9; margin: 0 8px; padding: 8px 8px;">
+                                <span class="e-icons e-eye"></span>&nbsp;<span class="e-icons icon-small e-eye"></span>&nbsp;<span class="e-icons icon-normal e-eye"></span>
+                                <br />
+                                <span style="color:dodgerblue; padding: 4px 0;">eye</span>
+                                <br />
+                                <span style="color:teal; padding: 4px 0;">e-eye</span>
+                                <br />
+                                \e7de
+                            </div>
+                            <div class="col-sm-1 justify-content-center" style="border: solid 1px #d9d9d9; margin: 0 8px; padding: 8px 8px;">
+                                <span class="e-icons e-circle-remove"></span>&nbsp;<span class="e-icons icon-small e-circle-remove"></span>&nbsp;<span class="e-icons icon-normal e-circle-remove"></span>
+                                <br />
+                                <span style="color:dodgerblue; padding: 4px 0;">circle-remove</span>
+                                <br />
+                                <span style="color:teal; padding: 4px 0;">e-circle-remove</span>
+                                <br />
+                                \e974
+                            </div>
+                            <div class="col-sm-1 justify-content-center" style="border: solid 1px #d9d9d9; margin: 0 8px; padding: 8px 8px;">
+                                <span class="e-icons e-trash"></span>&nbsp;<span class="e-icons icon-small e-trash"></span>&nbsp;<span class="e-icons icon-normal e-trash"></span>
+                                <br />
+                                <span style="color:dodgerblue; padding: 4px 0;">trash</span>
+                                <br />
+                                <span style="color:teal; padding: 4px 0;">e-trash</span>
+                                <br />
+                                \e820
+                            </div>
+                            <div class="col-sm-1 justify-content-center" style="border: solid 1px #d9d9d9; margin: 0 8px; padding: 8px 8px;">
+                                <span class="e-icons e-repeat"></span>&nbsp;<span class="e-icons icon-small e-repeat"></span>&nbsp;<span class="e-icons icon-normal e-repeat"></span>
+                                <br />
+                                <span style="color:dodgerblue; padding: 4px 0;">repeat</span>
+                                <br />
+                                <span style="color:teal; padding: 4px 0;">e-repeat</span>
+                                <br />
+                                \e772
+                            </div>
+                            <div class="col-sm-1 justify-content-center" style="border: solid 1px #d9d9d9; margin: 0 8px; padding: 8px 8px;">
+                                <span class="e-icons e-edit"></span>&nbsp;<span class="e-icons icon-small e-edit"></span>&nbsp;<span class="e-icons icon-normal e-edit"></span>
+                                <br />
+                                <span style="color:dodgerblue; padding: 4px 0;">edit</span>
+                                <br />
+                                <span style="color:teal; padding: 4px 0;">e-edit</span>
+                                <br />
+                                \e730
+                            </div>
+                            <div class="col-sm-1 justify-content-center" style="border: solid 1px #d9d9d9; margin: 0 8px; padding: 8px 8px;">
+                                <span class="e-icons e-send"></span>&nbsp;<span class="e-icons icon-small e-send"></span>&nbsp;<span class="e-icons icon-normal e-send"></span>
+                                <br />
+                                <span style="color:dodgerblue; padding: 4px 0;">send</span>
+                                <br />
+                                <span style="color:teal; padding: 4px 0;">e-send</span>
+                                <br />
+                                \e816
+                            </div>
+                        </div>
+                        <br />
+                        <!-- 3 -->
+                        <div class="row justify-content-center">
+                            <div class="col-sm-1 justify-content-center" style="border: solid 1px #d9d9d9; margin: 0 8px; padding: 8px 8px;">
+                                <span class="e-icons e-save"></span>&nbsp;<span class="e-icons icon-small e-save"></span>&nbsp;<span class="e-icons icon-normal e-save"></span>
+                                <br />
+                                <span style="color:dodgerblue; padding: 4px 0;">save</span>
+                                <br />
+                                <span style="color:teal; padding: 4px 0;">e-save</span>
+                                <br />
+                                \e98e
+                            </div>
+                            <div class="col-sm-1 justify-content-center" style="border: solid 1px #d9d9d9; margin: 0 8px; padding: 8px 8px;">
+                                <span class="e-icons e-close"></span>&nbsp;<span class="e-icons icon-small e-close"></span>&nbsp;<span class="e-icons icon-normal e-close"></span>
+                                <br />
+                                <span style="color:dodgerblue; padding: 4px 0;">close</span>
+                                <br />
+                                <span style="color:teal; padding: 4px 0;">e-close</span>
+                                <br />
+                                \e208
+                            </div>
+                            <div class="col-sm-1 justify-content-center" style="border: solid 1px #d9d9d9; margin: 0 8px; padding: 8px 8px;">
+                                <span class="e-icons e-circle-check"></span>&nbsp;<span class="e-icons icon-small e-circle-check"></span>&nbsp;<span class="e-icons icon-normal e-circle-check"></span>
+                                <br />
+                                <span style="color:dodgerblue; padding: 4px 0;">circle-check</span>
+                                <br />
+                                <span style="color:teal; padding: 4px 0;">e-circle-check</span>
+                                <br />
+                                \e72b
+                            </div>
+                            <div class="col-sm-1 justify-content-center" style="border: solid 1px #d9d9d9; margin: 0 8px; padding: 8px 8px;">
+                                <span class="e-icons e-circle-add"></span>&nbsp;<span class="e-icons icon-small e-circle-add"></span>&nbsp;<span class="e-icons icon-normal e-circle-add"></span>
+                                <br />
+                                <span style="color:dodgerblue; padding: 4px 0;">circle-add</span>
+                                <br />
+                                <span style="color:teal; padding: 4px 0;">e-circle-add</span>
+                                <br />
+                                \e768
+                            </div>
+                            <div class="col-sm-1 justify-content-center" style="border: solid 1px #d9d9d9; margin: 0 8px; padding: 8px 8px;">
+                                <span class="e-icons e-circle-remove"></span>&nbsp;<span class="e-icons icon-small e-circle-remove"></span>&nbsp;<span class="e-icons icon-normal e-circle-remove"></span>
+                                <br />
+                                <span style="color:dodgerblue; padding: 4px 0;">circle-remove</span>
+                                <br />
+                                <span style="color:teal; padding: 4px 0;">e-circle-remove</span>
+                                <br />
+                                \e81b
+                            </div>
+                            <div class="col-sm-1 justify-content-center" style="border: solid 1px #d9d9d9; margin: 0 8px; padding: 8px 8px;">
+                                <span class="e-icons e-error-treeview"></span>&nbsp;<span class="e-icons icon-small e-error-treeview"></span>&nbsp;<span class="e-icons icon-normal e-error-treeview"></span>
+                                <br />
+                                <span style="color:dodgerblue; padding: 4px 0;">error-treeview</span>
+                                <br />
+                                <span style="color:teal; padding: 4px 0;">e-error-treeview</span>
+                                <br />
+                                \e839
+                            </div>
+                            <div class="col-sm-1 justify-content-center" style="border: solid 1px #d9d9d9; margin: 0 8px; padding: 8px 8px;">
+                                <span class="e-icons e-circle-info"></span>&nbsp;<span class="e-icons icon-small e-circle-info"></span>&nbsp;<span class="e-icons icon-normal e-circle-info"></span>
+                                <br />
+                                <span style="color:dodgerblue; padding: 4px 0;">circle-info</span>
+                                <br />
+                                <span style="color:teal; padding: 4px 0;">e-circle-info</span>
+                                <br />
+                                \e800
+                            </div>
+                            <div class="col-sm-1 justify-content-center" style="border: solid 1px #d9d9d9; margin: 0 8px; padding: 8px 8px;">
+                                <span class="e-icons e-circle-close"></span>&nbsp;<span class="e-icons icon-small e-circle-close"></span>&nbsp;<span class="e-icons icon-normal e-circle-close"></span>
+                                <br />
+                                <span style="color:dodgerblue; padding: 4px 0;">circle-close</span>
+                                <br />
+                                <span style="color:teal; padding: 4px 0;">e-circle-close</span>
+                                <br />
+                                \e878
+                            </div>
+                        </div>
+                        <br />
+                        <!-- 4 -->
+                        <div class="row justify-content-center">
+                            <div class="col-sm-1 justify-content-center" style="border: solid 1px #d9d9d9; margin: 0 8px; padding: 8px 8px;">
+                                <span class="e-icons e-check"></span>&nbsp;<span class="e-icons icon-small e-check"></span>&nbsp;<span class="e-icons icon-normal e-check"></span>
+                                <br />
+                                <span style="color:dodgerblue; padding: 4px 0;">check</span>
+                                <br />
+                                <span style="color:teal; padding: 4px 0;">e-check</span>
+                                <br />
+                                \e774
+                            </div>
+                            <div class="col-sm-1 justify-content-center" style="border: solid 1px #d9d9d9; margin: 0 8px; padding: 8px 8px;">
+                                <span class="e-icons e-check-small"></span>&nbsp;<span class="e-icons icon-small e-check-small"></span>&nbsp;<span class="e-icons icon-normal e-check-small"></span>
+                                <br />
+                                <span style="color:dodgerblue; padding: 4px 0;">check small</span>
+                                <br />
+                                <span style="color:teal; padding: 4px 0;">e-check-small</span>
+                                <br />
+                                \e881
+                            </div>
+                            <div class="col-sm-1 justify-content-center" style="border: solid 1px #d9d9d9; margin: 0 8px; padding: 8px 8px;">
+                                <span class="e-icons e-check-large"></span>&nbsp;<span class="e-icons icon-small e-check-large"></span>&nbsp;<span class="e-icons icon-normal e-check-large"></span>
+                                <br />
+                                <span style="color:dodgerblue; padding: 4px 0;">check large</span>
+                                <br />
+                                <span style="color:teal; padding: 4px 0;">e-check-large</span>
+                                <br />
+                                \e727
+                            </div>
+                            <div class="col-sm-1 justify-content-center" style="border: solid 1px #d9d9d9; margin: 0 8px; padding: 8px 8px;">
+                                <span class="e-icons e-check-tick"></span>&nbsp;<span class="e-icons icon-small e-check-tick"></span>&nbsp;<span class="e-icons icon-normal e-check-tick"></span>
+                                <br />
+                                <span style="color:dodgerblue; padding: 4px 0;">check tick</span>
+                                <br />
+                                <span style="color:teal; padding: 4px 0;">e-check-tick</span>
+                                <br />
+                                \e8b1
+                            </div>
+                            <div class="col-sm-1 justify-content-center" style="border: solid 1px #d9d9d9; margin: 0 8px; padding: 8px 8px;">
+                                <span class="e-icons e-clear-form"></span>&nbsp;<span class="e-icons icon-small e-clear-form"></span>&nbsp;<span class="e-icons icon-normal e-clear-form"></span>
+                                <br />
+                                <span style="color:dodgerblue; padding: 4px 0;">clear-form</span>
+                                <br />
+                                <span style="color:teal; padding: 4px 0;">e-clear-form</span>
+                                <br />
+                                \e19a
+                            </div>
+                            <div class="col-sm-1 justify-content-center" style="border: solid 1px #d9d9d9; margin: 0 8px; padding: 8px 8px;">
+                                <span class="e-icons e-erase"></span>&nbsp;<span class="e-icons icon-small e-erase"></span>&nbsp;<span class="e-icons icon-normal e-erase"></span>
+                                <br />
+                                <span style="color:dodgerblue; padding: 4px 0;">erase</span>
+                                <br />
+                                <span style="color:teal; padding: 4px 0;">e-erase</span>
+                                <br />
+                                \e7cc
+                            </div>
+                            <div class="col-sm-1 justify-content-center" style="border: solid 1px #d9d9d9; margin: 0 8px; padding: 8px 8px;">
+                                <span class="e-icons e-excel icon-green"></span>&nbsp;<span class="e-icons icon-small e-excel icon-green"></span>&nbsp;<span class="e-icons icon-normal e-excel icon-green"></span>
+                                <br />
+                                <span style="color:dodgerblue; padding: 4px 0;">excel green</span>
+                                <br />
+                                <span style="color:teal; padding: 4px 0;">e-print icon-green</span>
+                                <br />
+                                \e700
+                            </div>
+                            <div class="col-sm-1 justify-content-center" style="border: solid 1px #ffffff; margin: 0 8px; padding: 8px 8px;">
+                                &nbsp;
+                            </div>
+                        </div>
+                        <br />
+                        <!-- 5 -->
+                        <div class="row justify-content-center">
+                            <div class="col-sm-1 justify-content-center" style="border: solid 1px #d9d9d9; margin: 0 8px; padding: 8px 8px;">
+                                <span class="e-icons e-prev-icon"></span>&nbsp;<span class="e-icons icon-small e-prev-icon"></span>&nbsp;<span class="e-icons icon-normal e-prev-icon"></span>
+                                <br />
+                                <span style="color:dodgerblue; padding: 4px 0;">prev icon</span>
+                                <br />
+                                <span style="color:teal; padding: 4px 0;">e-prev-icon</span>
+                                <br />
+                                \e921
+                            </div>
+                            <div class="col-sm-1 justify-content-center" style="border: solid 1px #d9d9d9; margin: 0 8px; padding: 8px 8px;">
+                                <span class="e-icons e-copy"></span>&nbsp;<span class="e-icons icon-small e-copy"></span>&nbsp;<span class="e-icons icon-normal e-copy"></span>
+                                <br />
+                                <span style="color:dodgerblue; padding: 4px 0;">copy</span>
+                                <br />
+                                <span style="color:teal; padding: 4px 0;">e-copy</span>
+                                <br />
+                                \e70a
+                            </div>
+                            <div class="col-sm-1 justify-content-center" style="border: solid 1px #d9d9d9; margin: 0 8px; padding: 8px 8px;">
+                                <span class="e-icons e-arrow-left"></span>&nbsp;<span class="e-icons icon-small e-arrow-left"></span>&nbsp;<span class="e-icons icon-normal e-arrow-left"></span>
+                                <br />
+                                <span style="color:dodgerblue; padding: 4px 0;">arrow-left</span>
+                                <br />
+                                <span style="color:teal; padding: 4px 0;">e-arrow-left</span>
+                                <br />
+                                \e773
+                            </div>
+                            <div class="col-sm-1 justify-content-center" style="border: solid 1px #d9d9d9; margin: 0 8px; padding: 8px 8px;">
+                                <span class="e-icons e-arrow-down">&nbsp;</span><span class="e-icons icon-small e-arrow-down"></span>&nbsp;<span class="e-icons icon-normal e-arrow-down"></span>
+                                <br />
+                                <span style="color:dodgerblue; padding: 4px 0;">arrow-down</span>
+                                <br />
+                                <span style="color:teal; padding: 4px 0;">e-arrow-down</span>
+                                <br />
+                                \e7d8
+                            </div>
+                            <div class="col-sm-1 justify-content-center" style="border: solid 1px #d9d9d9; margin: 0 8px; padding: 8px 8px;">
+                                <span class="e-icons e-arrow-up"></span>&nbsp;<span class="e-icons icon-small e-arrow-up"></span>&nbsp;<span class="e-icons icon-normal e-arrow-up"></span>
+                                <br />
+                                <span style="color:dodgerblue; padding: 4px 0;">arrow-up</span>
+                                <br />
+                                <span style="color:teal; padding: 4px 0;">e-arrow-up</span>
+                                <br />
+                                \e7df
+                            </div>
+                            <div class="col-sm-1 justify-content-center" style="border: solid 1px #d9d9d9; margin: 0 8px; padding: 8px 8px;">
+                                <span class="e-icons e-arrow-right"></span>&nbsp;<span class="e-icons icon-small e-arrow-right"></span>&nbsp;<span class="e-icons icon-normal e-arrow-right"></span>
+                                <br />
+                                <span style="color:dodgerblue; padding: 4px 0;">arrow-right</span>
+                                <br />
+                                <span style="color:teal; padding: 4px 0;">e-arrow-right</span>
+                                <br />
+                                \e7f9
+                            </div>
+                            <div class="col-sm-1 justify-content-center" style="border: solid 1px #d9d9d9; margin: 0 8px; padding: 8px 8px;">
+                                <span class="e-icons e-MT_Grid"></span>&nbsp;<span class="e-icons icon-small e-MT_Grid"></span>&nbsp;<span class="e-icons icon-normal e-MT_Grid"></span>
+                                <br />
+                                <span style="color:dodgerblue; padding: 4px 0;">MT_Grid</span>
+                                <br />
+                                <span style="color:teal; padding: 4px 0;">e-MT_Grid</span>
+                                <br />
+                                \e600
+                            </div>
+                        </div>
+                        <br />
+                        <!-- 6 -->
+                        <div class="row justify-content-center">
+                            <div class="col-sm-1 justify-content-center" style="border: solid 1px #d9d9d9; margin: 0 8px; padding: 8px 8px;">
+                                <span class="e-icons e-plus icon-red"></span>&nbsp;<span class="e-icons icon-small e-plus icon-red"></span>&nbsp;<span class="e-icons icon-normal e-plus icon-red"></span>
+                                <br />
+                                <span style="color:dodgerblue; padding: 4px 0;">plus red</span>
+                                <br />
+                                <span style="color:teal; padding: 4px 0;">e-plus icon-red</span>
+                                <br />
+                                \e963
+                            </div>
+                            <div class="col-sm-1 justify-content-center" style="border: solid 1px #d9d9d9; margin: 0 8px; padding: 8px 8px;">
+                                <span class="e-icons e-plus icon-green"></span>&nbsp;<span class="e-icons icon-small e-plus icon-green"></span>&nbsp;<span class="e-icons icon-normal e-plus icon-green"></span>
+                                <br />
+                                <span style="color:dodgerblue; padding: 4px 0;">plus green</span>
+                                <br />
+                                <span style="color:teal; padding: 4px 0;">e-plus icon-green</span>
+                                <br />
+                                \e963
+                            </div>
+                            <div class="col-sm-1 justify-content-center" style="border: solid 1px #d9d9d9; margin: 0 8px; padding: 8px 8px;">
+                                <span class="e-icons e-plus icon-navy"></span>&nbsp;<span class="e-icons icon-small e-plus icon-navy"></span>&nbsp;<span class="e-icons icon-normal e-plus icon-navy"></span>
+                                <br />
+                                <span style="color:dodgerblue; padding: 4px 0;">plus navy</span>
+                                <br />
+                                <span style="color:teal; padding: 4px 0;">e-plus icon-navy</span>
+                                <br />
+                                \e963
+                            </div>
+                            <div class="col-sm-1 justify-content-center" style="border: solid 1px #d9d9d9; margin: 0 8px; padding: 8px 8px;">
+                                <span class="e-icons e-plus icon-orange"></span>&nbsp;<span class="e-icons icon-small e-plus icon-orange"></span>&nbsp;<span class="e-icons icon-normal e-plus icon-orange"></span>
+                                <br />
+                                <span style="color:dodgerblue; padding: 4px 0;">plus orange</span>
+                                <br />
+                                <span style="color:teal; padding: 4px 0;">e-plus icon-orange</span>
+                                <br />
+                                \e963
+                            </div>
+                            <div class="col-sm-1 justify-content-center" style="border: solid 1px #d9d9d9; margin: 0 8px; padding: 8px 8px;">
+                                <span class="e-icons e-plus icon-purple"></span>&nbsp;<span class="e-icons icon-small e-plus icon-purple"></span>&nbsp;<span class="e-icons icon-normal e-plus icon-purple"></span>
+                                <br />
+                                <span style="color:dodgerblue; padding: 4px 0;">plus purple</span>
+                                <br />
+                                <span style="color:teal; padding: 4px 0;">e-plus icon-purple</span>
+                                <br />
+                                \e963
+                            </div>
+                            <div class="col-sm-1 justify-content-center" style="border: solid 1px #d9d9d9; margin: 0 8px; padding: 8px 8px;">
+                                <span class="e-icons e-plus icon-darkcyan"></span>&nbsp;<span class="e-icons icon-small e-plus icon-darkcyan"></span>&nbsp;<span class="e-icons icon-normal e-plus icon-darkcyan"></span>
+                                <br />
+                                <span style="color:dodgerblue; padding: 4px 0;">plus darkcyan</span>
+                                <br />
+                                <span style="color:teal; padding: 4px 0;">e-plus icon-darkcyan</span>
+                                <br />
+                                \e963
+                            </div>
+                            <div class="col-sm-1 justify-content-center" style="border: solid 1px #d9d9d9; margin: 0 8px; padding: 8px 8px;">
+                                <span class="e-icons e-plus icon-icon-slategrey"></span>&nbsp;<span class="e-icons icon-small e-plus icon-icon-slategrey"></span>&nbsp;<span class="e-icons icon-normal e-plus icon-icon-slategrey"></span>
+                                <br />
+                                <span style="color:dodgerblue; padding: 4px 0;">plus icon-slategrey</span>
+                                <br />
+                                <span style="color:teal; padding: 4px 0;">e-plus icon-icon-slategrey</span>
+                                <br />
+                                \e963
+                            </div>
+                        </div>
+                        <br />
+                        <!-- 7 -->
+                        <div class="row justify-content-center">
+                            <div class="col-sm-1 justify-content-center" style="border: solid 1px #d9d9d9; margin: 0 8px; padding: 8px 8px;">
+                                <span class="e-icons e-circle-close"></span>&nbsp;<span class="e-icons icon-small e-circle-close"></span>&nbsp;<span class="e-icons icon-normal e-circle-close"></span>
+                                <br />
+                                <span style="color:dodgerblue; padding: 4px 0;">circle close</span>
+                                <br />
+                                <span style="color:teal; padding: 4px 0;">e-circle-close</span>
+                                <br />
+                                \e7e9
+                            </div>
+                            <div class="col-sm-1 justify-content-center" style="border: solid 1px #d9d9d9; margin: 0 8px; padding: 8px 8px;">
+                                <span class="e-icons e-circle-remove"></span>&nbsp;<span class="e-icons icon-small e-circle-remove"></span>&nbsp;<span class="e-icons icon-normal e-circle-remove"></span>
+                                <br />
+                                <span style="color:dodgerblue; padding: 4px 0;">circle remove</span>
+                                <br />
+                                <span style="color:teal; padding: 4px 0;">e-circle-remove</span>
+                                <br />
+                                \e991
+                            </div>
+                            <div class="col-sm-1 justify-content-center" style="border: solid 1px #d9d9d9; margin: 0 8px; padding: 8px 8px;">
+                                <span class="e-icons e-circle-check"></span>&nbsp;<span class="e-icons icon-small e-circle-check"></span>&nbsp;<span class="e-icons icon-normal e-circle-check"></span>
+                                <br />
+                                <span style="color:dodgerblue; padding: 4px 0;">circle check</span>
+                                <br />
+                                <span style="color:teal; padding: 4px 0;">e-circle-check</span>
+                                <br />
+                                \ea84
+                            </div>
+                            <div class="col-sm-1 justify-content-center" style="border: solid 1px #d9d9d9; margin: 0 8px; padding: 8px 8px;">
+                                <span class="e-icons e-chart-insert-column"></span>&nbsp;<span class="e-icons icon-small e-chart-insert-column"></span>&nbsp;<span class="e-icons icon-normal e-chart-insert-column"></span>
+                                <br />
+                                <span style="color:dodgerblue; padding: 4px 0;">chart-insert-column</span>
+                                <br />
+                                <span style="color:teal; padding: 4px 0;">e-chart-insert-column</span>
+                                <br />
+                                \e845
+                            </div>
+                            <div class="col-sm-1 justify-content-center" style="border: solid 1px #d9d9d9; margin: 0 8px; padding: 8px 8px;">
+                                <span class="e-icons e-chart-insert-pie"></span>&nbsp;<span class="e-icons icon-small e-chart-insert-pie"></span>&nbsp;<span class="e-icons icon-normal e-chart-insert-pie"></span>
+                                <br />
+                                <span style="color:dodgerblue; padding: 4px 0;">chart-insert-pie</span>
+                                <br />
+                                <span style="color:teal; padding: 4px 0;">e-chart-insert-pie</span>
+                                <br />
+                                \e850
+                            </div>
+                            <div class="col-sm-1 justify-content-center" style="border: solid 1px #ffffff; margin: 0 8px; padding: 8px 8px;">
+                                &nbsp;
+                            </div>
+                            <div class="col-sm-1 justify-content-center" style="border: solid 1px #ffffff; margin: 0 8px; padding: 8px 8px;">
+                                &nbsp;
+                            </div>
+                        </div>
+                        <br />
+                        <!-- 8 -->
+                        <div class="row justify-content-center">
+                            <div class="col-sm-1 justify-content-center" style="border: solid 1px #d9d9d9; margin: 0 8px; padding: 8px 8px;">
+                                <span class="e-icons e-chevron-right-thin"></span>&nbsp;<span class="e-icons icon-small e-chevron-right-thin"></span>&nbsp;<span class="e-icons icon-normal e-chevron-right-thin"></span>
+                                <br />
+                                <span style="color:dodgerblue; padding: 4px 0;">chevron right thin</span>
+                                <br />
+                                <span style="color:teal; padding: 4px 0;">e-chevron-right-thin</span>
+                                <br />
+                                \e608
+                            </div>
+                            <div class="col-sm-1 justify-content-center" style="border: solid 1px #d9d9d9; margin: 0 8px; padding: 8px 8px;">
+                                <span class="e-icons e-chevron-down-thin"></span>&nbsp;<span class="e-icons icon-small e-chevron-down-thin"></span>&nbsp;<span class="e-icons icon-normal e-chevron-down-thin"></span>
+                                <br />
+                                <span style="color:dodgerblue; padding: 4px 0;">chevron down thin</span>
+                                <br />
+                                <span style="color:teal; padding: 4px 0;">e-chevron-down-thin</span>
+                                <br />
+                                \e36a
+                            </div>
+                            <div class="col-sm-1 justify-content-center" style="border: solid 1px #d9d9d9; margin: 0 8px; padding: 8px 8px;">
+                                <span class="e-icons e-chevron-down"></span>&nbsp;<span class="e-icons icon-small e-chevron-down"></span>&nbsp;<span class="e-icons icon-normal e-chevron-down"></span>
+                                <br />
+                                <span style="color:dodgerblue; padding: 4px 0;">chevron down</span>
+                                <br />
+                                <span style="color:teal; padding: 4px 0;">e-chevron-down</span>
+                                <br />
+                                \e916
+                            </div>
+                            <div class="col-sm-1 justify-content-center" style="border: solid 1px #d9d9d9; margin: 0 8px; padding: 8px 8px;">
+                                <span class="e-icons e-chevron-up"></span>&nbsp;<span class="e-icons icon-small e-chevron-up"></span>&nbsp;<span class="e-icons icon-normal e-chevron-up"></span>
+                                <br />
+                                <span style="color:dodgerblue; padding: 4px 0;">chevron up</span>
+                                <br />
+                                <span style="color:teal; padding: 4px 0;">e-chevron-up</span>
+                                <br />
+                                \e910
+                            </div>
+                            <div class="col-sm-1 justify-content-center" style="border: solid 1px #ffffff; margin: 0 8px; padding: 8px 8px;">
+                                &nbsp;
+                            </div>
+                            <div class="col-sm-1 justify-content-center" style="border: solid 1px #ffffff; margin: 0 8px; padding: 8px 8px;">
+                                &nbsp;
+                            </div>
+                            <div class="col-sm-1 justify-content-center" style="border: solid 1px #ffffff; margin: 0 8px; padding: 8px 8px;">
+                                &nbsp;
+                            </div>
+                        </div>
+                        <br />
+                        <!-- 9 -->
+                        <div class="row justify-content-center">
+                            <div class="col-sm-1 justify-content-center" style="border: solid 1px #d9d9d9; margin: 0 8px; padding: 8px 8px;">
+                                <span class="e-icons e-first-page" style="margin-right:10px;"></span>&nbsp;<span class="e-icons icon-small e-first-page" style="margin-right:10px;"></span>&nbsp;<span class="e-icons icon-normal e-first-page"></span>
+                                <br />
+                                <span style="color:dodgerblue; padding: 4px 0;">first page</span>
+                                <br />
+                                <span style="color:teal; padding: 4px 0;">e-first-page</span>
+                                <br />
+                                \e833
+                            </div>
+                            <div class="col-sm-1 justify-content-center" style="border: solid 1px #d9d9d9; margin: 0 8px; padding: 8px 8px;">
+                                <span class="e-icons e-chevron-left-double" style="margin-right:10px;"></span>&nbsp;<span class="e-icons icon-small e-chevron-left-double" style="margin-right:10px;"></span>&nbsp;<span class="e-icons icon-normal e-chevron-left-double"></span>
+                                <br />
+                                <span style="color:dodgerblue; padding: 4px 0;">chevron left double</span>
+                                <br />
+                                <span style="color:teal; padding: 4px 0;">e-chevron-left-double</span>
+                                <br />
+                                \e744
+                            </div>
+                            <div class="col-sm-1 justify-content-center" style="border: solid 1px #d9d9d9; margin: 0 8px; padding: 8px 8px;">
+                                <span class="e-icons e-chevron-left" style="margin-right:10px;"></span>&nbsp;<span class="e-icons icon-small e-chevron-left" style="margin-right:10px;"></span><span class="e-icons icon-normal e-chevron-left"></span>
+                                <br />
+                                <span style="color:dodgerblue; padding: 4px 0;">chevron left</span>
+                                <br />
+                                <span style="color:teal; padding: 4px 0;">e-chevron-left</span>
+                                <br />
+                                \e765
+                            </div>
+                            <div class="col-sm-1 justify-content-center" style="border: solid 1px #d9d9d9; margin: 0 8px; padding: 8px 8px;">
+                                <span class="e-icons e-chevron-right" style="margin-right:10px;"></span>&nbsp;<span class="e-icons icon-small e-chevron-right" style="margin-right:10px;"></span>&nbsp;<span class="e-icons icon-normal e-chevron-right"></span>
+                                <br />
+                                <span style="color:dodgerblue; padding: 4px 0;">chevron right</span>
+                                <br />
+                                <span style="color:teal; padding: 4px 0;">e-chevron-right</span>
+                                <br />
+                                \e748
+                            </div>
+                            <div class="col-sm-1 justify-content-center" style="border: solid 1px #d9d9d9; margin: 0 8px; padding: 8px 8px;">
+                                <span class="e-icons e-chevron-right-double" style="margin-right:10px;"></span>&nbsp;<span class="e-icons icon-small e-chevron-right-double" style="margin-right:10px;"></span>&nbsp;<span class="e-icons icon-normal e-chevron-right-double"></span>
+                                <br />
+                                <span style="color:dodgerblue; padding: 4px 0;">chevron right double</span>
+                                <br />
+                                <span style="color:teal; padding: 4px 0;">e-chevron-right-double</span>
+                                <br />
+                                \e7a9
+                            </div>
+                            <div class="col-sm-1 justify-content-center" style="border: solid 1px #d9d9d9; margin: 0 8px; padding: 8px 8px;">
+                                <span class="e-icons e-last-page" style="margin-right:10px;"></span>&nbsp;<span class="e-icons icon-small e-last-page" style="margin-right:10px;"></span>&nbsp;<span class="e-icons icon-normal e-last-page"></span>
+                                <br />
+                                <span style="color:dodgerblue; padding: 4px 0;">last page</span>
+                                <br />
+                                <span style="color:teal; padding: 4px 0;">e-last-page</span>
+                                <br />
+                                \e818
+                            </div>
+                            <div class="col-sm-1 justify-content-center" style="border: solid 1px #ffffff; margin: 0 8px; padding: 8px 8px;">
+                                &nbsp;
+                            </div>
+                        </div>
+                    </div>
+                </ContentTemplate>
+            </TabItem>
+            <TabItem>
+                <ChildContent>
+                    <TabHeader Text="Form elements"></TabHeader>
+                </ChildContent>
+                <ContentTemplate>
+                    <div class="form-group col-sm-12">
+                        <div>
+                            <div class="form-row" style="margin-bottom:6px;">
+                                <div class="form-group col-sm-12" style="border-bottom: 1px solid #ff6a00;">
+                                    <SfButton IconCss="e-icons e-addcircle" CssClass="e-small e-flat" Content="New"></SfButton>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-sm-2" style="font-size: 90%; padding-top: 4px;">
+                                    DatePicker:
+                                </div>
+                                <div class="form-group text-sm-right" style="font-size: 90%; padding-top: 4px;">
+                                    dal:&nbsp;
+                                </div>
+                                <div class="form-group col-sm-2" style="font-size: 90%;">
+                                    <SfDatePicker ID="rdadatedal" TValue="DateTime" @bind-Value="@RdADateDal" Placeholder="Scegli una data" Format="dd/MM/yyyy" AllowEdit="false" Min='@MinDalDate' Locale="it-IT"></SfDatePicker>
+                                </div>
+                                <div class="form-group text-sm-right" style="font-size: 90%; padding-top: 4px;">
+                                    &nbsp;&nbsp;al:&nbsp;
+                                </div>
+                                <div class="form-group col-sm-2" style="font-size: 90%;">
+                                    <SfDatePicker ID="rdadateal" TValue="DateTime" @bind-Value="@RdADateAl" Placeholder="Scegli una data" Format="dd/MM/yyyy" AllowEdit="false" Min='@MinAlDate' Locale="it-IT"></SfDatePicker>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-sm-2" style="font-size: 90%; padding-top: 4px;">
+                                    DropDownList:
+                                </div>
+                                <div class="form-group col-sm-2" style="font-size: 90%;">
+                                    <SfDropDownList ID="wbs" TItem="Coppia" TValue="string" PopupHeight="230px" Locale="it-IT">
+                                        <DropDownListEvents TItem="Coppia" TValue="string"></DropDownListEvents>
+                                        <DropDownListFieldSettings Text="Val" Value="ID"></DropDownListFieldSettings>
+                                    </SfDropDownList>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-sm-2" style="font-size: 90%; padding-top: 4px;">
+                                    TextBox:
+                                </div>
+                                <div class="form-group col-sm-2" style="font-size: 90%;">
+                                    <SfTextBox ID="descrizione"></SfTextBox>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-sm-2" style="font-size: 90%; padding-top: 4px;">
+                                    NumericTextBox:
+                                </div>
+                                <div class="form-group col-sm-3">
+                                    <SfNumericTextBox ID="qta" @bind-Value="@(NumericTextBox)" FloatLabelType="FloatLabelType.Always" Placeholder="Quantità" Locale="it-IT"></SfNumericTextBox>
+                                </div>
+
+                                <div class="form-group col-sm-1">&nbsp;</div>
+
+                                <div class="form-group col-sm-3" style="font-size: 90%;">
+                                    <span style="font-weight: bold; color: #808080;">Importo Totale:</span>&nbsp;<span>@totalinvoices.ToString("C2")</span>
+                                </div>
+                                <div class="form-group col-sm-3" style="font-size: 90%;">
+                                    <span style="font-weight: bold; color: #808080;">Saldo:</span>&nbsp;<span>@saldo.ToString("C2")</span>
+                                </div>
+                            </div>
+                            <br />
+                            <br />
+                            <div class="form-row">
+                                <div class="form-group col-sm-2" style="font-size: 90%;">
+                                    <SfButton IconCss="e-icons search icon-navy e-search" CssClass="e-small" Content="Cerca"></SfButton>
+                                </div>
+                                <div class="form-group col-sm-2" style="font-size: 90%;">
+                                    <SfButton IconCss="e-icons icon-small e-reload" CssClass="e-small" Content="Ripristina"></SfButton>
+                                </div>
+                                <div class="form-group col-sm-8" style="font-size: 90%;">
+                                    &nbsp;
+                                </div>
+                            </div>
+                        </div>
+
+                        <SfGrid DataSource="@Orders" AllowPaging="true" Locale="it-IT" AllowGrouping="true" Height="400">
+                            <GridPageSettings PageSizes="true"></GridPageSettings>
+                            <GridGroupSettings ShowDropArea="true"></GridGroupSettings>
+                            <GridColumns>
+                                <GridColumn Field=@nameof(Order.OrderID) HeaderText="Order ID" TextAlign="TextAlign.Right" Width="120"></GridColumn>
+                                <GridColumn Field=@nameof(Order.CustomerID) HeaderText="Customer Name" Width="150"></GridColumn>
+                                <GridColumn Field=@nameof(Order.OrderDate) HeaderText=" Order Date" Format="d" Type="ColumnType.Date" TextAlign="TextAlign.Right" Width="130"></GridColumn>
+                                <GridColumn Field=@nameof(Order.Freight) HeaderText="Freight" Format="C2" TextAlign="TextAlign.Right" Width="120"></GridColumn>
+                            </GridColumns>
+                        </SfGrid>
+                    </div>
+                </ContentTemplate>
+            </TabItem>
+            <TabItem>
+                <ChildContent>
+                    <TabHeader Text="Menu buttons"></TabHeader>
+                </ChildContent>
+                <ContentTemplate>
+                    <div id="target" class="col-lg-12 control-section" style="height:100%">
+                        <div>
+                            <div>
+                                @if (this.ShowButton)
+                                {
+                                    <button class="e-btn" @onclick="@OnBtnclicked">Open</button>
+                                }
+                            </div>
+                        </div>
+                        <SfDialog  Width="250px" Target="#target" ShowCloseIcon="true" @bind-Visible="Visibility">
+                            <DialogTemplates>
+                                <Header> Dialog </Header>
+                                <Content> This is a Dialog with button and primary button </Content>
+                                <FooterTemplate>
+                                    <span>Hi!</span>
+                                </FooterTemplate>
+                            </DialogTemplates>
+                            <DialogEvents OnOpen="@DialogOpen" Closed="@DialogClose"></DialogEvents>
+                        </SfDialog>
+                    </div>
+                    <div class="form-row">
+                        <div class="actionBtn">
+                            <SfButton IconCss="e-icons icon-small icon-green e-ok" CssClass="e-small" Content="Test" ></SfButton>
+                        </div>
+                        <div class="actionBtn" style="">
+                            <SfButton IconCss="e-icons icon-small icon-green e-ok" CssClass="e-small" Content="Evadi"></SfButton>
+                        </div>
+                        <div class="actionBtn" style="">
+                            <SfButton IconCss="e-icons icon-small icon-green e-check-mark" CssClass="e-small" Content="Approva"></SfButton>
+                        </div>
+                        <div class="actionBtn" style="">
+                            <SfButton IconCss="e-icons icon-small icon-green e-send" CssClass="e-small" Content="Crea e Invia"></SfButton>
+                        </div>
+                        <div class="actionBtn" style="">
+                            <SfButton IconCss="e-icons icon-small icon-navy e-save" CssClass="e-small" Content="Salva in Bozza"></SfButton>
+                        </div>
+                        <div class="actionBtn" style="">
+                            <SfButton IconCss="e-icons icon-small icon-red e-annulla" CssClass="e-small" Content="Annulla"></SfButton>
+                        </div>
+                        <div class="actionBtn" style="">
+                            <SfButton IconCss="e-icons icon-small icon-red e-close" CssClass="e-small" Content="Rifiuta"></SfButton>
+                        </div>
+                        <div class="actionBtn" style="">
+                            <SfButton IconCss="e-icons icon-small e-reload" CssClass="e-small" Content="Ripristina"></SfButton>
+                        </div>
+                        <div class="actionBtn" style="">
+                            <SfButton IconCss="e-icons icon-small icon-slategrey e-print" CssClass="e-small" Content="Stampa"></SfButton>
+                        </div>
+                        <div class="actionBtn" style="">
+                            <SfButton IconCss="e-icons icon-small icon-orange e-prev-icon" CssClass="e-small" Content="Vai ad Elenco RdA"></SfButton>
+                        </div>
+                    </div>
+
+                    <div style="margin-top: 30px;">
+                        <label style="padding: 10px 70px 10px 0;">USB Tethering @uno</label>
+                        <SfSwitch @bind-Checked="@isUSB" ValueChange="OnUSBChange" TChecked="bool"></SfSwitch>
+                    </div>
+                    <div style="margin-top: 10px;">
+                        <label style="padding: 10px 24px 10px 0; ">Portable Wi-Fi hotspot @due</label>
+                        <SfSwitch @bind-Checked="@ishotspot" ValueChange="OnHotspotChange" TChecked="bool"></SfSwitch>
+                    </div>
+                    <div style="margin-top: 10px;">
+                        <label style="padding: 10px 40px 10px 0; ">Bluetooth Tethering</label>
+                        <SfSwitch Disabled="true" @bind-Checked="@isBluetooth"></SfSwitch>
+                    </div>
+
+                    <div class="form-row" style="margin-top: 30px;">
+                        <div class="actionBtn">
+                            <SfButton IconCss="e-icons icon-small icon-green e-ok" CssClass="e-small" Content="Check All" OnClick="() => CheckAll()"></SfButton>
+                        </div>
+                        <div class="actionBtn" style="">
+                            <SfButton IconCss="e-icons icon-small icon-green e-ok" CssClass="e-small" Content="Uncheck All" OnClick="() => UnCheckAll()"></SfButton>
+                        </div>
+                    </div>
+
+                    <div style="margin-top: 15px;">
+                        @foreach (var item in data)
+                        {
+                            <SfCheckBox Label=@item.Label LabelPosition="LabelPosition.After" TChecked="bool" @bind-Checked="@item.isChecked" ValueChange="e => OnChange(e, item.Label)"></SfCheckBox>
+                            if (item.isChecked)
+                            {
+                                if (!CheckedItem.Contains(item)) { CheckedItem.Add(item); }
+                            }
+                            else
+                            {
+                                if (CheckedItem.Contains(item)) { CheckedItem.Remove(item); }
+                            }
+                        }
+                    </div>
+
+                    <div style="margin-top: 20px;">
+                        <h4>Checked Item</h4>
+                        @foreach (var item in CheckedItem)
+                        {
+                            <p>@item.Label</p>
+                        }
+                    </div>
+                </ContentTemplate>
+            </TabItem>
+            <TabItem>
+                <ChildContent>
+                    <TabHeader Text="CSV ';'"></TabHeader>
+                </ChildContent>
+                <ContentTemplate>
+                    <h5>@file1</h5>
+                    <div class="actionBtn" style="margin: 12px 0;">
+                        <SfButton IconCss="e-icons icon-small icon-green e-ok" CssClass="e-small" Content="Check" ></SfButton>
+                    </div>
+                    <SfGrid DataSource="@Imports1" AllowPaging="true" Locale="it-IT" AllowGrouping="true" Height="400" Width="700">
+                        <GridPageSettings PageSizes="true"></GridPageSettings>
+                        <GridGroupSettings ShowDropArea="true"></GridGroupSettings>
+                        <GridColumns>
+                            <GridColumn Field=@nameof(Import.primo) HeaderText="primo" TextAlign="TextAlign.Right" Width="150"></GridColumn>
+                            <GridColumn Field=@nameof(Import.secondo) HeaderText="secondo" TextAlign="TextAlign.Right" Width="150"></GridColumn>
+                            <GridColumn Field=@nameof(Import.terzo) HeaderText="terzo" TextAlign="TextAlign.Right" Width="150"></GridColumn>
+                            <GridColumn Field=@nameof(Import.quarto) HeaderText="quarto" TextAlign="TextAlign.Right" Width="150"></GridColumn>
+                        </GridColumns>
+                    </SfGrid>
+                </ContentTemplate>
+            </TabItem>
+            <TabItem>
+                <ChildContent>
+                    <TabHeader Text="CSV ','"></TabHeader>
+                </ChildContent>
+                <ContentTemplate>
+                    <h5>@file2</h5>
+                    <div class="actionBtn" style="margin: 12px 0;">
+                        <SfButton IconCss="e-icons icon-small icon-green e-ok" CssClass="e-small" Content="Check" ></SfButton>
+                    </div>
+                    <SfGrid DataSource="@Imports2" AllowPaging="true" Locale="it-IT" AllowGrouping="true" Height="400" Width="700">
+                        <GridPageSettings PageSizes="true"></GridPageSettings>
+                        <GridGroupSettings ShowDropArea="true"></GridGroupSettings>
+                        <GridColumns>
+                            <GridColumn Field=@nameof(Import.primo) HeaderText="primo" TextAlign="TextAlign.Right" Width="150"></GridColumn>
+                            <GridColumn Field=@nameof(Import.secondo) HeaderText="secondo" TextAlign="TextAlign.Right" Width="150"></GridColumn>
+                            <GridColumn Field=@nameof(Import.terzo) HeaderText="terzo" TextAlign="TextAlign.Right" Width="150"></GridColumn>
+                            <GridColumn Field=@nameof(Import.quarto) HeaderText="quarto" TextAlign="TextAlign.Right" Width="150"></GridColumn>
+                        </GridColumns>
+                    </SfGrid>
+                </ContentTemplate>
+            </TabItem>
+            <TabItem>
+                <ChildContent>
+                    <TabHeader Text="CSV 'tab.'"></TabHeader>
+                </ChildContent>
+                <ContentTemplate>
+                    <h5>@file3</h5>
+                    <div class="actionBtn" style="margin: 12px 0;">
+                        <SfButton IconCss="e-icons icon-small icon-green e-ok" CssClass="e-small" Content="Check"></SfButton>
+                    </div>
+                    <SfGrid DataSource="@Imports3" AllowPaging="true" Locale="it-IT" AllowGrouping="true" Height="400" Width="700">
+                        <GridPageSettings PageSizes="true"></GridPageSettings>
+                        <GridGroupSettings ShowDropArea="true"></GridGroupSettings>
+                        <GridColumns>
+                            <GridColumn Field=@nameof(Import.primo) HeaderText="primo" TextAlign="TextAlign.Right" Width="150"></GridColumn>
+                            <GridColumn Field=@nameof(Import.secondo) HeaderText="secondo" TextAlign="TextAlign.Right" Width="150"></GridColumn>
+                            <GridColumn Field=@nameof(Import.terzo) HeaderText="terzo" TextAlign="TextAlign.Right" Width="150"></GridColumn>
+                            <GridColumn Field=@nameof(Import.quarto) HeaderText="quarto" TextAlign="TextAlign.Right" Width="150"></GridColumn>
+                        </GridColumns>
+                    </SfGrid>
+                </ContentTemplate>
+            </TabItem>
+            <TabItem>
+                <ChildContent>
+                    <TabHeader Text="TXT ';'"></TabHeader>
+                </ChildContent>
+                <ContentTemplate>
+                    <h5>@file4</h5>
+                    <div class="actionBtn" style="margin: 12px 0;">
+                        <SfButton IconCss="e-icons icon-small icon-green e-ok" CssClass="e-small" Content="Check"></SfButton>
+                    </div>
+                    <SfGrid DataSource="@Imports4" AllowPaging="true" Locale="it-IT" AllowGrouping="true" Height="400" Width="700">
+                        <GridPageSettings PageSizes="true"></GridPageSettings>
+                        <GridGroupSettings ShowDropArea="true"></GridGroupSettings>
+                        <GridColumns>
+                            <GridColumn Field=@nameof(Import.primo) HeaderText="primo" TextAlign="TextAlign.Right" Width="150"></GridColumn>
+                            <GridColumn Field=@nameof(Import.secondo) HeaderText="secondo" TextAlign="TextAlign.Right" Width="150"></GridColumn>
+                            <GridColumn Field=@nameof(Import.terzo) HeaderText="terzo" TextAlign="TextAlign.Right" Width="150"></GridColumn>
+                            <GridColumn Field=@nameof(Import.quarto) HeaderText="quarto" TextAlign="TextAlign.Right" Width="150"></GridColumn>
+                        </GridColumns>
+                    </SfGrid>
+                </ContentTemplate>
+            </TabItem>
+            <TabItem>
+                <ChildContent>
+                    <TabHeader Text="Mine"></TabHeader>
+                </ChildContent>
+                <ContentTemplate>
+                    <h5>@file4</h5>
+                    <div class="actionBtn" style="margin: 12px 0;">
+                        <SfButton IconCss="e-icons icon-small icon-green e-ok" CssClass="e-small" Content="Check"></SfButton>
+                    </div>
+                    <SfGrid DataSource="@Imports5" AllowPaging="true" Locale="it-IT" AllowGrouping="true" Height="400" Width="700">
+                        <GridPageSettings PageSizes="true"></GridPageSettings>
+                        <GridGroupSettings ShowDropArea="true"></GridGroupSettings>
+                        <GridColumns>
+                            <GridColumn Field=@nameof(Import.primo) HeaderText="primo" TextAlign="TextAlign.Right" Width="150"></GridColumn>
+                            <GridColumn Field=@nameof(Import.secondo) HeaderText="secondo" TextAlign="TextAlign.Right" Width="150"></GridColumn>
+                            <GridColumn Field=@nameof(Import.terzo) HeaderText="terzo" TextAlign="TextAlign.Right" Width="150"></GridColumn>
+                            <GridColumn Field=@nameof(Import.quarto) HeaderText="quarto" TextAlign="TextAlign.Right" Width="150"></GridColumn>
+                        </GridColumns>
+                    </SfGrid>
+
+                    <div style="margin: 12px 0;">@myOutput</div>
+                </ContentTemplate>
+            </TabItem>
+        </TabItems>
+    </SfTab>
+</div>
+
+<SfDialog @ref="DialogRef" Width="250px" ShowCloseIcon="true" Visible="false">
+    <DialogTemplates>
+        <Header> Dialog </Header>
+        <Content> This is a Dialog with button and primary button </Content>
+    </DialogTemplates>
+    <DialogButtons>
+        <DialogButton Content="OK" IsPrimary="true" OnClick="@CloseDialog" />
+        <DialogButton Content="Cancel" OnClick="@CloseDialog" />
+    </DialogButtons>
+</SfDialog>
+
+<style>
+    @@font-face {
+        font-family: 'Toast_icons';
+        src: url(data:application/x-font-ttf;charset=utf-8;base64,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) format('truetype');
+        font-weight: normal;
+        font-style: normal;
+    }
+
+    .toast-icons {
+        font-family: 'Toast_icons' !important;
+        speak: none;
+        font-size: 55px;
+        font-style: normal;
+        font-weight: normal;
+        font-variant: normal;
+        text-transform: none;
+        line-height: 1;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+    }
+
+    #toast_type .e-toast-icon.e-icons {
+        height: auto;
+        font-size: 30px;
+    }
+
+    .toast-icons.e-success::before {
+        content: "\e701";
+    }
+
+    .default-tab .e-content .e-item {
+        padding: 10px;
+        text-align: justify;
+    }
+
+    @@font-face {
+        font-family: 'Socialicons';
+        src: url(data:application/x-font-ttf;charset=utf-8;base64,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) format('truetype');
+        font-weight: normal;
+        font-style: normal;
+    }
+
+    .default-tab .e-tab-icon {
+        font-family: 'Socialicons' !important;
+    }
+
+    .e-twitter:before {
+        content: '\a701';
+    }
+
+    .e-facebook:before {
+        content: '\a705';
+    }
+
+    .e-whatsapp:before {
+        content: '\a700';
+    }
+    #control-container {
+        padding: 0px !important;
+    }
+
+    .linear-parent {
+        text-align: center;
+        width: 75%;
+        margin: auto;
+    }
+
+    .linear-button {
+        text-align: center;
+        padding: 2%;
+    }
+
+    .progressbar-mode {
+        text-align: left;
+        font-family: Roboto-Regular;
+        font-size: 14px;
+        color: #3D3E3C;
+        margin-left: 10px;
+        margin-top: 5%;
+        padding: 0px;
+        top: 20px;
+    }
+
+    #reLoad {
+        border-radius: 4px;
+        text-transform: capitalize;
+    }
+
+    .e-btn-sb-icons {
+        font-family: 'button-icons';
+        line-height: 1;
+        font-style: normal;
+        font-weight: normal;
+        font-variant: normal;
+        text-transform: none;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+    }
+
+    .e-play-icon::before {
+        content: '\e701';
+    }
+
+    .e-pause-icon::before {
+        content: '\e705';
+    }
+
+    .e-open-icon::before {
+        content: '\e70d';
+    }
+
+    .e-add-icon::before {
+        content: '\e70a';
+    }
+</style>
+
+@code {
+    SfTextBox? TextboxObj;
+    private string? TextBoxValue;
+    private bool Visibility { get; set; } = true;
+    private bool ShowButton { get; set; } = false;
+    private string DialogText = "Greetings Nancy! When will you share me the source files of the project?";
+    private void DialogOpen(Object args)
+    {
+        this.ShowButton = false;
+    }
+    private void DialogClose(Object args)
+    {
+        this.ShowButton = true;
+    }
+    private void OnBtnclicked()
+    {
+        this.Visibility = true;
+    }
+    private void SendBtnclicked()
+    {
+        if (this.TextboxObj.Value != "")
+        {
+            DialogText = this.TextboxObj.Value;
+            TextBoxValue = "";
+            this.StateHasChanged();
+        }
+    }
+
+    SfDialog DialogRef;
+
+    private async Task OpenDialog()
+    {
+        await this.DialogRef.ShowAsync(true);
+    }
+
+    private async Task CloseDialog()
+    {
+        await this.DialogRef.HideAsync();
+    }
+
+    #region buttons
+    private string content = "Play";
+    private string iconCss = "e-btn-sb-icons e-play-icon";
+    #endregion
+
+    #region Switch test
+    private bool isUSB = true;
+    private bool ishotspot = false;
+    private bool isBluetooth = false;
+
+    private string uno = "on";
+    private string due = "off";
+
+    private void OnUSBChange(Syncfusion.Blazor.Buttons.ChangeEventArgs<bool> obj)
+    {
+        uno = "clicked";
+    }
+
+    private void OnHotspotChange(Syncfusion.Blazor.Buttons.ChangeEventArgs<bool> obj)
+    {
+        due = "clicked";
+    }
+    #endregion
+
+    #region Dati sessione utente loggato
+    string LoggedUser;
+    string[] arUser;
+
+    private string gIdUser;
+    private string gNameUser;
+    private string[] gRoleUser;
+    private string gCodFornUser;
+    private string gSuperUser;
+    private string gDivsUserStr;
+    private string[] gDivsUser;
+    private string[] gWhatReq;
+
+    private bool IsSuperAdmin = false;
+    private bool IsApprover = false;
+    private bool IsRequester = false;
+    #endregion
+
+    #region Notification
+    SfToast ToastObj;
+
+    private ToastModel Toast = new ToastModel { Title = "Success!", Content = "Your message has been sent successfully.", CssClass = "e-toast-success", Icon = "e-success toast-icons" };
+
+    private async Task ShowOnClick()
+    {
+        await this.ToastObj.Show(Toast);
+    }
+
+    private async Task HideOnClick()
+    {
+        await this.ToastObj.Hide("All");
+    }
+
+    private async Task onCreate()
+    {
+        await this.ToastObj.Show(Toast);
+    }
+    #endregion
+
+    #region Data picker test
+    public DateTime RdADateDal = new DateTime(DateTime.Now.Year, 1, 1);// DateTime.Now;
+    public DateTime MinDalDate = new DateTime(DateTime.Now.Year, 1, 1);
+
+    public DateTime RdADateAl = DateTime.Now;
+    public DateTime MinAlDate = new DateTime(DateTime.Now.Year, 1, 1);//DateTime.Now;
+
+    public DateTime? RdALDateDal;
+    public DateTime LMinDalDate = new DateTime(DateTime.Now.Year, 1, 1, 0, 0, 0);
+    public DateTime LMaxDalDate = DateTime.Now;
+    public DateTime? RdALDateAl;
+    public DateTime LMinAlDate = new DateTime(DateTime.Now.Year, 1, 1, 0, 0, 0);
+    public DateTime LMaxAlDate = DateTime.Now;
+
+    private void LDalChange(Syncfusion.Blazor.Calendars.ChangedEventArgs<DateTime?> args)
+    {
+        if (args.Value != null)
+        {
+            RdALDateDal = args.Value;
+        }
+        else
+        {
+            RdALDateDal = new DateTime(DateTime.Now.Year, 1, 1, 0, 0, 0);
+        }
+
+        StateHasChanged();
+    }
+
+    private void LAlChange(Syncfusion.Blazor.Calendars.ChangedEventArgs<DateTime?> args)
+    {
+        if (args.Value != null)
+        {
+            RdALDateAl = args.Value;
+        }
+        else
+        {
+            RdALDateAl = DateTime.Now;
+        }
+
+        StateHasChanged();
+    }
+
+    public void SetLMinAlDate()
+    {
+        LMinAlDate = (DateTime)RdALDateDal;
+    }
+    #endregion
+
+    private double NumericTextBox = 10000.52;
+
+    private double totalinvoices = 10000.52;
+    private double saldo = 10000.52;
+
+    public class Order
+    {
+        public int? OrderID { get; set; }
+        public string CustomerID { get; set; }
+        public DateTime? OrderDate { get; set; }
+        public double? Freight { get; set; }
+    }
+
+    public List<Order> Orders { get; set; }
+
+    public string file1 = "Test-1.csv";
+    public string file2 = "Test-2.csv";
+    public string file3 = "Test-3.csv";
+    public string file4 = "Test-4.txt";
+
+    public class Import
+    {
+        public int? primo { get; set; }
+        public int? secondo { get; set; }
+        public int? terzo { get; set; }
+        public int? quarto { get; set; }
+    }
+
+    public List<Import> Imports1 { get; set; }
+    public List<Import> Imports2 { get; set; }
+    public List<Import> Imports3 { get; set; }
+    public List<Import> Imports4 { get; set; }
+
+    public List<Import> Imports5 { get; set; }
+
+    public string myOutput = "";
+
+    protected override async Task OnInitializedAsync()
+    {
+        Orders = Enumerable.Range(1, 75).Select(x => new Order()
+        {
+            OrderID = 1000 + x,
+            CustomerID = (new string[] { "ALFKI", "ANANTR", "ANTON", "BLONP", "BOLID" })[new Random().Next(5)],
+            Freight = 2.1 * x,
+            OrderDate = DateTime.Now.AddDays(-x),
+        }).ToList();
+
+        // ProtectedBrowserStorageResult<string> result = await storage.GetAsync<string>("sessionLoggedUser");
+
+        // if (result.Success)
+        // {
+        //     // LoggedUser = result.Value;
+        //     // arUser = LoggedUser.Split("#");
+
+        //     // gIdUser = arUser[0];
+        //     // gNameUser = arUser[1];
+        //     // gRoleUser = arUser[2].Split(",");
+        //     // gCodFornUser = arUser[3];
+        //     // gSuperUser = arUser[4];
+
+        //     // if (gSuperUser != "0")
+        //     // {
+        //     //     IsSuperAdmin = true;
+        //     // }
+        //     // else
+        //     // {
+        //     //     IsSuperAdmin = false;
+        //     // }
+
+        //     // if (Array.BinarySearch(gRoleUser, "4") >= 0)
+        //     // {
+        //     //     IsApprover = true;
+        //     // }
+        //     // else
+        //     // {
+        //     //     IsApprover = false;
+        //     // }
+
+        //     // if (Array.BinarySearch(gRoleUser, "3") >= 0)
+        //     // {
+        //     //     IsRequester = true;
+        //     // }
+        //     // else
+        //     // {
+        //     //     IsRequester = false;
+        //     // }
+
+        //     // gDivsUserStr = arUser[5];
+        //     // gDivsUser = arUser[5].Split(",");
+
+        //     // gWhatReq = arUser[6].Split(",");
+        // }
+        // else
+        // {
+        //     // Kindly ask the user to exit your application
+        //     //NavigationManager.NavigateTo("/auth/login");
+        // }
+
+        //await this.ToastObj.Show(Toast);
+
+        //await ToastObj.Show(Toast);
+    }
+
+    // private async Task ReadFile(string fileToread, int wf)
+    // {
+    //     string[] frow;
+
+    //     var webRoot = Env.WebRootPath;
+    //     string tmppath;
+
+    //     Imports5 = new List<Import>();
+    //     myOutput = "";
+
+    //     await this.InvokeAsync(() => this.StateHasChanged());
+
+    //     tmppath = @webRoot + "\\DocsAreaDemo\\Temp\\DocAcq\\" + fileToread;
+
+    //     StreamReader sr = File.OpenText(tmppath);
+
+    //     string s = "";
+
+    //     while ((s = sr.ReadLine()) != null)
+    //     {
+    //         frow = s.Split("|");
+
+    //         Import rRow = new Import();
+
+    //         rRow.primo = Convert.ToInt32(frow[0]);
+    //         rRow.secondo = Convert.ToInt32(frow[1]);
+    //         rRow.terzo = Convert.ToInt32(frow[2]);
+    //         rRow.quarto = Convert.ToInt32(frow[3]);
+
+    //         Imports5.Add(rRow);
+
+    //         myOutput += s;
+    //     }
+
+    //     sr.Close();
+    // }
+
+    // private async void goCheckFile(string fileToImport, int wf)
+    // {
+    //     //HeaderWait = "Elaborazione in corso";
+    //     //BodyWait = "Controllo file Excel da importare";
+
+    //     //await OpenDialog();
+
+    //     //if (WaitDialogIsCompleted)
+    //     //{
+    //     //    await CheckExcel(fileToImport);
+    //     //}
+
+    //     //await CloseDialog();
+
+    //     //HeaderWait = "";
+    //     //BodyWait = "";
+
+    //     await CheckFile(fileToImport, wf);
+    // }
+
+    // private async Task CheckFile(string fileToImport, int wf)
+    // {
+    //     await this.InvokeAsync(() => this.StateHasChanged());
+
+    //     string FileToWork = "";
+    //     string FileWorked = "";
+
+    //     var webRoot = Env.WebRootPath;
+    //     string tmppath, sourcePath, destPath, newNameFile;
+
+    //     string dateToAdd;
+    //     int posExt, lenFileName;
+
+    //     posExt = fileToImport.LastIndexOf(".");
+    //     lenFileName = fileToImport.Length - posExt;
+
+    //     dateToAdd = "_" + DateTime.Now.Year.ToString() + DateTime.Now.Month.ToString() + DateTime.Now.Day.ToString() + "_" + DateTime.Now.Hour.ToString() + DateTime.Now.Minute.ToString() + DateTime.Now.Second.ToString();
+    //     newNameFile = fileToImport.Substring(0, posExt - 1) + dateToAdd + fileToImport.Substring(posExt, lenFileName);
+
+    //     tmppath = @webRoot + "\\DocsAreaDemo\\Temp\\DocAcq\\" + fileToImport;
+
+    //     FileToWork = fileToImport;
+    //     FileWorked = tmppath;
+
+    //     sourcePath = @webRoot + "\\DocsAreaDemo\\Temp\\DocAcq\\";
+    //     destPath = @webRoot + "\\DocsAreaDemo\\Worked\\DocAcq\\";
+
+    //     using (ExcelEngine excelEngine = new ExcelEngine())
+    //     {
+    //         //Instantiate the Excel application object
+    //         IApplication application = excelEngine.Excel;
+
+    //         //Set the default application version
+    //         application.DefaultVersion = ExcelVersion.Excel2013;
+
+    //         using (FileStream inputStream = new FileStream(tmppath, FileMode.Open))
+    //         {
+    //             switch (wf)
+    //             {
+    //                 case 1:
+    //                     IWorkbook workbook1 = application.Workbooks.Open(inputStream, ";");
+    //                     IWorksheet worksheet1 = workbook1.Worksheets[0];
+
+    //                     int lastRow1 = worksheet1.UsedRange.LastRow;
+
+    //                     Imports1 = new List<Import>();
+
+    //                     for (int iR = 1; iR <= lastRow1; iR++)
+    //                     {
+    //                         Import rRow = new Import();
+
+    //                         rRow.primo = Convert.ToInt32(worksheet1.Range[iR, 1].DisplayText);
+    //                         rRow.secondo = Convert.ToInt32(worksheet1.Range[iR, 2].DisplayText);
+    //                         rRow.terzo = Convert.ToInt32(worksheet1.Range[iR, 3].DisplayText);
+    //                         rRow.quarto = Convert.ToInt32(worksheet1.Range[iR, 4].DisplayText);
+
+    //                         Imports1.Add(rRow);
+    //                     }
+    //                     break;
+
+    //                 case 2:
+    //                     IWorkbook workbook2 = application.Workbooks.Open(inputStream, ",");
+    //                     IWorksheet worksheet2 = workbook2.Worksheets[0];
+
+    //                     int lastRow2 = worksheet2.UsedRange.LastRow;
+
+    //                     Imports2 = new List<Import>();
+
+    //                     for (int iR = 1; iR <= lastRow2; iR++)
+    //                     {
+    //                         Import rRow = new Import();
+
+    //                         rRow.primo = Convert.ToInt32(worksheet2.Range[iR, 1].DisplayText);
+    //                         rRow.secondo = Convert.ToInt32(worksheet2.Range[iR, 2].DisplayText);
+    //                         rRow.terzo = Convert.ToInt32(worksheet2.Range[iR, 3].DisplayText);
+    //                         rRow.quarto = Convert.ToInt32(worksheet2.Range[iR, 4].DisplayText);
+
+    //                         Imports2.Add(rRow);
+    //                     }
+    //                     break;
+
+    //                 case 3:
+    //                     IWorkbook workbook3 = application.Workbooks.Open(inputStream, "\t");
+    //                     IWorksheet worksheet3 = workbook3.Worksheets[0];
+
+    //                     int lastRow3 = worksheet3.UsedRange.LastRow;
+
+    //                     Imports3 = new List<Import>();
+
+    //                     for (int iR = 1; iR <= lastRow3; iR++)
+    //                     {
+    //                         Import rRow = new Import();
+
+    //                         rRow.primo = Convert.ToInt32(worksheet3.Range[iR, 1].DisplayText);
+    //                         rRow.secondo = Convert.ToInt32(worksheet3.Range[iR, 2].DisplayText);
+    //                         rRow.terzo = Convert.ToInt32(worksheet3.Range[iR, 3].DisplayText);
+    //                         rRow.quarto = Convert.ToInt32(worksheet3.Range[iR, 4].DisplayText);
+
+    //                         Imports3.Add(rRow);
+    //                     }
+    //                     break;
+
+    //                 case 4:
+    //                     IWorkbook workbook4 = application.Workbooks.Open(inputStream, "|");
+    //                     IWorksheet worksheet4 = workbook4.Worksheets[0];
+
+    //                     int lastRow4 = worksheet4.UsedRange.LastRow;
+
+    //                     Imports4 = new List<Import>();
+
+    //                     for (int iR = 1; iR <= lastRow4; iR++)
+    //                     {
+    //                         Import rRow = new Import();
+
+    //                         rRow.primo = Convert.ToInt32(worksheet4.Range[iR, 1].DisplayText);
+    //                         rRow.secondo = Convert.ToInt32(worksheet4.Range[iR, 2].DisplayText);
+    //                         rRow.terzo = Convert.ToInt32(worksheet4.Range[iR, 3].DisplayText);
+    //                         rRow.quarto = Convert.ToInt32(worksheet4.Range[iR, 4].DisplayText);
+
+    //                         Imports4.Add(rRow);
+    //                     }
+    //                     break;
+    //             }
+
+    //             inputStream.Close();
+    //         }
+    //     }
+    // }
+
+    // private async void TestRdA()
+    // {
+    //     //dMessageHeader = "Sending Mail";
+    //     //dMessageContent = "Please wait...";
+
+    //     //ActionDialogVisible = true;
+
+    //     ////await Task.Delay(3000);
+
+    //     //try
+    //     //{
+    //     //    using (MailMessage mail = new MailMessage())
+    //     //    {
+    //     //        mail.From = new MailAddress("GMVRequest@tdata.it");
+    //     //        mail.To.Add("dan.aqui@gmail.com");
+    //     //        mail.Subject = "Mail Test 4";
+    //     //        mail.Body = "Mail Test 4";
+    //     //        mail.IsBodyHtml = true;
+
+    //     //        using (SmtpClient smtp = new SmtpClient("mail.tdata.it"))
+    //     //        {
+    //     //            smtp.Credentials = new System.Net.NetworkCredential("GMVRequest@tdata.it", "gmvR3q!_tdata");
+
+    //     //            //smtp.EnableSsl = true;
+
+    //     //            //smtp.Send(mail);
+
+    //     //            await smtp.SendMailAsync(mail);
+
+    //     //            Message = "Mail Sent";
+
+    //     //            mail.Dispose();
+    //     //        }
+    //     //    }
+    //     //}
+    //     //catch (Exception ex)
+    //     //{
+    //     //    Message = ex.Message;
+    //     //}
+
+    //     //ActionDialogVisible = false;
+    // }
+
+    // ----------------------------------------------------------------------------------------------
+    public List<CheckBoxData> CheckedItem = new List<CheckBoxData> { };
+
+    public class CheckBoxData
+    {
+        public string Label;
+        public bool isChecked;
+    }
+
+    List<CheckBoxData> data = new List<CheckBoxData> {
+        new CheckBoxData { Label = "Debit Card", isChecked = true },
+        new CheckBoxData { Label = "Credit Card", isChecked = false },
+        new CheckBoxData { Label = "Net Banking", isChecked = false }
+    };
+
+    public void OnChange(Syncfusion.Blazor.Buttons.ChangeEventArgs<bool> args, string Label)
+    {
+        //Label
+    }
+
+    private void CheckAll()
+    {
+        foreach (var item in data)
+        {
+            item.isChecked = true;
+            if (!CheckedItem.Contains(item)) { CheckedItem.Add(item); }
+        }
+    }
+
+    private void UnCheckAll()
+    {
+        foreach (var item in CheckedItem)
+        {
+            item.isChecked = false;
+        }
+        CheckedItem.Clear();
+    }
+
+    #region Progress Bar
+    public RenderFragment AnnotationContent { get; set; }
+    public RenderFragment AnnotationContent1 { get; set; }
+
+    public string ColorTrack { get; set; } = null;
+
+    public SfProgressBar LinearInstance, CircularInstance, CircularInstance1;
+
+    public int Value { get; set; } = 100;
+
+    protected override void OnInitialized()
+    {
+        AnnotationContent =@<div id='point1' style='font-size:24px;font-weight:bold;color:#e91e63'><span>300%</span></div>;
+AnnotationContent1 =@<div id='point1' style='font-size:24px;font-weight:bold;color:#e91e63'><span>100%</span></div>;
+ColorTrack = "#969696";
+}
+
+private int progressValue { get; set; } = 0;
+private int MyValue { get; set; } = 0;
+
+private void startProgress()
+{
+//for (int i = 0; i < 1000; i++)
+//{
+//    this.progressValue = i;
+//}
+
+this.progressValue += 20;
+}
+
+private void KIProgress()
+{
+if ((this.MyValue + 13) < 100)
+this.MyValue += 13;
+else
+this.MyValue = 100;
+
+//style="font-size:24px;font-weight:bold;color:#e91e63"
+}
+
+public void TextHandler(TextRenderEventArgs args)
+{
+// args.Text = "..."; Here you can customize the text format.
+args.Color = "#e91e63";
+}
+#endregion
+}

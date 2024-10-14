@@ -1,7 +1,131 @@
 ﻿@page "/"
+@using Blazored.SessionStorage
+
+@inject NavigationManager Navigation
+@inject ISessionStorageService sessionStorage
 
 <PageTitle>Home</PageTitle>
 
-<h1>Hello, world!</h1>
+<h1>Benvenuto</h1>
 
-Welcome to your new app.
+<div class="row mb-5">
+    <div class="col-md-4">
+        <h5>Value Read from session storage</h5>
+        @NameFromSessionStorage
+    </div>
+
+    <div class="col-md-4">
+        <h5>Items in session storage</h5>
+        @ItemsInSessionStorage
+    </div>
+
+    <div class="col-md-4">
+        <h5>Item exist in session storage</h5>@(ItemExist)
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-4">
+        <h5>String Read from session storage</h5>
+        @StringFromSessionStorage
+    </div>
+</div>
+        <div class="nav-item px-3">
+            <NavLink class="nav-link" href="patientlist/0">
+                <span class="bi bi-list-nested-nav-menu" aria-hidden="true"></span> Pazienti
+            </NavLink>
+        </div>
+
+@code{
+    #region logging
+    string? LoggedUser;
+    string[]? arUser;
+
+    private string? sessionLoggedUser { get; set; }
+    #endregion
+
+    #region sample variables
+	string NameFromSessionStorage { get; set; }
+	string StringFromSessionStorage { get; set; }
+	int ItemsInSessionStorage { get; set; }
+	string Name { get; set; }
+	bool ItemExist { get; set; }
+    #endregion
+
+	protected override async Task OnInitializedAsync()
+	{
+        sessionLoggedUser = await sessionStorage.GetItemAsStringAsync("sessionLoggedUser");
+
+        if (string.IsNullOrEmpty(sessionLoggedUser))
+        {
+            Navigation.NavigateTo("/auth/login");
+        }
+
+        await sessionStorage.SetItemAsync("name", "John Smith");
+
+        //var name = await sessionStorage.GetItemAsync<string>("name");
+
+        await GetNameFromSessionStorage();
+        await GetStringFromSessionStorage();
+        await GetSessionStorageLength();
+	}
+
+    async Task GetNameFromSessionStorage()
+    {
+        try
+        {
+            NameFromSessionStorage = await sessionStorage.GetItemAsync<string>("name");
+
+            if (string.IsNullOrEmpty(NameFromSessionStorage))
+            {
+                NameFromSessionStorage = "Nothing Saved";
+            }
+        }
+        catch (Exception)
+        {
+            Console.WriteLine("error reading 'name'");
+        }
+    }
+
+    async Task GetStringFromSessionStorage()
+    {
+        StringFromSessionStorage = await sessionStorage.GetItemAsStringAsync("name");
+
+        if (string.IsNullOrEmpty(StringFromSessionStorage))
+        {
+            StringFromSessionStorage = "Nothing Saved";
+        }
+    }
+
+    async Task RemoveName()
+    {
+        await sessionStorage.RemoveItemAsync("name");
+        await GetNameFromSessionStorage();
+        await GetStringFromSessionStorage();
+        await GetSessionStorageLength();
+    }
+
+    async Task ClearSessionStorage()
+    {
+        Console.WriteLine("Calling Clear...");
+
+        await sessionStorage.ClearAsync();
+
+        Console.WriteLine("Getting name from session storage...");
+
+        await GetNameFromSessionStorage();
+
+        await GetStringFromSessionStorage();
+        
+        Console.WriteLine("Calling Get Length...");
+
+        await GetSessionStorageLength();
+    }
+
+    async Task GetSessionStorageLength()
+    {
+        Console.WriteLine(await sessionStorage.LengthAsync());
+        ItemsInSessionStorage = await sessionStorage.LengthAsync();
+        ItemExist = await sessionStorage.ContainKeyAsync("name");
+    }
+}

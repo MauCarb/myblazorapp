@@ -1,4 +1,8 @@
-﻿<div class="top-row ps-3 navbar navbar-dark">
+﻿@using Blazored.SessionStorage
+
+@inject ISessionStorageService sessionStorage
+
+<div class="top-row ps-3 navbar navbar-dark">
     <div class="container-fluid">
         <a class="navbar-brand" href="">Static Web Apps</a>
         <button title="Navigation menu" class="navbar-toggler" @onclick="ToggleNavMenu">
@@ -14,20 +18,63 @@
                 <span class="bi bi-house-door-fill-nav-menu" aria-hidden="true"></span> Home
             </NavLink>
         </div>
-        <div class="nav-item px-3">
+        <div class="nav-item px-3" style="display:@ShowForSU">
             <NavLink class="nav-link" href="counter">
                 <span class="bi bi-plus-square-fill-nav-menu" aria-hidden="true"></span> Counter
             </NavLink>
         </div>
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="fetchdata">
+        <div class="nav-item px-3" style="display:@ShowForSU">
+            <NavLink class="nav-link" href="weather">
                 <span class="bi bi-list-nested-nav-menu" aria-hidden="true"></span> Weather
+            </NavLink>
+        </div>
+        <div class="nav-item px-3" style="display:@ShowForSU">
+            <NavLink class="nav-link" href="clienti">
+                <span class="bi bi-list-nested-nav-menu" aria-hidden="true"></span> Clienti
+            </NavLink>
+        </div>
+        <div class="nav-item px-3" style="display:@ShowForSU">
+            <NavLink class="nav-link" href="pazienti">
+                <span class="bi bi-list-nested-nav-menu" aria-hidden="true"></span> Pazienti
+            </NavLink>
+        </div>
+        <div class="nav-item px-3">
+            <NavLink class="nav-link" href="patientlist/0">
+                <span class="bi bi-list-nested-nav-menu" aria-hidden="true"></span> Pazienti
+            </NavLink>
+        </div>
+        <div class="nav-item px-3" style="display:@ShowForSU">
+            <NavLink class="nav-link" href="admin/demosync">
+                <span class="bi bi-list-nested-nav-menu" aria-hidden="true"></span> Demo page
+            </NavLink>
+        </div>
+
+        <div class="nav-item px-3" style="display:@ShowForSU">
+            <NavLink class="nav-link" href="admin/stuff">
+                <span class="bi bi-list-nested-nav-menu" aria-hidden="true"></span> Stuff
             </NavLink>
         </div>
     </nav>
 </div>
 
 @code {
+    #region logging
+    string? LoggedUser;
+    string[]? arUser;
+    private string? SessionID;
+
+    private string? gIdUser;
+    private string? gFName;
+    private string? gLName;
+    private string? gSuperUser;
+
+    //private string[] gRoleUser;
+
+    private string? sessionLoggedUser { get; set; }
+    #endregion
+
+    private string ShowForSU = "none";
+
     private bool collapseNavMenu = true;
 
     private string? NavMenuCssClass => collapseNavMenu ? "collapse" : null;
@@ -35,5 +82,31 @@
     private void ToggleNavMenu()
     {
         collapseNavMenu = !collapseNavMenu;
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        sessionLoggedUser = await sessionStorage.GetItemAsStringAsync("sessionLoggedUser");
+
+        if (!string.IsNullOrEmpty(sessionLoggedUser))
+        {
+            LoggedUser = sessionLoggedUser.Substring(1, sessionLoggedUser.Length - 2);
+
+            arUser = LoggedUser.Split(",");
+
+            gIdUser = arUser[0];
+            gFName = arUser[1];
+            gLName = arUser[2];
+            gSuperUser = arUser[3];
+
+            SessionID = arUser[4];
+
+            // gRoleUser = arUser[n].Split(",");
+
+            if (gSuperUser == "1")
+            {
+                ShowForSU = "";
+            }
+        }
     }
 }

@@ -1,0 +1,183 @@
+﻿@page "/auth/login"
+@using Blazored.SessionStorage
+@using BlazorApp.Shared
+@using System.Net
+
+@inject LoginService LoginService
+
+@inject NavigationManager Navigation
+@inject ISessionStorageService sessionStorage
+
+@if (ShowLogin)
+{
+    <div class="col-lg-10 col-xl-9 card flex-row mx-auto px-0">
+        <div class="img-left d-none d-md-flex"></div>
+
+        <div class="card-body">
+            <form class="form-box px-3" @onsubmit="() => CheckUser()">
+                <div class="form-input">
+                    <span><i class="oi oi-account-login"></i></span>
+                    <input type="text" name="" placeholder="Username" tabindex="10" required @bind-value="@usr" />
+                </div>
+
+                <div class="form-input">
+                    <span><i class="oi oi-key"></i></span>
+                    <input type="password" name="" placeholder="Password" required @bind-value="@pwd" />
+                </div>
+
+                <div class="mb-3">
+                    <button type="submit" class="btn btn-block text-uppercase">Login</button>
+                </div>
+
+                <hr />
+
+                <table cellpadding="0" cellspacing="0" style="margin:0 auto; width:350px; margin-bottom:-20px;">
+                    <tr>
+                        <td style="font-size: 14px; color: #ff0000; height: 28px; vertical-align: top;">@alertMsg</td>
+                    </tr>
+                    <tr>
+                        <td style="text-align:center; font-size:16px; color:#304e67;">Powered by Phoenix</td>
+                    </tr>
+                </table>
+
+                @*<p><a href="">Go to index</a></p>*@
+
+            </form>
+        </div>
+    </div>
+}
+else
+{
+    <div class="col-lg-10 col-xl-9 card flex-row mx-auto px-0">
+        <div class="img-left d-none d-md-flex"></div>
+
+        <div class="card-body">
+            <div class="form-input" style="min-height:45px;">
+                &nbsp;
+            </div>
+
+            <div class="form-input" style="min-height:85px; text-align:center;">
+                App in aggiornamento
+            </div>
+
+            <div class="mb-3" style="min-height:45px;">
+                &nbsp;
+            </div>
+
+            <hr />
+
+            <table cellpadding="0" cellspacing="0" style="margin:0 auto; width:350px; margin-bottom:-20px;">
+                <tr>
+                    <td style="font-size: 14px; color: #ff0000; height: 28px; vertical-align: top;">@alertMsg</td>
+                </tr>
+                <tr>
+                    <td style="text-align:center; font-size:16px; color:#304e67;">Powered by Phoenix</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+}
+
+@code {
+    #region logging
+    private bool ShowLogin = false;
+
+    string usr = "";
+    string pwd = "";
+
+    // string? LoggedUser { get; set; }
+    string[]? arUser;
+
+    string alertMsg = "";
+
+    private string? sessionLoggedUser { get; set; }
+    private string SessionID;
+    #endregion
+
+    #region sample variables
+    string NameFromSessionStorage { get; set; }
+    string StringFromSessionStorage { get; set; }
+    int ItemsInSessionStorage { get; set; }
+    string Name { get; set; }
+    bool ItemExist { get; set; }
+    #endregion
+
+    protected async Task CheckUser()
+    {
+        if (usr != "" && pwd != "")
+        {
+            var cred = usr + "|" + pwd;
+
+            try
+            {
+                var LoggedUser = await LoginService.AuthUser1(cred);
+
+                //LoggedUser = await LoginService.AuthUser(usr, pwd);
+
+                if (!string.IsNullOrEmpty(LoggedUser))
+                {
+                    arUser = LoggedUser.Split(",");
+
+                    SessionID = Guid.NewGuid().ToString();                                                      // da usare per creare records di tabella temporanei
+
+                    // await UtentiService.ClearTempFilterSupportForLogOut(Convert.ToDouble(arUser[0]));       // cancella tutti i filtri inseriti per l'utente
+
+                    await sessionStorage.SetItemAsync("sessionLoggedUser", LoggedUser + "," + SessionID);      
+
+                    Navigation.NavigateTo("/");
+                }
+                else
+                {
+                    alertMsg = "Username e/o password errati";
+                }
+            }
+            catch (HttpRequestException ex)
+            {
+                if (ex.Message.Contains(HttpStatusCode.Unauthorized.ToString()))
+                {
+                    alertMsg = "Login Error";
+                }
+            }
+        }
+        else
+        {
+            alertMsg = "Inserire username e/o password";
+        }
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        sessionLoggedUser = await sessionStorage.GetItemAsStringAsync("sessionLoggedUser");
+
+        if (string.IsNullOrEmpty(sessionLoggedUser))
+        {
+            ShowLogin = true;
+        }
+        else
+        {
+            Navigation.NavigateTo("/");
+        }
+    }
+
+    // protected override async Task OnAfterRenderAsync(bool firstRender)
+    // {
+    //     // var result = await storage.GetAsync<string>("sessionLoggedUser");
+    //     string oldValue = sessionLoggedUser;
+
+    //     // sessionLoggedUser = result.Success ? result.Value : "";
+
+    //     // if (sessionLoggedUser != oldValue)
+    //     // {
+    //     //     if (sessionLoggedUser == null)
+    //     //     {
+    //     //         alertMsg = "Username e/o password errati";
+    //     //     }
+    //     //     else
+    //     //     {
+    //     //         StateHasChanged();
+
+    //     //         navigationManager.NavigateTo("home");
+    //     //     }
+    //     // }
+    // }
+}

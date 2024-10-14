@@ -1,0 +1,82 @@
+﻿@page "/pazienti"
+@using Blazored.SessionStorage
+
+@using BlazorApp.Shared
+
+@inject NavigationManager Navigation
+@inject ISessionStorageService sessionStorage
+
+@inject HttpClient Http
+
+@inject PatientService PatientService
+@inject NavigationManager Navigation
+
+
+<h3>Patients</h3>
+
+@if (patients == null)
+{
+    <p><em>Caricamento...</em></p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>IdPatient</th>
+                <th>LName</th>
+                <th>FName</th>
+                <th>Cod</th>
+                <th>Phone</th>
+                <th>Mobile</th>
+                <th>Address</th>
+                <th>City</th>
+                <th>ZipCode</th>
+                <th>fPrivacy</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var pat in patients)
+            {
+                <tr>
+                    <td>@pat.IdPatient</td>
+                    <td>@pat.LName</td>
+                    <td>@pat.FName</td>
+                    <td>@pat.Cod</td>
+                    <td>@pat.Phone</td>
+                    <td>@pat.Mobile</td>
+                    <td>@pat.Address</td>
+                    <td>@pat.City</td>
+                    <td>@pat.ZipCode</td>
+                    <td>@pat.fPrivacy</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+
+@code {
+    #region logging
+    string? LoggedUser;
+    string[]? arUser;
+    private string? sessionLoggedUser { get; set; }
+    #endregion
+
+    private List<Patient>? patients;
+
+    protected override async Task OnInitializedAsync()
+    {
+        sessionLoggedUser = await sessionStorage.GetItemAsStringAsync("sessionLoggedUser");
+
+        if (string.IsNullOrEmpty(sessionLoggedUser))
+        {
+            Navigation.NavigateTo("/auth/login");
+        }
+
+        
+        string p = "||1970-05-01|||";
+
+        patients = await PatientService.PatList(p);
+    }
+}
