@@ -8,6 +8,7 @@
 
 <h1>Benvenuto</h1>
 
+@* 
 <div class="row mb-5">
     <div class="col-md-4">
         <h5>Value Read from session storage</h5>
@@ -30,11 +31,7 @@
         @StringFromSessionStorage
     </div>
 </div>
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="patientlist/0">
-                <span class="bi bi-list-nested-nav-menu" aria-hidden="true"></span> Pazienti
-            </NavLink>
-        </div>
+ *@
 
 @code{
     #region logging
@@ -61,13 +58,13 @@
             Navigation.NavigateTo("/auth/login");
         }
 
-        await sessionStorage.SetItemAsync("name", "John Smith");
+        // await sessionStorage.SetItemAsync("name", "John Smith");
 
         //var name = await sessionStorage.GetItemAsync<string>("name");
 
-        await GetNameFromSessionStorage();
-        await GetStringFromSessionStorage();
-        await GetSessionStorageLength();
+        // await GetNameFromSessionStorage();
+        // await GetStringFromSessionStorage();
+        // await GetSessionStorageLength();
 	}
 
     async Task GetNameFromSessionStorage()

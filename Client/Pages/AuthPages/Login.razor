@@ -10,11 +10,11 @@
 
 @if (ShowLogin)
 {
-    <div class="col-lg-10 col-xl-9 card flex-row mx-auto px-0">
-        <div class="img-left d-none d-md-flex"></div>
+    <div class="col-sm-10 col-md-10 col-lg-10 col-xl-8 card flex-row mx-auto px-0">
+        <div class="img-left d-sm-flex d-md-flex d-lg-flex"></div>
 
         <div class="card-body">
-            <form class="form-box px-3" @onsubmit="() => CheckUser()">
+            <form class="form-box px-5" @onsubmit="() => CheckUser()">
                 <div class="form-input">
                     <span><i class="oi oi-account-login"></i></span>
                     <input type="text" name="" placeholder="Username" tabindex="10" required @bind-value="@usr" />
@@ -48,8 +48,8 @@
 }
 else
 {
-    <div class="col-lg-10 col-xl-9 card flex-row mx-auto px-0">
-        <div class="img-left d-none d-md-flex"></div>
+    <div class="col-sm-10 col-md-10 col-lg-10 col-xl-8 card flex-row mx-auto px-0">
+        <div class="img-left d-sm-flex d-md-flex d-lg-flex"></div>
 
         <div class="card-body">
             <div class="form-input" style="min-height:45px;">
