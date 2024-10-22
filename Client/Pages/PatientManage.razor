@@ -435,7 +435,7 @@
 
     private Visit Visita = new Visit();
 
-    private List<Coppia> ListaVisite;
+    private List<CoppiaDecDat> ListaVisite;
     private int VisitaCorrente = -1;
     #endregion
 
@@ -642,9 +642,9 @@
 
                     VisitaCorrente = 0;
 
-                    DataVisita = ListaVisite[0].Val;
+                    DataVisita = ListaVisite[0].Val.ToString("dd/MM/yyyy");
 
-                    LoadVisit(Decimal.Parse(ListaVisite[0].ID));
+                    LoadVisit(ListaVisite[0].ID);
                 }
                 else
                 {
@@ -866,9 +866,9 @@
                 NextVisitDisabled = false;
                 LastVisitDisabled = false;
 
-                DataVisita = ListaVisite[VisitaCorrente].Val;
+                DataVisita = ListaVisite[VisitaCorrente].Val.ToString("dd/MM/yyyy");
 
-                LoadVisit(Decimal.Parse(ListaVisite[VisitaCorrente].ID));
+                LoadVisit(ListaVisite[VisitaCorrente].ID);
                 break;
 
             case 1:
@@ -886,9 +886,9 @@
                     }
                 }
 
-                DataVisita = ListaVisite[VisitaCorrente].Val;
+                DataVisita = ListaVisite[VisitaCorrente].Val.ToString("dd/MM/yyyy");
 
-                LoadVisit(Decimal.Parse(ListaVisite[VisitaCorrente].ID));
+                LoadVisit(ListaVisite[VisitaCorrente].ID);
                 break;
 
             case 2:
@@ -905,9 +905,9 @@
                         LastVisitDisabled = true;
                     }
                 }
-                DataVisita = ListaVisite[VisitaCorrente].Val;
+                DataVisita = ListaVisite[VisitaCorrente].Val.ToString("dd/MM/yyyy");
 
-                LoadVisit(Decimal.Parse(ListaVisite[VisitaCorrente].ID));
+                LoadVisit(ListaVisite[VisitaCorrente].ID);
                 break;
 
             case 3:
@@ -919,9 +919,9 @@
                 NextVisitDisabled = true;
                 LastVisitDisabled = true;
 
-                DataVisita = ListaVisite[VisitaCorrente].Val;
+                DataVisita = ListaVisite[VisitaCorrente].Val.ToString("dd/MM/yyyy");
 
-                LoadVisit(Decimal.Parse(ListaVisite[VisitaCorrente].ID));
+                LoadVisit(ListaVisite[VisitaCorrente].ID);
                 break;
         }
 
@@ -988,11 +988,11 @@
 
             VisitaCorrente = 0;
 
-            DataVisita = ListaVisite[0].Val;
-
             // Visita = await VisitService.GetVisit(Decimal.Parse(ListaVisite[0].ID));
 
-            LoadVisit(Decimal.Parse(ListaVisite[VisitaCorrente].ID));
+            DataVisita = ListaVisite[0].Val.ToString("dd/MM/yyyy");
+
+            LoadVisit(ListaVisite[VisitaCorrente].ID);
         }
 
         AddVisitDisabled = false;
