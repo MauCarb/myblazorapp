@@ -15,6 +15,6 @@ public class VisusFilterService
 
     public async Task<List<FiltroMisure>> VisusList(string p)
     {
-        return await _httpClient.GetFromJsonAsync<List<FiltroMisure>>($"https://https://ophthalapi02-dcafg8d7hhekfkb0.italynorth-01.azurewebsites.net/api/filtervisus/{p}");
+        return await _httpClient.GetFromJsonAsync<List<FiltroMisure>>($"https://ophthalapi02-dcafg8d7hhekfkb0.italynorth-01.azurewebsites.net/api/filtervisus/{p}");
     }
 }
