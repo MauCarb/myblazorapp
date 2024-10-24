@@ -1,0 +1,295 @@
+﻿@page "/visuslist/{d:decimal}"
+@using Blazored.SessionStorage
+
+@using BlazorApp.Shared
+
+@inject NavigationManager Navigation
+@inject ISessionStorageService sessionStorage
+
+@inject HttpClient Http
+
+@inject PatientService PatientService
+@inject VisusFilterService VisusFilterService
+
+<h5>Visus</h5>
+
+<div class="container-fluid form-filter" style="padding: 4px 10px 14px 10px;">
+    <div class="row">
+        <div class="col-sm-3">
+            <SfTextBox ID="lname" @bind-Value="@LName" Placeholder="Cognome" FloatLabelType="@FloatLabelType.Auto"></SfTextBox>
+        </div>
+
+        <div class="col-sm-2">
+            <SfTextBox ID="fname" @bind-Value="@FName" Placeholder="Nome" FloatLabelType="@FloatLabelType.Auto"></SfTextBox>
+        </div>
+
+        <div class="col-sm-1">
+            <SfButton IconCss="e-icons e-search icon-slategrey" CssClass="e-flat btn-light" Content="Cerca" style="margin-top:24px;" OnClick="() => Search()"></SfButton>
+        </div>
+
+        <div class="col-sm-1">
+            <SfButton IconCss="e-icons e-repeat icon-green" CssClass="e-flat btn-light" Content="Ripristina" style="margin-top:24px;" OnClick="() => Reset()"></SfButton>
+        </div>
+    </div>
+</div>
+
+<br />
+
+<div id="target">
+    <SfGrid ID="VisusGrid" @ref="RefVisusGrid" DataSource="@misure" AllowPaging="true" Width="auto" RowHeight="20" AllowExcelExport="true" Locale="it-IT">
+        <GridPageSettings PageCount="PAGE_COUNT" PageSize="DEFAULT_PAGE_SIZE" PageSizes="PageSizes"></GridPageSettings>
+        <GridColumns>
+            <GridColumn HeaderText="Dett" TextAlign="TextAlign.Center" Width="60">
+                <Template>
+                    @{
+                        var patInfo = (context as FiltroMisure);
+                        var idp = patInfo.IdPatient;
+                        var idm = patInfo.IdMisura;
+
+                        if (idm != 0)
+                        {
+                            <SfButton IconCss="e-icons e-eye icon-darkcyan" CssClass="e-small e-flat btn-white" Content="" OnClick="() => GoToVisus(idp, idm)"></SfButton>
+                        }
+
+                    }
+                </Template>
+            </GridColumn>
+            <GridColumn Field=@nameof(FiltroMisure.LName) HeaderText="Nome" Width="100"></GridColumn>
+            <GridColumn Field=@nameof(FiltroMisure.FName) HeaderText="Cognome" Width="100"></GridColumn>
+            <GridColumn Field=@nameof(FiltroMisure.CodFisc) HeaderText="Cod. Fiscale" Width="100"></GridColumn>
+            <GridColumn Field=@nameof(FiltroMisure.Mobile) HeaderText="Mobile" Width="100"></GridColumn>
+            <GridColumn Field=@nameof(FiltroMisure.UltimaData) HeaderText="Ultimo controllo" Format="d" Type="ColumnType.Date" Width="100"></GridColumn>
+            <GridColumn HeaderText="" TextAlign="TextAlign.Center" Width="80">
+                <Template>
+                    @{
+                        var patInfo = (context as FiltroMisure);
+                        var idp = patInfo.IdPatient;
+
+                        <SfButton IconCss="e-icons e-circle-add icon-red" CssClass="e-small e-flat btn-white" Content="Nuovo controllo" OnClick="() => AddVisus(idp)"></SfButton>
+                    }
+                </Template>
+            </GridColumn>
+        </GridColumns>
+    </SfGrid>
+
+    <br />
+    <br />
+
+    <!-- Dialog for alert -->
+    <SfDialog @bind-Visible="AlertVisible" Width="400px" IsModal="true" ShowCloseIcon="true">
+        <DialogTemplates>
+            <Header> Attenzione </Header>
+            <Content> @AlertText </Content>
+        </DialogTemplates>
+        <DialogButtons>
+            <DialogButton Content="OK" IsPrimary="true" OnClick="@CloseDialog" />
+        </DialogButtons>
+    </SfDialog>
+</div>
+
+@code {
+    [Parameter]
+    public decimal d { get; set; }
+
+    public const int PAGE_COUNT = 10;
+    public const int DEFAULT_PAGE_SIZE = 10;
+    public string[] PageSizes = new string[] { "Tutti", "5", "10", "20", "50" };
+
+    #region logging
+    string? LoggedUser;
+    string[]? arUser;
+
+    private string? gIdUser;
+    private string? gFName;
+    private string? gLName;
+    private string? gSuperUser;
+
+    private string? SessionID;
+
+    //private string[] gRoleUser;
+
+
+    private string sessionLoggedUser { get; set; }
+    #endregion
+
+    #region alert dialog
+    private bool AlertVisible { get; set; } = false;
+
+    private string AlertText { get; set; } = "";
+
+    private void CloseDialog()
+    {
+        AlertVisible = false;
+    }
+    #endregion
+
+    private List<Patient>? patients;    // to delete
+
+    private List<FiltroMisure>? misure;
+
+    private SfGrid<FiltroMisure> RefVisusGrid;
+
+    #region binding variables
+    private int LYear;
+    private bool fLastDate = false;
+    private string switchLabel = "Off";
+
+    public DateTime BirthDate;
+
+    FilterSupport MyFilter = new FilterSupport { };
+
+    public string FName = "";
+    public string LName = "";
+    #endregion
+
+    #region funzioni di supporto
+    public static int GetDaysInMonth(int year, int month)
+    {
+        // Verifica che il mese sia compreso tra 1 e 12
+        if (month < 1 || month > 12)
+        {
+            throw new ArgumentOutOfRangeException(nameof(month), "Il mese deve essere compreso tra 1 e 12.");
+        }
+
+        // Anni bisestili: divisibili per 4, ma non per 100, a meno che siano divisibili per 400
+        bool isLeapYear = year % 4 == 0 && (year % 100 != 0 || year % 400 == 0);
+
+        // Numero di giorni per ogni mese
+        int[] daysInMonth = { 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
+
+        // Aggiungi un giorno a febbraio se è un anno bisestile
+        if (isLeapYear && month == 2)
+        {
+            return daysInMonth[month - 1] + 1;
+        }
+
+        return daysInMonth[month - 1];
+    }
+
+    private Boolean CheckDate(string myDate)
+    {
+        Boolean result = false;
+        string myYear, myMonth, myDay;
+        int GiorniMese;
+
+        if (myDate.Length == 8)
+        {
+            myYear = myDate.Substring(4, 4);
+            myMonth = myDate.Substring(2, 2);
+            myDay = myDate.Substring(0, 2);
+
+            if (int.Parse(myYear) > 1900)
+            {
+                if ((int.Parse(myMonth) >= 1) && (int.Parse(myMonth) <= 12))
+                {
+                    GiorniMese = (GetDaysInMonth(int.Parse(myYear), int.Parse(myMonth)));
+
+                    if ((int.Parse(myDay) >= 1) && (int.Parse(myDay) <= GiorniMese))
+                    {
+                        result = true;
+                    }
+                    else
+                    {
+                        // giorno non compreso tra 1 e numero giorni previsto per il mese esci con false
+                        AlertText = "Giorno data di nascita non valido";
+                        AlertVisible = true;
+                    }
+                }
+                else
+                {
+                    // mese non compreso tra 1 e 12 esci con false
+                    AlertText = "Mese data di nascita non valido";
+                    AlertVisible = true;
+                }
+            }
+            else
+            {
+                // anno inferiore al 190 esci con false
+                AlertText = "Anno data di nascita non valido";
+                AlertVisible = true;
+            }
+        }
+        else
+        {
+            // anno inferiore al 190 esci con false
+            AlertText = "Data di nascita non valida";
+            AlertVisible = true;
+        }
+
+        return result;
+    }
+    #endregion region
+
+    protected override async Task OnInitializedAsync()
+    {
+        sessionLoggedUser = await sessionStorage.GetItemAsStringAsync("sessionLoggedUser");
+
+        if (string.IsNullOrEmpty(sessionLoggedUser))
+        {
+            Navigation.NavigateTo("/auth/login");
+        }
+        else
+        {
+            LoggedUser = sessionLoggedUser.Substring(1, sessionLoggedUser.Length - 2);
+
+            arUser = LoggedUser.Split(",");
+
+            gIdUser = arUser[0];
+            gFName = arUser[1];
+            gLName = arUser[2];
+            gSuperUser = arUser[3];
+
+            SessionID = arUser[4];
+
+            // gRoleUser = arUser[n].Split(",");
+        }
+    }
+
+    private async void Search()
+    {
+        bool AllowSearch = false;
+        double s_idUser;
+
+        s_idUser = Convert.ToDouble(gIdUser);
+
+        AllowSearch = (!string.IsNullOrEmpty(LName) || !string.IsNullOrEmpty(FName)) ? true : false;
+
+        if (AllowSearch)
+        {
+            try
+            {
+                string pp = FName + "|" + LName;
+
+                misure = await VisusFilterService.VisusList(pp);
+
+                StateHasChanged();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+        }
+    }
+
+    public async void Reset()
+    {
+        await Task.Delay(10);
+
+        FName = "";
+        LName = "";
+
+        misure = new List<FiltroMisure>();
+
+        StateHasChanged();
+    }
+
+    public void GoToVisus(decimal idp, decimal idm)
+    {
+        Navigation.NavigateTo("/visusmanage/" + idp.ToString() + "/" + idm.ToString());
+    }
+
+    public void AddVisus(decimal idp)
+    {
+        Navigation.NavigateTo("/visusmanage/" + idp.ToString() + "/0");
+    }
+}

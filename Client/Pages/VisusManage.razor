@@ -1,0 +1,929 @@
+﻿@page "/visusmanage/{idp:decimal}/{idm:decimal}"
+@using Blazored.SessionStorage
+@using Newtonsoft.Json
+
+@using BlazorApp.Shared
+
+@inject NavigationManager Navigation
+@inject ISessionStorageService sessionStorage
+
+@inject HttpClient Http
+
+@inject PatientMngService PatientMngService
+@inject ListVisitsService ListVisitsService
+@inject VisitService VisitService
+
+@inject ListVisusService ListVisusService
+@inject VisusService VisusService
+
+<h5>
+    @TitlePage
+
+    <span style="display: @fShowLessBtn;">
+        <SfButton IconCss="e-icons e-chevron-up" CssClass="e-flat btn-white" Content="" OnClick='() => SwapView("less")'></SfButton>
+    </span>
+    <span style="display: @fShowMoreBtn;">
+        <SfButton IconCss="e-icons e-chevron-down" CssClass="e-flat btn-white" Content="" OnClick='() => SwapView("more")'></SfButton>
+    </span>
+
+    <span style="float: right;">
+        <SfButton IconCss="e-icons e-chevron-left icon-green" CssClass="e-flat btn-light" Content="Visus" OnClick="() => GoToVisusList(0)"></SfButton>
+    </span>
+</h5>
+
+<!-- Sezione paziente -->
+<div class="container-fluid bg-light" style="padding: 0 10px 10px 10px;">
+    <div class="row">
+        <div class="col-sm-1">
+            <SfTextBox ID="cod" @bind-Value="@Cod" Placeholder="Cod" FloatLabelType="@FloatLabelType.Auto" Readonly="true"></SfTextBox>
+        </div>
+
+        <div class="col-sm-4">
+            <SfTextBox ID="lname" @bind-Value="@LName" Placeholder="Cognome" FloatLabelType="@FloatLabelType.Auto" Readonly="true"></SfTextBox>
+        </div>
+
+        <div class="col-sm-3">
+            <SfTextBox ID="fname" @bind-Value="@FName" Placeholder="Nome" FloatLabelType="@FloatLabelType.Auto" Readonly="true"></SfTextBox>
+        </div>
+
+        <div class="col-sm-1">
+            <SfMaskedTextBox ID="datanascita" @bind-Value="@BirthDate" Mask="00/00/0000" Placeholder="Data di nascita" FloatLabelType="@FloatLabelType.Auto" Readonly="true"></SfMaskedTextBox>
+        </div>
+
+        <div class="col-sm-2">
+            <SfTextBox ID="codfisc" @bind-Value="@CodFisc" Placeholder="Cod Fiscale" FloatLabelType="@FloatLabelType.Auto" Readonly="true"></SfTextBox>
+        </div>
+    </div>
+
+    @if (ShowMore)
+    {
+        <div class="row" style="margin-top: 10px;">
+            <div class="col-sm-4">
+                <SfTextBox ID="address" @bind-Value="@Address" Placeholder="Indirizzo" FloatLabelType="@FloatLabelType.Auto" Readonly="true"></SfTextBox>
+            </div>
+
+            <div class="col-sm-3">
+                <SfTextBox ID="city" @bind-Value="@City" Placeholder="Città" FloatLabelType="@FloatLabelType.Auto" Readonly="true"></SfTextBox>
+            </div>
+
+            <div class="col-sm-1">
+                <SfTextBox ID="zipcode" @bind-Value="@ZipCode" Placeholder="CAP" FloatLabelType="@FloatLabelType.Auto" Readonly="true"></SfTextBox>
+            </div>
+
+            <div class="col-sm-3">
+                <SfTextBox ID="state" @bind-Value="@State" Placeholder="Stato" FloatLabelType="@FloatLabelType.Auto" Readonly="true"></SfTextBox>
+            </div>
+        </div>
+
+        <div class="row" style="margin-top: 10px;">
+            <div class="col-sm-2">
+                <SfTextBox ID="phone" @bind-Value="@Phone" Placeholder="Telefono" FloatLabelType="@FloatLabelType.Auto" Readonly="true"></SfTextBox>
+            </div>
+
+            <div class="col-sm-2">
+                <SfTextBox ID="mobile" @bind-Value="@Mobile" Placeholder="Mobile" FloatLabelType="@FloatLabelType.Auto" Readonly="true"></SfTextBox>
+            </div>
+
+            <div class="col-sm-7">
+                <SfTextBox ID="email" @bind-Value="@Email" Placeholder="Email" FloatLabelType="@FloatLabelType.Auto" Readonly="true"></SfTextBox>
+            </div>
+        </div>
+
+        <div class="row" style="margin-top: 10px;">
+            <div class="col-sm-8">
+                <SfTextBox ID="note" @bind-Value="@Note" Placeholder="Note" FloatLabelType="@FloatLabelType.Auto" Multiline="true" Readonly="true"></SfTextBox>
+            </div>
+            <div class="col-sm-4">
+                <span style="color: rgba(0, 0, 0, 0.54);font-size: 13px;line-height: 1.4; display:block; margin-bottom:2px;">Privacy</span>
+                <div class="col-sm-4">
+                    <label style="font-size: 11pt; padding: 0 8px 8px 0;">@switchPrivacy</label>
+                    <SfSwitch @bind-Checked="@fPrivacy" ValueChange="ManagePrivacy" TChecked="bool" Disabled="true"></SfSwitch>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+<!-- Sezione visus    -->
+<div class="container-fluid" style="padding: 10px 10px; margin-top: 30px;">
+    <div class="row">
+        <div class="col-sm-2">
+            <span style="font-weight:600;">Data:&nbsp;</span><span style="font-size: 14px; color:midnightblue;">@DataVisita</span>
+        </div>
+
+        <div class="col-sm-2">
+            <div class="btn-toolbar mb-3" role="toolbar" aria-label="Toolbar with button groups">
+                <div class="btn-group me-2" role="group" aria-label="First group">
+                    <SfButton IconCss="e-icons icon-small e-first-page" CssClass="e-small e-flat btn-light" Content="" OnClick="() => GoToVisus(0)" Disabled="@FirstVisusDisabled" title="Ultimo visus"></SfButton>
+                    <SfButton IconCss="e-icons icon-small e-chevron-left" CssClass="e-small e-flat btn-light" Content="" OnClick="() => GoToVisus(1)" Disabled="@PrevVisusDisabled" title="Visus precedente"></SfButton>
+                    <SfButton IconCss="e-icons icon-small e-chevron-right" CssClass="e-small e-flat btn-light" Content="" OnClick="() => GoToVisus(2)" Disabled="@NextVisusDisabled" title="Visus successivo"></SfButton>
+                    <SfButton IconCss="e-icons icon-small e-last-page" CssClass="e-small e-flat btn-light" Content="" OnClick="() => GoToVisus(3)" Disabled="@LastVisusDisabled" title="Primo visus"></SfButton>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-sm-1">
+            <div class="btn-toolbar mb-3" role="toolbar" aria-label="Toolbar with button groups">
+                <div class="btn-group me-2" role="group" aria-label="Second group">
+                    <SfButton IconCss="e-icons e-circle-add icon-navy" CssClass="e-flat btn-light" Content=" Nuovo Visus" OnClick="() => NewVisus()" Disabled="@AddVisusDisabled"></SfButton>
+                    &nbsp;
+                    <SfButton IconCss="e-icons icon-navy e-save" CssClass="e-flat btn-light" Content=" Salva Visus" OnClick="() => SaveVisus()" Disabled="@SaveVisusDisabled"></SfButton>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row" style="margin-top: 10px;">
+        <div class="col-sm-6">
+            <div class="row" style="margin-top: 10px;">
+                <div class="col-sm-3">&nbsp;</div>
+                <div class="col" style="text-align: center; font-size: larger;">
+                    Occhio Destro
+                </div>
+            </div>
+            <div class="row" style="margin-top: 10px;">
+                <div class="col-sm-3">&nbsp;</div>
+                <div class="col-sm-3" style="text-align: center; font-weight:bolder;">
+                    Sfera
+                </div>
+                <div class="col-sm-3" style="text-align: center; font-weight:bolder;">
+                    Cilindro
+                </div>
+                <div class="col-sm-3" style="text-align: center; font-weight:bolder;">
+                    Asse
+                </div>
+            </div>
+            <div class="row" style="margin-top: 10px;">
+                <div class="col-sm-3" style="text-align: right; padding-top: 5px;">
+                    <span>PER DISTANZA</span>
+                </div>
+                <div class="col-sm-3">
+                    <SfTextBox ID="ODD_Sf" @bind-Value="@Visus.ODD_Sf"></SfTextBox>
+                </div>
+                <div class="col-sm-3">
+                    <SfTextBox ID="ODD_Cil" @bind-Value="@Visus.ODD_Cil"></SfTextBox>
+                </div>
+                <div class="col-sm-3">
+                    <SfTextBox ID="ODD_Asse" @bind-Value="@Visus.ODD_Asse"></SfTextBox>
+                </div>
+            </div>
+            <div class="row" style="margin-top: 10px;">
+                <div class="col-sm-3" style="text-align: right; padding-top: 5px;">
+                    <span>A PERMANENZA</span>
+                </div>
+                <div class="col-sm-3">
+                    <SfTextBox ID="ODP_Sf" @bind-Value="@Visus.ODP_Sf"></SfTextBox>
+                </div>
+                <div class="col-sm-3">
+                    <SfTextBox ID="ODP_Cil" @bind-Value="@Visus.ODP_Cil"></SfTextBox>
+                </div>
+                <div class="col-sm-3">
+                    <SfTextBox ID="ODP_Asse" @bind-Value="@Visus.ODP_Asse"></SfTextBox>
+                </div>
+            </div>
+            <div class="row" style="margin-top: 10px;">
+                <div class="col-sm-3" style="text-align: right; padding-top: 5px;">
+                    <span>PER LETTURA</span>
+                </div>
+                <div class="col-sm-3">
+                    <SfTextBox ID="ODL_Sf" @bind-Value="@Visus.ODL_Sf"></SfTextBox>
+                </div>
+                <div class="col-sm-3">
+                    <SfTextBox ID="ODL_Cil" @bind-Value="@Visus.ODL_Cil"></SfTextBox>
+                </div>
+                <div class="col-sm-3">
+                    <SfTextBox ID="ODL_Asse" @bind-Value="@Visus.ODL_Asse"></SfTextBox>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-sm-6">
+            <div class="row" style="margin-top: 10px;">
+                <div class="col" style="text-align: center; font-size: larger;">
+                    Occhio Sinistro
+                </div>
+                <div class="col-sm-3">&nbsp;</div>
+            </div>
+            <div class="row" style="margin-top: 10px;">
+                <div class="col-sm-3" style="text-align: center; font-weight:bolder;">
+                    Sfera
+                </div>
+                <div class="col-sm-3" style="text-align: center; font-weight:bolder;">
+                    Cilindro
+                </div>
+                <div class="col-sm-3" style="text-align: center; font-weight:bolder;">
+                    Asse
+                </div>
+                <div class="col-sm-3">&nbsp;</div>
+            </div>
+            <div class="row" style="margin-top: 10px;">
+                <div class="col-sm-3">
+                    <SfTextBox ID="OSD_Sf" @bind-Value="@Visus.OSD_Sf"></SfTextBox>
+                </div>
+                <div class="col-sm-3">
+                    <SfTextBox ID="OSD_Cil" @bind-Value="@Visus.OSD_Cil"></SfTextBox>
+                </div>
+                <div class="col-sm-3">
+                    <SfTextBox ID="OSD_Asse" @bind-Value="@Visus.OSD_Asse"></SfTextBox>
+                </div>
+                <div class="col-sm-3">&nbsp;</div>
+            </div>
+            <div class="row" style="margin-top: 10px;">
+                <div class="col-sm-3">
+                    <SfTextBox ID="OSP_Sf" @bind-Value="@Visus.OSP_Sf"></SfTextBox>
+                </div>
+                <div class="col-sm-3">
+                    <SfTextBox ID="OSP_Cil" @bind-Value="@Visus.OSP_Cil"></SfTextBox>
+                </div>
+                <div class="col-sm-3">
+                    <SfTextBox ID="OSP_Asse" @bind-Value="@Visus.OSP_Asse"></SfTextBox>
+                </div>
+                <div class="col-sm-3">&nbsp;</div>
+            </div>
+            <div class="row" style="margin-top: 10px;">
+                <div class="col-sm-3">
+                    <SfTextBox ID="OSL_Sf" @bind-Value="@Visus.OSL_Sf"></SfTextBox>
+                </div>
+                <div class="col-sm-3">
+                    <SfTextBox ID="OSL_Cil" @bind-Value="@Visus.OSL_Cil"></SfTextBox>
+                </div>
+                <div class="col-sm-3">
+                    <SfTextBox ID="OSL_Asse" @bind-Value="@Visus.OSL_Asse"></SfTextBox>
+                </div>
+                <div class="col-sm-3">&nbsp;</div>
+            </div>
+        </div>
+
+        <div class="col-sm-1">&nbsp;</div>
+    </div>
+
+    <div class="row" style="margin-top: 10px;">
+        <div class="col-sm-6">
+            <div class="row" style="margin-top: 10px;">
+                <div class="col-sm-4" style="text-align:right;">
+                    <label style="font-size: 12pt; padding: 0 8px 8px 0;">@switchTabo</label>
+                    <SfSwitch @bind-Checked="@fTabo" ValueChange="ManageTabo" TChecked="bool"></SfSwitch>
+                </div>
+
+                <div class="col-sm-6" style="text-align:right;">
+                    <label style="font-size: 12pt; padding: 0 8px 8px 0;">@switchInter</label>
+                    <SfSwitch @bind-Checked="@fInter" ValueChange="ManageInter" TChecked="bool"></SfSwitch>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row" style="margin-top: 10px;">
+        <div class="col-sm-1">&nbsp;</div>
+        <div class="col-sm-2">
+            <SfTextBox ID="Distanza" @bind-Value="@Visus.DI" Placeholder="Distanza interpupillare (mm)" FloatLabelType="@FloatLabelType.Auto"></SfTextBox>
+        </div>
+    </div>
+
+    <div class="row" style="margin-top: 20px;">
+        <div class="col-sm-1">&nbsp;</div>
+        <div class="col-sm-8">
+            <SfTextBox ID="NoteVisus" @bind-Value="@Visus.Note" Placeholder="NOTE" FloatLabelType="@FloatLabelType.Auto" Multiline="true"></SfTextBox>
+        </div>
+        <div class="col-sm-1">&nbsp;</div>
+    </div>
+</div>
+
+<br />
+<br />
+
+<SfDialog Width="400px" Target="#target" ShowCloseIcon="true" @bind-Visible="AlertVisible">
+    <DialogTemplates>
+        <Header> Attenzione </Header>
+        <Content> @AlertText </Content>
+    </DialogTemplates>
+    <DialogButtons>
+        <DialogButton Content="OK" IsPrimary="true" OnClick="@CloseDialog" />
+    </DialogButtons>
+</SfDialog>
+
+<style>
+    textarea.e-input,
+    .e-float-input textarea,
+    .e-float-input.e-control-wrapper textarea,
+    .e-input-group textarea,
+    .e-input-group.e-control-wrapper textarea {
+        resize: none;
+    }
+</style>
+
+@code {
+    [Parameter]
+    public decimal idp { get; set; }
+    [Parameter]
+    public decimal idm { get; set; }
+
+    string TitlePage = "";
+
+    public const int PAGE_COUNT = 10;
+    public const int DEFAULT_PAGE_SIZE = 10;
+    public string[] PageSizes = new string[] { "Tutti", "5", "10", "20", "50" };
+
+
+    Boolean ShowMore = false;
+    string fShowLessBtn = "none";
+    string fShowMoreBtn = "inline-block";
+
+    private string SaveText = "";
+
+    private bool AlertVisible { get; set; } = false;
+
+    private string AlertText { get; set; } = "";
+
+    private void CloseDialog()
+    {
+        AlertVisible = false;
+    }
+
+    #region logging
+    string? LoggedUser;
+    string[]? arUser;
+
+    private string? gIdUser;
+    private string? gFName;
+    private string? gLName;
+    private string? gSuperUser;
+
+    private string? SessionID;
+
+    //private string[] gRoleUser;
+
+    private string sessionLoggedUser { get; set; }
+    #endregion
+
+    #region binding dati paziente
+    private Patient Paziente = new Patient();
+
+    public string LName = "";
+    public string FName = "";
+
+    public string Cod = "";
+    public string CodFisc = "";
+
+    public string BirthDate = "";
+    public string BirthCity = "";
+    public string Gender = "";
+
+    public string Address = "";
+    public string City = "";
+    public string ZipCode = "";
+    public string State = "";
+
+    public string Phone = "";
+    public string Mobile = "";
+    public string Email = "";
+    public string Note = "";
+
+    public string Privacy = "";
+
+    private string switchPrivacy = "Da firmare";
+    private bool fPrivacy = false;
+    #endregion
+
+    #region binding dati visus
+    public string DataVisita = "";
+
+    public Boolean FirstVisusDisabled = false;
+    public Boolean PrevVisusDisabled = false;
+    public Boolean NextVisusDisabled = false;
+    public Boolean LastVisusDisabled = false;
+
+    public Boolean AddVisusDisabled = false;
+    public Boolean SaveVisusDisabled = true;
+
+    public Boolean IsNewVisus = false;
+
+    // private Visit Visita = new Visit();
+
+    private Misure Visus = new Misure();
+
+    // private List<CoppiaDecDat> ListaVisite;
+    // private int VisitaCorrente = -1;
+
+    private List<CoppiaDecDat> ListaVisus;
+    private int VisusCorrente = -1;
+
+    private string switchTabo = "TABO: No";
+    private bool fTabo = false;
+
+    private string switchInter = "INTERNAZIONALE: No";
+    private bool fInter = false;
+    #endregion
+
+    #region Funzioni di supporto
+    private void ManagePrivacy(Syncfusion.Blazor.Buttons.ChangeEventArgs<bool> obj)
+    {
+        if (fPrivacy)
+        {
+            switchPrivacy = "Firmata";
+        }
+        else
+        {
+            switchPrivacy = "Da firmare";
+        }
+    }
+
+    private void ManageTabo(Syncfusion.Blazor.Buttons.ChangeEventArgs<bool> obj)
+    {
+        if (fTabo)
+        {
+            switchTabo = "TABO: Si";
+        }
+        else
+        {
+            switchTabo = "TABO: No";
+        }
+    }
+
+    private void ManageInter(Syncfusion.Blazor.Buttons.ChangeEventArgs<bool> obj)
+    {
+        if (fInter)
+        {
+            switchInter = "INTERNAZIONALE: Si";
+        }
+        else
+        {
+            switchInter = "INTERNAZIONALE: No";
+        }
+    }
+
+    private void SwapView(string view)
+    {
+        if (view == "less")
+        {
+            ShowMore = false;
+
+            fShowLessBtn = "none";
+            fShowMoreBtn = "inline-block";
+        }
+        else
+        {
+            ShowMore = true;
+
+            fShowLessBtn = "inline-block";
+            fShowMoreBtn = "none";
+        }
+    }
+
+    private string SetObjNullToStr(object obj)
+    {
+        string result = "";
+
+        if ((obj == null) || (obj.Equals(System.DBNull.Value)))
+        {
+            result = "";
+        }
+        else
+        {
+            result = obj.ToString();
+        }
+
+        return result;
+    }
+
+    public static int GetDaysInMonth(int year, int month)
+    {
+        // Verifica che il mese sia compreso tra 1 e 12
+        if (month < 1 || month > 12)
+        {
+            throw new ArgumentOutOfRangeException(nameof(month), "Il mese deve essere compreso tra 1 e 12.");
+        }
+
+        // Anni bisestili: divisibili per 4, ma non per 100, a meno che siano divisibili per 400
+        bool isLeapYear = year % 4 == 0 && (year % 100 != 0 || year % 400 == 0);
+
+        // Numero di giorni per ogni mese
+        int[] daysInMonth = { 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
+
+        // Aggiungi un giorno a febbraio se è un anno bisestile
+        if (isLeapYear && month == 2)
+        {
+            return daysInMonth[month - 1] + 1;
+        }
+
+        return daysInMonth[month - 1];
+    }
+
+    private Boolean CheckDate(string myDate)
+    {
+        Boolean result = false;
+        string myYear, myMonth, myDay;
+        int GiorniMese;
+
+        if (myDate.Length == 8)
+        {
+            myYear = myDate.Substring(4, 4);
+            myMonth = myDate.Substring(2, 2);
+            myDay = myDate.Substring(0, 2);
+
+            if (int.Parse(myYear) > 1900)
+            {
+                if ((int.Parse(myMonth) >= 1) && (int.Parse(myMonth) <= 12))
+                {
+                    GiorniMese = (GetDaysInMonth(int.Parse(myYear), int.Parse(myMonth)));
+
+                    if ((int.Parse(myDay) >= 1) && (int.Parse(myDay) <= GiorniMese))
+                    {
+                        result = true;
+                    }
+                    else
+                    {
+                        // giorno non compreso tra 1 e numero giorni previsto per il mese esci con false
+                        AlertText = "Giorno data di nascita non valido";
+                        AlertVisible = true;
+                    }
+                }
+                else
+                {
+                    // mese non compreso tra 1 e 12 esci con false
+                    AlertText = "Mese data di nascita non valido";
+                    AlertVisible = true;
+                }
+            }
+            else
+            {
+                // anno inferiore al 190 esci con false
+                AlertText = "Anno data di nascita non valido";
+                AlertVisible = true;
+            }
+        }
+        else
+        {
+            // anno inferiore al 190 esci con false
+            AlertText = "Data di nascita non valida";
+            AlertVisible = true;
+        }
+
+        return result;
+    }
+    #endregion
+
+    protected override async Task OnInitializedAsync()
+    {
+        sessionLoggedUser = await sessionStorage.GetItemAsStringAsync("sessionLoggedUser");
+
+        if (string.IsNullOrEmpty(sessionLoggedUser))
+        {
+            Navigation.NavigateTo("/auth/login");
+        }
+        else
+        {
+            LoggedUser = sessionLoggedUser.Substring(1, sessionLoggedUser.Length - 2);
+
+            arUser = LoggedUser.Split(",");
+
+            gIdUser = arUser[0];
+            gFName = arUser[1];
+            gLName = arUser[2];
+            gSuperUser = arUser[3];
+
+            SessionID = arUser[4];
+
+            // gRoleUser = arUser[n].Split(",");
+
+            // load dati paziente
+            LoadPatient();
+
+            if (idm == 0)
+            {
+                TitlePage = "Nuovo Visus";
+
+                SaveText = "Inserisci dati Visus";
+
+                fTabo = false;
+                switchTabo = "TABO: No";
+
+                fInter = false;
+                switchInter = "INTERNAZIONALE: No";
+            }
+            else
+            {
+                TitlePage = "Dati Visus";
+
+                SaveText = "Aggiorna dati Visus";
+            }
+
+            // load date e id storico visite e dati ultima visita
+            // ListaVisite = await ListVisitsService.ListPatientsVisits(idp);
+
+            // load date e id storico visus e dati ultimo visus
+            ListaVisus = await ListVisusService.ListPatientsVisus(idp);
+
+            if (ListaVisus.Count > 0)
+            {
+                SaveVisusDisabled = false;
+
+                if (ListaVisus.Count == 1)
+                {
+                    FirstVisusDisabled = true;
+                    PrevVisusDisabled = true;
+                    NextVisusDisabled = true;
+                    LastVisusDisabled = true;
+                }
+                else
+                {
+                    FirstVisusDisabled = true;
+                    PrevVisusDisabled = true;
+                    NextVisusDisabled = false;
+                    LastVisusDisabled = false;
+                }
+
+                VisusCorrente = 0;
+
+                DataVisita = ListaVisus[0].Val.ToString("dd/MM/yyyy");
+
+                LoadVisus(ListaVisus[0].ID);
+            }
+            else
+            {
+                FirstVisusDisabled = true;
+                PrevVisusDisabled = true;
+                NextVisusDisabled = true;
+                LastVisusDisabled = true;
+
+                SaveVisusDisabled = true;
+            }
+
+            if (idm == 0)
+            {
+                NewVisus();
+            }
+
+            StateHasChanged();
+        }
+    }
+
+    public async void LoadPatient()
+    {
+        Paziente = await PatientMngService.GetPatient(idp);
+
+        FName = Paziente.FName;
+        LName = Paziente.LName;
+
+        Cod = SetObjNullToStr(Paziente.Cod);
+
+        CodFisc = SetObjNullToStr(Paziente.CodFisc);
+        BirthDate = SetObjNullToStr(Paziente.BirthDate);
+        BirthCity = SetObjNullToStr(Paziente.BirthCity);
+        Gender = SetObjNullToStr(Paziente.Gender);
+
+        Address = SetObjNullToStr(Paziente.Address);
+        City = SetObjNullToStr(Paziente.City);
+        ZipCode = SetObjNullToStr(Paziente.ZipCode);
+        State = SetObjNullToStr(Paziente.State);
+
+        Phone = SetObjNullToStr(Paziente.Phone);
+        Mobile = SetObjNullToStr(Paziente.Mobile);
+        Email = SetObjNullToStr(Paziente.Email);
+
+        Note = SetObjNullToStr(Paziente.Note);
+
+        fPrivacy = Paziente.fPrivacy;
+
+        if (fPrivacy)
+        {
+            switchPrivacy = "Firmata";
+        }
+    }
+
+    public async void GoToVisusList(decimal id)
+    {
+        await Task.Delay(10);
+        Navigation.NavigateTo("/visuslist/" + id.ToString());
+    }
+
+    public async void LoadVisus(decimal id)
+    {
+        Visus = await VisusService.GetVisus(id);
+
+        Visus.ODD_Sf = SetObjNullToStr(Visus.ODD_Sf);
+
+        Visus.ODD_Cil = SetObjNullToStr(Visus.ODD_Cil);
+
+        Visus.ODD_Asse = SetObjNullToStr(Visus.ODD_Asse);
+
+        Visus.OSD_Sf = SetObjNullToStr(Visus.OSD_Sf);
+
+        Visus.OSD_Cil = SetObjNullToStr(Visus.OSD_Cil);
+
+        Visus.OSD_Asse = SetObjNullToStr(Visus.OSD_Asse);
+
+
+        Visus.ODP_Sf = SetObjNullToStr(Visus.ODP_Sf);
+
+        Visus.ODP_Cil = SetObjNullToStr(Visus.ODP_Cil);
+
+        Visus.ODP_Asse = SetObjNullToStr(Visus.ODP_Asse);
+
+        Visus.OSP_Sf = SetObjNullToStr(Visus.OSP_Sf);
+
+        Visus.OSP_Cil = SetObjNullToStr(Visus.OSP_Cil);
+
+        Visus.OSP_Asse = SetObjNullToStr(Visus.OSP_Asse);
+
+
+        Visus.ODL_Sf = SetObjNullToStr(Visus.ODL_Sf);
+
+        Visus.ODL_Cil = SetObjNullToStr(Visus.ODL_Cil);
+
+        Visus.ODL_Asse = SetObjNullToStr(Visus.ODL_Asse);
+
+        Visus.OSL_Sf = SetObjNullToStr(Visus.OSL_Sf);
+
+        Visus.OSL_Cil = SetObjNullToStr(Visus.OSL_Cil);
+
+        Visus.OSL_Asse = SetObjNullToStr(Visus.OSL_Asse);
+
+
+        fTabo = Visus.Tabo;
+        if (fTabo)
+        {
+            switchTabo = "TABO: Si";
+        }
+
+        fInter = Visus.Inter;
+        if (fInter)
+        {
+            switchInter = "INTERNAZIONALE: Si";
+        }
+
+        Visus.DI = SetObjNullToStr(Visus.DI);
+
+        Visus.Note = SetObjNullToStr(Visus.Note);
+
+        StateHasChanged();
+    }
+
+    public async void GoToVisus(int p)
+    {
+        await Task.Delay(10);
+
+        switch (p)
+        {
+            case 0:
+                VisusCorrente = 0;
+
+                FirstVisusDisabled = true;
+                PrevVisusDisabled = true;
+
+                NextVisusDisabled = false;
+                LastVisusDisabled = false;
+
+                DataVisita = ListaVisus[VisusCorrente].Val.ToString("dd/MM/yyyy");
+
+                LoadVisus(ListaVisus[VisusCorrente].ID);
+                break;
+
+            case 1:
+                if (VisusCorrente > 0)
+                {
+                    VisusCorrente -= 1;
+
+                    NextVisusDisabled = false;
+                    LastVisusDisabled = false;
+
+                    if (VisusCorrente == 0)
+                    {
+                        FirstVisusDisabled = true;
+                        PrevVisusDisabled = true;
+                    }
+                }
+
+                DataVisita = ListaVisus[VisusCorrente].Val.ToString("dd/MM/yyyy");
+
+                LoadVisus(ListaVisus[VisusCorrente].ID);
+                break;
+
+            case 2:
+                if (VisusCorrente < ListaVisus.Count - 1)
+                {
+                    VisusCorrente += 1;
+
+                    FirstVisusDisabled = false;
+                    PrevVisusDisabled = false;
+
+                    if (VisusCorrente == ListaVisus.Count - 1)
+                    {
+                        NextVisusDisabled = true;
+                        LastVisusDisabled = true;
+                    }
+                }
+
+                DataVisita = ListaVisus[VisusCorrente].Val.ToString("dd/MM/yyyy");
+
+                LoadVisus(ListaVisus[VisusCorrente].ID);
+                break;
+
+            case 3:
+                VisusCorrente = ListaVisus.Count - 1;
+
+                FirstVisusDisabled = false;
+                PrevVisusDisabled = false;
+
+                NextVisusDisabled = true;
+                LastVisusDisabled = true;
+
+                DataVisita = ListaVisus[VisusCorrente].Val.ToString("dd/MM/yyyy");
+
+                LoadVisus(ListaVisus[VisusCorrente].ID);
+                break;
+        }
+
+        StateHasChanged();
+    }
+
+    public async void NewVisus()
+    {
+        await Task.Run(() =>
+        {
+            IsNewVisus = true;
+
+            DataVisita = DateTime.Now.ToString("dd/MM/yyyy");
+
+            AddVisusDisabled = true;
+
+            SaveVisusDisabled = false;
+
+            Visus = new Misure();
+
+            Visus.DataMisura = DateTime.Now;
+
+            StateHasChanged();
+        });
+    }
+
+    public async void SaveVisus()
+    {
+        if (IsNewVisus)
+        {
+            Visus.ptIdPatient = idp;
+            Visus.ptIdUser = Decimal.Parse(gIdUser);
+            Visus.InsertDate = DateTime.Now;
+            Visus.DataMisura = DateTime.Now;
+
+            Visus.Tabo = fTabo;
+            Visus.Inter = fInter;
+
+            await VisusService.AddVisus(Visus);
+        }
+        else
+        {
+            Visus.Tabo = fTabo;
+            Visus.Inter = fInter;
+
+            await VisusService.UpdVisus(Visus.IdMisura, Visus);
+        }
+
+        // load date e id storico visite e dati ultima visita
+        ListaVisus.Clear();
+
+        // ListaVisite = await ListVisitsService.ListPatientsVisits(idp);
+
+        ListaVisus = await ListVisusService.ListPatientsVisus(idp);
+
+        if (ListaVisus.Count > 0)
+        {
+            if (ListaVisus.Count == 1)
+            {
+                FirstVisusDisabled = true;
+                PrevVisusDisabled = true;
+                NextVisusDisabled = true;
+                LastVisusDisabled = true;
+            }
+            else
+            {
+                FirstVisusDisabled = true;
+                PrevVisusDisabled = true;
+                NextVisusDisabled = false;
+                LastVisusDisabled = false;
+            }
+
+            VisusCorrente = 0;
+
+            DataVisita = ListaVisus[0].Val.ToString();
+
+            LoadVisus(ListaVisus[VisusCorrente].ID);
+        }
+
+        AddVisusDisabled = false;
+        // SaveVisusDisabled = true;
+
+        StateHasChanged();
+
+        if (IsNewVisus)
+        {
+            // visit entry completed
+
+            IsNewVisus = false;
+        }
+        else
+        {
+            // visit update completed
+        }
+    }
+}

@@ -26,6 +26,12 @@ builder.Services.AddScoped<ListVisitsService>();
 
 builder.Services.AddScoped<VisitService>();
 
+builder.Services.AddScoped<ListVisusService>();
+
+builder.Services.AddScoped<VisusService>();
+
+builder.Services.AddScoped<VisusFilterService>();
+
 builder.Services.AddSyncfusionBlazor();
 
 await builder.Build().RunAsync();
