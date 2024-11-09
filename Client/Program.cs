@@ -32,6 +32,14 @@ builder.Services.AddScoped<VisusService>();
 
 builder.Services.AddScoped<VisusFilterService>();
 
+builder.Services.AddScoped<ControlliService>();
+
+builder.Services.AddScoped<ListControlliService>();
+
+builder.Services.AddScoped<OrtoctisService>();
+
+builder.Services.AddScoped<ListOrtoctisService>();
+
 builder.Services.AddSyncfusionBlazor();
 
 await builder.Build().RunAsync();

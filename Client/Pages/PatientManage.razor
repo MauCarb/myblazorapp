@@ -2,6 +2,8 @@
 @using Blazored.SessionStorage
 @using Newtonsoft.Json
 
+@using Syncfusion.Blazor.Navigations
+
 @using BlazorApp.Shared
 
 @inject NavigationManager Navigation
@@ -10,8 +12,18 @@
 @inject HttpClient Http
 
 @inject PatientMngService PatientMngService
+
 @inject ListVisitsService ListVisitsService
 @inject VisitService VisitService
+
+@inject ListVisusService ListVisusService
+@inject VisusService VisusService
+
+@inject ListControlliService ListControlliService
+@inject ControlliService ControlliService
+
+@inject ListOrtoctisService ListOrtoctisService
+@inject OrtoctisService OrtoctisService
 
 <h5>
     @TitlePage
@@ -30,6 +42,7 @@
     </span>
 </h5>
 
+<!-- Sezione paziente -->
 <div class="container-fluid bg-light" style="padding: 0 10px 10px 10px;">
     <div class="row">
         <div class="col-sm-1">
@@ -94,7 +107,7 @@
             <div class="col-sm-4">
                 <span style="color: rgba(0, 0, 0, 0.54);font-size: 13px;line-height: 1.4; display:block; margin-bottom:2px;">Privacy</span>
                 <div class="col-sm-4">
-                    <label style="font-size: 11pt; padding: 0 8px 8px 0;">@switchPrivacy</label>
+                    <label style="font-size: 11pt; padding: 0 8px 8px 0; vertical-align: super;">@switchPrivacy</label>
                     <SfSwitch @bind-Checked="@fPrivacy" ValueChange="ManagePrivacy" TChecked="bool"></SfSwitch>
                 </div>
             </div>
@@ -102,6 +115,7 @@
     }
 </div>
 
+<!-- Sezione visite, prescrizione occhiali, controlli, ortottica,   -->
 @if (ShowVisits)
 {
     <div class="container-fluid" style="padding: 10px 10px; margin-top: 30px;">
@@ -120,203 +134,623 @@
 				    </div>
                 </div>
             </div>
-            <div class="col-sm-1">
-                <div class="btn-toolbar mb-3" role="toolbar" aria-label="Toolbar with button groups">
-                    <div class="btn-group me-2" role="group" aria-label="Second group">
-                        <SfButton IconCss="e-icons e-circle-add icon-navy" CssClass="e-flat btn-light" Content=" Nuova Visita" OnClick="() => NewVisit()" Disabled="@AddVisitDisabled"></SfButton>
-                        &nbsp;
-                        <SfButton IconCss="e-icons icon-navy e-save" CssClass="e-flat btn-light" Content=" Salva Visita" OnClick="() => SaveVisit()" Disabled="@SaveVisitDisabled"></SfButton>
-                    </div>
-                </div>
-            </div>
         </div>
-    
-        <div class="row" style="margin-top: 10px;">
-            <div class="col-sm-5">
-                <div class="row" style="margin-top: 10px;">
-                    <div class="col">
-                        <SfTextBox ID="diagnosi" @bind-Value="@Visita.Diagnosi" Placeholder="Diagnosi" FloatLabelType="@FloatLabelType.Auto"></SfTextBox>
-                    </div>
-                </div>
-                <div class="row" style="margin-top: 10px;">
-                    <div class="col">
-                        <SfTextBox ID="anamnesi" @bind-Value="@Visita.Anamnesi" Placeholder="Anamnesi" FloatLabelType="@FloatLabelType.Auto"></SfTextBox>
-                    </div>
-                </div>
-                <div class="row" style="margin-top: 10px;">
-                    <div class="col">
-                        <SfTextBox ID="annessi" @bind-Value="@Visita.Annessi" Placeholder="Annessi" FloatLabelType="@FloatLabelType.Auto"></SfTextBox>
-                    </div>
-                </div>
-                <div class="row" style="margin-top: 10px;">
-                    <div class="col">
-                        <SfTextBox ID="segantod" @bind-Value="@Visita.Seg_Ant_Od" Placeholder="Seg.Ant.OD" FloatLabelType="@FloatLabelType.Auto"></SfTextBox>
-                    </div>
-                </div>
-                <div class="row" style="margin-top: 10px;">
-                    <div class="col">
-                        <SfTextBox ID="segantos" @bind-Value="@Visita.Seg_Ant_Os" Placeholder="Seg.Ant.OS" FloatLabelType="@FloatLabelType.Auto"></SfTextBox>
-                    </div>
-                </div>
-                <div class="row" style="margin-top: 10px;">
-                    <div class="col">
-                        <SfTextBox ID="fundusod" @bind-Value="@Visita.Fundus_Od" Placeholder="Fundus OD" FloatLabelType="@FloatLabelType.Auto"></SfTextBox>
-                    </div>
-                </div>
-                <div class="row" style="margin-top: 10px;">
-                    <div class="col">
-                        <SfTextBox ID="fundusos" @bind-Value="@Visita.Fundus_Os" Placeholder="Fundus OS" FloatLabelType="@FloatLabelType.Auto"></SfTextBox>
-                    </div>
-                </div>
-                <div class="row" style="margin-top: 10px;">
-                    <div class="col">
-                        <SfTextBox ID="visusod" @bind-Value="@Visita.Visus_Od" Placeholder="Visus OD" FloatLabelType="@FloatLabelType.Auto"></SfTextBox>
-                    </div>
-                </div>
-                <div class="row" style="margin-top: 10px;">
-                    <div class="col">
-                        <SfTextBox ID="visusos" @bind-Value="@Visita.Visus_Os" Placeholder="Visus OS" FloatLabelType="@FloatLabelType.Auto"></SfTextBox>
-                    </div>
-                </div>
-                <div class="row" style="margin-top: 10px;">
-                    <div class="col">
-                        <SfTextBox ID="terapia" @bind-Value="@Visita.Terapia" Placeholder="Terapia" FloatLabelType="@FloatLabelType.Auto"></SfTextBox>
-                    </div>
-                </div>
-                <div class="row" style="margin-top: 10px;">
-                    <div class="col-sm-4">
-                        <SfTextBox ID="odpl" @bind-Value="@Visita.ODPL" Placeholder="ODPL" FloatLabelType="@FloatLabelType.Auto"></SfTextBox>
-                    </div>
-                    <div class="col-sm-4">
-                        <SfTextBox ID="odpv" @bind-Value="@Visita.ODPV" Placeholder="ODPV" FloatLabelType="@FloatLabelType.Auto"></SfTextBox>
-                    </div>
-                    <div class="col-sm-4">
-                        <SfTextBox ID="odmd" @bind-Value="@Visita.ODMD" Placeholder="MD" FloatLabelType="@FloatLabelType.Auto"></SfTextBox>
-                    </div>
-                </div>
-                <div class="row" style="margin-top: 10px;">
-                    <div class="col-sm-4">
-                        <SfTextBox ID="ospl" @bind-Value="@Visita.OSPL" Placeholder="OSPL" FloatLabelType="@FloatLabelType.Auto"></SfTextBox>
-                    </div>
-                    <div class="col-sm-4">
-                        <SfTextBox ID="ospv" @bind-Value="@Visita.OSPV" Placeholder="OSPV" FloatLabelType="@FloatLabelType.Auto"></SfTextBox>
-                    </div>
-                    <div class="col-sm-4">
-                        <SfTextBox ID="osmd" @bind-Value="@Visita.OSMD" Placeholder="MD" FloatLabelType="@FloatLabelType.Auto"></SfTextBox>
-                    </div>
-                </div>
-                <div class="row" style="margin-top: 10px;">
-                    <div class="col">
-                        <SfTextBox ID="motivovisita" @bind-Value="@Visita.MotivoVisita" Placeholder="Motivo" FloatLabelType="@FloatLabelType.Auto"></SfTextBox>
-                    </div>
-                </div>
-            </div>
 
-            <div class="col-sm-7">
-                <div class="row" style="margin-top: 10px;">
-                    <div class="col">
-                        <SfTextBox ID="interventi" @bind-Value="@Visita.Interventi" Placeholder="Interventi" FloatLabelType="@FloatLabelType.Auto"></SfTextBox>
-                    </div>
-                </div>
-                <div class="row" style="margin-top: 10px;">
-                    <div class="col-sm-7">
-                        <SfTextBox ID="curva" @bind-Value="@Visita.CurvaTono" Placeholder="Curva Tono" FloatLabelType="@FloatLabelType.Auto"></SfTextBox>
-                    </div>
-                    <div class="col-sm-5">
-                        <SfTextBox ID="argon" @bind-Value="@Visita.CurvaArgon" Placeholder="Argon" FloatLabelType="@FloatLabelType.Auto"></SfTextBox>
-                    </div>
-                </div>
-                <div class="row" style="margin-top: 10px;">
-                    <div class="col">
-                        <SfTextBox ID="vortottica" @bind-Value="@Visita.VOrtottica" Placeholder="Visita Ortottica" FloatLabelType="@FloatLabelType.Auto"></SfTextBox>
-                    </div>
-                </div>
-                <div class="row" style="margin-top: 10px;">
-                    <div class="col-sm-7">
-                        <SfTextBox ID="shirmer" @bind-Value="@Visita.SHIRMER" Placeholder="SHIRMER" FloatLabelType="@FloatLabelType.Auto"></SfTextBox>
-                    </div>
-                    <div class="col-sm-5">
-                        <SfTextBox ID="tono" @bind-Value="@Visita.TONO" Placeholder="TONO" FloatLabelType="@FloatLabelType.Auto"></SfTextBox>
-                    </div>
-                </div>
-                <div class="row" style="margin-top: 10px;">
-                    <div class="col-sm-7">
-                        <SfTextBox ID="lavaggio" @bind-Value="@Visita.Lavaggio" Placeholder="Lavaggio" FloatLabelType="@FloatLabelType.Auto"></SfTextBox>
-                    </div>
-                    <div class="col-sm-5">
-                        <SfTextBox ID="biometria" @bind-Value="@Visita.Biometria" Placeholder="Biometria" FloatLabelType="@FloatLabelType.Auto"></SfTextBox>
-                    </div>
-                </div>
-                <div class="row" style="margin-top: 10px;">
-                    <div class="col-sm-6">
-                        <SfTextBox ID="fagod" @bind-Value="@Visita.FAG_Od" Placeholder="Fag OD" FloatLabelType="@FloatLabelType.Auto"></SfTextBox>
-                    </div>
-                    <div class="col-sm-6">
-                        <SfTextBox ID="fagos" @bind-Value="@Visita.FAG_Os" Placeholder="Fag OS" FloatLabelType="@FloatLabelType.Auto"></SfTextBox>
-                    </div>
-                </div>
-                <div class="row" style="margin-top: 10px;">
-                    <div class="col-sm-7">
-                        <SfTextBox ID="topografia" @bind-Value="@Visita.Topografia" Placeholder="Topografia" FloatLabelType="@FloatLabelType.Auto"></SfTextBox>
-                    </div>
-                    <div class="col-sm-5">
-                        <SfTextBox ID="iv" @bind-Value="@Visita.IV" Placeholder="IV" FloatLabelType="@FloatLabelType.Auto"></SfTextBox>
-                    </div>
-                </div>
-                <div class="row" style="margin-top: 10px;">
-                    <div class="col-sm-6">
-                        <SfTextBox ID="octod" @bind-Value="@Visita.OCT_Od" Placeholder="Oct OD" FloatLabelType="@FloatLabelType.Auto"></SfTextBox>
-                    </div>
-                    <div class="col-sm-6">
-                        <SfTextBox ID="octos" @bind-Value="@Visita.OCT_Os" Placeholder="Oct OS" FloatLabelType="@FloatLabelType.Auto"></SfTextBox>
-                    </div>
-                </div>
-                <div class="row" style="margin-top: 10px;">
-                    <div class="col-sm-6">
-                        <SfTextBox ID="rnflod" @bind-Value="@Visita.RNFL_Od" Placeholder="RNFL OD" FloatLabelType="@FloatLabelType.Auto"></SfTextBox>
-                    </div>
-                    <div class="col-sm-6">
-                        <SfTextBox ID="rnflos" @bind-Value="@Visita.RNFL_Os" Placeholder="RNFL OS" FloatLabelType="@FloatLabelType.Auto"></SfTextBox>
-                    </div>
-                </div>
-                <div class="row" style="margin-top: 10px;">
-                    <div class="col-sm-6">
-                        <SfTextBox ID="cvod" @bind-Value="@Visita.CV_Od" Placeholder="CV OD" FloatLabelType="@FloatLabelType.Auto"></SfTextBox>
-                    </div>
-                    <div class="col-sm-6">
-                        <SfTextBox ID="cvos" @bind-Value="@Visita.CV_Os" Placeholder="CV OS" FloatLabelType="@FloatLabelType.Auto"></SfTextBox>
-                    </div>
-                </div>
-                <div class="row" style="margin-top: 10px;">
-                    <div class="col-sm-3">
-                        <SfTextBox ID="pachimetriaod" @bind-Value="@Visita.PACH_Od" Placeholder="Pachimetria OD" FloatLabelType="@FloatLabelType.Auto"></SfTextBox>
-                    </div>
-                    <div class="col-sm-3">
-                        <SfTextBox ID="pachimetriaos" @bind-Value="@Visita.PACH_Os" Placeholder="Pachimetria OS" FloatLabelType="@FloatLabelType.Auto"></SfTextBox>
-                    </div>
-                    <div class="col-sm-3">
-                        <SfTextBox ID="cdod" @bind-Value="@Visita.CD_Od" Placeholder="C/D OD" FloatLabelType="@FloatLabelType.Auto"></SfTextBox>
-                    </div>
-                    <div class="col-sm-3">
-                        <SfTextBox ID="cdos" @bind-Value="@Visita.CD_Os" Placeholder="C/D OS" FloatLabelType="@FloatLabelType.Auto"></SfTextBox>
-                    </div>
-                </div>
-                <div class="row" style="margin-top: 10px;">
-                    <div class="col">
-                        <SfTextBox ID="auto" @bind-Value="@Visita.Auto" Placeholder="Auto" FloatLabelType="@FloatLabelType.Auto"></SfTextBox>
-                    </div>
-                </div>
-                <div class="row" style="margin-top: 10px;">
-                    <div class="col">
-                        <SfTextBox ID="conclusioni" @bind-Value="@Visita.Conclusioni" Placeholder="Conclusioni" FloatLabelType="@FloatLabelType.Auto"></SfTextBox>
-                    </div>
-                </div>
-            </div>
-	    </div>
+        <div class="row">
+            <div class="col-md-12">
+                <SfTab>
+                    <TabItems>
+                        <!-- Sezione Visite -->
+                        <TabItem>
+                            <ChildContent>
+                                <TabHeader Text="Visite"></TabHeader>
+                            </ChildContent>
+                            <ContentTemplate>
+                                <div class="row" style="margin-top: 10px;">
+                                    <div class="col-sm-2">
+                                        <SfButton IconCss="e-icons e-circle-add icon-navy" CssClass="e-flat btn-light" Content=" Nuova Visita" OnClick="() => NewVisit()" Disabled="@AddVisitDisabled"></SfButton>
+                                    </div>
+                                    <div class="col-sm-10">
+                                        <span style="float: right;">
+                                            <SfButton IconCss="e-icons icon-navy e-save" CssClass="e-flat btn-light" Content=" Salva Visita" OnClick="() => SaveVisit()" Disabled="@SaveVisitDisabled"></SfButton>
+                                        </span>
+                                    </div>
+                                </div>
 
-        <div class="row" style="margin-top: 10px;">
-            <div class="col">
-                <SfTextBox ID="notevisita" @bind-Value="@Visita.Note" Placeholder="NOTE" FloatLabelType="@FloatLabelType.Auto"></SfTextBox>
+                                <!-- Dati di verifica -->
+                                @*
+                            <div class="row" style="margin-top: 10px;">
+                            <div class="col-sm-12">
+                            <table class="table table-bordered" style="border:1px solid #f90;">
+                            <thead>
+                            <tr>
+                            <th>VisitaCorrente</th>
+                            <th>Visita.IdVisit</th>
+                            <th>Visita.ptIdUser</th>
+                            <th>Visita.InsertDate</th>
+                            <th>Visita.ptIdPatient</th>
+                            <th>Visita.ptIdAppointment</th>
+                            <th>Visita.DataVisita</th>
+                            <th>Visita.Diagnosi</th>
+                            <th>Visita.Anamnesi</th>
+                            <th>Visita.TipoVisita</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                            <td>@VisitaCorrente</td>
+                            <td>@Visita.IdVisit</td>
+                            <td>@Visita.ptIdUser</td>
+                            <td>@Visita.InsertDate</td>
+                            <td>@Visita.ptIdPatient</td>
+                            <td>@Visita.ptIdAppointment</td>
+                            <td>@Visita.DataVisita</td>
+                            <td>@Visita.Diagnosi</td>
+                            <td>@Visita.Anamnesi</td>
+                            <td>@Visita.TipoVisita</td>
+                            </tr>
+                            </tbody>
+                            </table>
+                            </div>
+                            </div>
+                            *@
+
+                                <!-- Dati visita -->
+                                <div class="row" style="margin-top: 10px;">
+                                    <div class="col-sm-5">
+                                        <div class="row" style="margin-top: 10px;">
+                                            <div class="col">
+                                                <SfTextBox ID="diagnosi" @bind-Value="@Visita.Diagnosi" Placeholder="Diagnosi" FloatLabelType="@FloatLabelType.Auto"></SfTextBox>
+                                            </div>
+                                        </div>
+                                        <div class="row" style="margin-top: 10px;">
+                                            <div class="col">
+                                                <SfTextBox ID="anamnesi" @bind-Value="@Visita.Anamnesi" Placeholder="Anamnesi" FloatLabelType="@FloatLabelType.Auto"></SfTextBox>
+                                            </div>
+                                        </div>
+                                        <div class="row" style="margin-top: 10px;">
+                                            <div class="col">
+                                                <SfTextBox ID="annessi" @bind-Value="@Visita.Annessi" Placeholder="Annessi" FloatLabelType="@FloatLabelType.Auto"></SfTextBox>
+                                            </div>
+                                        </div>
+                                        <div class="row" style="margin-top: 10px;">
+                                            <div class="col">
+                                                <SfTextBox ID="segantod" @bind-Value="@Visita.Seg_Ant_Od" Placeholder="Seg.Ant.OD" FloatLabelType="@FloatLabelType.Auto"></SfTextBox>
+                                            </div>
+                                        </div>
+                                        <div class="row" style="margin-top: 10px;">
+                                            <div class="col">
+                                                <SfTextBox ID="segantos" @bind-Value="@Visita.Seg_Ant_Os" Placeholder="Seg.Ant.OS" FloatLabelType="@FloatLabelType.Auto"></SfTextBox>
+                                            </div>
+                                        </div>
+                                        <div class="row" style="margin-top: 10px;">
+                                            <div class="col">
+                                                <SfTextBox ID="fundusod" @bind-Value="@Visita.Fundus_Od" Placeholder="Fundus OD" FloatLabelType="@FloatLabelType.Auto"></SfTextBox>
+                                            </div>
+                                        </div>
+                                        <div class="row" style="margin-top: 10px;">
+                                            <div class="col">
+                                                <SfTextBox ID="fundusos" @bind-Value="@Visita.Fundus_Os" Placeholder="Fundus OS" FloatLabelType="@FloatLabelType.Auto"></SfTextBox>
+                                            </div>
+                                        </div>
+                                        <div class="row" style="margin-top: 10px;">
+                                            <div class="col">
+                                                <SfTextBox ID="visusod" @bind-Value="@Visita.Visus_Od" Placeholder="Visus OD" FloatLabelType="@FloatLabelType.Auto"></SfTextBox>
+                                            </div>
+                                        </div>
+                                        <div class="row" style="margin-top: 10px;">
+                                            <div class="col">
+                                                <SfTextBox ID="visusos" @bind-Value="@Visita.Visus_Os" Placeholder="Visus OS" FloatLabelType="@FloatLabelType.Auto"></SfTextBox>
+                                            </div>
+                                        </div>
+                                        <div class="row" style="margin-top: 10px;">
+                                            <div class="col">
+                                                <SfTextBox ID="terapia" @bind-Value="@Visita.Terapia" Placeholder="Terapia" FloatLabelType="@FloatLabelType.Auto"></SfTextBox>
+                                            </div>
+                                        </div>
+                                        <div class="row" style="margin-top: 10px;">
+                                            <div class="col-sm-4">
+                                                <SfTextBox ID="odpl" @bind-Value="@Visita.ODPL" Placeholder="ODPL" FloatLabelType="@FloatLabelType.Auto"></SfTextBox>
+                                            </div>
+                                            <div class="col-sm-4">
+                                                <SfTextBox ID="odpv" @bind-Value="@Visita.ODPV" Placeholder="ODPV" FloatLabelType="@FloatLabelType.Auto"></SfTextBox>
+                                            </div>
+                                            <div class="col-sm-4">
+                                                <SfTextBox ID="odmd" @bind-Value="@Visita.ODMD" Placeholder="MD" FloatLabelType="@FloatLabelType.Auto"></SfTextBox>
+                                            </div>
+                                        </div>
+                                        <div class="row" style="margin-top: 10px;">
+                                            <div class="col-sm-4">
+                                                <SfTextBox ID="ospl" @bind-Value="@Visita.OSPL" Placeholder="OSPL" FloatLabelType="@FloatLabelType.Auto"></SfTextBox>
+                                            </div>
+                                            <div class="col-sm-4">
+                                                <SfTextBox ID="ospv" @bind-Value="@Visita.OSPV" Placeholder="OSPV" FloatLabelType="@FloatLabelType.Auto"></SfTextBox>
+                                            </div>
+                                            <div class="col-sm-4">
+                                                <SfTextBox ID="osmd" @bind-Value="@Visita.OSMD" Placeholder="MD" FloatLabelType="@FloatLabelType.Auto"></SfTextBox>
+                                            </div>
+                                        </div>
+                                        <div class="row" style="margin-top: 10px;">
+                                            <div class="col">
+                                                <SfTextBox ID="motivovisita" @bind-Value="@Visita.MotivoVisita" Placeholder="Motivo" FloatLabelType="@FloatLabelType.Auto"></SfTextBox>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-7">
+                                        <div class="row" style="margin-top: 10px;">
+                                            <div class="col">
+                                                <SfTextBox ID="interventi" @bind-Value="@Visita.Interventi" Placeholder="Interventi" FloatLabelType="@FloatLabelType.Auto"></SfTextBox>
+                                            </div>
+                                        </div>
+                                        <div class="row" style="margin-top: 10px;">
+                                            <div class="col-sm-7">
+                                                <SfTextBox ID="curva" @bind-Value="@Visita.CurvaTono" Placeholder="Curva Tono" FloatLabelType="@FloatLabelType.Auto"></SfTextBox>
+                                            </div>
+                                            <div class="col-sm-5">
+                                                <SfTextBox ID="argon" @bind-Value="@Visita.CurvaArgon" Placeholder="Argon" FloatLabelType="@FloatLabelType.Auto"></SfTextBox>
+                                            </div>
+                                        </div>
+                                        <div class="row" style="margin-top: 10px;">
+                                            <div class="col">
+                                                <SfTextBox ID="vortottica" @bind-Value="@Visita.VOrtottica" Placeholder="Visita Ortottica" FloatLabelType="@FloatLabelType.Auto"></SfTextBox>
+                                            </div>
+                                        </div>
+                                        <div class="row" style="margin-top: 10px;">
+                                            <div class="col-sm-7">
+                                                <SfTextBox ID="shirmer" @bind-Value="@Visita.SHIRMER" Placeholder="SHIRMER" FloatLabelType="@FloatLabelType.Auto"></SfTextBox>
+                                            </div>
+                                            <div class="col-sm-5">
+                                                <SfTextBox ID="tono" @bind-Value="@Visita.TONO" Placeholder="TONO" FloatLabelType="@FloatLabelType.Auto"></SfTextBox>
+                                            </div>
+                                        </div>
+                                        <div class="row" style="margin-top: 10px;">
+                                            <div class="col-sm-7">
+                                                <SfTextBox ID="lavaggio" @bind-Value="@Visita.Lavaggio" Placeholder="Lavaggio" FloatLabelType="@FloatLabelType.Auto"></SfTextBox>
+                                            </div>
+                                            <div class="col-sm-5">
+                                                <SfTextBox ID="biometria" @bind-Value="@Visita.Biometria" Placeholder="Biometria" FloatLabelType="@FloatLabelType.Auto"></SfTextBox>
+                                            </div>
+                                        </div>
+                                        <div class="row" style="margin-top: 10px;">
+                                            <div class="col-sm-6">
+                                                <SfTextBox ID="fagod" @bind-Value="@Visita.FAG_Od" Placeholder="Fag OD" FloatLabelType="@FloatLabelType.Auto"></SfTextBox>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <SfTextBox ID="fagos" @bind-Value="@Visita.FAG_Os" Placeholder="Fag OS" FloatLabelType="@FloatLabelType.Auto"></SfTextBox>
+                                            </div>
+                                        </div>
+                                        <div class="row" style="margin-top: 10px;">
+                                            <div class="col-sm-7">
+                                                <SfTextBox ID="topografia" @bind-Value="@Visita.Topografia" Placeholder="Topografia" FloatLabelType="@FloatLabelType.Auto"></SfTextBox>
+                                            </div>
+                                            <div class="col-sm-5">
+                                                <SfTextBox ID="iv" @bind-Value="@Visita.IV" Placeholder="IV" FloatLabelType="@FloatLabelType.Auto"></SfTextBox>
+                                            </div>
+                                        </div>
+                                        <div class="row" style="margin-top: 10px;">
+                                            <div class="col-sm-6">
+                                                <SfTextBox ID="octod" @bind-Value="@Visita.OCT_Od" Placeholder="Oct OD" FloatLabelType="@FloatLabelType.Auto"></SfTextBox>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <SfTextBox ID="octos" @bind-Value="@Visita.OCT_Os" Placeholder="Oct OS" FloatLabelType="@FloatLabelType.Auto"></SfTextBox>
+                                            </div>
+                                        </div>
+                                        <div class="row" style="margin-top: 10px;">
+                                            <div class="col-sm-6">
+                                                <SfTextBox ID="rnflod" @bind-Value="@Visita.RNFL_Od" Placeholder="RNFL OD" FloatLabelType="@FloatLabelType.Auto"></SfTextBox>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <SfTextBox ID="rnflos" @bind-Value="@Visita.RNFL_Os" Placeholder="RNFL OS" FloatLabelType="@FloatLabelType.Auto"></SfTextBox>
+                                            </div>
+                                        </div>
+                                        <div class="row" style="margin-top: 10px;">
+                                            <div class="col-sm-6">
+                                                <SfTextBox ID="cvod" @bind-Value="@Visita.CV_Od" Placeholder="CV OD" FloatLabelType="@FloatLabelType.Auto"></SfTextBox>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <SfTextBox ID="cvos" @bind-Value="@Visita.CV_Os" Placeholder="CV OS" FloatLabelType="@FloatLabelType.Auto"></SfTextBox>
+                                            </div>
+                                        </div>
+                                        <div class="row" style="margin-top: 10px;">
+                                            <div class="col-sm-3">
+                                                <SfTextBox ID="pachimetriaod" @bind-Value="@Visita.PACH_Od" Placeholder="Pachimetria OD" FloatLabelType="@FloatLabelType.Auto"></SfTextBox>
+                                            </div>
+                                            <div class="col-sm-3">
+                                                <SfTextBox ID="pachimetriaos" @bind-Value="@Visita.PACH_Os" Placeholder="Pachimetria OS" FloatLabelType="@FloatLabelType.Auto"></SfTextBox>
+                                            </div>
+                                            <div class="col-sm-3">
+                                                <SfTextBox ID="cdod" @bind-Value="@Visita.CD_Od" Placeholder="C/D OD" FloatLabelType="@FloatLabelType.Auto"></SfTextBox>
+                                            </div>
+                                            <div class="col-sm-3">
+                                                <SfTextBox ID="cdos" @bind-Value="@Visita.CD_Os" Placeholder="C/D OS" FloatLabelType="@FloatLabelType.Auto"></SfTextBox>
+                                            </div>
+                                        </div>
+                                        <div class="row" style="margin-top: 10px;">
+                                            <div class="col">
+                                                <SfTextBox ID="auto" @bind-Value="@Visita.Auto" Placeholder="Auto" FloatLabelType="@FloatLabelType.Auto"></SfTextBox>
+                                            </div>
+                                        </div>
+                                        <div class="row" style="margin-top: 10px;">
+                                            <div class="col">
+                                                <SfTextBox ID="conclusioni" @bind-Value="@Visita.Conclusioni" Placeholder="Conclusioni" FloatLabelType="@FloatLabelType.Auto"></SfTextBox>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Note visita -->
+                                <div class="row" style="margin-top: 10px;">
+                                    <div class="col">
+                                        <SfTextBox ID="notevisita" @bind-Value="@Visita.Note" Placeholder="NOTE" FloatLabelType="@FloatLabelType.Auto"></SfTextBox>
+                                    </div>
+                                </div>
+                            </ContentTemplate>
+                        </TabItem>
+
+                        <!-- Sezione Prescrizione Occhiali -->
+                        <TabItem>
+                            <ChildContent>
+                                <TabHeader Text="Prescrizione Occhiali"></TabHeader>
+                            </ChildContent>
+                            <ContentTemplate>
+                                <div class="row" style="margin-top: 10px;">
+                                    <div class="col-sm-12">
+                                        <span style="float: right;">
+                                            <SfButton IconCss="e-icons icon-navy e-save" CssClass="e-flat btn-light" Content=" Salva Prescrizione" OnClick="() => SaveVisus()" Disabled="@SaveVisusDisabled"></SfButton>
+                                        </span>
+                                    </div>
+                                </div>
+
+                                <!-- Occhi Destro - Sinistro -->
+                                <div class="row" style="margin-top: 10px;">
+                                    <!-- Occhio Destro -->
+                                    <div class="col-sm-6">
+                                        <div class="row" style="margin-top: 10px;">
+                                            <div class="col-sm-3">&nbsp;</div>
+                                            <!-- style="border:1px solid #f90;"-->
+                                            <div class="col" style="text-align: center; font-size: larger;">
+                                                <!-- border:1px solid #09f;-->
+                                                Occhio Destro
+                                            </div>
+                                        </div>
+                                        <div class="row" style="margin-top: 10px;">
+                                            <div class="col-sm-3">&nbsp;</div>
+                                            <div class="col-sm-3" style="text-align: center; font-weight:bolder;">
+                                                Sfera
+                                            </div>
+                                            <div class="col-sm-3" style="text-align: center; font-weight:bolder;">
+                                                Cilindro
+                                            </div>
+                                            <div class="col-sm-3" style="text-align: center; font-weight:bolder;">
+                                                Asse
+                                            </div>
+                                        </div>
+                                        <div class="row" style="margin-top: 10px;">
+                                            <div class="col-sm-3" style="text-align: right; padding-top: 5px;">
+                                                <span>PER DISTANZA</span>
+                                            </div>
+                                            <div class="col-sm-3">
+                                                <SfTextBox ID="ODD_Sf" @bind-Value="@Visus.ODD_Sf"></SfTextBox>
+                                            </div>
+                                            <div class="col-sm-3">
+                                                <SfTextBox ID="ODD_Cil" @bind-Value="@Visus.ODD_Cil"></SfTextBox>
+                                            </div>
+                                            <div class="col-sm-3">
+                                                <SfTextBox ID="ODD_Asse" @bind-Value="@Visus.ODD_Asse"></SfTextBox>
+                                            </div>
+                                        </div>
+                                        <div class="row" style="margin-top: 10px;">
+                                            <div class="col-sm-3" style="text-align: right; padding-top: 5px;">
+                                                <span>A PERMANENZA</span>
+                                            </div>
+                                            <div class="col-sm-3">
+                                                <SfTextBox ID="ODP_Sf" @bind-Value="@Visus.ODP_Sf"></SfTextBox>
+                                            </div>
+                                            <div class="col-sm-3">
+                                                <SfTextBox ID="ODP_Cil" @bind-Value="@Visus.ODP_Cil"></SfTextBox>
+                                            </div>
+                                            <div class="col-sm-3">
+                                                <SfTextBox ID="ODP_Asse" @bind-Value="@Visus.ODP_Asse"></SfTextBox>
+                                            </div>
+                                        </div>
+                                        <div class="row" style="margin-top: 10px;">
+                                            <div class="col-sm-3" style="text-align: right; padding-top: 5px;">
+                                                <span>PER LETTURA</span>
+                                            </div>
+                                            <div class="col-sm-3">
+                                                <SfTextBox ID="ODL_Sf" @bind-Value="@Visus.ODL_Sf"></SfTextBox>
+                                            </div>
+                                            <div class="col-sm-3">
+                                                <SfTextBox ID="ODL_Cil" @bind-Value="@Visus.ODL_Cil"></SfTextBox>
+                                            </div>
+                                            <div class="col-sm-3">
+                                                <SfTextBox ID="ODL_Asse" @bind-Value="@Visus.ODL_Asse"></SfTextBox>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Occhio Sinistro -->
+                                    <div class="col-sm-6">
+                                        <div class="row" style="margin-top: 10px;">
+                                            <div class="col" style="text-align: center; font-size: larger;">
+                                                <!--  border:1px solid #09f; -->
+                                                Occhio Sinistro
+                                            </div>
+                                            <div class="col-sm-3">&nbsp;</div>
+                                            <!-- style="border:1px solid #f90;"-->
+                                        </div>
+                                        <div class="row" style="margin-top: 10px;">
+                                            <div class="col-sm-3" style="text-align: center; font-weight:bolder;">
+                                                Sfera
+                                            </div>
+                                            <div class="col-sm-3" style="text-align: center; font-weight:bolder;">
+                                                Cilindro
+                                            </div>
+                                            <div class="col-sm-3" style="text-align: center; font-weight:bolder;">
+                                                Asse
+                                            </div>
+                                            <div class="col-sm-3">&nbsp;</div>
+                                        </div>
+                                        <div class="row" style="margin-top: 10px;">
+                                            <div class="col-sm-3">
+                                                <SfTextBox ID="OSD_Sf" @bind-Value="@Visus.OSD_Sf"></SfTextBox>
+                                            </div>
+                                            <div class="col-sm-3">
+                                                <SfTextBox ID="OSD_Cil" @bind-Value="@Visus.OSD_Cil"></SfTextBox>
+                                            </div>
+                                            <div class="col-sm-3">
+                                                <SfTextBox ID="OSD_Asse" @bind-Value="@Visus.OSD_Asse"></SfTextBox>
+                                            </div>
+                                            <div class="col-sm-3">&nbsp;</div>
+                                        </div>
+                                        <div class="row" style="margin-top: 10px;">
+                                            <div class="col-sm-3">
+                                                <SfTextBox ID="OSP_Sf" @bind-Value="@Visus.OSP_Sf"></SfTextBox>
+                                            </div>
+                                            <div class="col-sm-3">
+                                                <SfTextBox ID="OSP_Cil" @bind-Value="@Visus.OSP_Cil"></SfTextBox>
+                                            </div>
+                                            <div class="col-sm-3">
+                                                <SfTextBox ID="OSP_Asse" @bind-Value="@Visus.OSP_Asse"></SfTextBox>
+                                            </div>
+                                            <div class="col-sm-3">&nbsp;</div>
+                                        </div>
+                                        <div class="row" style="margin-top: 10px;">
+                                            <div class="col-sm-3">
+                                                <SfTextBox ID="OSL_Sf" @bind-Value="@Visus.OSL_Sf"></SfTextBox>
+                                            </div>
+                                            <div class="col-sm-3">
+                                                <SfTextBox ID="OSL_Cil" @bind-Value="@Visus.OSL_Cil"></SfTextBox>
+                                            </div>
+                                            <div class="col-sm-3">
+                                                <SfTextBox ID="OSL_Asse" @bind-Value="@Visus.OSL_Asse"></SfTextBox>
+                                            </div>
+                                            <div class="col-sm-3">&nbsp;</div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-1">&nbsp;</div>
+                                </div>
+
+                                <!-- TABO - Internazionale -->
+                                <div class="row" style="margin-top: 10px;">
+                                    <div class="col-sm-4">
+                                        <label style="font-size: 12pt; padding: 0 8px 8px 0; vertical-align: super;">@switchTabo</label>
+                                        <SfSwitch @bind-Checked="@fTabo" ValueChange="ManageTabo" TChecked="bool"></SfSwitch>
+                                    </div>
+
+                                    @*
+                                <div class="col-sm-6" style="text-align:right;">
+                                <label style="font-size: 12pt; padding: 0 8px 8px 0;">@switchInter</label>
+                                <SfSwitch @bind-Checked="@fInter" ValueChange="ManageInter" TChecked="bool"></SfSwitch>
+                                </div>
+                                *@
+                                </div>
+
+                                <!-- Distanza interpupillare -->
+                                <div class="row" style="margin-top: 10px;">
+                                    <div class="col-sm-2">
+                                        <SfTextBox ID="Distanza" @bind-Value="@Visus.DI" Placeholder="Distanza interpupillare (mm)" FloatLabelType="@FloatLabelType.Auto"></SfTextBox>
+                                    </div>
+                                </div>
+
+                                <!-- Note visus -->
+                                <div class="row" style="margin-top: 20px;">
+                                    <div class="col">
+                                        <SfTextBox ID="NoteVisus" @bind-Value="@Visus.Note" Placeholder="NOTE" FloatLabelType="@FloatLabelType.Auto" Multiline="true"></SfTextBox>
+                                    </div>
+                                </div>
+                            </ContentTemplate>
+                        </TabItem>
+
+                        <!-- Sezione Controlli -->
+                        <TabItem>
+                            <ChildContent>
+                                <TabHeader Text="Controlli"></TabHeader>
+                            </ChildContent>
+                            <ContentTemplate>
+                                <div class="row" style="margin-top: 10px;">
+                                    <div class="col-sm-1"><b>&nbsp;Controllo</b> <i>@(CntrCorrente + 1)</i> <b>di</b> <i>@ListaCntr.Count</i></div>
+
+                                    <div class="col-sm-2">
+                                        <SfButton IconCss="e-icons icon-small e-first-page" CssClass="e-small e-flat btn-light" Content="" OnClick="() => GoToControl(0)" Disabled="@FirstCntrDisabled" title="Ultimo Controllo"></SfButton>
+                                        <SfButton IconCss="e-icons icon-small e-chevron-left" CssClass="e-small e-flat btn-light" Content="" OnClick="() => GoToControl(1)" Disabled="@PrevCntrDisabled" title="Controllo precedente"></SfButton>
+                                        <SfButton IconCss="e-icons icon-small e-chevron-right" CssClass="e-small e-flat btn-light" Content="" OnClick="() => GoToControl(2)" Disabled="@NextCntrDisabled" title="Controllo successivo"></SfButton>
+                                        <SfButton IconCss="e-icons icon-small e-last-page" CssClass="e-small e-flat btn-light" Content="" OnClick="() => GoToControl(3)" Disabled="@LastCntrDisabled" title="Primo Controllo"></SfButton>
+                                    </div>
+
+                                    <div class="col-sm-1">&nbsp;</div>
+
+                                    <div class="col-sm-2">
+                                        <SfButton IconCss="e-icons e-circle-add icon-navy" CssClass="e-flat btn-light" Content=" Nuovo Controllo" OnClick="() => NewControl()" Disabled="@AddCntrDisabled"></SfButton>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <span style="float: right;">
+                                            <SfButton IconCss="e-icons icon-navy e-save" CssClass="e-flat btn-light" Content=" Salva Controllo" OnClick="() => SaveControl()" Disabled="@SaveCntrDisabled"></SfButton>
+                                        </span>
+                                    </div>
+                                </div>
+
+                                <!-- Dati di verifica -->
+                                @*
+                            <div class="row" style="margin-top: 10px;">
+                            <div class="col-sm-12">
+                            <table class="table table-bordered" style="border:1px solid #f90;">
+                            <thead>
+                            <tr>
+                            <th>VisitaCorrente</th>
+                            <th>Visita.IdVisit</th>
+                            <th>Visita.DataVisita</th>
+                            <th>Controllo.IdControllo</th>
+                            <th>Controllo.ptIdUser</th>
+                            <th>Controllo.InsertDate</th>
+                            <th>Controllo.ptIdVisit</th>
+                            <th>Controllo.DataControllo</th>
+                            <th>Controllo.Valutazione</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                            <td>@VisitaCorrente</td>
+                            <td>@Visita.IdVisit</td>
+                            <td>@Visita.DataVisita</td>
+                            <td>@Controllo.IdControllo</td>
+                            <td>@Controllo.ptIdUser</td>
+                            <td>@Controllo.InsertDate</td>
+                            <td>@Controllo.ptIdVisit</td>
+                            <td>@Controllo.DataControllo</td>
+                            <td>@Controllo.Valutazione</td>
+                            </tr>
+                            </tbody>
+                            </table>
+                            </div>
+                            </div>
+                            *@
+                                <!-- Dati controllo -->
+                                <div class="row" style="margin-top: 10px;">
+                                    <div class="col-sm-1">
+                                        <SfMaskedTextBox ID="datacontrollo" @bind-Value="@DataControllo" Mask="00/00/0000" Placeholder="Data controllo" FloatLabelType="@FloatLabelType.Auto"></SfMaskedTextBox>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <label id="label_valutazione" for="valutazione" style="color: #343a40; font-weight: 500; margin: 3px 0;">Valutazione</label>
+                                        <SfTextBox ID="valutazione" @bind-Value="@Controllo.Valutazione" Multiline=true></SfTextBox>
+                                    </div>
+                                </div>
+                            </ContentTemplate>
+                        </TabItem>
+
+                        <!-- Sezione Ortottica -->
+                        <TabItem>
+                            <ChildContent>
+                                <TabHeader Text="Ortottica"></TabHeader>
+                            </ChildContent>
+                            <ContentTemplate>
+                                <div class="row" style="margin-top: 10px;">
+                                    <div class="col-sm-12">
+                                        <span style="float: right;">
+                                            <SfButton IconCss="e-icons icon-navy e-save" CssClass="e-flat btn-light" Content=" Salva Ortottica" OnClick="() => SaveOrtoctis()" Disabled="@SaveOrtoctisDisabled"></SfButton>
+                                        </span>
+                                    </div>
+                                </div>
+
+                                <!-- Posizione Primaria -->
+                                <div class="row" style="margin-top: 12px;">
+                                    <div class="col-sm-8">
+                                        <SfTextBox ID="oPosizione" @bind-Value="@Ortoctis.Posizione" Placeholder="Posizione Primaria" FloatLabelType="@FloatLabelType.Always"></SfTextBox>
+                                    </div>
+                                </div>
+
+                                <!-- Motilità Attiva -->
+                                <div class="row" style="margin-top: 12px;">
+                                    <div class="col-sm-8">
+                                        <SfTextBox ID="oMotilita" @bind-Value="@Ortoctis.Motilita" Placeholder="Motilità Attiva" FloatLabelType="@FloatLabelType.Always"></SfTextBox>
+                                    </div>
+                                </div>
+
+                                <!-- Convergenza -->
+                                <div class="row" style="margin-top: 12px;">
+                                    <div class="col-sm-8">
+                                        <SfTextBox ID="oConvergenza" @bind-Value="@Ortoctis.Convergenza" Placeholder="Convergenza" FloatLabelType="@FloatLabelType.Always"></SfTextBox>
+                                    </div>
+                                </div>
+
+                                <!-- Cover Test -->
+                                <div class="row" style="margin-top: 12px;">
+                                    <div class="col-sm-8">
+                                        <SfTextBox ID="oCover" @bind-Value="@Ortoctis.Cover" Placeholder="Cover Test" FloatLabelType="@FloatLabelType.Always"></SfTextBox>
+                                    </div>
+                                </div>
+
+                                <!-- Prisma Cover Test -->
+                                <div class="row" style="margin-top: 12px;">
+                                    <div class="col-sm-8">
+                                        <SfTextBox ID="oPrismaCover" @bind-Value="@Ortoctis.PrismaCover" Placeholder="Prisma Cover Test" FloatLabelType="@FloatLabelType.Always"></SfTextBox>
+                                    </div>
+                                </div>
+
+                                <!-- Ampiezza Fusiva -->
+                                <div class="row" style="margin-top: 12px;">
+                                    <div class="col-sm-8">
+                                        <SfTextBox ID="oAmpiezza" @bind-Value="@Ortoctis.Ampiezza" Placeholder="Ampiezza Fusiva" FloatLabelType="@FloatLabelType.Always"></SfTextBox>
+                                    </div>
+                                </div>
+
+                                <!-- Vetro Rosso -->
+                                <div class="row" style="margin-top: 12px;">
+                                    <div class="col-sm-8">
+                                        <SfTextBox ID="oVetro" @bind-Value="@Ortoctis.Vetro" Placeholder="Vetro Rosso" FloatLabelType="@FloatLabelType.Always"></SfTextBox>
+                                    </div>
+                                </div>
+
+                                <!-- Lang Test -->
+                                <div class="row" style="margin-top: 12px;">
+                                    <div class="col-sm-8">
+                                        <SfTextBox ID="oLang" @bind-Value="@Ortoctis.Lang" Placeholder="Lang Test" FloatLabelType="@FloatLabelType.Always"></SfTextBox>
+                                    </div>
+                                </div>
+
+                                <!-- Titmus Test -->
+                                <div class="row" style="margin-top: 12px;">
+                                    <div class="col-sm-8">
+                                        <SfTextBox ID="oTitmus" @bind-Value="@Ortoctis.Titmus" Placeholder="Titmus Test" FloatLabelType="@FloatLabelType.Always"></SfTextBox>
+                                    </div>
+                                </div>
+
+                                <!-- Altri test per la visione binoculare -->
+                                <div class="row" style="margin-top: 12px;">
+                                    <div class="col-sm-8">
+                                        <SfTextBox ID="oAltriTest" @bind-Value="@Ortoctis.AltriTest" Placeholder="Altri test per la visione binoculare" FloatLabelType="@FloatLabelType.Always"></SfTextBox>
+                                    </div>
+                                </div>
+
+                                <!-- Conclusioni -->
+                                <div class="row" style="margin-top: 12px;">
+                                    <div class="col-sm-8">
+                                        <label class="e-label-top" style="color: #343a40; font-weight: 500; font-size: 12px; padding-bottom:3px;" id="label_Conclusioni" for="oConclusioni">Conclusioni</label>
+                                        <SfTextBox ID="oConclusioni" @bind-Value="@Ortoctis.Conclusioni" Multiline="true"></SfTextBox>
+                                    </div>
+                                </div>
+
+                                <!-- Diagnosi -->
+                                <div class="row" style="margin-top: 12px;">
+                                    <div class="col-sm-8">
+                                        <label class="e-label-top" style="color: #343a40; font-weight: 500; font-size: 12px; padding-bottom:3px;" id="label_Diagnosi" for="oDiagnosi">Diagnosi</label>
+                                        <SfTextBox ID="oDiagnosi" @bind-Value="@Ortoctis.Diagnosi" Multiline="true"></SfTextBox>
+                                    </div>
+                                </div>
+
+                                <!-- Terapia -->
+                                <div class="row" style="margin-top: 12px;">
+                                    <div class="col-sm-8">
+                                        <label class="e-label-top" style="color: #343a40; font-weight: 500; font-size: 12px; padding-bottom:3px;" id="label_Terapia" for="oTerapia">Terapia</label>
+                                        <SfTextBox ID="oTerapia" @bind-Value="@Ortoctis.Terapia" Multiline="true"></SfTextBox>
+                                    </div>
+                                </div>
+                            </ContentTemplate>
+                        </TabItem>
+                    </TabItems>
+                </SfTab>
             </div>
         </div>
     </div>
@@ -343,6 +777,59 @@
     .e-input-group.e-control-wrapper textarea {
         resize: none;
     }
+
+    .default-tab {
+        border: 1px solid #d7d7d7;
+    }
+
+        .default-tab .e-content .e-item {
+            padding: 10px;
+            text-align: justify;
+        }
+
+    .default-tab-control-section {
+        margin: 20px 20% 20px 20%;
+    }
+
+    @@media screen and (max-width: 480px) {
+        .default-tab-control-section {
+            margin: 20px 0 20px 0;
+        }
+    }
+
+    .bootstrap5 .default-tab,
+    .bootstrap .default-tab,
+    .bootstrap4 .default-tab {
+        border: none;
+    }
+
+        .bootstrap5 .default-tab .e-content > .e-item.e-active,
+        .bootstrap4 .default-tab .e-content > .e-item.e-active,
+        .bootstrap .default-tab .e-content > .e-item.e-active {
+            background: #FAF9F8;
+        }
+
+    .e-tab .e-tab-header .e-toolbar-items .e-active .e-tab-wrap {
+        border-bottom: 4px solid #0d6efd;
+    }
+
+        .e-tab .e-tab-header .e-toolbar-items .e-active .e-tab-wrap:hover {
+            border-bottom: 4px solid #0d6efd;
+        }
+
+    .e-tab .e-tab-header .e-toolbar-item:not(.e-active) {
+        border-bottom: 0px;
+    }
+
+    /*
+            .e-tab .e-toolbar .e-toolbar-items .e-toolbar-item .e-text-wrap {
+            height: 50px;
+        }
+
+        .e-tab-wrap:hover, .e-tab-wrap:active {
+            border-bottom: 4px solid #0d6efd !important;
+        }
+     */
 </style>
 
 
@@ -356,6 +843,16 @@
     public const int DEFAULT_PAGE_SIZE = 10;
     public string[] PageSizes = new string[] { "Tutti", "5", "10", "20", "50" };
 
+    private List<TabData> TabStyles { get; set; } = new List<TabData>() {
+        new TabData { StyleMode = "Default Tab", StyleClass = "" },
+        new TabData { StyleMode = "Fill Tab Header", StyleClass = "e-fill" },
+        new TabData { StyleMode = "Background Tab Header", StyleClass = "e-background" }
+    };
+    public class TabData
+    {
+        public string StyleMode { get; set; }
+        public string StyleClass { get; set; }
+    }
 
     Boolean ShowMore = true;
     string fShowLessBtn = "inline-block";
@@ -374,17 +871,16 @@
         AlertVisible = false;
     }
 
-
-
     #region logging
     string? LoggedUser;
     string[]? arUser;
-    private string? SessionID;
 
     private string? gIdUser;
     private string? gFName;
     private string? gLName;
     private string? gSuperUser;
+
+    private string? SessionID;
 
     //private string[] gRoleUser;
 
@@ -435,8 +931,60 @@
 
     private Visit Visita = new Visit();
 
-    private List<CoppiaDecDat> ListaVisite;
+    // private List<Coppia> ListaVisite;
+    private List<CoppiaDecDat> ListaVisite = new List<CoppiaDecDat>();
     private int VisitaCorrente = -1;
+    #endregion
+
+    #region binding dati prescrizione occhiali
+    public string DataMisura = "";
+
+    public Boolean SaveVisusDisabled = false;
+
+    public Boolean IsNewVisus = false;
+
+    private Misure Visus = new Misure();
+
+    private List<CoppiaDecDat> ListaVisus;
+    private int VisusCorrente = -1;
+
+    private string switchTabo = "TABO: Si";
+    private bool fTabo = true;
+
+    private string switchInter = "INTERNAZIONALE: No";
+    private bool fInter = false;
+    #endregion
+
+    #region binding dati controllo
+    public string DataControllo = "";
+
+    public Boolean FirstCntrDisabled = false;
+    public Boolean PrevCntrDisabled = false;
+    public Boolean NextCntrDisabled = false;
+    public Boolean LastCntrDisabled = false;
+
+    public Boolean AddCntrDisabled = false;
+    public Boolean SaveCntrDisabled = false;
+
+    public Boolean IsNewCntr = false;
+
+    private Controlli Controllo = new Controlli();
+
+    private List<CoppiaDecDat> ListaCntr = new List<CoppiaDecDat>();
+    private int CntrCorrente = -1;
+    #endregion
+
+    #region visita ortottica
+    public string DataOrtottica = "";
+
+    public Boolean SaveOrtoctisDisabled = false;
+
+    public Boolean IsNewOrtoctis = false;
+
+    private Ortottica Ortoctis = new Ortottica();
+
+    private List<CoppiaDecDat> ListaOrtoctis;
+    private int OrtoctisCorrente = -1;
     #endregion
 
     #region Funzioni di supporto
@@ -561,6 +1109,36 @@
 
         return result;
     }
+
+    private void ManageTabo(Syncfusion.Blazor.Buttons.ChangeEventArgs<bool> obj)
+    {
+        if (fTabo)
+        {
+            switchTabo = "TABO: Si";
+        }
+        else
+        {
+            switchTabo = "TABO: No";
+        }
+    }
+
+    private void ManageInter(Syncfusion.Blazor.Buttons.ChangeEventArgs<bool> obj)
+    {
+        if (fInter)
+        {
+            switchInter = "INTERNAZIONALE: Si";
+        }
+        else
+        {
+            switchInter = "INTERNAZIONALE: No";
+        }
+    }
+
+    public async void GoToPatientList(decimal id)
+    {
+        await Task.Delay(10);
+        Navigation.NavigateTo("/patientlist/" + id.ToString());
+    }
     #endregion
 
     protected override async Task OnInitializedAsync()
@@ -621,6 +1199,12 @@
                 // load date e id storico visite e dati ultima visita
                 ListaVisite = await ListVisitsService.ListPatientsVisits(id);
 
+                // load date e id storico visus e dati ultimo visus
+                ListaVisus = await ListVisusService.ListPatientsVisus(id);
+
+                // load date e id storico visite ortottiche
+                ListaOrtoctis = await ListOrtoctisService.ListPatientsOrtottica(id);
+
                 if (ListaVisite.Count > 0)
                 {
                     SaveVisitDisabled = false;
@@ -642,9 +1226,43 @@
 
                     VisitaCorrente = 0;
 
-                    DataVisita = ListaVisite[0].Val.ToString("dd/MM/yyyy");
+                    DataVisita = ListaVisite[VisitaCorrente].Val.ToString("dd/MM/yyyy");
 
-                    LoadVisit(ListaVisite[0].ID);
+                    LoadVisit(ListaVisite[VisitaCorrente].ID);
+
+                    LoadVisus();
+
+                    // load date e id storico controlli e dati ultimo controllo
+
+                    ListaCntr = await ListControlliService.ListControlliByVisit(ListaVisite[VisitaCorrente].ID);
+
+                    if (ListaCntr.Count > 0)
+                    {
+                        if (ListaCntr.Count == 1)
+                        {
+                            FirstCntrDisabled = true;
+                            PrevCntrDisabled = true;
+                            NextCntrDisabled = true;
+                            LastCntrDisabled = true;
+                        }
+                        else
+                        {
+                            FirstCntrDisabled = true;
+                            PrevCntrDisabled = true;
+                            NextCntrDisabled = false;
+                            LastCntrDisabled = false;
+                        }
+
+                        CntrCorrente = 0;
+
+                        DataControllo = ListaCntr[CntrCorrente].Val.ToString();
+
+                        LoadControl(ListaCntr[CntrCorrente].ID);
+                    }
+
+                    AddCntrDisabled = false;
+
+                    LoadOrtoctis();
                 }
                 else
                 {
@@ -661,6 +1279,7 @@
         }
     }
 
+    #region Pazienti
     public async void LoadPatient()
     {
         Paziente = await PatientMngService.GetPatient(id);
@@ -708,7 +1327,8 @@
 
         if (BirthDate != "")
         {
-            if (CheckDate(BirthDate)){
+            if (CheckDate(BirthDate))
+            {
                 TmpDate = BirthDate.Substring(4, 4) + "-" + BirthDate.Substring(2, 2) + "-" + BirthDate.Substring(0, 2) + " 00:00:00,000";
 
                 Paziente.BirthDate = DateTime.ParseExact(TmpDate, "yyyy-MM-dd HH:mm:ss,fff", System.Globalization.CultureInfo.InvariantCulture);
@@ -753,13 +1373,9 @@
             Navigation.NavigateTo("/patientlist/" + id.ToString());
         }
     }
+    #endregion
 
-    public async void GoToPatientList(decimal id)
-    {
-        await Task.Delay(10);
-        Navigation.NavigateTo("/patientlist/" + id.ToString());
-    }
-
+    #region Visite
     public async void LoadVisit(decimal idv)
     {
         Visita = await VisitService.GetVisit(idv);
@@ -851,6 +1467,99 @@
         StateHasChanged();
     }
 
+    public async void CloneVisit(decimal idv)
+    {
+        Visit TmpVisita = new Visit();
+
+        TmpVisita = await VisitService.GetVisit(idv);
+
+        Visita.Diagnosi = SetObjNullToStr(TmpVisita.Diagnosi);
+
+        Visita.Anamnesi = SetObjNullToStr(TmpVisita.Anamnesi);
+
+        Visita.Annessi = SetObjNullToStr(TmpVisita.Annessi);
+
+        Visita.Seg_Ant_Od = SetObjNullToStr(TmpVisita.Seg_Ant_Od);
+
+        Visita.Seg_Ant_Os = SetObjNullToStr(TmpVisita.Seg_Ant_Os);
+
+        Visita.Fundus_Od = SetObjNullToStr(TmpVisita.Fundus_Od);
+
+        Visita.Fundus_Os = SetObjNullToStr(TmpVisita.Fundus_Os);
+
+        Visita.Visus_Od = SetObjNullToStr(TmpVisita.Visus_Od);
+
+        Visita.Visus_Os = SetObjNullToStr(TmpVisita.Visus_Os);
+
+        Visita.Terapia = SetObjNullToStr(TmpVisita.Terapia);
+
+        Visita.ODPL = SetObjNullToStr(TmpVisita.ODPL);
+
+        Visita.ODPV = SetObjNullToStr(TmpVisita.ODPV);
+
+        Visita.ODMD = SetObjNullToStr(TmpVisita.ODMD);
+
+        Visita.OSPL = SetObjNullToStr(TmpVisita.OSPL);
+
+        Visita.OSPV = SetObjNullToStr(TmpVisita.OSPV);
+
+        Visita.OSMD = SetObjNullToStr(TmpVisita.OSMD);
+
+        Visita.Interventi = SetObjNullToStr(TmpVisita.Interventi);
+
+        Visita.CurvaTono = SetObjNullToStr(TmpVisita.CurvaTono);
+
+        Visita.CurvaArgon = SetObjNullToStr(TmpVisita.CurvaArgon);
+
+        Visita.VOrtottica = SetObjNullToStr(TmpVisita.VOrtottica);
+
+        Visita.SHIRMER = SetObjNullToStr(TmpVisita.SHIRMER);
+
+        Visita.TONO = SetObjNullToStr(TmpVisita.TONO);
+
+        Visita.Lavaggio = SetObjNullToStr(TmpVisita.Lavaggio);
+
+        Visita.Biometria = SetObjNullToStr(TmpVisita.Biometria);
+
+        Visita.FAG_Od = SetObjNullToStr(TmpVisita.FAG_Od);
+
+        Visita.FAG_Os = SetObjNullToStr(TmpVisita.FAG_Os);
+
+        Visita.Topografia = SetObjNullToStr(TmpVisita.Topografia);
+
+        Visita.IV = SetObjNullToStr(TmpVisita.IV);
+
+        Visita.OCT_Od = SetObjNullToStr(TmpVisita.OCT_Od);
+
+        Visita.OCT_Os = SetObjNullToStr(TmpVisita.OCT_Os);
+
+        Visita.RNFL_Od = SetObjNullToStr(TmpVisita.RNFL_Od);
+
+        Visita.RNFL_Os = SetObjNullToStr(TmpVisita.RNFL_Os);
+
+        Visita.CV_Od = SetObjNullToStr(TmpVisita.CV_Od);
+
+        Visita.CV_Os = SetObjNullToStr(TmpVisita.CV_Os);
+
+        Visita.PACH_Od = SetObjNullToStr(TmpVisita.PACH_Od);
+
+        Visita.PACH_Os = SetObjNullToStr(TmpVisita.PACH_Os);
+
+        Visita.CD_Od = SetObjNullToStr(TmpVisita.CD_Od);
+
+        Visita.CD_Os = SetObjNullToStr(TmpVisita.CD_Os);
+
+        Visita.Auto = SetObjNullToStr(TmpVisita.Auto);
+
+        Visita.MotivoVisita = SetObjNullToStr(TmpVisita.MotivoVisita);
+
+        Visita.Conclusioni = SetObjNullToStr(TmpVisita.Conclusioni);
+
+        Visita.Note = SetObjNullToStr(TmpVisita.Note);
+
+        StateHasChanged();
+    }
+
     public async void GoToVisit(int p)
     {
         await Task.Delay(10);
@@ -865,10 +1574,6 @@
 
                 NextVisitDisabled = false;
                 LastVisitDisabled = false;
-
-                DataVisita = ListaVisite[VisitaCorrente].Val.ToString("dd/MM/yyyy");
-
-                LoadVisit(ListaVisite[VisitaCorrente].ID);
                 break;
 
             case 1:
@@ -885,10 +1590,6 @@
                         PrevVisitDisabled = true;
                     }
                 }
-
-                DataVisita = ListaVisite[VisitaCorrente].Val.ToString("dd/MM/yyyy");
-
-                LoadVisit(ListaVisite[VisitaCorrente].ID);
                 break;
 
             case 2:
@@ -905,9 +1606,6 @@
                         LastVisitDisabled = true;
                     }
                 }
-                DataVisita = ListaVisite[VisitaCorrente].Val.ToString("dd/MM/yyyy");
-
-                LoadVisit(ListaVisite[VisitaCorrente].ID);
                 break;
 
             case 3:
@@ -918,12 +1616,54 @@
 
                 NextVisitDisabled = true;
                 LastVisitDisabled = true;
-
-                DataVisita = ListaVisite[VisitaCorrente].Val.ToString("dd/MM/yyyy");
-
-                LoadVisit(ListaVisite[VisitaCorrente].ID);
                 break;
         }
+
+        DataVisita = ListaVisite[VisitaCorrente].Val.ToString("dd/MM/yyyy");
+
+        LoadVisit(ListaVisite[VisitaCorrente].ID);
+
+        AddVisitDisabled = false;
+
+        LoadVisus();
+
+        LoadOrtoctis();
+
+        // load date e id storico controlli e dati ultimo controllo
+        DataControllo = "";
+        Controllo = new Controlli();
+        CntrCorrente = -1;
+
+        ListaCntr.Clear();
+
+        ListaCntr = await ListControlliService.ListControlliByVisit(ListaVisite[VisitaCorrente].ID);
+
+        if (ListaCntr.Count > 0)
+        {
+            if (ListaCntr.Count == 1)
+            {
+                FirstCntrDisabled = true;
+                PrevCntrDisabled = true;
+                NextCntrDisabled = true;
+                LastCntrDisabled = true;
+            }
+            else
+            {
+                FirstCntrDisabled = true;
+                PrevCntrDisabled = true;
+                NextCntrDisabled = false;
+                LastCntrDisabled = false;
+            }
+
+            CntrCorrente = 0;
+
+            DataControllo = ListaCntr[CntrCorrente].Val.ToString();
+
+            LoadControl(ListaCntr[CntrCorrente].ID);
+        }
+
+        AddCntrDisabled = false;
+        SaveCntrDisabled = false;
 
         StateHasChanged();
     }
@@ -932,17 +1672,42 @@
     {
         await Task.Run(() =>
         {
+            // parte visite
             IsNewVisit = true;
-
-            DataVisita = DateTime.Now.ToString("dd/MM/yyyy");
-
-            AddVisitDisabled = true;
-
-            SaveVisitDisabled = false;
 
             Visita = new Visit();
 
+            if (VisitaCorrente != -1)   // clona l'ultima visita
+            {
+                CloneVisit(ListaVisite[0].ID);
+            }
+
+            Visita.ptIdPatient = id;
+            Visita.ptIdUser = Decimal.Parse(gIdUser);
+            Visita.InsertDate = DateTime.Now;
             Visita.DataVisita = DateTime.Now;
+
+            DataVisita = Visita.DataVisita.ToString("dd/MM/yyyy");
+
+            AddVisitDisabled = true;
+            SaveVisitDisabled = false;
+
+            // parte visus
+            NewVisus();
+            Visus.DataMisura = Visita.DataVisita;
+
+            // parte controlli
+            Controllo = new Controlli();
+
+            IsNewCntr = false;
+            DataControllo = "";
+
+            AddCntrDisabled = false;
+            SaveCntrDisabled = true;
+
+            // parte ortottica
+            NewOrtoctis();
+            Ortoctis.DataOrtottica = Visita.DataVisita;
 
             StateHasChanged();
         });
@@ -952,12 +1717,10 @@
     {
         if (IsNewVisit)
         {
-            Visita.ptIdPatient = id;
-            Visita.ptIdUser = Decimal.Parse(gIdUser);
-            Visita.InsertDate = DateTime.Now;
-            Visita.DataVisita = DateTime.Now;
-
             await VisitService.AddVisit(Visita);
+
+            // visit entry completed
+            IsNewVisit = false;
         }
         else
         {
@@ -988,8 +1751,6 @@
 
             VisitaCorrente = 0;
 
-            // Visita = await VisitService.GetVisit(Decimal.Parse(ListaVisite[0].ID));
-
             DataVisita = ListaVisite[0].Val.ToString("dd/MM/yyyy");
 
             LoadVisit(ListaVisite[VisitaCorrente].ID);
@@ -999,16 +1760,424 @@
         // SaveVisitDisabled = true;
 
         StateHasChanged();
+    }
+    #endregion
 
-        if (IsNewVisit)
+    #region Prescrizione Occhiali
+    public async void LoadVisus()
+    {
+        VisusCorrente = -1;
+
+        for (var iv = 0; iv < ListaVisus.Count; iv++)
         {
-            // visit entry completed
+            if (ListaVisus[iv].Val.ToString("dd/MM/yyyy") == DataVisita)
+            {
+                VisusCorrente = iv;
+            }
+        }
 
-            IsNewVisit = false;
+        if (VisusCorrente > -1)
+        {
+            IsNewVisus = false;
+
+            Visus = await VisusService.GetVisus(ListaVisus[VisusCorrente].ID);
+
+            Visus.ODD_Sf = SetObjNullToStr(Visus.ODD_Sf);
+
+            Visus.ODD_Cil = SetObjNullToStr(Visus.ODD_Cil);
+
+            Visus.ODD_Asse = SetObjNullToStr(Visus.ODD_Asse);
+
+            Visus.OSD_Sf = SetObjNullToStr(Visus.OSD_Sf);
+
+            Visus.OSD_Cil = SetObjNullToStr(Visus.OSD_Cil);
+
+            Visus.OSD_Asse = SetObjNullToStr(Visus.OSD_Asse);
+
+
+            Visus.ODP_Sf = SetObjNullToStr(Visus.ODP_Sf);
+
+            Visus.ODP_Cil = SetObjNullToStr(Visus.ODP_Cil);
+
+            Visus.ODP_Asse = SetObjNullToStr(Visus.ODP_Asse);
+
+            Visus.OSP_Sf = SetObjNullToStr(Visus.OSP_Sf);
+
+            Visus.OSP_Cil = SetObjNullToStr(Visus.OSP_Cil);
+
+            Visus.OSP_Asse = SetObjNullToStr(Visus.OSP_Asse);
+
+
+            Visus.ODL_Sf = SetObjNullToStr(Visus.ODL_Sf);
+
+            Visus.ODL_Cil = SetObjNullToStr(Visus.ODL_Cil);
+
+            Visus.ODL_Asse = SetObjNullToStr(Visus.ODL_Asse);
+
+            Visus.OSL_Sf = SetObjNullToStr(Visus.OSL_Sf);
+
+            Visus.OSL_Cil = SetObjNullToStr(Visus.OSL_Cil);
+
+            Visus.OSL_Asse = SetObjNullToStr(Visus.OSL_Asse);
+
+
+            fTabo = Visus.Tabo;
+            if (fTabo)
+            {
+                switchTabo = "TABO: Si";
+            }
+
+            fInter = Visus.Inter;
+            if (fInter)
+            {
+                switchInter = "INTERNAZIONALE: Si";
+            }
+
+            Visus.DI = SetObjNullToStr(Visus.DI);
+
+            Visus.Note = SetObjNullToStr(Visus.Note);
         }
         else
         {
-            // visit update completed
+            IsNewVisus = true;
+
+            DataMisura = DataVisita;
+
+            SaveVisusDisabled = false;
+
+            Visus = new Misure();
+
+            Visus.DataMisura = ListaVisite[VisitaCorrente].Val;
         }
+
+        StateHasChanged();
     }
+
+    public async void NewVisus()
+    {
+        await Task.Run(() =>
+        {
+            IsNewVisus = true;
+
+            Visus = new Misure();
+
+            Visus.ptIdUser = Decimal.Parse(gIdUser);
+            Visus.ptIdPatient = id;
+            Visus.InsertDate = DateTime.Now;
+            Visus.DataMisura = DateTime.Now;
+
+            DataMisura = DateTime.Now.ToString("dd/MM/yyyy");
+
+            SaveVisusDisabled = false;
+
+            StateHasChanged();
+        });
+    }
+
+    public async void SaveVisus()
+    {
+        Visus.Tabo = fTabo;
+        Visus.Inter = fInter;
+
+        if (IsNewVisus)
+        {
+            Visus.ptIdUser = Decimal.Parse(gIdUser);
+            Visus.ptIdPatient = id;
+            Visus.InsertDate = DateTime.Now;
+
+            await VisusService.AddVisus(Visus);
+
+            // visit entry completed
+            IsNewVisus = false;
+        }
+        else
+        {
+            await VisusService.UpdVisus(Visus.IdMisura, Visus);
+        }
+
+        // load date e id storico visite e dati ultima visita
+        ListaVisus.Clear();
+
+        ListaVisus = await ListVisusService.ListPatientsVisus(id);
+
+        if (ListaVisus.Count > 0)
+        {
+            VisusCorrente = 0;
+
+            DataMisura = ListaVisus[VisusCorrente].Val.ToString();
+
+            LoadVisus();
+        }
+
+        StateHasChanged();
+    }
+    #endregion
+
+    #region Controlli
+    public async void LoadControl(decimal idc)
+    {
+        Controllo = await ControlliService.GetControllo(idc);
+
+        Controllo.Valutazione = SetObjNullToStr(Controllo.Valutazione);
+
+        StateHasChanged();
+    }
+
+    public async void GoToControl(int p)
+    {
+        await Task.Delay(10);
+
+        switch (p)
+        {
+            case 0:                         // primo controllo
+                CntrCorrente = 0;
+
+                FirstCntrDisabled = true;
+                PrevCntrDisabled = true;
+
+                NextCntrDisabled = false;
+                LastCntrDisabled = false;
+                break;
+
+            case 1:                         // controllo precedente
+                if (CntrCorrente > 0)
+                {
+                    CntrCorrente -= 1;
+
+                    NextCntrDisabled = false;
+                    LastCntrDisabled = false;
+
+                    if (CntrCorrente == 0)
+                    {
+                        FirstCntrDisabled = true;
+                        PrevCntrDisabled = true;
+                    }
+                }
+                break;
+
+            case 2:                         // controllo successivo
+                if (CntrCorrente < ListaCntr.Count - 1)
+                {
+                    CntrCorrente += 1;
+
+                    FirstCntrDisabled = false;
+                    PrevCntrDisabled = false;
+
+                    if (CntrCorrente == ListaCntr.Count - 1)
+                    {
+                        NextCntrDisabled = true;
+                        LastCntrDisabled = true;
+                    }
+                }
+                break;
+
+            case 3:                         // ultimo controllo
+                CntrCorrente = ListaCntr.Count - 1;
+
+                FirstCntrDisabled = false;
+                PrevCntrDisabled = false;
+
+                NextCntrDisabled = true;
+                LastCntrDisabled = true;
+                break;
+        }
+
+        DataControllo = ListaCntr[CntrCorrente].Val.ToString("dd/MM/yyyy");
+
+        LoadControl(ListaCntr[CntrCorrente].ID);
+
+        StateHasChanged();
+    }
+
+    public async void NewControl()
+    {
+        await Task.Run(() =>
+        {
+            // parte controlli
+            IsNewCntr = true;
+
+            Controllo = new Controlli();
+
+            Controllo.ptIdUser = Decimal.Parse(gIdUser);
+            Controllo.InsertDate = DateTime.Now;
+            Controllo.ptIdVisit = ListaVisite[VisitaCorrente].ID;
+            Controllo.DataControllo = DateTime.Now;
+
+            DataControllo = Controllo.DataControllo.ToString("dd/MM/yyyy");
+
+            AddCntrDisabled = true;
+            SaveCntrDisabled = false;
+
+            StateHasChanged();
+        });
+    }
+
+    public async void SaveControl()
+    {
+        if (IsNewCntr)
+        {
+            await ControlliService.AddControllo(Controllo);
+
+            // control entry completed
+            IsNewCntr = false;
+        }
+        else
+        {
+            await ControlliService.UpdControllo(Controllo.IdControllo, Controllo);
+        }
+
+        // load date e id storico controlli e dati ultimo controllo
+        ListaCntr.Clear();
+
+        ListaCntr = await ListControlliService.ListControlliByVisit(Visita.IdVisit);
+
+        if (ListaCntr.Count > 0)
+        {
+            if (ListaCntr.Count == 1)
+            {
+                FirstCntrDisabled = true;
+                PrevCntrDisabled = true;
+                NextCntrDisabled = true;
+                LastCntrDisabled = true;
+            }
+            else
+            {
+                FirstCntrDisabled = true;
+                PrevCntrDisabled = true;
+                NextCntrDisabled = false;
+                LastCntrDisabled = false;
+            }
+
+            CntrCorrente = 0;
+
+            DataControllo = ListaCntr[0].Val.ToString("dd/MM/yyyy");
+
+            LoadControl(ListaCntr[CntrCorrente].ID);
+        }
+
+        AddCntrDisabled = false;
+        // SaveCntrDisabled = true;
+
+        StateHasChanged();
+    }
+    #endregion
+
+    #region Visita Ortottica
+    public async void LoadOrtoctis()
+    {
+        OrtoctisCorrente = -1;
+
+        for (var iv = 0; iv < ListaOrtoctis.Count; iv++)
+        {
+            if (ListaOrtoctis[iv].Val.ToString("dd/MM/yyyy") == DataVisita)
+            {
+                OrtoctisCorrente = iv;
+            }
+        }
+
+        if (OrtoctisCorrente > -1)
+        {
+            IsNewOrtoctis = false;
+
+            Ortoctis = await OrtoctisService.GetOrtottica(ListaOrtoctis[OrtoctisCorrente].ID);
+
+            Ortoctis.Posizione = SetObjNullToStr(Ortoctis.Posizione);
+
+            Ortoctis.Motilita = SetObjNullToStr(Ortoctis.Motilita);
+
+            Ortoctis.Convergenza = SetObjNullToStr(Ortoctis.Convergenza);
+
+            Ortoctis.Cover = SetObjNullToStr(Ortoctis.Cover);
+
+            Ortoctis.PrismaCover = SetObjNullToStr(Ortoctis.PrismaCover);
+
+            Ortoctis.Ampiezza = SetObjNullToStr(Ortoctis.Ampiezza);
+
+            Ortoctis.Vetro = SetObjNullToStr(Ortoctis.Vetro);
+
+            Ortoctis.Lang = SetObjNullToStr(Ortoctis.Lang);
+
+            Ortoctis.Titmus = SetObjNullToStr(Ortoctis.Titmus);
+
+            Ortoctis.AltriTest = SetObjNullToStr(Ortoctis.AltriTest);
+
+
+            Ortoctis.Conclusioni = SetObjNullToStr(Ortoctis.Conclusioni);
+
+            Ortoctis.Diagnosi = SetObjNullToStr(Ortoctis.Diagnosi);
+
+            Ortoctis.Terapia = SetObjNullToStr(Ortoctis.Terapia);
+        }
+        else
+        {
+            IsNewOrtoctis = true;
+
+            DataOrtottica = DataVisita;
+
+            SaveOrtoctisDisabled = false;
+
+            Ortoctis = new Ortottica();
+
+            Ortoctis.DataOrtottica = ListaVisite[VisitaCorrente].Val;
+        }
+
+        StateHasChanged();
+    }
+
+    public async void NewOrtoctis()
+    {
+        await Task.Run(() =>
+        {
+            IsNewOrtoctis = true;
+
+            Ortoctis = new Ortottica();
+
+            Ortoctis.ptIdUser = Decimal.Parse(gIdUser);
+            Ortoctis.ptIdPatient = id;
+            Ortoctis.InsertDate = DateTime.Now;
+            Ortoctis.DataOrtottica = DateTime.Now;
+
+            DataOrtottica = DateTime.Now.ToString("dd/MM/yyyy");
+
+            SaveOrtoctisDisabled = false;
+
+            StateHasChanged();
+        });
+    }
+
+    public async void SaveOrtoctis()
+    {
+        if (IsNewOrtoctis)
+        {
+            Ortoctis.ptIdUser = Decimal.Parse(gIdUser);
+            Ortoctis.ptIdPatient = id;
+            Ortoctis.InsertDate = DateTime.Now;
+
+            await OrtoctisService.AddOrtottica(Ortoctis);
+
+            // visit entry completed
+            IsNewOrtoctis = false;
+        }
+        else
+        {
+            await OrtoctisService.UpdOrtottica(Ortoctis.IdOrtottica, Ortoctis);
+        }
+
+        // load date e id storico visite e dati ultima visita
+        ListaOrtoctis.Clear();
+
+        ListaOrtoctis = await ListOrtoctisService.ListPatientsOrtottica(id);
+
+        if (ListaOrtoctis.Count > 0)
+        {
+            OrtoctisCorrente = 0;
+
+            DataOrtottica = ListaOrtoctis[OrtoctisCorrente].Val.ToString();
+
+            LoadOrtoctis();
+        }
+
+        StateHasChanged();
+    }
+    #endregion
 }

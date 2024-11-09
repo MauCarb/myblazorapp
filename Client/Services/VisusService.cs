@@ -1,8 +1,5 @@
-﻿using System.Net.Http;
+﻿using BlazorApp.Shared;
 using System.Net.Http.Json;
-using System.Text.Json;
-using System.Text.Json.Serialization;
-using BlazorApp.Shared;
 
 public class VisusService
 {

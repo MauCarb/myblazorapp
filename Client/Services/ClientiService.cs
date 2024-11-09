@@ -1,8 +1,5 @@
-﻿using System.Net.Http.Json;
-using System.Threading.Tasks;
-using System.Collections.Generic;
-using BlazorApp.Shared;
-using static System.Net.WebRequestMethods;
+﻿using BlazorApp.Shared;
+using System.Net.Http.Json;
 
 public class ClientiService
 {

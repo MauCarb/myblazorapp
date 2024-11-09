@@ -1,5 +1,5 @@
-﻿using System.Net.Http.Json;
-using BlazorApp.Shared;
+﻿using BlazorApp.Shared;
+using System.Net.Http.Json;
 
 public class PatientMngService
 {

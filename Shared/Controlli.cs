@@ -12,7 +12,7 @@ namespace BlazorApp.Shared
         public decimal IdControllo { get; set; }
         public decimal ptIdUser { get; set; }
         public DateTime InsertDate { get; set; }
-        public decimal ptIdPatient { get; set; }
+        public decimal ptIdVisit { get; set; }
         public DateTime DataControllo { get; set; }
         public string Valutazione { get; set; }
     }
