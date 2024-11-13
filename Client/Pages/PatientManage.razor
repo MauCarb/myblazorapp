@@ -11,6 +11,7 @@
 
 @inject HttpClient Http
 
+@inject PatientService PatientService
 @inject PatientMngService PatientMngService
 
 @inject ListVisitsService ListVisitsService
@@ -34,6 +35,7 @@
     <span style="display: @fShowMoreBtn;">
         <SfButton IconCss="e-icons e-chevron-down" CssClass="e-flat btn-white" Content="" OnClick='() => SwapView("more")'></SfButton>
     </span>
+    @*<span>PazienteValido: @PazienteValido</span>*@
 
     <span style="float: right;">
         <SfButton IconCss="e-icons e-save icon-navy" CssClass="e-flat btn-light" Content="@SaveText" OnClick="() => SavePatient()"></SfButton>
@@ -105,7 +107,7 @@
                 <SfTextBox ID="note" @bind-Value="@Note" Placeholder="Note" FloatLabelType="@FloatLabelType.Auto" Multiline="true"></SfTextBox>
             </div>
             <div class="col-sm-4">
-                <span style="color: rgba(0, 0, 0, 0.54);font-size: 13px;line-height: 1.4; display:block; margin-bottom:2px;">Privacy</span>
+                <span style="color: rgba(0, 0, 0, 0.54); font-size: 13px;line-height: 1.4; display:block; margin-bottom:2px;">Privacy</span>
                 <div class="col-sm-4">
                     <label style="font-size: 11pt; padding: 0 8px 8px 0; vertical-align: super;">@switchPrivacy</label>
                     <SfSwitch @bind-Checked="@fPrivacy" ValueChange="ManagePrivacy" TChecked="bool"></SfSwitch>
@@ -152,55 +154,63 @@
                                     </div>
                                     <div class="col-sm-10">
                                         <span style="float: right;">
-                                            <SfButton IconCss="e-icons icon-navy e-save" CssClass="e-flat btn-light" Content=" Salva Visita" OnClick="() => SaveVisit()" Disabled="@SaveVisitDisabled"></SfButton>
+                                            <SfButton IconCss="e-icons icon-navy e-save" CssClass="e-flat btn-light" Content=" Salva Visita" OnClick="() => SaveVisit()"></SfButton>
+                                            @* Disabled="@SaveVisitDisabled"*@
                                         </span>
                                     </div>
                                 </div>
 
                                 <!-- Dati di verifica -->
                                 @*
-                            <div class="row" style="margin-top: 10px;">
-                            <div class="col-sm-12">
-                            <table class="table table-bordered" style="border:1px solid #f90;">
-                            <thead>
-                            <tr>
-                            <th>VisitaCorrente</th>
-                            <th>Visita.IdVisit</th>
-                            <th>Visita.ptIdUser</th>
-                            <th>Visita.InsertDate</th>
-                            <th>Visita.ptIdPatient</th>
-                            <th>Visita.ptIdAppointment</th>
-                            <th>Visita.DataVisita</th>
-                            <th>Visita.Diagnosi</th>
-                            <th>Visita.Anamnesi</th>
-                            <th>Visita.TipoVisita</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <tr>
-                            <td>@VisitaCorrente</td>
-                            <td>@Visita.IdVisit</td>
-                            <td>@Visita.ptIdUser</td>
-                            <td>@Visita.InsertDate</td>
-                            <td>@Visita.ptIdPatient</td>
-                            <td>@Visita.ptIdAppointment</td>
-                            <td>@Visita.DataVisita</td>
-                            <td>@Visita.Diagnosi</td>
-                            <td>@Visita.Anamnesi</td>
-                            <td>@Visita.TipoVisita</td>
-                            </tr>
-                            </tbody>
-                            </table>
-                            </div>
-                            </div>
-                            *@
+                                <div class="row" style="margin-top: 10px;">
+                                    <div class="col-sm-12">
+                                        <table class="table table-bordered" style="border:1px solid #f90;">
+                                            <thead>
+                                                <tr>
+                                                    <th>VisitaCorrente</th>
+                                                    <th>Visita.IdVisit</th>
+                                                    <th>Visita.ptIdUser</th>
+                                                    <th>Visita.InsertDate</th>
+                                                    <th>Visita.ptIdPatient</th>
+                                                    <th>Visita.ptIdAppointment</th>
+                                                    <th>Visita.DataVisita</th>
+                                                    <th>Visita.DiagnosiOD</th>
+                                                    <th>Visita.DiagnosiOS</th>
+                                                    <th>Visita.Anamnesi</th>
+                                                    <th>Visita.TipoVisita</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td>@VisitaCorrente</td>
+                                                    <td>@Visita.IdVisit</td>
+                                                    <td>@Visita.ptIdUser</td>
+                                                    <td>@Visita.InsertDate</td>
+                                                    <td>@Visita.ptIdPatient</td>
+                                                    <td>@Visita.ptIdAppointment</td>
+                                                    <td>@Visita.DataVisita</td>
+                                                    <td>@Visita.DiagnosiOD</td>
+                                                    <td>@Visita.DiagnosiOS</td>
+                                                    <td>@Visita.Anamnesi</td>
+                                                    <td>@Visita.TipoVisita</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                *@
 
                                 <!-- Dati visita -->
                                 <div class="row" style="margin-top: 10px;">
                                     <div class="col-sm-5">
                                         <div class="row" style="margin-top: 10px;">
                                             <div class="col">
-                                                <SfTextBox ID="diagnosi" @bind-Value="@Visita.Diagnosi" Placeholder="Diagnosi" FloatLabelType="@FloatLabelType.Auto"></SfTextBox>
+                                                <SfTextBox ID="diagnosiod" @bind-Value="@Visita.DiagnosiOD" Placeholder="Diagnosi OD" FloatLabelType="@FloatLabelType.Auto"></SfTextBox>
+                                            </div>
+                                        </div>
+                                        <div class="row" style="margin-top: 10px;">
+                                            <div class="col">
+                                                <SfTextBox ID="diagnosios" @bind-Value="@Visita.DiagnosiOS" Placeholder="Diagnosi OS" FloatLabelType="@FloatLabelType.Auto"></SfTextBox>
                                             </div>
                                         </div>
                                         <div class="row" style="margin-top: 10px;">
@@ -256,7 +266,7 @@
                                                 <SfTextBox ID="odpv" @bind-Value="@Visita.ODPV" Placeholder="ODPV" FloatLabelType="@FloatLabelType.Auto"></SfTextBox>
                                             </div>
                                             <div class="col-sm-4">
-                                                <SfTextBox ID="odmd" @bind-Value="@Visita.ODMD" Placeholder="MD" FloatLabelType="@FloatLabelType.Auto"></SfTextBox>
+                                                <SfTextBox ID="odmd" @bind-Value="@Visita.ODMD" Placeholder="MD OD" FloatLabelType="@FloatLabelType.Auto"></SfTextBox>
                                             </div>
                                         </div>
                                         <div class="row" style="margin-top: 10px;">
@@ -267,7 +277,7 @@
                                                 <SfTextBox ID="ospv" @bind-Value="@Visita.OSPV" Placeholder="OSPV" FloatLabelType="@FloatLabelType.Auto"></SfTextBox>
                                             </div>
                                             <div class="col-sm-4">
-                                                <SfTextBox ID="osmd" @bind-Value="@Visita.OSMD" Placeholder="MD" FloatLabelType="@FloatLabelType.Auto"></SfTextBox>
+                                                <SfTextBox ID="osmd" @bind-Value="@Visita.OSMD" Placeholder="MD OS" FloatLabelType="@FloatLabelType.Auto"></SfTextBox>
                                             </div>
                                         </div>
                                         <div class="row" style="margin-top: 10px;">
@@ -293,7 +303,12 @@
                                         </div>
                                         <div class="row" style="margin-top: 10px;">
                                             <div class="col">
-                                                <SfTextBox ID="vortottica" @bind-Value="@Visita.VOrtottica" Placeholder="Visita Ortottica" FloatLabelType="@FloatLabelType.Auto"></SfTextBox>
+                                                <SfTextBox ID="vortotticaod" @bind-Value="@Visita.VOrtotticaOD" Placeholder="Visus corretto OD" FloatLabelType="@FloatLabelType.Auto"></SfTextBox>
+                                            </div>
+                                        </div>
+                                        <div class="row" style="margin-top: 10px;">
+                                            <div class="col">
+                                                <SfTextBox ID="vortotticaos" @bind-Value="@Visita.VOrtotticaOS" Placeholder="Visus corretto OS" FloatLabelType="@FloatLabelType.Auto"></SfTextBox>
                                             </div>
                                         </div>
                                         <div class="row" style="margin-top: 10px;">
@@ -389,7 +404,7 @@
                         </TabItem>
 
                         <!-- Sezione Prescrizione Occhiali -->
-                        <TabItem>
+                        <TabItem Disabled=@PrescrizioneDisabled>
                             <ChildContent>
                                 <TabHeader Text="Prescrizione Occhiali"></TabHeader>
                             </ChildContent>
@@ -565,7 +580,7 @@
                         </TabItem>
 
                         <!-- Sezione Controlli -->
-                        <TabItem>
+                        <TabItem Disabled=@ControlliDisabled>
                             <ChildContent>
                                 <TabHeader Text="Controlli"></TabHeader>
                             </ChildContent>
@@ -627,6 +642,7 @@
                             </div>
                             </div>
                             *@
+                                
                                 <!-- Dati controllo -->
                                 <div class="row" style="margin-top: 10px;">
                                     <div class="col-sm-1">
@@ -641,7 +657,7 @@
                         </TabItem>
 
                         <!-- Sezione Ortottica -->
-                        <TabItem>
+                        <TabItem Disabled=@OrtotticaDisabled>
                             <ChildContent>
                                 <TabHeader Text="Ortottica"></TabHeader>
                             </ChildContent>
@@ -759,10 +775,18 @@
 <br />
 <br />
 
-<SfDialog Width="400px" Target="#target" ShowCloseIcon="true" @bind-Visible="AlertVisible">
+<SfDialog Width="400px" Target="#target" ShowCloseIcon="true" @bind-Visible="DialogVisible">
     <DialogTemplates>
-        <Header> Attenzione </Header>
-        <Content> @AlertText </Content>
+        <Header> @DialogHeader </Header>
+        <Content>
+            <div class='msg-wrapper col-lg-12'>
+                <span class='@DialogIcon'></span>
+                <span class='error-msg col-lg-10'>@DialogText</span>
+            </div>
+            <div class='error-detail col-lg-8'>
+                <span>@DialogDetail</span>
+            </div>
+        </Content>
     </DialogTemplates>
     <DialogButtons>
         <DialogButton Content="OK" IsPrimary="true" OnClick="@CloseDialog" />
@@ -770,14 +794,6 @@
 </SfDialog>
 
 <style>
-    textarea.e-input,
-    .e-float-input textarea,
-    .e-float-input.e-control-wrapper textarea,
-    .e-input-group textarea,
-    .e-input-group.e-control-wrapper textarea {
-        resize: none;
-    }
-
     .default-tab {
         border: 1px solid #d7d7d7;
     }
@@ -814,23 +830,136 @@
     }
 
         .e-tab .e-tab-header .e-toolbar-items .e-active .e-tab-wrap:hover {
-            border-bottom: 4px solid #0d6efd;
-        }
+        border-bottom: 4px solid #0d6efd;
+    }
 
     .e-tab .e-tab-header .e-toolbar-item:not(.e-active) {
         border-bottom: 0px;
     }
 
-    /*
-            .e-tab .e-toolbar .e-toolbar-items .e-toolbar-item .e-text-wrap {
-            height: 50px;
+    @*/*
+        .e-tab .e-toolbar .e-toolbar-items .e-toolbar-item .e-text-wrap {
+        height: 50px;
+    }
+
+    .e-tab-wrap:hover, .e-tab-wrap:active {
+        border-bottom: 4px solid #0d6efd !important;
+    }*/
+    *@
+    
+    .e-btn.e-flat.e-primary, .e-btn.e-flat.e-primary:focus {
+        background-color: #317ab9;
+        border-color: #265f91;
+        color: #fff;
+    }
+
+        .e-btn.e-flat.e-primary:hover, .e-btn.e-flat.e-primary:active {
+            background-color: #21527d;
+            border-color: #163854;
+            color: #fff;
         }
 
-        .e-tab-wrap:hover, .e-tab-wrap:active {
-            border-bottom: 4px solid #0d6efd !important;
-        }
-     */
-</style>
+    .e-circle-close {
+        width: 24px;
+        height: 24px;
+        position: relative;
+        display: inline-block;
+    }
+
+    .e-circle-info {
+        width: 24px;
+        height: 24px;
+        position: relative;
+        display: inline-block;
+    }
+
+    .error-msg {
+        color: #66afe9;
+        display: inline-block;
+        position: relative;
+        top: -20px;
+        left: 10px;
+    }
+
+    .error-detail {
+        position: relative;
+        left: 36px;
+        margin: 0 0 21px;
+    }
+
+    @*/*
+    .e-icons.close-icon.col-lg-2:before {
+        content: '\e7e9';
+        font-size: 26px;
+        color: #d9534f;
+        position: relative;
+        left: 1px;
+        bottom: 18px; e-circle-info
+    }*/
+    *@
+    
+    .e-icons.e-circle-close.col-lg-2:before {
+        font-size: 20px;
+        color: #d9534f;
+        position: relative;
+        left: 4px;
+        bottom: 18px;
+    }
+
+    .e-icons.e-circle-info.col-lg-2:before {
+        font-size: 20px;
+        color: #228e1f;
+        position: relative;
+        left: 4px;
+        bottom: 18px;
+    }
+
+    .e-dialog .e-footer-content {
+        background-color: #f8f8f8;
+    }
+
+    .e-dialog.e-control.e-popup, .e-dialog.e-control.e-popup .e-dlg-header-content {
+        background-color: #d9edf7;
+    }
+
+    .e-dialog.e-control.e-popup {
+        padding: 3px;
+    }
+
+    .e-dialog.e-control .e-dlg-header-content {
+        padding: 10px;
+    }
+
+    .e-dialog.e-control .e-footer-content {
+        padding: 8px 12px;
+    }
+
+    .e-dialog.e-control .e-dlg-content {
+        padding: 15px 0 0;
+    }
+
+    .msg-wrapper.col-lg-12 {
+        margin-top: 20px;
+    }
+
+    .customtooltip.e-tooltip-wrap.e-popup {
+        background-color: #ededed;
+        border: 1px solid #d9d9d9;
+    }
+    .e-tooltip-wrap .e-tip-content {
+        color: #3d3d3d;
+    }
+    .customtooltip.e-tooltip-wrap .e-arrow-tip-outer {
+        border-bottom: 12px solid transparent;
+        border-left: 12px solid transparent;
+        border-top: 12px solid transparent;
+        border-right: 12px solid transparent;
+    }
+    .customtooltip.e-tooltip-wrap .e-arrow-tip-inner {
+        color: #ededed;
+        font-size: 25.9px;
+    }
+    </style>
 
 
 @code {
@@ -862,14 +991,19 @@
 
     Boolean ShowVisits = false;
 
-    private bool AlertVisible { get; set; } = false;
+    #region dialog
+    private bool DialogVisible { get; set; } = false;
 
-    private string AlertText { get; set; } = "";
+    private string DialogHeader { get; set; } = "";
+    private string DialogIcon { get; set; } = "";
+    private string DialogText { get; set; } = "";
+    private string DialogDetail { get; set; } = "";
 
     private void CloseDialog()
     {
-        AlertVisible = false;
+        DialogVisible = false;
     }
+    #endregion
 
     #region logging
     string? LoggedUser;
@@ -888,7 +1022,10 @@
     #endregion
 
     #region binding dati paziente
+    private List<Patient>? Pazienti;
     private Patient Paziente = new Patient();
+
+    public Boolean PazienteValido = false;
 
     public string LName = "";
     public string FName = "";
@@ -939,8 +1076,8 @@
     #region binding dati prescrizione occhiali
     public string DataMisura = "";
 
+    public Boolean PrescrizioneDisabled = true;
     public Boolean SaveVisusDisabled = false;
-
     public Boolean IsNewVisus = false;
 
     private Misure Visus = new Misure();
@@ -957,6 +1094,8 @@
 
     #region binding dati controllo
     public string DataControllo = "";
+
+    public Boolean ControlliDisabled = true;
 
     public Boolean FirstCntrDisabled = false;
     public Boolean PrevCntrDisabled = false;
@@ -977,8 +1116,9 @@
     #region visita ortottica
     public string DataOrtottica = "";
 
-    public Boolean SaveOrtoctisDisabled = false;
+    public Boolean OrtotticaDisabled = true;
 
+    public Boolean SaveOrtoctisDisabled = false;
     public Boolean IsNewOrtoctis = false;
 
     private Ortottica Ortoctis = new Ortottica();
@@ -1082,29 +1222,41 @@
                     else
                     {
                         // giorno non compreso tra 1 e numero giorni previsto per il mese esci con false
-                        AlertText = "Giorno data di nascita non valido";
-                        AlertVisible = true;
+                        DialogHeader = " Attenzione ";
+                        DialogIcon = "e-icons e-circle-close col-lg-2";
+                        DialogText = "Giorno data di nascita non valido";
+                        DialogDetail = "";
+                        DialogVisible = true;
                     }
                 }
                 else
                 {
                     // mese non compreso tra 1 e 12 esci con false
-                    AlertText = "Mese data di nascita non valido";
-                    AlertVisible = true;
+                    DialogHeader = " Attenzione ";
+                    DialogIcon = "e-icons e-circle-close col-lg-2";
+                    DialogText = "Mese data di nascita non valido";
+                    DialogDetail = "";
+                    DialogVisible = true;
                 }
             }
             else
             {
                 // anno inferiore al 190 esci con false
-                AlertText = "Anno data di nascita non valido";
-                AlertVisible = true;
+                DialogHeader = " Attenzione ";
+                DialogIcon = "e-icons e-circle-close col-lg-2";
+                DialogText = "Anno data di nascita non valido";
+                DialogDetail = "";
+                DialogVisible = true;
             }
         }
         else
         {
             // anno inferiore al 190 esci con false
-            AlertText = "Data di nascita non valida";
-            AlertVisible = true;
+            DialogHeader = " Attenzione ";
+            DialogIcon = "e-icons e-circle-close col-lg-2";
+            DialogText = "Data di nascita non valida";
+            DialogDetail = "";
+            DialogVisible = true;
         }
 
         return result;
@@ -1224,6 +1376,10 @@
                         LastVisitDisabled = false;
                     }
 
+                    PrescrizioneDisabled = false;
+                    ControlliDisabled = false;
+                    OrtotticaDisabled = false;
+
                     VisitaCorrente = 0;
 
                     DataVisita = ListaVisite[VisitaCorrente].Val.ToString("dd/MM/yyyy");
@@ -1272,6 +1428,10 @@
                     LastVisitDisabled = true;
 
                     SaveVisitDisabled = true;
+
+                    PrescrizioneDisabled = true;
+                    ControlliDisabled = true;
+                    OrtotticaDisabled = true;
                 }
 
                 StateHasChanged();
@@ -1313,65 +1473,170 @@
         }
     }
 
+    // public async void ListPatients()
+    // {
+    //     string pp = FName + "|" + LName + "||||";
+
+    //     Pazienti = await PatientService.PatList(FName + "|" + LName + "||||");
+    // }
+
+    public async void CheckPatient()
+    {
+        Boolean result = true;
+
+        DialogHeader = "";
+        DialogIcon = "";
+        DialogText = "";
+        DialogDetail = "";
+
+        if (String.IsNullOrEmpty(FName) || String.IsNullOrEmpty(LName))
+        {
+            if (String.IsNullOrEmpty(LName))
+            {
+                result &= false;
+
+                DialogHeader = " Attenzione ";
+                DialogIcon = "e-icons e-circle-close col-lg-2";
+                DialogText = "I campi Nome e Cognome sono obbligatori";
+                DialogDetail = "Inserire il campo Cognome.";
+            }
+
+            if (String.IsNullOrEmpty(FName))
+            {
+                result &= false;
+
+                DialogHeader = " Attenzione ";
+                DialogIcon = "e-icons e-circle-close col-lg-2";
+                DialogText = "I campi Nome e Cognome sono obbligatori";
+                DialogDetail += " Inserire il campo Nome";
+            }
+        }
+        else
+        {
+            if (Pazienti != null)
+            {
+                Pazienti.Clear();
+            }
+
+            Pazienti = await PatientService.PatList(FName + "|" + LName + "||||");
+
+            if (Pazienti.Count == 0)
+            {
+                // non sono presenti casi di omonimia
+                result = true;
+            }
+            else
+            {
+                if (String.IsNullOrEmpty(CodFisc))
+                {
+                    result &= false;
+
+                    DialogHeader = " Attenzione ";
+                    DialogIcon = "e-icons e-circle-close col-lg-2";
+                    DialogText += "Sono presenti in archivio altri pazienti con lo stesso Nome e Cognome.";
+                    DialogDetail = "Inserire il Codice Fiscale";
+                }
+                else
+                {
+                    for (var pp = 0; pp < Pazienti.Count; pp++)
+                    {
+                        if (Pazienti[pp].CodFisc == CodFisc)
+                        {
+                            result &= false;
+                        }
+                    }
+
+                    if (!result)
+                    {
+                        result &= false;
+
+                        DialogHeader = " Attenzione ";
+                        DialogIcon = "e-icons e-circle-close col-lg-2";
+                        DialogText += "Sono presenti in archivio altri pazienti con lo stesso Nome, Cognome e Codice Fiscale.";
+                        DialogDetail = "Modificare il Nome o il Cognome o il Codice Fiscale";
+                    }
+                }
+            }
+        }
+
+        StateHasChanged();
+
+        // return result;
+        PazienteValido = result;
+    }
+
     public async void SavePatient()
     {
         string TmpDate;
         Boolean ContinueIns = true;
 
-        Paziente.Cod = Cod;
-
-        Paziente.FName = FName;
-        Paziente.LName = LName;
-
-        Paziente.CodFisc = CodFisc;
-
-        if (BirthDate != "")
+        await Task.Run(() =>
         {
-            if (CheckDate(BirthDate))
-            {
-                TmpDate = BirthDate.Substring(4, 4) + "-" + BirthDate.Substring(2, 2) + "-" + BirthDate.Substring(0, 2) + " 00:00:00,000";
+            CheckPatient();
+        });
 
-                Paziente.BirthDate = DateTime.ParseExact(TmpDate, "yyyy-MM-dd HH:mm:ss,fff", System.Globalization.CultureInfo.InvariantCulture);
-            }
-            else
+        if (!PazienteValido)
+        {
+            DialogVisible = true;
+        }
+        else{
+            Paziente.Cod = Cod;
+
+            Paziente.FName = FName.Trim();
+            Paziente.LName = LName.Trim();
+
+            Paziente.CodFisc = CodFisc;
+
+            if (BirthDate != "")
             {
-                ContinueIns = false;
+                if (CheckDate(BirthDate))
+                {
+                    TmpDate = BirthDate.Substring(4, 4) + "-" + BirthDate.Substring(2, 2) + "-" + BirthDate.Substring(0, 2) + " 00:00:00,000";
+
+                    Paziente.BirthDate = DateTime.ParseExact(TmpDate, "yyyy-MM-dd HH:mm:ss,fff", System.Globalization.CultureInfo.InvariantCulture);
+                }
+                else
+                {
+                    ContinueIns = false;
+                }
+            }
+
+            if (ContinueIns)
+            {
+                Paziente.BirthCity = BirthCity;
+                Paziente.Gender = Gender;
+
+                Paziente.Address = Address;
+                Paziente.City = City;
+                Paziente.ZipCode = ZipCode;
+                Paziente.State = State;
+
+                Paziente.Phone = Phone;
+                Paziente.Mobile = Mobile;
+                Paziente.Email = Email;
+
+                Paziente.Note = Note;
+
+                Paziente.fPrivacy = fPrivacy;
+
+                if (id == 0)
+                {
+                    Paziente.ptIdUser = Decimal.Parse(gIdUser);
+
+                    Paziente.InsertDate = DateTime.Now;
+
+                    await PatientMngService.AddPatient(Paziente);
+                }
+                else
+                {
+                    await PatientMngService.UpdPatient(id, Paziente);
+                }
+
+                Navigation.NavigateTo("/patientlist/" + id.ToString());
             }
         }
 
-        if (ContinueIns)
-        {
-            Paziente.BirthCity = BirthCity;
-            Paziente.Gender = Gender;
-
-            Paziente.Address = Address;
-            Paziente.City = City;
-            Paziente.ZipCode = ZipCode;
-            Paziente.State = State;
-
-            Paziente.Phone = Phone;
-            Paziente.Mobile = Mobile;
-            Paziente.Email = Email;
-
-            Paziente.Note = Note;
-
-            Paziente.fPrivacy = fPrivacy;
-
-            if (id == 0)
-            {
-                Paziente.ptIdUser = Decimal.Parse(gIdUser);
-
-                Paziente.InsertDate = DateTime.Now;
-
-                await PatientMngService.AddPatient(Paziente);
-            }
-            else
-            {
-                await PatientMngService.UpdPatient(id, Paziente);
-            }
-
-            Navigation.NavigateTo("/patientlist/" + id.ToString());
-        }
+        StateHasChanged();
     }
     #endregion
 
@@ -1380,7 +1645,9 @@
     {
         Visita = await VisitService.GetVisit(idv);
 
-        Visita.Diagnosi = SetObjNullToStr(Visita.Diagnosi);
+        Visita.DiagnosiOD = SetObjNullToStr(Visita.DiagnosiOD);
+
+        Visita.DiagnosiOS = SetObjNullToStr(Visita.DiagnosiOS);
 
         Visita.Anamnesi = SetObjNullToStr(Visita.Anamnesi);
 
@@ -1418,7 +1685,9 @@
 
         Visita.CurvaArgon = SetObjNullToStr(Visita.CurvaArgon);
 
-        Visita.VOrtottica = SetObjNullToStr(Visita.VOrtottica);
+        Visita.VOrtotticaOD = SetObjNullToStr(Visita.VOrtotticaOD);
+
+        Visita.VOrtotticaOS = SetObjNullToStr(Visita.VOrtotticaOS);
 
         Visita.SHIRMER = SetObjNullToStr(Visita.SHIRMER);
 
@@ -1473,7 +1742,9 @@
 
         TmpVisita = await VisitService.GetVisit(idv);
 
-        Visita.Diagnosi = SetObjNullToStr(TmpVisita.Diagnosi);
+        Visita.DiagnosiOD = SetObjNullToStr(TmpVisita.DiagnosiOD);
+
+        Visita.DiagnosiOS = SetObjNullToStr(TmpVisita.DiagnosiOS);
 
         Visita.Anamnesi = SetObjNullToStr(TmpVisita.Anamnesi);
 
@@ -1511,7 +1782,9 @@
 
         Visita.CurvaArgon = SetObjNullToStr(TmpVisita.CurvaArgon);
 
-        Visita.VOrtottica = SetObjNullToStr(TmpVisita.VOrtottica);
+        Visita.VOrtotticaOD = SetObjNullToStr(TmpVisita.VOrtotticaOD);
+
+        Visita.VOrtotticaOS = SetObjNullToStr(TmpVisita.VOrtotticaOS);
 
         Visita.SHIRMER = SetObjNullToStr(TmpVisita.SHIRMER);
 
@@ -1749,6 +2022,10 @@
                 LastVisitDisabled = false;
             }
 
+            PrescrizioneDisabled = false;
+            ControlliDisabled = false;
+            OrtotticaDisabled = false;
+
             VisitaCorrente = 0;
 
             DataVisita = ListaVisite[0].Val.ToString("dd/MM/yyyy");
@@ -1760,6 +2037,12 @@
         // SaveVisitDisabled = true;
 
         StateHasChanged();
+
+        // DialogHeader = " Informazioni ";
+        // DialogIcon = "e-icons e-circle-info col-lg-2";
+        // DialogText = "Dati Visita salvati";
+        // DialogDetail = "";
+        // DialogVisible = true;
     }
     #endregion
 
@@ -1910,6 +2193,12 @@
         }
 
         StateHasChanged();
+
+        // DialogHeader = " Informazioni ";
+        // DialogIcon = "e-icons e-circle-info col-lg-2";
+        // DialogText = "Dati Prescrizione occhiali salvati";
+        // DialogDetail = "";
+        // DialogVisible = true;
     }
     #endregion
 
@@ -2059,6 +2348,12 @@
         // SaveCntrDisabled = true;
 
         StateHasChanged();
+
+        // DialogHeader = " Informazioni ";
+        // DialogIcon = "e-icons e-circle-info col-lg-2";
+        // DialogText = "Dati Controllo salvati";
+        // DialogDetail = "";
+        // DialogVisible = true;
     }
     #endregion
 
@@ -2178,6 +2473,12 @@
         }
 
         StateHasChanged();
-    }
+ 
+        // DialogHeader = " Informazioni ";
+        // DialogIcon = "e-icons e-circle-info col-lg-2";
+        // DialogText = "Dati Visita ortottica salvati";
+        // DialogDetail = "";
+        // DialogVisible = true;
+   }
     #endregion
 }
