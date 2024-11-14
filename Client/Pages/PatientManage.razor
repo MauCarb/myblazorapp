@@ -2036,13 +2036,16 @@
         AddVisitDisabled = false;
         // SaveVisitDisabled = true;
 
-        StateHasChanged();
+        await Task.Run(() =>
+        {
+            DialogHeader = " Informazioni ";
+            DialogIcon = "e-icons e-circle-info col-lg-2";
+            DialogText = "Dati Visita salvati";
+            DialogDetail = "";
+            DialogVisible = true;
+        });
 
-        // DialogHeader = " Informazioni ";
-        // DialogIcon = "e-icons e-circle-info col-lg-2";
-        // DialogText = "Dati Visita salvati";
-        // DialogDetail = "";
-        // DialogVisible = true;
+        StateHasChanged();
     }
     #endregion
 
@@ -2192,13 +2195,16 @@
             LoadVisus();
         }
 
-        StateHasChanged();
+        await Task.Run(() =>
+        {
+            DialogHeader = " Informazioni ";
+            DialogIcon = "e-icons e-circle-info col-lg-2";
+            DialogText = "Dati Prescrizione occhiali salvati";
+            DialogDetail = "";
+            DialogVisible = true;
+        });
 
-        // DialogHeader = " Informazioni ";
-        // DialogIcon = "e-icons e-circle-info col-lg-2";
-        // DialogText = "Dati Prescrizione occhiali salvati";
-        // DialogDetail = "";
-        // DialogVisible = true;
+        StateHasChanged();
     }
     #endregion
 
@@ -2347,13 +2353,16 @@
         AddCntrDisabled = false;
         // SaveCntrDisabled = true;
 
-        StateHasChanged();
+        await Task.Run(() =>
+        {
+            DialogHeader = " Informazioni ";
+            DialogIcon = "e-icons e-circle-info col-lg-2";
+            DialogText = "Dati Controllo salvati";
+            DialogDetail = "";
+            DialogVisible = true;
+        });
 
-        // DialogHeader = " Informazioni ";
-        // DialogIcon = "e-icons e-circle-info col-lg-2";
-        // DialogText = "Dati Controllo salvati";
-        // DialogDetail = "";
-        // DialogVisible = true;
+        StateHasChanged();
     }
     #endregion
 
@@ -2472,13 +2481,16 @@
             LoadOrtoctis();
         }
 
+        await Task.Run(() =>
+        {
+            DialogHeader = " Informazioni ";
+            DialogIcon = "e-icons e-circle-info col-lg-2";
+            DialogText = "Dati Visita ortottica salvati";
+            DialogDetail = "";
+            DialogVisible = true;
+        });
+
         StateHasChanged();
- 
-        // DialogHeader = " Informazioni ";
-        // DialogIcon = "e-icons e-circle-info col-lg-2";
-        // DialogText = "Dati Visita ortottica salvati";
-        // DialogDetail = "";
-        // DialogVisible = true;
    }
     #endregion
 }
