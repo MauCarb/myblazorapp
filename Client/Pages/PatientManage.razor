@@ -48,23 +48,23 @@
 <div class="container-fluid bg-light" style="padding: 0 10px 10px 10px;">
     <div class="row">
         <div class="col-sm-1">
-            <SfTextBox ID="cod" @bind-Value="@Cod" Placeholder="Cod" FloatLabelType="@FloatLabelType.Auto"></SfTextBox>
+            <SfTextBox ID="cod" @bind-Value="@Cod" Placeholder="Cod" FloatLabelType="@FloatLabelType.Always"></SfTextBox>
         </div>
 
         <div class="col-sm-4">
-            <SfTextBox ID="lname" @bind-Value="@LName" Placeholder="Cognome" FloatLabelType="@FloatLabelType.Auto"></SfTextBox>
+            <SfTextBox ID="lname" @bind-Value="@LName" Placeholder="Cognome" FloatLabelType="@FloatLabelType.Always"></SfTextBox>
         </div>
 
         <div class="col-sm-3">
-            <SfTextBox ID="fname" @bind-Value="@FName" Placeholder="Nome" FloatLabelType="@FloatLabelType.Auto"></SfTextBox>
+            <SfTextBox ID="fname" @bind-Value="@FName" Placeholder="Nome" FloatLabelType="@FloatLabelType.Always"></SfTextBox>
         </div>
 
         <div class="col-sm-1">
-            <SfMaskedTextBox ID="datanascita" @bind-Value="@BirthDate" Mask="00/00/0000" Placeholder="Data di nascita" FloatLabelType="@FloatLabelType.Auto"></SfMaskedTextBox>
+            <SfMaskedTextBox ID="datanascita" @bind-Value="@BirthDate" Mask="00/00/0000" Placeholder="Data di nascita" FloatLabelType="@FloatLabelType.Always"></SfMaskedTextBox>
         </div>
 
         <div class="col-sm-2">
-            <SfTextBox ID="codfisc" @bind-Value="@CodFisc" Placeholder="Cod Fiscale" FloatLabelType="@FloatLabelType.Auto"></SfTextBox>
+            <SfTextBox ID="codfisc" @bind-Value="@CodFisc" Placeholder="Cod Fiscale" FloatLabelType="@FloatLabelType.Always"></SfTextBox>
         </div>
     </div>
 
@@ -72,39 +72,39 @@
     {
         <div class="row" style="margin-top: 10px;">
             <div class="col-sm-4">
-                <SfTextBox ID="address" @bind-Value="@Address" Placeholder="Indirizzo" FloatLabelType="@FloatLabelType.Auto"></SfTextBox>
+                <SfTextBox ID="address" @bind-Value="@Address" Placeholder="Indirizzo" FloatLabelType="@FloatLabelType.Always"></SfTextBox>
             </div>
 
             <div class="col-sm-3">
-                <SfTextBox ID="city" @bind-Value="@City" Placeholder="Città" FloatLabelType="@FloatLabelType.Auto"></SfTextBox>
+                <SfTextBox ID="city" @bind-Value="@City" Placeholder="Città" FloatLabelType="@FloatLabelType.Always"></SfTextBox>
             </div>
 
             <div class="col-sm-1">
-                <SfTextBox ID="zipcode" @bind-Value="@ZipCode" Placeholder="CAP" FloatLabelType="@FloatLabelType.Auto"></SfTextBox>
+                <SfTextBox ID="zipcode" @bind-Value="@ZipCode" Placeholder="CAP" FloatLabelType="@FloatLabelType.Always"></SfTextBox>
             </div>
 
             <div class="col-sm-3">
-                <SfTextBox ID="state" @bind-Value="@State" Placeholder="Stato" FloatLabelType="@FloatLabelType.Auto"></SfTextBox>
+                <SfTextBox ID="state" @bind-Value="@State" Placeholder="Stato" FloatLabelType="@FloatLabelType.Always"></SfTextBox>
             </div>
         </div>
         
         <div class="row" style="margin-top: 10px;">
             <div class="col-sm-2">
-                <SfTextBox ID="phone" @bind-Value="@Phone" Placeholder="Telefono" FloatLabelType="@FloatLabelType.Auto"></SfTextBox>
+                <SfTextBox ID="phone" @bind-Value="@Phone" Placeholder="Telefono" FloatLabelType="@FloatLabelType.Always"></SfTextBox>
             </div>
 
             <div class="col-sm-2">
-                <SfTextBox ID="mobile" @bind-Value="@Mobile" Placeholder="Mobile" FloatLabelType="@FloatLabelType.Auto"></SfTextBox>
+                <SfTextBox ID="mobile" @bind-Value="@Mobile" Placeholder="Mobile" FloatLabelType="@FloatLabelType.Always"></SfTextBox>
             </div>
 
             <div class="col-sm-7">
-                <SfTextBox ID="email" @bind-Value="@Email" Placeholder="Email" FloatLabelType="@FloatLabelType.Auto"></SfTextBox>
+                <SfTextBox ID="email" @bind-Value="@Email" Placeholder="Email" FloatLabelType="@FloatLabelType.Always"></SfTextBox>
             </div>
         </div>
         
         <div class="row" style="margin-top: 10px;">
             <div class="col-sm-8">
-                <SfTextBox ID="note" @bind-Value="@Note" Placeholder="Note" FloatLabelType="@FloatLabelType.Auto" Multiline="true"></SfTextBox>
+                <SfTextBox ID="note" @bind-Value="@Note" Placeholder="Note" FloatLabelType="@FloatLabelType.Always" Multiline="true"></SfTextBox>
             </div>
             <div class="col-sm-4">
                 <span style="color: rgba(0, 0, 0, 0.54); font-size: 13px;line-height: 1.4; display:block; margin-bottom:2px;">Privacy</span>
@@ -205,84 +205,84 @@
                                     <div class="col-sm-5">
                                         <div class="row" style="margin-top: 10px;">
                                             <div class="col">
-                                                <SfTextBox ID="diagnosiod" @bind-Value="@Visita.DiagnosiOD" Placeholder="Diagnosi OD" FloatLabelType="@FloatLabelType.Auto"></SfTextBox>
+                                                <SfTextBox ID="diagnosiod" @bind-Value="@Visita.DiagnosiOD" Placeholder="Diagnosi OD" FloatLabelType="@FloatLabelType.Always"></SfTextBox>
                                             </div>
                                         </div>
                                         <div class="row" style="margin-top: 10px;">
                                             <div class="col">
-                                                <SfTextBox ID="diagnosios" @bind-Value="@Visita.DiagnosiOS" Placeholder="Diagnosi OS" FloatLabelType="@FloatLabelType.Auto"></SfTextBox>
+                                                <SfTextBox ID="diagnosios" @bind-Value="@Visita.DiagnosiOS" Placeholder="Diagnosi OS" FloatLabelType="@FloatLabelType.Always"></SfTextBox>
                                             </div>
                                         </div>
                                         <div class="row" style="margin-top: 10px;">
                                             <div class="col">
-                                                <SfTextBox ID="anamnesi" @bind-Value="@Visita.Anamnesi" Placeholder="Anamnesi" FloatLabelType="@FloatLabelType.Auto"></SfTextBox>
+                                                <SfTextBox ID="anamnesi" @bind-Value="@Visita.Anamnesi" Placeholder="Anamnesi" FloatLabelType="@FloatLabelType.Always"></SfTextBox>
                                             </div>
                                         </div>
                                         <div class="row" style="margin-top: 10px;">
                                             <div class="col">
-                                                <SfTextBox ID="annessi" @bind-Value="@Visita.Annessi" Placeholder="Annessi" FloatLabelType="@FloatLabelType.Auto"></SfTextBox>
+                                                <SfTextBox ID="annessi" @bind-Value="@Visita.Annessi" Placeholder="Annessi" FloatLabelType="@FloatLabelType.Always"></SfTextBox>
                                             </div>
                                         </div>
                                         <div class="row" style="margin-top: 10px;">
                                             <div class="col">
-                                                <SfTextBox ID="segantod" @bind-Value="@Visita.Seg_Ant_Od" Placeholder="Seg.Ant.OD" FloatLabelType="@FloatLabelType.Auto"></SfTextBox>
+                                                <SfTextBox ID="segantod" @bind-Value="@Visita.Seg_Ant_Od" Placeholder="Seg.Ant.OD" FloatLabelType="@FloatLabelType.Always"></SfTextBox>
                                             </div>
                                         </div>
                                         <div class="row" style="margin-top: 10px;">
                                             <div class="col">
-                                                <SfTextBox ID="segantos" @bind-Value="@Visita.Seg_Ant_Os" Placeholder="Seg.Ant.OS" FloatLabelType="@FloatLabelType.Auto"></SfTextBox>
+                                                <SfTextBox ID="segantos" @bind-Value="@Visita.Seg_Ant_Os" Placeholder="Seg.Ant.OS" FloatLabelType="@FloatLabelType.Always"></SfTextBox>
                                             </div>
                                         </div>
                                         <div class="row" style="margin-top: 10px;">
                                             <div class="col">
-                                                <SfTextBox ID="fundusod" @bind-Value="@Visita.Fundus_Od" Placeholder="Fundus OD" FloatLabelType="@FloatLabelType.Auto"></SfTextBox>
+                                                <SfTextBox ID="fundusod" @bind-Value="@Visita.Fundus_Od" Placeholder="Fundus OD" FloatLabelType="@FloatLabelType.Always"></SfTextBox>
                                             </div>
                                         </div>
                                         <div class="row" style="margin-top: 10px;">
                                             <div class="col">
-                                                <SfTextBox ID="fundusos" @bind-Value="@Visita.Fundus_Os" Placeholder="Fundus OS" FloatLabelType="@FloatLabelType.Auto"></SfTextBox>
+                                                <SfTextBox ID="fundusos" @bind-Value="@Visita.Fundus_Os" Placeholder="Fundus OS" FloatLabelType="@FloatLabelType.Always"></SfTextBox>
                                             </div>
                                         </div>
                                         <div class="row" style="margin-top: 10px;">
                                             <div class="col">
-                                                <SfTextBox ID="visusod" @bind-Value="@Visita.Visus_Od" Placeholder="Visus OD" FloatLabelType="@FloatLabelType.Auto"></SfTextBox>
+                                                <SfTextBox ID="visusod" @bind-Value="@Visita.Visus_Od" Placeholder="Visus OD" FloatLabelType="@FloatLabelType.Always"></SfTextBox>
                                             </div>
                                         </div>
                                         <div class="row" style="margin-top: 10px;">
                                             <div class="col">
-                                                <SfTextBox ID="visusos" @bind-Value="@Visita.Visus_Os" Placeholder="Visus OS" FloatLabelType="@FloatLabelType.Auto"></SfTextBox>
+                                                <SfTextBox ID="visusos" @bind-Value="@Visita.Visus_Os" Placeholder="Visus OS" FloatLabelType="@FloatLabelType.Always"></SfTextBox>
                                             </div>
                                         </div>
                                         <div class="row" style="margin-top: 10px;">
                                             <div class="col">
-                                                <SfTextBox ID="terapia" @bind-Value="@Visita.Terapia" Placeholder="Terapia" FloatLabelType="@FloatLabelType.Auto"></SfTextBox>
+                                                <SfTextBox ID="terapia" @bind-Value="@Visita.Terapia" Placeholder="Terapia" FloatLabelType="@FloatLabelType.Always"></SfTextBox>
                                             </div>
                                         </div>
                                         <div class="row" style="margin-top: 10px;">
                                             <div class="col-sm-4">
-                                                <SfTextBox ID="odpl" @bind-Value="@Visita.ODPL" Placeholder="ODPL" FloatLabelType="@FloatLabelType.Auto"></SfTextBox>
+                                                <SfTextBox ID="odpl" @bind-Value="@Visita.ODPL" Placeholder="ODPL" FloatLabelType="@FloatLabelType.Always"></SfTextBox>
                                             </div>
                                             <div class="col-sm-4">
-                                                <SfTextBox ID="odpv" @bind-Value="@Visita.ODPV" Placeholder="ODPV" FloatLabelType="@FloatLabelType.Auto"></SfTextBox>
+                                                <SfTextBox ID="odpv" @bind-Value="@Visita.ODPV" Placeholder="ODPV" FloatLabelType="@FloatLabelType.Always"></SfTextBox>
                                             </div>
                                             <div class="col-sm-4">
-                                                <SfTextBox ID="odmd" @bind-Value="@Visita.ODMD" Placeholder="MD OD" FloatLabelType="@FloatLabelType.Auto"></SfTextBox>
+                                                <SfTextBox ID="odmd" @bind-Value="@Visita.ODMD" Placeholder="MD OD" FloatLabelType="@FloatLabelType.Always"></SfTextBox>
                                             </div>
                                         </div>
                                         <div class="row" style="margin-top: 10px;">
                                             <div class="col-sm-4">
-                                                <SfTextBox ID="ospl" @bind-Value="@Visita.OSPL" Placeholder="OSPL" FloatLabelType="@FloatLabelType.Auto"></SfTextBox>
+                                                <SfTextBox ID="ospl" @bind-Value="@Visita.OSPL" Placeholder="OSPL" FloatLabelType="@FloatLabelType.Always"></SfTextBox>
                                             </div>
                                             <div class="col-sm-4">
-                                                <SfTextBox ID="ospv" @bind-Value="@Visita.OSPV" Placeholder="OSPV" FloatLabelType="@FloatLabelType.Auto"></SfTextBox>
+                                                <SfTextBox ID="ospv" @bind-Value="@Visita.OSPV" Placeholder="OSPV" FloatLabelType="@FloatLabelType.Always"></SfTextBox>
                                             </div>
                                             <div class="col-sm-4">
-                                                <SfTextBox ID="osmd" @bind-Value="@Visita.OSMD" Placeholder="MD OS" FloatLabelType="@FloatLabelType.Auto"></SfTextBox>
+                                                <SfTextBox ID="osmd" @bind-Value="@Visita.OSMD" Placeholder="MD OS" FloatLabelType="@FloatLabelType.Always"></SfTextBox>
                                             </div>
                                         </div>
                                         <div class="row" style="margin-top: 10px;">
                                             <div class="col">
-                                                <SfTextBox ID="motivovisita" @bind-Value="@Visita.MotivoVisita" Placeholder="Motivo" FloatLabelType="@FloatLabelType.Auto"></SfTextBox>
+                                                <SfTextBox ID="motivovisita" @bind-Value="@Visita.MotivoVisita" Placeholder="Motivo" FloatLabelType="@FloatLabelType.Always"></SfTextBox>
                                             </div>
                                         </div>
                                     </div>
@@ -290,105 +290,105 @@
                                     <div class="col-sm-7">
                                         <div class="row" style="margin-top: 10px;">
                                             <div class="col">
-                                                <SfTextBox ID="interventi" @bind-Value="@Visita.Interventi" Placeholder="Interventi" FloatLabelType="@FloatLabelType.Auto"></SfTextBox>
+                                                <SfTextBox ID="interventi" @bind-Value="@Visita.Interventi" Placeholder="Interventi" FloatLabelType="@FloatLabelType.Always"></SfTextBox>
                                             </div>
                                         </div>
                                         <div class="row" style="margin-top: 10px;">
                                             <div class="col-sm-7">
-                                                <SfTextBox ID="curva" @bind-Value="@Visita.CurvaTono" Placeholder="Curva Tono" FloatLabelType="@FloatLabelType.Auto"></SfTextBox>
+                                                <SfTextBox ID="curva" @bind-Value="@Visita.CurvaTono" Placeholder="Curva Tono" FloatLabelType="@FloatLabelType.Always"></SfTextBox>
                                             </div>
                                             <div class="col-sm-5">
-                                                <SfTextBox ID="argon" @bind-Value="@Visita.CurvaArgon" Placeholder="Argon" FloatLabelType="@FloatLabelType.Auto"></SfTextBox>
+                                                <SfTextBox ID="argon" @bind-Value="@Visita.CurvaArgon" Placeholder="Argon" FloatLabelType="@FloatLabelType.Always"></SfTextBox>
                                             </div>
                                         </div>
                                         <div class="row" style="margin-top: 10px;">
                                             <div class="col">
-                                                <SfTextBox ID="vortotticaod" @bind-Value="@Visita.VOrtotticaOD" Placeholder="Visus corretto OD" FloatLabelType="@FloatLabelType.Auto"></SfTextBox>
+                                                <SfTextBox ID="vortotticaod" @bind-Value="@Visita.VOrtotticaOD" Placeholder="Visus corretto OD" FloatLabelType="@FloatLabelType.Always"></SfTextBox>
                                             </div>
                                         </div>
                                         <div class="row" style="margin-top: 10px;">
                                             <div class="col">
-                                                <SfTextBox ID="vortotticaos" @bind-Value="@Visita.VOrtotticaOS" Placeholder="Visus corretto OS" FloatLabelType="@FloatLabelType.Auto"></SfTextBox>
+                                                <SfTextBox ID="vortotticaos" @bind-Value="@Visita.VOrtotticaOS" Placeholder="Visus corretto OS" FloatLabelType="@FloatLabelType.Always"></SfTextBox>
                                             </div>
                                         </div>
                                         <div class="row" style="margin-top: 10px;">
                                             <div class="col-sm-7">
-                                                <SfTextBox ID="shirmer" @bind-Value="@Visita.SHIRMER" Placeholder="SHIRMER" FloatLabelType="@FloatLabelType.Auto"></SfTextBox>
+                                                <SfTextBox ID="shirmer" @bind-Value="@Visita.SHIRMER" Placeholder="SHIRMER" FloatLabelType="@FloatLabelType.Always"></SfTextBox>
                                             </div>
                                             <div class="col-sm-5">
-                                                <SfTextBox ID="tono" @bind-Value="@Visita.TONO" Placeholder="TONO" FloatLabelType="@FloatLabelType.Auto"></SfTextBox>
+                                                <SfTextBox ID="tono" @bind-Value="@Visita.TONO" Placeholder="TONO" FloatLabelType="@FloatLabelType.Always"></SfTextBox>
                                             </div>
                                         </div>
                                         <div class="row" style="margin-top: 10px;">
                                             <div class="col-sm-7">
-                                                <SfTextBox ID="lavaggio" @bind-Value="@Visita.Lavaggio" Placeholder="Lavaggio" FloatLabelType="@FloatLabelType.Auto"></SfTextBox>
+                                                <SfTextBox ID="lavaggio" @bind-Value="@Visita.Lavaggio" Placeholder="Lavaggio" FloatLabelType="@FloatLabelType.Always"></SfTextBox>
                                             </div>
                                             <div class="col-sm-5">
-                                                <SfTextBox ID="biometria" @bind-Value="@Visita.Biometria" Placeholder="Biometria" FloatLabelType="@FloatLabelType.Auto"></SfTextBox>
+                                                <SfTextBox ID="biometria" @bind-Value="@Visita.Biometria" Placeholder="Biometria" FloatLabelType="@FloatLabelType.Always"></SfTextBox>
                                             </div>
                                         </div>
                                         <div class="row" style="margin-top: 10px;">
                                             <div class="col-sm-6">
-                                                <SfTextBox ID="fagod" @bind-Value="@Visita.FAG_Od" Placeholder="Fag OD" FloatLabelType="@FloatLabelType.Auto"></SfTextBox>
+                                                <SfTextBox ID="fagod" @bind-Value="@Visita.FAG_Od" Placeholder="Fag OD" FloatLabelType="@FloatLabelType.Always"></SfTextBox>
                                             </div>
                                             <div class="col-sm-6">
-                                                <SfTextBox ID="fagos" @bind-Value="@Visita.FAG_Os" Placeholder="Fag OS" FloatLabelType="@FloatLabelType.Auto"></SfTextBox>
+                                                <SfTextBox ID="fagos" @bind-Value="@Visita.FAG_Os" Placeholder="Fag OS" FloatLabelType="@FloatLabelType.Always"></SfTextBox>
                                             </div>
                                         </div>
                                         <div class="row" style="margin-top: 10px;">
                                             <div class="col-sm-7">
-                                                <SfTextBox ID="topografia" @bind-Value="@Visita.Topografia" Placeholder="Topografia" FloatLabelType="@FloatLabelType.Auto"></SfTextBox>
+                                                <SfTextBox ID="topografia" @bind-Value="@Visita.Topografia" Placeholder="Topografia" FloatLabelType="@FloatLabelType.Always"></SfTextBox>
                                             </div>
                                             <div class="col-sm-5">
-                                                <SfTextBox ID="iv" @bind-Value="@Visita.IV" Placeholder="IV" FloatLabelType="@FloatLabelType.Auto"></SfTextBox>
+                                                <SfTextBox ID="iv" @bind-Value="@Visita.IV" Placeholder="IV" FloatLabelType="@FloatLabelType.Always"></SfTextBox>
                                             </div>
                                         </div>
                                         <div class="row" style="margin-top: 10px;">
                                             <div class="col-sm-6">
-                                                <SfTextBox ID="octod" @bind-Value="@Visita.OCT_Od" Placeholder="Oct OD" FloatLabelType="@FloatLabelType.Auto"></SfTextBox>
+                                                <SfTextBox ID="octod" @bind-Value="@Visita.OCT_Od" Placeholder="Oct OD" FloatLabelType="@FloatLabelType.Always"></SfTextBox>
                                             </div>
                                             <div class="col-sm-6">
-                                                <SfTextBox ID="octos" @bind-Value="@Visita.OCT_Os" Placeholder="Oct OS" FloatLabelType="@FloatLabelType.Auto"></SfTextBox>
+                                                <SfTextBox ID="octos" @bind-Value="@Visita.OCT_Os" Placeholder="Oct OS" FloatLabelType="@FloatLabelType.Always"></SfTextBox>
                                             </div>
                                         </div>
                                         <div class="row" style="margin-top: 10px;">
                                             <div class="col-sm-6">
-                                                <SfTextBox ID="rnflod" @bind-Value="@Visita.RNFL_Od" Placeholder="RNFL OD" FloatLabelType="@FloatLabelType.Auto"></SfTextBox>
+                                                <SfTextBox ID="rnflod" @bind-Value="@Visita.RNFL_Od" Placeholder="RNFL OD" FloatLabelType="@FloatLabelType.Always"></SfTextBox>
                                             </div>
                                             <div class="col-sm-6">
-                                                <SfTextBox ID="rnflos" @bind-Value="@Visita.RNFL_Os" Placeholder="RNFL OS" FloatLabelType="@FloatLabelType.Auto"></SfTextBox>
+                                                <SfTextBox ID="rnflos" @bind-Value="@Visita.RNFL_Os" Placeholder="RNFL OS" FloatLabelType="@FloatLabelType.Always"></SfTextBox>
                                             </div>
                                         </div>
                                         <div class="row" style="margin-top: 10px;">
                                             <div class="col-sm-6">
-                                                <SfTextBox ID="cvod" @bind-Value="@Visita.CV_Od" Placeholder="CV OD" FloatLabelType="@FloatLabelType.Auto"></SfTextBox>
+                                                <SfTextBox ID="cvod" @bind-Value="@Visita.CV_Od" Placeholder="CV OD" FloatLabelType="@FloatLabelType.Always"></SfTextBox>
                                             </div>
                                             <div class="col-sm-6">
-                                                <SfTextBox ID="cvos" @bind-Value="@Visita.CV_Os" Placeholder="CV OS" FloatLabelType="@FloatLabelType.Auto"></SfTextBox>
+                                                <SfTextBox ID="cvos" @bind-Value="@Visita.CV_Os" Placeholder="CV OS" FloatLabelType="@FloatLabelType.Always"></SfTextBox>
                                             </div>
                                         </div>
                                         <div class="row" style="margin-top: 10px;">
                                             <div class="col-sm-3">
-                                                <SfTextBox ID="pachimetriaod" @bind-Value="@Visita.PACH_Od" Placeholder="Pachimetria OD" FloatLabelType="@FloatLabelType.Auto"></SfTextBox>
+                                                <SfTextBox ID="pachimetriaod" @bind-Value="@Visita.PACH_Od" Placeholder="Pachimetria OD" FloatLabelType="@FloatLabelType.Always"></SfTextBox>
                                             </div>
                                             <div class="col-sm-3">
-                                                <SfTextBox ID="pachimetriaos" @bind-Value="@Visita.PACH_Os" Placeholder="Pachimetria OS" FloatLabelType="@FloatLabelType.Auto"></SfTextBox>
+                                                <SfTextBox ID="pachimetriaos" @bind-Value="@Visita.PACH_Os" Placeholder="Pachimetria OS" FloatLabelType="@FloatLabelType.Always"></SfTextBox>
                                             </div>
                                             <div class="col-sm-3">
-                                                <SfTextBox ID="cdod" @bind-Value="@Visita.CD_Od" Placeholder="C/D OD" FloatLabelType="@FloatLabelType.Auto"></SfTextBox>
+                                                <SfTextBox ID="cdod" @bind-Value="@Visita.CD_Od" Placeholder="C/D OD" FloatLabelType="@FloatLabelType.Always"></SfTextBox>
                                             </div>
                                             <div class="col-sm-3">
-                                                <SfTextBox ID="cdos" @bind-Value="@Visita.CD_Os" Placeholder="C/D OS" FloatLabelType="@FloatLabelType.Auto"></SfTextBox>
+                                                <SfTextBox ID="cdos" @bind-Value="@Visita.CD_Os" Placeholder="C/D OS" FloatLabelType="@FloatLabelType.Always"></SfTextBox>
                                             </div>
                                         </div>
                                         <div class="row" style="margin-top: 10px;">
                                             <div class="col">
-                                                <SfTextBox ID="auto" @bind-Value="@Visita.Auto" Placeholder="Auto" FloatLabelType="@FloatLabelType.Auto"></SfTextBox>
+                                                <SfTextBox ID="auto" @bind-Value="@Visita.Auto" Placeholder="Auto" FloatLabelType="@FloatLabelType.Always"></SfTextBox>
                                             </div>
                                         </div>
                                         <div class="row" style="margin-top: 10px;">
                                             <div class="col">
-                                                <SfTextBox ID="conclusioni" @bind-Value="@Visita.Conclusioni" Placeholder="Conclusioni" FloatLabelType="@FloatLabelType.Auto"></SfTextBox>
+                                                <SfTextBox ID="conclusioni" @bind-Value="@Visita.Conclusioni" Placeholder="Conclusioni" FloatLabelType="@FloatLabelType.Always"></SfTextBox>
                                             </div>
                                         </div>
                                     </div>
@@ -397,7 +397,7 @@
                                 <!-- Note visita -->
                                 <div class="row" style="margin-top: 10px;">
                                     <div class="col">
-                                        <SfTextBox ID="notevisita" @bind-Value="@Visita.Note" Placeholder="NOTE" FloatLabelType="@FloatLabelType.Auto"></SfTextBox>
+                                        <SfTextBox ID="notevisita" @bind-Value="@Visita.Note" Placeholder="NOTE" FloatLabelType="@FloatLabelType.Always"></SfTextBox>
                                     </div>
                                 </div>
                             </ContentTemplate>
@@ -566,14 +566,14 @@
                                 <!-- Distanza interpupillare -->
                                 <div class="row" style="margin-top: 10px;">
                                     <div class="col-sm-2">
-                                        <SfTextBox ID="Distanza" @bind-Value="@Visus.DI" Placeholder="Distanza interpupillare (mm)" FloatLabelType="@FloatLabelType.Auto"></SfTextBox>
+                                        <SfTextBox ID="Distanza" @bind-Value="@Visus.DI" Placeholder="Distanza interpupillare (mm)" FloatLabelType="@FloatLabelType.Always"></SfTextBox>
                                     </div>
                                 </div>
 
                                 <!-- Note visus -->
                                 <div class="row" style="margin-top: 20px;">
                                     <div class="col">
-                                        <SfTextBox ID="NoteVisus" @bind-Value="@Visus.Note" Placeholder="NOTE" FloatLabelType="@FloatLabelType.Auto" Multiline="true"></SfTextBox>
+                                        <SfTextBox ID="NoteVisus" @bind-Value="@Visus.Note" Placeholder="NOTE" FloatLabelType="@FloatLabelType.Always" Multiline="true"></SfTextBox>
                                     </div>
                                 </div>
                             </ContentTemplate>
@@ -646,7 +646,7 @@
                                 <!-- Dati controllo -->
                                 <div class="row" style="margin-top: 10px;">
                                     <div class="col-sm-1">
-                                        <SfMaskedTextBox ID="datacontrollo" @bind-Value="@DataControllo" Mask="00/00/0000" Placeholder="Data controllo" FloatLabelType="@FloatLabelType.Auto"></SfMaskedTextBox>
+                                        <SfMaskedTextBox ID="datacontrollo" @bind-Value="@DataControllo" Mask="00/00/0000" Placeholder="Data controllo" FloatLabelType="@FloatLabelType.Always"></SfMaskedTextBox>
                                     </div>
                                     <div class="col-sm-4">
                                         <label id="label_valutazione" for="valutazione" style="color: #343a40; font-weight: 500; margin: 3px 0;">Valutazione</label>
@@ -1540,7 +1540,7 @@
                 {
                     for (var pp = 0; pp < Pazienti.Count; pp++)
                     {
-                        if (Pazienti[pp].CodFisc == CodFisc)
+                        if ((Pazienti[pp].CodFisc == CodFisc) && (Pazienti[pp].IdPatient != id))
                         {
                             result &= false;
                         }
