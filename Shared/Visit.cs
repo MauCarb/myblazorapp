@@ -18,7 +18,8 @@ namespace BlazorApp.Shared
         public string DiagnosiOD { get; set; }
         public string DiagnosiOS { get; set; }
         public string Anamnesi { get; set; }
-        public string Annessi { get; set; }
+        public string Annessi_Od { get; set; }
+        public string Annessi_Os { get; set; }
         public string Seg_Ant_Od { get; set; }
         public string Seg_Ant_Os { get; set; }
         public string Fundus_Od { get; set; }
@@ -33,17 +34,22 @@ namespace BlazorApp.Shared
         public string OSPV { get; set; }
         public string OSMD { get; set; }
         public string Interventi { get; set; }
-        public string CurvaTono { get; set; }
+        public string CurvaTono_Od { get; set; }
+        public string CurvaTono_Os { get; set; }
         public string CurvaArgon { get; set; }
         public string VOrtotticaOD { get; set; }
         public string VOrtotticaOS { get; set; }
-        public string SHIRMER { get; set; }
-        public string TONO { get; set; }
-        public string Lavaggio { get; set; }
+        public string SHIRMER_Od { get; set; }
+        public string SHIRMER_Os { get; set; }
+        public string TONO_Od { get; set; }
+        public string TONO_Os { get; set; }
+        public string Lavaggio_Od { get; set; }
+        public string Lavaggio_Os { get; set; }
         public string Biometria { get; set; }
         public string FAG_Od { get; set; }
         public string FAG_Os { get; set; }
-        public string Topografia { get; set; }
+        public string Topografia_Od { get; set; }
+        public string Topografia_Os { get; set; }
         public string IV { get; set; }
         public string OCT_Od { get; set; }
         public string OCT_Os { get; set; }
