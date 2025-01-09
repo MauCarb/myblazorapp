@@ -142,9 +142,12 @@
                     <div class="btn-group me-2" role="group" aria-label="First group">
                         <SfButton IconCss="e-icons icon-small e-first-page" CssClass="e-small e-flat btn-light" Content="" OnClick="() => GoToVisit(0)" Disabled="@FirstVisitDisabled" title="Ultima visita"></SfButton>
                         <SfButton IconCss="e-icons icon-small e-chevron-left" CssClass="e-small e-flat btn-light" Content="" OnClick="() => GoToVisit(1)" Disabled="@PrevVisitDisabled" title="Visita precedente"></SfButton>
+
+                        <span class="vstepper">@IndexVisita</span>
+
                         <SfButton IconCss="e-icons icon-small e-chevron-right" CssClass="e-small e-flat btn-light" Content="" OnClick="() => GoToVisit(2)" Disabled="@NextVisitDisabled" title="Visita successiva"></SfButton>
                         <SfButton IconCss="e-icons icon-small e-last-page" CssClass="e-small e-flat btn-light" Content="" OnClick="() => GoToVisit(3)" Disabled="@LastVisitDisabled" title="Prima visita"></SfButton>
-				    </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -322,7 +325,7 @@
                                         <!-- Motivo Visita -->
                                         <div class="row" style="margin-top: 10px;">
                                             <div class="col">
-                                                <SfTextBox ID="motivovisita" @bind-Value="@Visita.MotivoVisita" Placeholder="Motivo Visita" FloatLabelType="@FloatLabelType.Always"></SfTextBox>
+                                                <SfTextBox ID="motivovisita" @bind-Value="@Visita.MotivoVisita" Placeholder="Motivo Visita" FloatLabelType="@FloatLabelType.Always" Multiline="true"></SfTextBox>
                                             </div>
                                         </div>
                                     </div>
@@ -466,7 +469,7 @@
                                         <!-- Conclusioni -->
                                         <div class="row" style="margin-top: 10px;">
                                             <div class="col">
-                                                <SfTextBox ID="conclusioni" @bind-Value="@Visita.Conclusioni" Placeholder="Conclusioni" FloatLabelType="@FloatLabelType.Always"></SfTextBox>
+                                                <SfTextBox ID="conclusioni" @bind-Value="@Visita.Conclusioni" Placeholder="Conclusioni" FloatLabelType="@FloatLabelType.Always" Multiline="true"></SfTextBox>
                                             </div>
                                         </div>
                                     </div>
@@ -475,7 +478,7 @@
                                 <!-- Note visita -->
                                 <div class="row" style="margin-top: 10px;">
                                     <div class="col">
-                                        <SfTextBox ID="notevisita" @bind-Value="@Visita.Note" Placeholder="NOTE" FloatLabelType="@FloatLabelType.Always"></SfTextBox>
+                                        <SfTextBox ID="notevisita" @bind-Value="@Visita.Note" Placeholder="NOTE" FloatLabelType="@FloatLabelType.Always" Multiline="true"></SfTextBox>
                                     </div>
                                 </div>
                             </ContentTemplate>
@@ -491,6 +494,9 @@
                                     <div class="col-sm-12">
                                         <span style="float: right;">
                                             <SfButton IconCss="e-icons icon-navy e-save" CssClass="e-flat btn-light" Content=" Salva Prescrizione" OnClick="() => SaveVisus()" Disabled="@SaveVisusDisabled"></SfButton>
+                                        </span>
+                                        <span style="float: right;">
+                                            <SfButton IconCss="e-icons icon-navy e-print" CssClass="e-flat btn-light" Content=" Stampa Prescrizione Occhiali" OnClick="() => PrintOcchiali()" Disabled="@PrintVisusDisabled"></SfButton>
                                         </span>
                                     </div>
                                 </div>
@@ -664,13 +670,20 @@
                             </ChildContent>
                             <ContentTemplate>
                                 <div class="row" style="margin-top: 10px;">
-                                    <div class="col-sm-1"><b>&nbsp;Controllo</b> <i>@(CntrCorrente + 1)</i> <b>di</b> <i>@ListaCntr.Count</i></div>
+                                    <div class="col-sm-1"><b>&nbsp;Controllo</b> <i>@(CntrCorrente + 1)</i> <b>di</b> <i>@ListaCntrs.Count</i></div>
 
                                     <div class="col-sm-2">
-                                        <SfButton IconCss="e-icons icon-small e-first-page" CssClass="e-small e-flat btn-light" Content="" OnClick="() => GoToControl(0)" Disabled="@FirstCntrDisabled" title="Ultimo Controllo"></SfButton>
-                                        <SfButton IconCss="e-icons icon-small e-chevron-left" CssClass="e-small e-flat btn-light" Content="" OnClick="() => GoToControl(1)" Disabled="@PrevCntrDisabled" title="Controllo precedente"></SfButton>
-                                        <SfButton IconCss="e-icons icon-small e-chevron-right" CssClass="e-small e-flat btn-light" Content="" OnClick="() => GoToControl(2)" Disabled="@NextCntrDisabled" title="Controllo successivo"></SfButton>
-                                        <SfButton IconCss="e-icons icon-small e-last-page" CssClass="e-small e-flat btn-light" Content="" OnClick="() => GoToControl(3)" Disabled="@LastCntrDisabled" title="Primo Controllo"></SfButton>
+                                        <div class="btn-toolbar mb-3" role="toolbar" aria-label="Toolbar controlli button groups">
+                                            <div class="btn-group me-2" role="group" aria-label="First group">
+                                                <SfButton IconCss="e-icons icon-small e-first-page" CssClass="e-small e-flat btn-light" Content="" OnClick="() => GoToControl(0)" Disabled="@FirstCntrDisabled" title="Ultimo Controllo"></SfButton>
+                                                <SfButton IconCss="e-icons icon-small e-chevron-left" CssClass="e-small e-flat btn-light" Content="" OnClick="() => GoToControl(1)" Disabled="@PrevCntrDisabled" title="Controllo precedente"></SfButton>
+
+                                                <span class="vstepper">@IndexControlli</span>
+
+                                                <SfButton IconCss="e-icons icon-small e-chevron-right" CssClass="e-small e-flat btn-light" Content="" OnClick="() => GoToControl(2)" Disabled="@NextCntrDisabled" title="Controllo successivo"></SfButton>
+                                                <SfButton IconCss="e-icons icon-small e-last-page" CssClass="e-small e-flat btn-light" Content="" OnClick="() => GoToControl(3)" Disabled="@LastCntrDisabled" title="Primo Controllo"></SfButton>
+                                            </div>
+                                        </div>
                                     </div>
 
                                     <div class="col-sm-1">&nbsp;</div>
@@ -681,6 +694,9 @@
                                     <div class="col-sm-6">
                                         <span style="float: right;">
                                             <SfButton IconCss="e-icons icon-navy e-save" CssClass="e-flat btn-light" Content=" Salva Controllo" OnClick="() => SaveControl()" Disabled="@SaveCntrDisabled"></SfButton>
+                                        </span>
+                                        <span style="float: right;">
+                                            <SfButton IconCss="e-icons icon-navy e-print" CssClass="e-flat btn-light" Content=" Stampa Controlli" OnClick="() => PrintControlli()" Disabled="@PrintCntrDisabled"></SfButton>
                                         </span>
                                     </div>
                                 </div>
@@ -744,6 +760,9 @@
                                     <div class="col-sm-12">
                                         <span style="float: right;">
                                             <SfButton IconCss="e-icons icon-navy e-save" CssClass="e-flat btn-light" Content=" Salva Ortottica" OnClick="() => SaveOrtoctis()" Disabled="@SaveOrtoctisDisabled"></SfButton>
+                                        </span>
+                                        <span style="float: right;">
+                                            <SfButton IconCss="e-icons icon-navy e-print" CssClass="e-flat btn-light" Content=" Stampa Ortottica" OnClick="() => PrintOrtottica()" Disabled="@PrintVisitDisabled"></SfButton>
                                         </span>
                                     </div>
                                 </div>
@@ -872,6 +891,16 @@
 </SfDialog>
 
 <style>
+    .vstepper {
+        display: inline-block;
+        margin: 0 10px 0 8px;
+        border: 1px solid #ccc;
+        width: 80px;
+        text-align: center;
+        font-size: 13px;
+        padding-top: 3px;
+    }
+
     .default-tab {
         border: 1px solid #d7d7d7;
     }
@@ -1150,6 +1179,8 @@
     // private List<Coppia> ListaVisite;
     private List<CoppiaDecDat> ListaVisite = new List<CoppiaDecDat>();
     private int VisitaCorrente = -1;
+
+    string IndexVisita = "";
     #endregion
 
     #region binding dati prescrizione occhiali
@@ -1157,6 +1188,8 @@
 
     public Boolean PrescrizioneDisabled = true;
     public Boolean SaveVisusDisabled = false;
+    public Boolean PrintVisusDisabled = true;
+
     public Boolean IsNewVisus = false;
 
     private Misure Visus = new Misure();
@@ -1183,13 +1216,17 @@
 
     public Boolean AddCntrDisabled = false;
     public Boolean SaveCntrDisabled = false;
+    public Boolean PrintCntrDisabled = true;
 
     public Boolean IsNewCntr = false;
 
     private Controlli Controllo = new Controlli();
 
-    private List<CoppiaDecDat> ListaCntr = new List<CoppiaDecDat>();
+    private List<TriplaDecDatStr> ListaCntrs = new List<TriplaDecDatStr>();
+
     private int CntrCorrente = -1;
+
+    string IndexControlli = "";
     #endregion
 
     #region visita ortottica
@@ -1462,6 +1499,8 @@
 
                     VisitaCorrente = 0;
 
+                    IndexVisita = (VisitaCorrente + 1).ToString() + " di " + ListaVisite.Count.ToString();
+
                     DataVisita = ListaVisite[VisitaCorrente].Val.ToString("dd/MM/yyyy");
 
                     LoadVisit(ListaVisite[VisitaCorrente].ID);
@@ -1470,11 +1509,11 @@
 
                     // load date e id storico controlli e dati ultimo controllo
 
-                    ListaCntr = await ListControlliService.ListControlliByVisit(ListaVisite[VisitaCorrente].ID);
+                    ListaCntrs = await ListControlliService.ListControlliByVisit(ListaVisite[VisitaCorrente].ID);
 
-                    if (ListaCntr.Count > 0)
+                    if (ListaCntrs.Count > 0)
                     {
-                        if (ListaCntr.Count == 1)
+                        if (ListaCntrs.Count == 1)
                         {
                             FirstCntrDisabled = true;
                             PrevCntrDisabled = true;
@@ -1491,9 +1530,24 @@
 
                         CntrCorrente = 0;
 
-                        DataControllo = ListaCntr[CntrCorrente].Val.ToString();
+                        IndexControlli = (CntrCorrente + 1).ToString() + " di " + ListaCntrs.Count.ToString();
 
-                        LoadControl(ListaCntr[CntrCorrente].ID);
+                        DataControllo = ListaCntrs[CntrCorrente].ValDat.ToString();
+
+                        LoadControl(ListaCntrs[CntrCorrente].ID);
+
+                        PrintCntrDisabled = false;
+                    }
+                    else
+                    {
+                        FirstCntrDisabled = true;
+                        PrevCntrDisabled = true;
+                        NextCntrDisabled = true;
+                        LastCntrDisabled = true;
+
+                        IndexControlli = " - ";
+
+                        PrintCntrDisabled = true;
                     }
 
                     AddCntrDisabled = false;
@@ -1512,6 +1566,8 @@
                     PrescrizioneDisabled = true;
                     ControlliDisabled = true;
                     OrtotticaDisabled = true;
+
+                    IndexVisita = " - ";
                 }
 
                 StateHasChanged();
@@ -1604,16 +1660,12 @@
 
             Pazienti = await PatientService.PatList(FName + "|" + LName + "||||");
 
-            if (Pazienti.Count == 0)
-            {
-                // non sono presenti casi di omonimia
-                result = true;
-            }
-            else
+            if (Pazienti.Count > 0)     //  sono presenti casi di omonimia
             {
                 if (String.IsNullOrEmpty(CodFisc))
                 {
                     result &= false;
+                    PazienteValido &= false;
 
                     DialogHeader = " Attenzione ";
                     DialogIcon = "e-icons e-circle-close col-lg-2";
@@ -1643,10 +1695,15 @@
             }
         }
 
+        // await Task.Run(() =>
+        // {
+        //     PazienteValido = result;
+        // });
+
         StateHasChanged();
 
         // return result;
-        PazienteValido = result;
+        // PazienteValido = result;
     }
 
     public async void SavePatient()
@@ -1908,6 +1965,8 @@
             case 0:
                 VisitaCorrente = 0;
 
+                IndexVisita = (VisitaCorrente + 1).ToString() + " di " + ListaVisite.Count.ToString();
+
                 FirstVisitDisabled = true;
                 PrevVisitDisabled = true;
 
@@ -1928,6 +1987,8 @@
                         FirstVisitDisabled = true;
                         PrevVisitDisabled = true;
                     }
+
+                    IndexVisita = (VisitaCorrente + 1).ToString() + " di " + ListaVisite.Count.ToString();
                 }
                 break;
 
@@ -1944,11 +2005,15 @@
                         NextVisitDisabled = true;
                         LastVisitDisabled = true;
                     }
+
+                    IndexVisita = (VisitaCorrente + 1).ToString() + " di " + ListaVisite.Count.ToString();
                 }
                 break;
 
             case 3:
                 VisitaCorrente = ListaVisite.Count - 1;
+
+                IndexVisita = (VisitaCorrente + 1).ToString() + " di " + ListaVisite.Count.ToString();
 
                 FirstVisitDisabled = false;
                 PrevVisitDisabled = false;
@@ -1973,13 +2038,13 @@
         Controllo = new Controlli();
         CntrCorrente = -1;
 
-        ListaCntr.Clear();
+        ListaCntrs.Clear();
 
-        ListaCntr = await ListControlliService.ListControlliByVisit(ListaVisite[VisitaCorrente].ID);
+        ListaCntrs = await ListControlliService.ListControlliByVisit(ListaVisite[VisitaCorrente].ID);
 
-        if (ListaCntr.Count > 0)
+        if (ListaCntrs.Count > 0)
         {
-            if (ListaCntr.Count == 1)
+            if (ListaCntrs.Count == 1)
             {
                 FirstCntrDisabled = true;
                 PrevCntrDisabled = true;
@@ -1996,13 +2061,31 @@
 
             CntrCorrente = 0;
 
-            DataControllo = ListaCntr[CntrCorrente].Val.ToString();
+            IndexControlli = (CntrCorrente + 1).ToString() + " di " + ListaCntrs.Count.ToString();
 
-            LoadControl(ListaCntr[CntrCorrente].ID);
+            DataControllo = ListaCntrs[CntrCorrente].ValDat.ToString();
+
+            LoadControl(ListaCntrs[CntrCorrente].ID);
+
+            SaveCntrDisabled = false;
+
+            PrintCntrDisabled = false;
+        }
+        else
+        {
+            FirstCntrDisabled = true;
+            PrevCntrDisabled = true;
+            NextCntrDisabled = true;
+            LastCntrDisabled = true;
+
+            IndexControlli = " - ";
+
+            SaveCntrDisabled = true;
+
+            PrintCntrDisabled = true;
         }
 
         AddCntrDisabled = false;
-        SaveCntrDisabled = false;
 
         StateHasChanged();
     }
@@ -2096,6 +2179,8 @@
 
             VisitaCorrente = 0;
 
+            IndexVisita = (VisitaCorrente + 1).ToString() + " di " + ListaVisite.Count.ToString();
+
             DataVisita = ListaVisite[0].Val.ToString("dd/MM/yyyy");
 
             LoadVisit(ListaVisite[VisitaCorrente].ID);
@@ -2133,6 +2218,8 @@
         if (VisusCorrente > -1)
         {
             IsNewVisus = false;
+
+            PrintVisusDisabled = false;
 
             Visus = await VisusService.GetVisus(ListaVisus[VisusCorrente].ID);
 
@@ -2198,6 +2285,8 @@
             DataMisura = DataVisita;
 
             SaveVisusDisabled = false;
+
+            PrintVisusDisabled = true;
 
             Visus = new Misure();
 
@@ -2319,14 +2408,14 @@
                 break;
 
             case 2:                         // controllo successivo
-                if (CntrCorrente < ListaCntr.Count - 1)
+                if (CntrCorrente < ListaCntrs.Count - 1)
                 {
                     CntrCorrente += 1;
 
                     FirstCntrDisabled = false;
                     PrevCntrDisabled = false;
 
-                    if (CntrCorrente == ListaCntr.Count - 1)
+                    if (CntrCorrente == ListaCntrs.Count - 1)
                     {
                         NextCntrDisabled = true;
                         LastCntrDisabled = true;
@@ -2335,7 +2424,7 @@
                 break;
 
             case 3:                         // ultimo controllo
-                CntrCorrente = ListaCntr.Count - 1;
+                CntrCorrente = ListaCntrs.Count - 1;
 
                 FirstCntrDisabled = false;
                 PrevCntrDisabled = false;
@@ -2345,9 +2434,9 @@
                 break;
         }
 
-        DataControllo = ListaCntr[CntrCorrente].Val.ToString("dd/MM/yyyy");
+        DataControllo = ListaCntrs[CntrCorrente].ValDat.ToString("dd/MM/yyyy");
 
-        LoadControl(ListaCntr[CntrCorrente].ID);
+        LoadControl(ListaCntrs[CntrCorrente].ID);
 
         StateHasChanged();
     }
@@ -2390,13 +2479,13 @@
         }
 
         // load date e id storico controlli e dati ultimo controllo
-        ListaCntr.Clear();
+        ListaCntrs.Clear();
 
-        ListaCntr = await ListControlliService.ListControlliByVisit(Visita.IdVisit);
+        ListaCntrs = await ListControlliService.ListControlliByVisit(Visita.IdVisit);
 
-        if (ListaCntr.Count > 0)
+        if (ListaCntrs.Count > 0)
         {
-            if (ListaCntr.Count == 1)
+            if (ListaCntrs.Count == 1)
             {
                 FirstCntrDisabled = true;
                 PrevCntrDisabled = true;
@@ -2413,9 +2502,24 @@
 
             CntrCorrente = 0;
 
-            DataControllo = ListaCntr[0].Val.ToString("dd/MM/yyyy");
+            IndexControlli = (CntrCorrente + 1).ToString() + " di " + ListaCntrs.Count.ToString();
 
-            LoadControl(ListaCntr[CntrCorrente].ID);
+            DataControllo = ListaCntrs[0].ValDat.ToString("dd/MM/yyyy");
+
+            LoadControl(ListaCntrs[CntrCorrente].ID);
+
+            PrintCntrDisabled = false;
+        }
+        else
+        {
+            FirstCntrDisabled = true;
+            PrevCntrDisabled = true;
+            NextCntrDisabled = true;
+            LastCntrDisabled = true;
+
+            IndexControlli = " - ";
+
+            PrintCntrDisabled = true;
         }
 
         AddCntrDisabled = false;
@@ -3777,6 +3881,1961 @@
         pdfDocument.Save(memoryStream);
         //Download the PDF document
         await JS.SaveAs("Scheda " + LName + " " + FName + "_" + ListaVisite[VisitaCorrente].Val.ToString("dd.MM.yyyy") + ".pdf", memoryStream.ToArray());
+    }
+
+    async void PrintOrtottica()
+    {
+        int paragraphAfterSpacing = 8;
+        int cellMargin = 8;
+
+        //Create a new PDF document.
+        PdfDocument pdfDocument = new PdfDocument();
+
+        #region Definizione documento pdf
+        // Set document information
+        // ------------------------------------------------------------------------------------------------------------------------
+        pdfDocument.DocumentInformation.Author = "Powered by Phoenix";
+        pdfDocument.DocumentInformation.CreationDate = DateTime.Now;
+        pdfDocument.DocumentInformation.Creator = "Ophthal";
+        pdfDocument.DocumentInformation.Keywords = "Dott. La Bruna";
+        pdfDocument.DocumentInformation.Subject = "Scheda Ortottica";
+        pdfDocument.DocumentInformation.Title = "Scheda Ortottica";
+
+        // Set page size
+        // ------------------------------------------------------------------------------------------------------------------------
+        pdfDocument.PageSettings.Size = Syncfusion.Pdf.PdfPageSize.A4;
+
+        // Set margin for all the pages
+        // pdfDocument.PageSettings.Margins.Left = 10;
+        // pdfDocument.PageSettings.Margins.Right = 10;
+        // pdfDocument.PageSettings.Margins.Top = 10;
+        // pdfDocument.PageSettings.Margins.Bottom = 10;
+
+        pdfDocument.PageSettings.Margins.All = 40F;
+
+        // Set page orientation
+        // ------------------------------------------------------------------------------------------------------------------------
+        pdfDocument.PageSettings.Orientation = PdfPageOrientation.Portrait;
+
+        // Set paginate layout
+        // ------------------------------------------------------------------------------------------------------------------------
+        PdfLayoutFormat format = new PdfLayoutFormat();
+        format.Layout = PdfLayoutType.Paginate;
+
+        // Add page to the PDF document
+        PdfPage page = pdfDocument.Pages.Add();
+        #endregion
+
+        #region Header & Footer
+        // Create Header and Footer font
+        // ------------------------------------------------------------------------------------------------------------------------
+        PdfFont fontHeader = new PdfStandardFont(PdfFontFamily.Helvetica, 14, PdfFontStyle.Regular);
+        PdfFont fontFooter = new PdfStandardFont(PdfFontFamily.Helvetica, 7, PdfFontStyle.Regular);
+
+        #region Header
+        // Get document's bounds
+        // ------------------------------------------------------------------------------------------------------------------------
+        RectangleF bounds = new RectangleF(0, 0, pdfDocument.Pages[0].GetClientSize().Width, 50);
+
+        // Create a Page template that can be used as header.
+        // ------------------------------------------------------------------------------------------------------------------------
+        PdfPageTemplateElement header = new PdfPageTemplateElement(bounds);
+
+        // Load image for header
+        // Scarica l'immagine dal server
+        var httpClient = new HttpClient();
+        string imageUrl = $"{Env.BaseAddress}/img/LB_Logo_25.png";                      // URL dell'immagine
+        var imageBytes = await httpClient.GetByteArrayAsync(imageUrl);
+
+        PdfGridCellStyle HeadLogoStyle = new PdfGridCellStyle();
+        HeadLogoStyle.Borders.Left.Width = 0;
+        HeadLogoStyle.Borders.Right.Width = 0;
+        HeadLogoStyle.Borders.Top.Width = 0;
+        HeadLogoStyle.Borders.Bottom.Width = 0.1F;
+        HeadLogoStyle.CellPadding = new PdfPaddings(0, 0, 0, 0);
+
+        // Setup font for Dati Testata
+        PdfStandardFont hHeadFont = new PdfStandardFont(PdfFontFamily.Helvetica, 14, PdfFontStyle.Bold);
+        PdfStandardFont hNameFont = new PdfStandardFont(PdfFontFamily.Helvetica, 7, PdfFontStyle.Bold);
+        PdfStandardFont hValueFont = new PdfStandardFont(PdfFontFamily.Helvetica, 7, PdfFontStyle.Regular);
+
+        // Specify the style for bottom
+        PdfGridCellStyle HeadStyle = new PdfGridCellStyle();
+        HeadStyle.Borders.Left.Width = 0;
+        HeadStyle.Borders.Right.Width = 0;
+        HeadStyle.Borders.Top.Width = 0;
+        HeadStyle.Borders.Bottom.Width = 0.1F;
+        HeadStyle.CellPadding = new PdfPaddings(60, 10, 0, 20);
+        HeadStyle.StringFormat = new PdfStringFormat(PdfTextAlignment.Center);
+
+        // Usa un MemoryStream per creare il PdfBitmap
+        using (MemoryStream imageStream = new MemoryStream(imageBytes))
+        {
+            PdfImage image = new PdfBitmap(imageStream);
+
+            HeadLogoStyle.BackgroundImage = new PdfBitmap(imageStream);
+
+            // Draw the image in the header.
+            header.Graphics.DrawImage(image, new PointF(0, 0), new SizeF(46, 25));      // (46, 25) = width, height immagine
+        }
+
+        // Add the header at the top.
+        //pdfDocument.Template.Top = header;
+        #endregion
+
+        #region Footer
+        // Create a Page template that can be used as footer.
+        // ------------------------------------------------------------------------------------------------------------------------
+        PdfPageTemplateElement footer = new PdfPageTemplateElement(bounds);
+
+        PdfBrush brush = new PdfSolidBrush(Color.Black);
+
+        // Create page date of printing field.
+        PdfTextElement pageDatePrint = new PdfTextElement("Printed on " + DateTime.Now.ToShortDateString(), fontFooter, brush);
+
+
+        // Create page number field.
+        PdfPageNumberField pageNumber = new PdfPageNumberField(fontFooter, brush);
+
+        // Create page count field.
+        PdfPageCountField count = new PdfPageCountField(fontFooter, brush);
+
+        // Add the fields in composite fields.
+        PdfCompositeField compositeField = new PdfCompositeField(fontFooter, brush, "Page {0} of {1}", pageNumber, count);
+
+        compositeField.Bounds = footer.Bounds;
+
+        // Draw the text element and store its layout information
+        pageDatePrint.Draw(footer.Graphics, new PointF(0, 40));
+
+        // Draw the composite field in footer.
+        compositeField.Draw(footer.Graphics, new PointF(270, 40));
+
+        // Add the footer template at the bottom.
+        pdfDocument.Template.Bottom = footer;
+        #endregion
+        #endregion
+
+        #region Prima parte: Dati Testata
+        #region Definizione stile celle Dati Testata
+        // // Setup font for Dati Testata
+        // PdfStandardFont hNameFont = new PdfStandardFont(PdfFontFamily.Helvetica, 7, PdfFontStyle.Bold);
+        // PdfStandardFont hValueFont = new PdfStandardFont(PdfFontFamily.Helvetica, 7, PdfFontStyle.Regular);
+
+        // // Specify the style for bottom
+        // PdfGridCellStyle HeadStyle = new PdfGridCellStyle();
+        // HeadStyle.Borders.Left.Width = 0.1F;
+        // HeadStyle.Borders.Right.Width = 0.1F;
+        // HeadStyle.Borders.Top.Width = 0.1F;
+        // HeadStyle.Borders.Bottom.Width = 0.1F;
+        // HeadStyle.CellPadding = new PdfPaddings(2, 2, 2, 2);
+        // HeadStyle.StringFormat = new PdfStringFormat(PdfTextAlignment.Center);
+
+        // PdfGridCellStyle HeadLogoStyle = new PdfGridCellStyle();
+        // HeadLogoStyle.Borders.Left.Width = 0;
+        // HeadLogoStyle.Borders.Right.Width = 0;
+        // HeadLogoStyle.Borders.Top.Width = 0;
+        // HeadLogoStyle.Borders.Bottom.Width = 0;
+        // HeadLogoStyle.CellPadding = new PdfPaddings(0, 0, 0, 0);
+        #endregion
+
+        #region Imposta griglia Dati Testata
+        // Create the head grid
+        PdfGrid HeadPdfGrid = new PdfGrid();
+
+        // Add the rows to head grid
+        PdfGridRow row = HeadPdfGrid.Rows.Add();
+
+        //Adding grid style
+        PdfGridStyle gridStyle = new PdfGridStyle();
+
+        //Allow grid to overflow horizontally
+        gridStyle.AllowHorizontalOverflow = true;
+
+        //Adding cell spacing between cells
+        gridStyle.CellSpacing = 0F;
+
+        HeadPdfGrid.Style = gridStyle;
+
+        // Set rows's height
+        // row.Height = 18;
+
+        // Add the columns to head grid
+        HeadPdfGrid.Columns.Add(2);
+
+        // Set columns's width
+        HeadPdfGrid.Columns[0].Width = 50;
+        HeadPdfGrid.Columns[1].Width = 465;
+
+        // Set columns merged
+        // HeadPdfGrid.Rows[0].Cells[0].RowSpan = 2;
+        #endregion
+
+        #region Inserimento Dati Testata
+        // Set the HeadPdfGrid's value
+        PdfTextElement val;
+
+        HeadPdfGrid.Rows[0].Cells[0].Style = HeadLogoStyle;
+        HeadPdfGrid.Rows[0].Cells[0].ImagePosition = PdfGridImagePosition.Tile;                                         // 0-0
+
+        HeadPdfGrid.Rows[0].Cells[1].Style = HeadStyle;
+
+        val = new PdfTextElement("Visita Ortottica", hHeadFont, PdfBrushes.Black);                                      // 0-1
+        HeadPdfGrid.Rows[0].Cells[1].Value = val;
+
+        PdfLayoutResult result = HeadPdfGrid.Draw(page, new Syncfusion.Drawing.PointF(0, 0));
+        #endregion
+        #endregion
+
+        #region Seconda parte: Dati Visita Ortottica
+        // Create field's name and field's font
+        // ------------------------------------------------------------------------------------------------------------------------
+        PdfFont fieldNameFont = new PdfStandardFont(PdfFontFamily.Helvetica, 10, PdfFontStyle.Bold);
+        PdfFont fieldFont = new PdfStandardFont(PdfFontFamily.Helvetica, 10, PdfFontStyle.Regular);
+
+        #region Definizione stile celle Visita
+        // Specify the style for head's cell
+        PdfGridCellStyle posCellStyleH = new PdfGridCellStyle();
+        posCellStyleH.Borders.Left.Width = 0;
+        posCellStyleH.Borders.Right.Width = 0;
+        posCellStyleH.Borders.Top.Width = 0;
+        posCellStyleH.Borders.Bottom.Width = 0;
+        posCellStyleH.CellPadding = new PdfPaddings(0, 3, 6, 6);
+
+        // Specify the style for value's cell
+        PdfGridCellStyle posCellStyleV = new PdfGridCellStyle();
+        posCellStyleV.Borders.Left.Width = 0;
+        posCellStyleV.Borders.Right.Width = 0;
+        posCellStyleV.Borders.Top.Width = 0;
+        posCellStyleV.Borders.Bottom.Width = 0;
+        posCellStyleV.CellPadding = new PdfPaddings(3, 3, 6, 6);
+        #endregion
+
+        #region Imposta griglia Dati Visita
+        // Create Grid
+        PdfGrid VisitPdfGrid = new PdfGrid();
+
+        // Add Rows
+        PdfGridRow rowV01 = VisitPdfGrid.Rows.Add();
+        PdfGridRow rowV02 = VisitPdfGrid.Rows.Add();
+        PdfGridRow rowV03 = VisitPdfGrid.Rows.Add();
+        PdfGridRow rowV04 = VisitPdfGrid.Rows.Add();
+        PdfGridRow rowV05 = VisitPdfGrid.Rows.Add();
+        PdfGridRow rowV06 = VisitPdfGrid.Rows.Add();
+        PdfGridRow rowV07 = VisitPdfGrid.Rows.Add();
+        PdfGridRow rowV08 = VisitPdfGrid.Rows.Add();
+        PdfGridRow rowV09 = VisitPdfGrid.Rows.Add();
+        PdfGridRow rowV10 = VisitPdfGrid.Rows.Add();
+        PdfGridRow rowV11 = VisitPdfGrid.Rows.Add();
+        PdfGridRow rowV12 = VisitPdfGrid.Rows.Add();
+        PdfGridRow rowV13 = VisitPdfGrid.Rows.Add();
+
+        // Set Rows's height
+        // rowV01.Height = 15;         // Posizione Primaria
+        // rowV02.Height = 15;         // Motilità Attiva
+        // rowV03.Height = 15;         // Convergenza
+        // rowV04.Height = 15;         // Cover Test
+        // rowV05.Height = 15;         // Prisma Cover Test
+        // rowV06.Height = 15;         // Ampiezza Fusiva
+        // rowV07.Height = 15;         // Vetro Rosso
+        // rowV08.Height = 15;         // Lang Test
+        // rowV09.Height = 15;         // Titmus Test
+        // rowV10.Height = 15;         // Altri test per la visione binoculare
+        // rowV11.Height = 15;         // Conclusioni
+        // rowV12.Height = 15;         // Diagnosi
+        // rowV13.Height = 15;         // Terapia
+
+        // Add Columns
+        VisitPdfGrid.Columns.Add(2);
+
+        // Set Columns's width
+        VisitPdfGrid.Columns[0].Width = 110;
+        VisitPdfGrid.Columns[1].Width = 400;
+        #endregion
+
+        #region Inserimento Dati Visita Ortottica
+        // Set the HeadPdfGrid's value
+        PdfTextElement value;
+
+        VisitPdfGrid.Rows[0].Cells[0].Style = posCellStyleH;                                        // Posizione Primaria
+        VisitPdfGrid.Rows[0].Cells[1].Style = posCellStyleV;
+
+        VisitPdfGrid.Rows[1].Cells[0].Style = posCellStyleH;                                        // Motilità Attiva
+        VisitPdfGrid.Rows[1].Cells[1].Style = posCellStyleV;
+
+        VisitPdfGrid.Rows[2].Cells[0].Style = posCellStyleH;                                        // Convergenza
+        VisitPdfGrid.Rows[2].Cells[1].Style = posCellStyleV;
+
+        VisitPdfGrid.Rows[3].Cells[0].Style = posCellStyleH;                                        // Cover Test
+        VisitPdfGrid.Rows[3].Cells[1].Style = posCellStyleV;
+
+        VisitPdfGrid.Rows[4].Cells[0].Style = posCellStyleH;                                        // Prisma Cover Test
+        VisitPdfGrid.Rows[4].Cells[1].Style = posCellStyleV;
+
+        VisitPdfGrid.Rows[5].Cells[0].Style = posCellStyleH;                                        // Ampiezza Fusiva
+        VisitPdfGrid.Rows[5].Cells[1].Style = posCellStyleV;
+
+        VisitPdfGrid.Rows[6].Cells[0].Style = posCellStyleH;                                        // Vetro Rosso
+        VisitPdfGrid.Rows[6].Cells[1].Style = posCellStyleV;
+
+        VisitPdfGrid.Rows[7].Cells[0].Style = posCellStyleH;                                        // Lang Test
+        VisitPdfGrid.Rows[7].Cells[1].Style = posCellStyleV;
+
+        VisitPdfGrid.Rows[8].Cells[0].Style = posCellStyleH;                                        // Titmus Test
+        VisitPdfGrid.Rows[8].Cells[1].Style = posCellStyleV;
+
+        VisitPdfGrid.Rows[9].Cells[0].Style = posCellStyleH;                                        // Altri test per la visione binoculare
+        VisitPdfGrid.Rows[9].Cells[1].Style = posCellStyleV;
+
+        VisitPdfGrid.Rows[10].Cells[0].Style = posCellStyleH;                                       // Conclusioni
+        VisitPdfGrid.Rows[10].Cells[1].Style = posCellStyleV;
+
+        VisitPdfGrid.Rows[11].Cells[0].Style = posCellStyleH;                                       // Diagnosi
+        VisitPdfGrid.Rows[11].Cells[1].Style = posCellStyleV;
+
+        VisitPdfGrid.Rows[12].Cells[0].Style = posCellStyleH;                                       // Terapia
+        VisitPdfGrid.Rows[12].Cells[1].Style = posCellStyleV;
+
+        value = new PdfTextElement("Posizione Primaria:", fieldNameFont, PdfBrushes.Black);         //  0 - 0
+        VisitPdfGrid.Rows[0].Cells[0].Value = value;
+        value = new PdfTextElement(FillEmpty(Ortoctis.Posizione), fieldFont, PdfBrushes.Black);     //  0 - 1
+        VisitPdfGrid.Rows[0].Cells[1].Value = value;
+
+        value = new PdfTextElement("Motilità Attiva:", fieldNameFont, PdfBrushes.Black);            //  1 - 0
+        VisitPdfGrid.Rows[1].Cells[0].Value = value;
+        value = new PdfTextElement(FillEmpty(Ortoctis.Motilita), fieldFont, PdfBrushes.Black);      //  1 - 1
+        VisitPdfGrid.Rows[1].Cells[1].Value = value;
+
+        value = new PdfTextElement("Convergenza:", fieldNameFont, PdfBrushes.Black);                //  2 - 0
+        VisitPdfGrid.Rows[2].Cells[0].Value = value;
+        value = new PdfTextElement(FillEmpty(Ortoctis.Convergenza), fieldFont, PdfBrushes.Black);   //  2 - 1
+        VisitPdfGrid.Rows[2].Cells[1].Value = value;
+
+        value = new PdfTextElement("Cover Test:", fieldNameFont, PdfBrushes.Black);                 //  3 - 0
+        VisitPdfGrid.Rows[3].Cells[0].Value = value;
+        value = new PdfTextElement(FillEmpty(Ortoctis.Cover), fieldFont, PdfBrushes.Black);         //  3 - 1
+        VisitPdfGrid.Rows[3].Cells[1].Value = value;
+
+        value = new PdfTextElement("Prisma Cover Test:", fieldNameFont, PdfBrushes.Black);          //  4 - 0
+        VisitPdfGrid.Rows[4].Cells[0].Value = value;
+        value = new PdfTextElement(FillEmpty(Ortoctis.PrismaCover), fieldFont, PdfBrushes.Black);   //  4 - 1
+        VisitPdfGrid.Rows[4].Cells[1].Value = value;
+
+        value = new PdfTextElement("Ampiezza Fusiva:", fieldNameFont, PdfBrushes.Black);            //  5 - 0
+        VisitPdfGrid.Rows[5].Cells[0].Value = value;
+        value = new PdfTextElement(FillEmpty(Ortoctis.Ampiezza), fieldFont, PdfBrushes.Black);      //  5 - 1
+        VisitPdfGrid.Rows[5].Cells[1].Value = value;
+
+        value = new PdfTextElement("Vetro Rosso:", fieldNameFont, PdfBrushes.Black);                //  6 - 0
+        VisitPdfGrid.Rows[6].Cells[0].Value = value;
+        value = new PdfTextElement(FillEmpty(Ortoctis.Vetro), fieldFont, PdfBrushes.Black);         //  6 - 1
+        VisitPdfGrid.Rows[6].Cells[1].Value = value;
+
+        value = new PdfTextElement("Lang Test:", fieldNameFont, PdfBrushes.Black);                  //  7 - 0
+        VisitPdfGrid.Rows[7].Cells[0].Value = value;
+        value = new PdfTextElement(FillEmpty(Ortoctis.Lang), fieldFont, PdfBrushes.Black);          //  7 - 1
+        VisitPdfGrid.Rows[7].Cells[1].Value = value;
+
+        value = new PdfTextElement("Titmus Test:", fieldNameFont, PdfBrushes.Black);                //  8 - 0
+        VisitPdfGrid.Rows[8].Cells[0].Value = value;
+        value = new PdfTextElement(FillEmpty(Ortoctis.Titmus), fieldFont, PdfBrushes.Black);        //  8 - 1
+        VisitPdfGrid.Rows[8].Cells[1].Value = value;
+
+        value = new PdfTextElement("Altri test per la visione binoculare:", fieldNameFont, PdfBrushes.Black);                // 9-0
+        VisitPdfGrid.Rows[9].Cells[0].Value = value;
+        value = new PdfTextElement(FillEmpty(Ortoctis.AltriTest), fieldFont, PdfBrushes.Black);     //  9 - 1
+        VisitPdfGrid.Rows[9].Cells[1].Value = value;
+
+        value = new PdfTextElement("Conclusioni:", fieldNameFont, PdfBrushes.Black);                // 10 - 0
+        VisitPdfGrid.Rows[10].Cells[0].Value = value;
+        value = new PdfTextElement(FillEmpty(Ortoctis.Conclusioni), fieldFont, PdfBrushes.Black);   // 10 - 1
+        VisitPdfGrid.Rows[10].Cells[1].Value = value;
+
+        value = new PdfTextElement("Diagnosi:", fieldNameFont, PdfBrushes.Black);                   // 11 - 0
+        VisitPdfGrid.Rows[11].Cells[0].Value = value;
+        value = new PdfTextElement(FillEmpty(Ortoctis.Diagnosi), fieldFont, PdfBrushes.Black);      // 11 - 1
+        VisitPdfGrid.Rows[11].Cells[1].Value = value;
+
+        value = new PdfTextElement("Terapia:", fieldNameFont, PdfBrushes.Black);                    // 12 - 0
+        VisitPdfGrid.Rows[12].Cells[0].Value = value;
+        value = new PdfTextElement(FillEmpty(Ortoctis.Terapia), fieldFont, PdfBrushes.Black);       // 12 - 1
+        VisitPdfGrid.Rows[12].Cells[1].Value = value;
+        #endregion
+
+        // Draw PDF grid into the PDF page.
+        VisitPdfGrid.Draw(page, new Syncfusion.Drawing.PointF(0, result.Bounds.Bottom + paragraphAfterSpacing));
+        #endregion
+
+        //Create memory stream.
+        MemoryStream memoryStream = new MemoryStream();
+
+        //Save the PDF document.
+        pdfDocument.Save(memoryStream);
+
+        //Download the PDF document
+        await JS.SaveAs("Scheda Ortottica " + LName + " " + FName + "_" + ListaVisite[VisitaCorrente].Val.ToString("dd.MM.yyyy") + ".pdf", memoryStream.ToArray());
+    }
+
+    async void PrintControlli()
+    {
+        int paragraphAfterSpacing = 8;
+        int cellMargin = 8;
+
+        //Create a new PDF document.
+        PdfDocument pdfDocument = new PdfDocument();
+
+        #region Definizione documento pdf
+        // Set document information
+        // ------------------------------------------------------------------------------------------------------------------------
+        pdfDocument.DocumentInformation.Author = "Powered by Phoenix";
+        pdfDocument.DocumentInformation.CreationDate = DateTime.Now;
+        pdfDocument.DocumentInformation.Creator = "Ophthal";
+        pdfDocument.DocumentInformation.Keywords = "Dott. La Bruna";
+        pdfDocument.DocumentInformation.Subject = "Scheda Controlli";
+        pdfDocument.DocumentInformation.Title = "Scheda Controlli";
+
+        // Set page size
+        // ------------------------------------------------------------------------------------------------------------------------
+        pdfDocument.PageSettings.Size = Syncfusion.Pdf.PdfPageSize.A4;
+
+        // Set margin for all the pages
+        // pdfDocument.PageSettings.Margins.Left = 10;
+        // pdfDocument.PageSettings.Margins.Right = 10;
+        // pdfDocument.PageSettings.Margins.Top = 10;
+        // pdfDocument.PageSettings.Margins.Bottom = 10;
+
+        pdfDocument.PageSettings.Margins.All = 40F;
+
+        // Set page orientation
+        // ------------------------------------------------------------------------------------------------------------------------
+        pdfDocument.PageSettings.Orientation = PdfPageOrientation.Portrait;
+
+        // Set paginate layout
+        // ------------------------------------------------------------------------------------------------------------------------
+        PdfLayoutFormat format = new PdfLayoutFormat();
+        format.Layout = PdfLayoutType.Paginate;
+
+        // Add page to the PDF document
+        PdfPage page = pdfDocument.Pages.Add();
+        #endregion
+
+        #region Header & Footer
+        // Create Header and Footer font
+        // ------------------------------------------------------------------------------------------------------------------------
+        PdfFont fontHeader = new PdfStandardFont(PdfFontFamily.Helvetica, 14, PdfFontStyle.Regular);
+        PdfFont fontFooter = new PdfStandardFont(PdfFontFamily.Helvetica, 7, PdfFontStyle.Regular);
+
+        #region Header
+        // Get document's bounds
+        // ------------------------------------------------------------------------------------------------------------------------
+        RectangleF bounds = new RectangleF(0, 0, pdfDocument.Pages[0].GetClientSize().Width, 50);
+
+        // Create a Page template that can be used as header.
+        // ------------------------------------------------------------------------------------------------------------------------
+        PdfPageTemplateElement header = new PdfPageTemplateElement(bounds);
+
+        // Load image for header
+        // Scarica l'immagine dal server
+        var httpClient = new HttpClient();
+        string imageUrl = $"{Env.BaseAddress}/img/LB_Logo_25.png";                      // URL dell'immagine
+        var imageBytes = await httpClient.GetByteArrayAsync(imageUrl);
+
+        PdfGridCellStyle HeadLogoStyle = new PdfGridCellStyle();
+        HeadLogoStyle.Borders.Left.Width = 0;
+        HeadLogoStyle.Borders.Right.Width = 0;
+        HeadLogoStyle.Borders.Top.Width = 0;
+        HeadLogoStyle.Borders.Bottom.Width = 0.1F;
+        HeadLogoStyle.CellPadding = new PdfPaddings(0, 0, 0, 0);
+
+        // Setup font for Dati Testata
+        PdfStandardFont hHeadFont = new PdfStandardFont(PdfFontFamily.Helvetica, 14, PdfFontStyle.Bold);
+        PdfStandardFont hNameFont = new PdfStandardFont(PdfFontFamily.Helvetica, 7, PdfFontStyle.Bold);
+        PdfStandardFont hValueFont = new PdfStandardFont(PdfFontFamily.Helvetica, 7, PdfFontStyle.Regular);
+
+        // Specify the style for bottom
+        PdfGridCellStyle HeadStyle = new PdfGridCellStyle();
+        HeadStyle.Borders.Left.Width = 0;
+        HeadStyle.Borders.Right.Width = 0;
+        HeadStyle.Borders.Top.Width = 0;
+        HeadStyle.Borders.Bottom.Width = 0.1F;
+        HeadStyle.CellPadding = new PdfPaddings(40, 10, 0, 20);
+        HeadStyle.StringFormat = new PdfStringFormat(PdfTextAlignment.Center);
+
+        // Usa un MemoryStream per creare il PdfBitmap
+        using (MemoryStream imageStream = new MemoryStream(imageBytes))
+        {
+            PdfImage image = new PdfBitmap(imageStream);
+
+            HeadLogoStyle.BackgroundImage = new PdfBitmap(imageStream);
+
+            // Draw the image in the header.
+            header.Graphics.DrawImage(image, new PointF(0, 0), new SizeF(46, 25));      // (46, 25) = width, height immagine
+        }
+
+        // Add the header at the top.
+        //pdfDocument.Template.Top = header;
+        #endregion
+
+        #region Footer
+        // Create a Page template that can be used as footer.
+        // ------------------------------------------------------------------------------------------------------------------------
+        PdfPageTemplateElement footer = new PdfPageTemplateElement(bounds);
+
+        PdfBrush brush = new PdfSolidBrush(Color.Black);
+
+        // Create page date of printing field.
+        PdfTextElement pageDatePrint = new PdfTextElement("Printed on " + DateTime.Now.ToShortDateString(), fontFooter, brush);
+
+
+        // Create page number field.
+        PdfPageNumberField pageNumber = new PdfPageNumberField(fontFooter, brush);
+
+        // Create page count field.
+        PdfPageCountField count = new PdfPageCountField(fontFooter, brush);
+
+        // Add the fields in composite fields.
+        PdfCompositeField compositeField = new PdfCompositeField(fontFooter, brush, "Page {0} of {1}", pageNumber, count);
+
+        compositeField.Bounds = footer.Bounds;
+
+        // Draw the text element and store its layout information
+        pageDatePrint.Draw(footer.Graphics, new PointF(0, 40));
+
+        // Draw the composite field in footer.
+        compositeField.Draw(footer.Graphics, new PointF(270, 40));
+
+        // Add the footer template at the bottom.
+        pdfDocument.Template.Bottom = footer;
+        #endregion
+        #endregion
+
+        #region Prima parte: Dati Testata
+        #region Definizione stile celle Dati Testata
+        // // Setup font for Dati Testata
+        // PdfStandardFont hNameFont = new PdfStandardFont(PdfFontFamily.Helvetica, 7, PdfFontStyle.Bold);
+        // PdfStandardFont hValueFont = new PdfStandardFont(PdfFontFamily.Helvetica, 7, PdfFontStyle.Regular);
+
+        // // Specify the style for bottom
+        // PdfGridCellStyle HeadStyle = new PdfGridCellStyle();
+        // HeadStyle.Borders.Left.Width = 0.1F;
+        // HeadStyle.Borders.Right.Width = 0.1F;
+        // HeadStyle.Borders.Top.Width = 0.1F;
+        // HeadStyle.Borders.Bottom.Width = 0.1F;
+        // HeadStyle.CellPadding = new PdfPaddings(2, 2, 2, 2);
+        // HeadStyle.StringFormat = new PdfStringFormat(PdfTextAlignment.Center);
+
+        // PdfGridCellStyle HeadLogoStyle = new PdfGridCellStyle();
+        // HeadLogoStyle.Borders.Left.Width = 0;
+        // HeadLogoStyle.Borders.Right.Width = 0;
+        // HeadLogoStyle.Borders.Top.Width = 0;
+        // HeadLogoStyle.Borders.Bottom.Width = 0;
+        // HeadLogoStyle.CellPadding = new PdfPaddings(0, 0, 0, 0);
+        #endregion
+
+        #region Imposta griglia Dati Testata
+        // Create the head grid
+        PdfGrid HeadPdfGrid = new PdfGrid();
+
+        // Add the rows to head grid
+        PdfGridRow row = HeadPdfGrid.Rows.Add();
+
+        //Adding grid style
+        PdfGridStyle gridStyle = new PdfGridStyle();
+
+        //Allow grid to overflow horizontally
+        gridStyle.AllowHorizontalOverflow = true;
+
+        //Adding cell spacing between cells
+        gridStyle.CellSpacing = 0F;
+
+        HeadPdfGrid.Style = gridStyle;
+
+        // Set rows's height
+        // row.Height = 18;
+
+        // Add the columns to head grid
+        HeadPdfGrid.Columns.Add(2);
+
+        // Set columns's width
+        HeadPdfGrid.Columns[0].Width = 50;
+        HeadPdfGrid.Columns[1].Width = 465;
+
+        // Set columns merged
+        // HeadPdfGrid.Rows[0].Cells[0].RowSpan = 2;
+        #endregion
+
+        #region Inserimento Dati Testata
+        // Set the HeadPdfGrid's value
+        PdfTextElement val;
+
+        HeadPdfGrid.Rows[0].Cells[0].Style = HeadLogoStyle;
+        HeadPdfGrid.Rows[0].Cells[0].ImagePosition = PdfGridImagePosition.Tile;                                         // 0-0
+
+        HeadPdfGrid.Rows[0].Cells[1].Style = HeadStyle;
+
+        val = new PdfTextElement("Lista Controlli", hHeadFont, PdfBrushes.Black);                                       // 0-1
+        HeadPdfGrid.Rows[0].Cells[1].Value = val;
+
+        PdfLayoutResult result = HeadPdfGrid.Draw(page, new Syncfusion.Drawing.PointF(0, 0));
+        #endregion
+        #endregion
+
+        #region Seconda parte: Dati Lista Controlli
+        // Create field's name and field's font
+        // ------------------------------------------------------------------------------------------------------------------------
+        PdfFont fieldDateFont = new PdfStandardFont(PdfFontFamily.Helvetica, 11, PdfFontStyle.Bold);
+        PdfFont fieldValueFont = new PdfStandardFont(PdfFontFamily.Helvetica, 11, PdfFontStyle.Regular);
+
+        PdfFont fieldNameFont = new PdfStandardFont(PdfFontFamily.Helvetica, 10, PdfFontStyle.Bold);
+        PdfFont fieldFont = new PdfStandardFont(PdfFontFamily.Helvetica, 10, PdfFontStyle.Regular);
+
+        #region Definizione stile celle Visita
+        // Specify the style for head's cell
+        PdfGridCellStyle posCellStyleHH = new PdfGridCellStyle();
+        posCellStyleHH.Borders.Left.Width = 0;
+        posCellStyleHH.Borders.Right.Width = 0;
+        posCellStyleHH.Borders.Top.Width = 0;
+        posCellStyleHH.Borders.Bottom.Width = 0;
+        posCellStyleHH.CellPadding = new PdfPaddings(0, 3, 6, 6);
+        posCellStyleHH.StringFormat = new PdfStringFormat(PdfTextAlignment.Right);
+
+        // Specify the style for value's cell
+        PdfGridCellStyle posCellStyleVV = new PdfGridCellStyle();
+        posCellStyleVV.Borders.Left.Width = 0;
+        posCellStyleVV.Borders.Right.Width = 0;
+        posCellStyleVV.Borders.Top.Width = 0;
+        posCellStyleVV.Borders.Bottom.Width = 0;
+        posCellStyleVV.CellPadding = new PdfPaddings(3, 3, 6, 6);
+
+        // Specify the style for head's cell
+        PdfGridCellStyle posCellStyleH = new PdfGridCellStyle();
+        posCellStyleH.Borders.Left.Width = 0;
+        posCellStyleH.Borders.Right.Width = 0;
+        posCellStyleH.Borders.Top.Width = 0;
+        posCellStyleH.Borders.Bottom.Width = 0.1F;
+        posCellStyleH.CellPadding = new PdfPaddings(0, 3, 12, 6);
+        posCellStyleH.StringFormat = new PdfStringFormat(PdfTextAlignment.Right);
+
+        // Specify the style for value's cell
+        PdfGridCellStyle posCellStyleV = new PdfGridCellStyle();
+        posCellStyleV.Borders.Left.Width = 0;
+        posCellStyleV.Borders.Right.Width = 0;
+        posCellStyleV.Borders.Top.Width = 0;
+        posCellStyleV.Borders.Bottom.Width = 0.1F;
+        posCellStyleV.CellPadding = new PdfPaddings(3, 3, 12, 6);
+        #endregion
+
+        #region Imposta griglia Controlli Visita
+        // Create Grid
+        PdfGrid VisitPdfGrid = new PdfGrid();
+
+        // Add Columns
+        VisitPdfGrid.Columns.Add(2);
+
+        // Add Rows
+        PdfGridRow rowHead = VisitPdfGrid.Rows.Add();
+
+        // Set Rows's height
+        // rowHead.Height = 35;
+
+        // Set Columns's width
+        VisitPdfGrid.Columns[0].Width = 90;
+        VisitPdfGrid.Columns[1].Width = 420;
+        #endregion
+
+        #region Inserimento Dati Lista Controlli
+        // Set the HeadPdfGrid's value
+        PdfTextElement value;
+
+        // VisitPdfGrid.Rows[0].Cells[0].Style = posCellStyleHH;                                       // Data Visita
+        // VisitPdfGrid.Rows[0].Cells[1].Style = posCellStyleVV;
+
+        // value = new PdfTextElement("Data Visita:", fieldNameFont, PdfBrushes.Black);                //  0 - 0
+        // VisitPdfGrid.Rows[0].Cells[0].Value = value;
+        // value = new PdfTextElement(FillEmpty(DataVisita), fieldFont, PdfBrushes.Black);             //  0 - 1
+        // VisitPdfGrid.Rows[0].Cells[1].Value = value;
+
+        VisitPdfGrid.Rows[0].Cells[0].Style = posCellStyleH;                                            // Intestazione tabella controlli Data Controllo
+        VisitPdfGrid.Rows[0].Cells[1].Style = posCellStyleV;
+
+        value = new PdfTextElement("Data Controllo:", fieldNameFont, PdfBrushes.Black);                 //  0 - 0
+        VisitPdfGrid.Rows[0].Cells[0].Value = value;
+        value = new PdfTextElement("Valutazione", fieldFont, PdfBrushes.Black);                         //  0 - 1
+        VisitPdfGrid.Rows[0].Cells[1].Value = value;
+
+        for (int rp = 0; rp < ListaCntrs.Count; rp++)
+        {
+            PdfGridRow cRow = VisitPdfGrid.Rows.Add();
+
+            cRow.Cells[0].Style = posCellStyleH;
+            cRow.Cells[1].Style = posCellStyleV;
+
+            val = new PdfTextElement(ListaCntrs[rp].ValDat.ToString("dd/MM/yyyy"), fieldFont, PdfBrushes.Black);
+            cRow.Cells[0].Value = val;
+
+            val = new PdfTextElement(ListaCntrs[rp].ValStr, fieldFont, PdfBrushes.Black);
+            cRow.Cells[1].Value = val;
+        }
+        #endregion
+
+        // Draw PDF grid into the PDF page.
+        VisitPdfGrid.Draw(page, new Syncfusion.Drawing.PointF(0, result.Bounds.Bottom + paragraphAfterSpacing));
+        #endregion
+
+        //Create memory stream.
+        MemoryStream memoryStream = new MemoryStream();
+
+        //Save the PDF document.
+        pdfDocument.Save(memoryStream);
+
+        //Download the PDF document
+        await JS.SaveAs("Scheda Controlli " + LName + " " + FName + "_" + ListaVisite[VisitaCorrente].Val.ToString("dd.MM.yyyy") + ".pdf", memoryStream.ToArray());
+    }
+
+    async void PrintOcchiali()
+    {
+        int paragraphAfterSpacing = 16;
+        //int cellMargin = 8;
+
+        //Create a new PDF document.
+        PdfDocument pdfDocument = new PdfDocument();
+
+        #region Definizione documento pdf
+        // Set document information
+        // ------------------------------------------------------------------------------------------------------------------------
+        pdfDocument.DocumentInformation.Author = "Powered by Phoenix";
+        pdfDocument.DocumentInformation.CreationDate = DateTime.Now;
+        pdfDocument.DocumentInformation.Creator = "Ophthal";
+        pdfDocument.DocumentInformation.Keywords = "Dott. La Bruna";
+        pdfDocument.DocumentInformation.Subject = "Prescrizione Lenti";
+        pdfDocument.DocumentInformation.Title = "Prescrizione Lenti";
+
+        // Set page size
+        // ------------------------------------------------------------------------------------------------------------------------
+        pdfDocument.PageSettings.Size = Syncfusion.Pdf.PdfPageSize.A4;
+
+        // Set margin for all the pages
+        // pdfDocument.PageSettings.Margins.Left = 10;
+        // pdfDocument.PageSettings.Margins.Right = 10;
+        // pdfDocument.PageSettings.Margins.Top = 10;
+        // pdfDocument.PageSettings.Margins.Bottom = 10;
+
+        pdfDocument.PageSettings.Margins.All = 40F;
+
+        // Set page orientation
+        // ------------------------------------------------------------------------------------------------------------------------
+        pdfDocument.PageSettings.Orientation = PdfPageOrientation.Portrait;
+
+        // Set paginate layout
+        // ------------------------------------------------------------------------------------------------------------------------
+        PdfLayoutFormat format = new PdfLayoutFormat();
+        format.Layout = PdfLayoutType.Paginate;
+
+        // Add page to the PDF document
+        PdfPage page = pdfDocument.Pages.Add();
+
+        // Obtain PdfGraphics object.
+        PdfGraphics g = page.Graphics;
+        #endregion
+
+        #region Header & Footer
+        // Create Header and Footer font
+        // ------------------------------------------------------------------------------------------------------------------------
+        PdfFont fontHeader = new PdfStandardFont(PdfFontFamily.Helvetica, 14, PdfFontStyle.Regular);
+        PdfFont fontFooter = new PdfStandardFont(PdfFontFamily.Helvetica, 7, PdfFontStyle.Regular);
+
+        #region Header
+        // Get document's bounds
+        // ------------------------------------------------------------------------------------------------------------------------
+        RectangleF bounds = new RectangleF(0, 0, pdfDocument.Pages[0].GetClientSize().Width, 50);
+
+        // Create a Page template that can be used as header.
+        // ------------------------------------------------------------------------------------------------------------------------
+        PdfPageTemplateElement header = new PdfPageTemplateElement(bounds);
+
+        // Load image for header
+        // Scarica l'immagine dal server
+        var httpClient = new HttpClient();
+        string imageUrl = $"{Env.BaseAddress}/img/LB_Logo_25.png";                      // URL del Logo
+        var imageBytes = await httpClient.GetByteArrayAsync(imageUrl);
+
+        PdfGridCellStyle HeadLogoStyle = new PdfGridCellStyle();
+        HeadLogoStyle.Borders.Left.Width = 0;
+        HeadLogoStyle.Borders.Right.Width = 0;
+        HeadLogoStyle.Borders.Top.Width = 0;
+        HeadLogoStyle.Borders.Bottom.Width = 0.1F;
+        HeadLogoStyle.CellPadding = new PdfPaddings(0, 0, 0, 0);
+
+        // Setup font for Dati Testata
+        PdfStandardFont hHeadFont = new PdfStandardFont(PdfFontFamily.Helvetica, 14, PdfFontStyle.Bold);
+        PdfStandardFont hNameFont = new PdfStandardFont(PdfFontFamily.Helvetica, 7, PdfFontStyle.Bold);
+        PdfStandardFont hValueFont = new PdfStandardFont(PdfFontFamily.Helvetica, 7, PdfFontStyle.Regular);
+
+        // Specify the style for bottom
+        PdfGridCellStyle HeadStyle = new PdfGridCellStyle();
+        HeadStyle.Borders.Left.Width = 0;
+        HeadStyle.Borders.Right.Width = 0;
+        HeadStyle.Borders.Top.Width = 0;
+        HeadStyle.Borders.Bottom.Width = 0.1F;
+        HeadStyle.CellPadding = new PdfPaddings(40, 10, 0, 20);
+        HeadStyle.StringFormat = new PdfStringFormat(PdfTextAlignment.Center);
+
+        // Usa un MemoryStream per creare il PdfBitmap
+        using (MemoryStream imageStream = new MemoryStream(imageBytes))
+        {
+            PdfImage image = new PdfBitmap(imageStream);
+
+            HeadLogoStyle.BackgroundImage = new PdfBitmap(imageStream);
+
+            // Draw the image in the header.
+            header.Graphics.DrawImage(image, new PointF(0, 0), new SizeF(46, 25));      // (46, 25) = width, height immagine
+        }
+
+        // Add the header at the top.
+        //pdfDocument.Template.Top = header;
+        #endregion
+
+        #region Footer
+        // Create a Page template that can be used as footer.
+        // ------------------------------------------------------------------------------------------------------------------------
+        PdfPageTemplateElement footer = new PdfPageTemplateElement(bounds);
+
+        PdfBrush brush = new PdfSolidBrush(Color.Black);
+
+        // Create page date of printing field.
+        PdfTextElement pageDatePrint = new PdfTextElement("Printed on " + DateTime.Now.ToShortDateString(), fontFooter, brush);
+
+
+        // Create page number field.
+        PdfPageNumberField pageNumber = new PdfPageNumberField(fontFooter, brush);
+
+        // Create page count field.
+        PdfPageCountField count = new PdfPageCountField(fontFooter, brush);
+
+        // Add the fields in composite fields.
+        PdfCompositeField compositeField = new PdfCompositeField(fontFooter, brush, "Page {0} of {1}", pageNumber, count);
+
+        compositeField.Bounds = footer.Bounds;
+
+        // Draw the text element and store its layout information
+        pageDatePrint.Draw(footer.Graphics, new PointF(0, 40));
+
+        // Draw the composite field in footer.
+        compositeField.Draw(footer.Graphics, new PointF(270, 40));
+
+        // Add the footer template at the bottom.
+        // pdfDocument.Template.Bottom = footer;
+        #endregion
+        #endregion
+
+        PdfGridCellStyle CellStyleU = new PdfGridCellStyle();
+        CellStyleU.Borders.Left.Width = 0;
+        CellStyleU.Borders.Right.Width = 0;
+        CellStyleU.Borders.Top.Width = 0;
+        CellStyleU.Borders.Bottom.Width = 0F;
+        CellStyleU.CellPadding = new PdfPaddings(2, 0, 0, 0);
+
+        string underUrl = $"{Env.BaseAddress}/img/underscore0.png";                      // URL dell'underscore
+        var underImgBytes = await httpClient.GetByteArrayAsync(underUrl);
+
+        // Usa un MemoryStream per creare il PdfBitmap
+        using (MemoryStream underImgStream = new MemoryStream(underImgBytes))
+        {
+            PdfImage image = new PdfBitmap(underImgStream);
+
+            CellStyleU.BackgroundImage = new PdfBitmap(underImgStream);
+        }
+
+        #region Grafico misura
+        PdfFont font = new PdfStandardFont(PdfFontFamily.Helvetica, 8, PdfFontStyle.Bold);
+        PdfPen pen = new PdfPen(Color.Black);
+
+        PointF p1 = new PointF();
+        PointF p2 = new PointF();
+
+        // g.DrawString("Arcs", font, PdfBrushes.DarkBlue, new PointF(330, 0));
+
+        pen = new PdfPen(Color.Black);
+        pen.Width = 0.5F;
+        pen.LineCap = PdfLineCap.Round;
+        pen.LineCap = PdfLineCap.Flat;
+
+        // Occhio Destro
+        RectangleF rect1 = new RectangleF(45, 190, 200, 200);
+
+        pen.Color = Color.Black;
+
+        // archi
+        g.DrawArc(pen, rect1, 180, 180);                    // 1° arco
+
+        rect1.X += 15;
+        rect1.Y += 15;
+        rect1.Width -= 30;
+        rect1.Height -= 30;
+        g.DrawArc(pen, rect1, 180, 180);                    // 2° arco
+
+        rect1.X += 15;
+        rect1.Y += 15;
+        rect1.Width -= 30;
+        rect1.Height -= 30;
+        g.DrawArc(pen, rect1, 180, 180);                    // 3° arco
+
+        // segmenti
+        for (var a = 0; a <= 180; a += 10)
+        {
+            p1.X = (float)(Math.Cos(Math.PI * a / 180) * 70 + 145);
+            p1.Y = (float)(290 - Math.Sin(Math.PI * a / 180) * 70);
+
+            p2.X = (float)(Math.Cos(Math.PI * a / 180) * 100 + 145);
+            p2.Y = (float)(290 - Math.Sin(Math.PI * a / 180) * 100);
+
+            g.DrawLine(pen, p1, p2);
+        }
+
+        for (var a = 5; a <= 175; a += 10)
+        {
+            p1.X = (float)(Math.Cos(Math.PI * a / 180) * 70 + 145);
+            p1.Y = (float)(290 - Math.Sin(Math.PI * a / 180) * 70);
+
+            p2.X = (float)(Math.Cos(Math.PI * a / 180) * 85 + 145);
+            p2.Y = (float)(290 - Math.Sin(Math.PI * a / 180) * 85);
+
+            g.DrawLine(pen, p1, p2);
+        }
+
+        // gradi
+        g.Save();
+        g.TranslateTransform(255, 288);
+        g.RotateTransform(90);
+        g.DrawString("0", font, PdfBrushes.Black, 0, 0);
+        g.Restore();
+
+        g.Save();
+        g.TranslateTransform(247, 248);
+        g.RotateTransform(70);
+        g.DrawString("20", font, PdfBrushes.Black, 0, 0);
+        g.Restore();
+
+        g.Save();
+        g.TranslateTransform(226, 216);
+        g.RotateTransform(50);
+        g.DrawString("40", font, PdfBrushes.Black, 0, 0);
+        g.Restore();
+
+        g.Save();
+        g.TranslateTransform(196, 193);
+        g.RotateTransform(30);
+        g.DrawString("60", font, PdfBrushes.Black, 0, 0);
+        g.Restore();
+
+        g.Save();
+        g.TranslateTransform(160, 181);
+        g.RotateTransform(10);
+        g.DrawString("80", font, PdfBrushes.Black, 0, 0);
+        g.Restore();
+
+        g.Save();
+        g.TranslateTransform(119, 183);
+        g.RotateTransform(-10);
+        g.DrawString("100", font, PdfBrushes.Black, 0, 0);
+        g.Restore();
+
+        g.Save();
+        g.TranslateTransform(84, 198);
+        g.RotateTransform(-30);
+        g.DrawString("120", font, PdfBrushes.Black, 0, 0);
+        g.Restore();
+
+        g.Save();
+        g.TranslateTransform(56, 225);
+        g.RotateTransform(-50);
+        g.DrawString("140", font, PdfBrushes.Black, 0, 0);
+        g.Restore();
+
+        g.Save();
+        g.TranslateTransform(39, 259);
+        g.RotateTransform(-70);
+        g.DrawString("160", font, PdfBrushes.Black, 0, 0);
+        g.Restore();
+
+        g.Save();
+        g.TranslateTransform(35, 296);
+        g.RotateTransform(-90);
+        g.DrawString("180", font, PdfBrushes.Black, 0, 0);
+        g.Restore();
+
+        // linea inferiore
+        p1.X = 45;
+        p1.Y = 290;
+
+        p2.X = 140;
+        p2.Y = 290;
+
+        g.DrawLine(pen, p1, p2);
+
+        p1.X = 142;
+        p1.Y = 290;
+
+        p2.X = 148;
+        p2.Y = 290;
+
+        g.DrawLine(pen, p1, p2);
+
+        p1.X = 150;
+        p1.Y = 290;
+
+        p2.X = 245;
+        p2.Y = 290;
+
+        g.DrawLine(pen, p1, p2);
+
+        p1.X = 145;
+        p1.Y = 287;
+
+        p2.X = 145;
+        p2.Y = 293;
+
+        g.DrawLine(pen, p1, p2);
+
+        // Occhio Sinistro
+        RectangleF rect2 = new RectangleF(265, 190, 200, 200);
+
+        pen.Color = Color.Black;
+
+        // archi
+        g.DrawArc(pen, rect2, 180, 180);                    // 1° arco
+
+        rect2.X += 15;
+        rect2.Y += 15;
+        rect2.Width -= 30;
+        rect2.Height -= 30;
+        g.DrawArc(pen, rect2, 180, 180);                    // 2° arco
+
+        rect2.X += 15;
+        rect2.Y += 15;
+        rect2.Width -= 30;
+        rect2.Height -= 30;
+        g.DrawArc(pen, rect2, 180, 180);                    // 3° arco
+
+        // segmenti
+        for (var a = 0; a <= 180; a += 10)
+        {
+            p1.X = (float)(Math.Cos(Math.PI * a / 180) * 70 + 365);
+            p1.Y = (float)(290 - Math.Sin(Math.PI * a / 180) * 70);
+
+            p2.X = (float)(Math.Cos(Math.PI * a / 180) * 100 + 365);
+            p2.Y = (float)(290 - Math.Sin(Math.PI * a / 180) * 100);
+
+            g.DrawLine(pen, p1, p2);
+        }
+
+        for (var a = 5; a <= 175; a += 10)
+        {
+            p1.X = (float)(Math.Cos(Math.PI * a / 180) * 70 + 365);
+            p1.Y = (float)(290 - Math.Sin(Math.PI * a / 180) * 70);
+
+            p2.X = (float)(Math.Cos(Math.PI * a / 180) * 85 + 365);
+            p2.Y = (float)(290 - Math.Sin(Math.PI * a / 180) * 85);
+
+            g.DrawLine(pen, p1, p2);
+        }
+
+        // gradi
+        g.Save();
+        g.TranslateTransform(475, 288);
+        g.RotateTransform(90);
+        g.DrawString("0", font, PdfBrushes.Black, 0, 0);
+        g.Restore();
+
+        g.Save();
+        g.TranslateTransform(467, 248);
+        g.RotateTransform(70);
+        g.DrawString("20", font, PdfBrushes.Black, 0, 0);
+        g.Restore();
+
+        g.Save();
+        g.TranslateTransform(446, 216);
+        g.RotateTransform(50);
+        g.DrawString("40", font, PdfBrushes.Black, 0, 0);
+        g.Restore();
+
+        g.Save();
+        g.TranslateTransform(416, 193);
+        g.RotateTransform(30);
+        g.DrawString("60", font, PdfBrushes.Black, 0, 0);
+        g.Restore();
+
+        g.Save();
+        g.TranslateTransform(380, 181);
+        g.RotateTransform(10);
+        g.DrawString("80", font, PdfBrushes.Black, 0, 0);
+        g.Restore();
+
+        g.Save();
+        g.TranslateTransform(339, 183);
+        g.RotateTransform(-10);
+        g.DrawString("100", font, PdfBrushes.Black, 0, 0);
+        g.Restore();
+
+        g.Save();
+        g.TranslateTransform(304, 198);
+        g.RotateTransform(-30);
+        g.DrawString("120", font, PdfBrushes.Black, 0, 0);
+        g.Restore();
+
+        g.Save();
+        g.TranslateTransform(276, 225);
+        g.RotateTransform(-50);
+        g.DrawString("140", font, PdfBrushes.Black, 0, 0);
+        g.Restore();
+
+        g.Save();
+        g.TranslateTransform(259, 259);
+        g.RotateTransform(-70);
+        g.DrawString("160", font, PdfBrushes.Black, 0, 0);
+        g.Restore();
+
+        g.Save();
+        g.TranslateTransform(255, 296);
+        g.RotateTransform(-90);
+        g.DrawString("180", font, PdfBrushes.Black, 0, 0);
+        g.Restore();
+
+        // linea inferiore
+        p1.X = 265;
+        p1.Y = 290;
+
+        p2.X = 360;
+        p2.Y = 290;
+
+        g.DrawLine(pen, p1, p2);
+
+        p1.X = 362;
+        p1.Y = 290;
+
+        p2.X = 368;
+        p2.Y = 290;
+
+        g.DrawLine(pen, p1, p2);
+
+        p1.X = 370;
+        p1.Y = 290;
+
+        p2.X = 465;
+        p2.Y = 290;
+
+        g.DrawLine(pen, p1, p2);
+
+        p1.X = 365;
+        p1.Y = 287;
+
+        p2.X = 365;
+        p2.Y = 293;
+
+        g.DrawLine(pen, p1, p2);
+
+        // Assi
+        pen.Width = 1.5F;
+
+        // occhio destro
+        if (Visus.ODD_Asse != "")
+        {
+            pen.Color = Color.DarkBlue;
+
+            double aa = Convert.ToDouble(Visus.ODD_Asse);
+
+            p1.X = (float)(Math.Cos(Math.PI * aa / 180) + 145);
+            p1.Y = (float)(290 - Math.Sin(Math.PI * aa / 180));
+
+            p2.X = (float)(Math.Cos(Math.PI * aa / 180) * 115 + 145);
+            p2.Y = (float)(290 - Math.Sin(Math.PI * aa / 180) * 115);
+
+            g.DrawLine(pen, p1, p2);
+        }
+
+        if (Visus.ODP_Asse != "")
+        {
+            pen.Color = Color.DarkRed;
+
+            double aa = Convert.ToDouble(Visus.ODP_Asse);
+
+            p1.X = (float)(Math.Cos(Math.PI * aa / 180) + 145);
+            p1.Y = (float)(290 - Math.Sin(Math.PI * aa / 180));
+
+            p2.X = (float)(Math.Cos(Math.PI * aa / 180) * 115 + 145);
+            p2.Y = (float)(290 - Math.Sin(Math.PI * aa / 180) * 115);
+
+            g.DrawLine(pen, p1, p2);
+        }
+
+        if (Visus.ODL_Asse != "")
+        {
+            pen.Color = Color.DarkGreen;
+
+            double aa = Convert.ToDouble(Visus.ODL_Asse);
+
+            p1.X = (float)(Math.Cos(Math.PI * aa / 180) + 145);
+            p1.Y = (float)(290 - Math.Sin(Math.PI * aa / 180));
+
+            p2.X = (float)(Math.Cos(Math.PI * aa / 180) * 115 + 145);
+            p2.Y = (float)(290 - Math.Sin(Math.PI * aa / 180) * 115);
+
+            g.DrawLine(pen, p1, p2);
+        }
+
+        // occhio sinistro
+        if (Visus.OSD_Asse != "")
+        {
+            pen.Color = Color.DarkBlue;
+
+            double aa = Convert.ToDouble(Visus.OSD_Asse);
+
+            p1.X = (float)(Math.Cos(Math.PI * aa / 180) + 365);
+            p1.Y = (float)(290 - Math.Sin(Math.PI * aa / 180));
+
+            p2.X = (float)(Math.Cos(Math.PI * aa / 180) * 115 + 365);
+            p2.Y = (float)(290 - Math.Sin(Math.PI * aa / 180) * 115);
+
+            g.DrawLine(pen, p1, p2);
+        }
+
+        if (Visus.OSP_Asse != "")
+        {
+            pen.Color = Color.DarkRed;
+
+            double aa = Convert.ToDouble(Visus.OSP_Asse);
+
+            p1.X = (float)(Math.Cos(Math.PI * aa / 180) + 365);
+            p1.Y = (float)(290 - Math.Sin(Math.PI * aa / 180));
+
+            p2.X = (float)(Math.Cos(Math.PI * aa / 180) * 115 + 365);
+            p2.Y = (float)(290 - Math.Sin(Math.PI * aa / 180) * 115);
+
+            g.DrawLine(pen, p1, p2);
+        }
+
+        if (Visus.OSL_Asse != "")
+        {
+            pen.Color = Color.DarkGreen;
+
+            double aa = Convert.ToDouble(Visus.OSL_Asse);
+
+            p1.X = (float)(Math.Cos(Math.PI * aa / 180) + 365);
+            p1.Y = (float)(290 - Math.Sin(Math.PI * aa / 180));
+
+            p2.X = (float)(Math.Cos(Math.PI * aa / 180) * 115 + 365);
+            p2.Y = (float)(290 - Math.Sin(Math.PI * aa / 180) * 115);
+
+            g.DrawLine(pen, p1, p2);
+        }
+
+        pen.Width = 0.5F;
+        #endregion
+
+        #region Prima parte: Dati Testata
+        #region Definizione stili celle Dati Testata
+        // Setup font for Dati Testata
+        PdfStandardFont DocFont = new PdfStandardFont(PdfFontFamily.Helvetica, 12, PdfFontStyle.Bold);
+        PdfStandardFont FieldBldFont = new PdfStandardFont(PdfFontFamily.Helvetica, 10, PdfFontStyle.Bold);
+        PdfStandardFont FieldRegFont = new PdfStandardFont(PdfFontFamily.Helvetica, 10, PdfFontStyle.Regular);
+        PdfStandardFont FieldItaBldFont = new PdfStandardFont(PdfFontFamily.Helvetica, 10, PdfFontStyle.Bold | PdfFontStyle.Italic);
+        PdfStandardFont TitleFont = new PdfStandardFont(PdfFontFamily.Helvetica, 14, PdfFontStyle.Bold);
+
+        // Specify the style for bottom
+        PdfGridCellStyle HeadDocStyle = new PdfGridCellStyle();
+        HeadDocStyle.Borders.Left.Width = 0;
+        HeadDocStyle.Borders.Right.Width = 0;
+        HeadDocStyle.Borders.Top.Width = 0;
+        HeadDocStyle.Borders.Bottom.Width = 0;
+        HeadDocStyle.CellPadding = new PdfPaddings(36, 0, 8, 0);
+        HeadDocStyle.StringFormat = new PdfStringFormat(PdfTextAlignment.Center);
+
+        PdfGridCellStyle HeadFieldStyle = new PdfGridCellStyle();
+        HeadFieldStyle.Borders.Left.Width = 0;
+        HeadFieldStyle.Borders.Right.Width = 0;
+        HeadFieldStyle.Borders.Top.Width = 0;
+        HeadFieldStyle.Borders.Bottom.Width = 0;
+        HeadFieldStyle.CellPadding = new PdfPaddings(2, 0, 20, 0);
+
+        PdfGridCellStyle HeadTitleStyle = new PdfGridCellStyle();
+        HeadTitleStyle.Borders.Left.Width = 0;
+        HeadTitleStyle.Borders.Right.Width = 0;
+        HeadTitleStyle.Borders.Top.Width = 0;
+        HeadTitleStyle.Borders.Bottom.Width = 0;
+        HeadTitleStyle.CellPadding = new PdfPaddings(150, 0, 4, 0);
+
+        PdfGridCellStyle HeadEmptyStyle = new PdfGridCellStyle();
+        HeadEmptyStyle.Borders.Left.Width = 0;              // 0.1F;
+        HeadEmptyStyle.Borders.Right.Width = 0;
+        HeadEmptyStyle.Borders.Top.Width = 0;
+        HeadEmptyStyle.Borders.Bottom.Width = 0;
+        HeadEmptyStyle.CellPadding = new PdfPaddings(0, 0, 0, 0);
+        #endregion
+
+        #region Imposta griglia Dati Testata
+        // Create the head grid
+        PdfGrid HeadPdfGrid = new PdfGrid();
+
+        //Adding grid style
+        PdfGridStyle gridStyle = new PdfGridStyle();
+
+        //Allow grid to overflow horizontally
+        gridStyle.AllowHorizontalOverflow = true;
+
+        //Adding cell spacing between cells
+        gridStyle.CellSpacing = 0F;
+
+        HeadPdfGrid.Style = gridStyle;
+
+        // Add the rows to head grid
+        PdfGridRow rowL0 = HeadPdfGrid.Rows.Add();
+        PdfGridRow rowL1 = HeadPdfGrid.Rows.Add();
+        PdfGridRow rowL2 = HeadPdfGrid.Rows.Add();
+        PdfGridRow rowL3 = HeadPdfGrid.Rows.Add();
+        PdfGridRow rowL4 = HeadPdfGrid.Rows.Add();
+        // PdfGridRow rowL5 = HeadPdfGrid.Rows.Add();
+        // PdfGridRow rowL6 = HeadPdfGrid.Rows.Add();
+        // PdfGridRow rowL7 = HeadPdfGrid.Rows.Add();
+
+        // Set rows's height
+        rowL0.Height = 36;
+        rowL1.Height = 36;
+        rowL2.Height = 18;
+        rowL3.Height = 36;
+        rowL4.Height = 36;
+
+        // Add the columns to head grid
+        HeadPdfGrid.Columns.Add(8);
+
+        // Set columns's width
+        HeadPdfGrid.Columns[0].Width = 33;
+        HeadPdfGrid.Columns[1].Width = 21;
+        HeadPdfGrid.Columns[2].Width = 193;
+        HeadPdfGrid.Columns[3].Width = 36;
+        HeadPdfGrid.Columns[4].Width = 94;
+        HeadPdfGrid.Columns[5].Width = 21;
+        HeadPdfGrid.Columns[6].Width = 84;
+        HeadPdfGrid.Columns[7].Width = 33;
+
+        // Set columns merged (ColumnSpan & RowSpan)
+        HeadPdfGrid.Rows[0].Cells[1].ColumnSpan = 2;
+        HeadPdfGrid.Rows[1].Cells[5].ColumnSpan = 3;
+        HeadPdfGrid.Rows[2].Cells[0].ColumnSpan = 8;
+        HeadPdfGrid.Rows[3].Cells[1].ColumnSpan = 6;
+        HeadPdfGrid.Rows[4].Cells[2].ColumnSpan = 5;
+        #endregion
+
+        #region Inserimento Dati Testata
+        // Set the HeadPdfGrid's value
+        PdfTextElement val;
+
+        // HeadPdfGrid.Rows[0].Cells[0].Style = HeadLogoStyle;
+        // HeadPdfGrid.Rows[0].Cells[0].ImagePosition = PdfGridImagePosition.Tile;
+
+        val = new PdfTextElement("", FieldBldFont, PdfBrushes.Black);                                           // 0-0
+        HeadPdfGrid.Rows[0].Cells[0].Value = val;
+        HeadPdfGrid.Rows[0].Cells[0].Style = HeadEmptyStyle;
+
+        //val = new PdfTextElement("Dott. MARCO LA BRUNA", DocFont, PdfBrushes.Black);                            // 0-1
+        val = new PdfTextElement("", DocFont, PdfBrushes.Black);                            // 0-1
+        HeadPdfGrid.Rows[0].Cells[1].Value = val;
+        HeadPdfGrid.Rows[0].Cells[1].Style = HeadDocStyle;
+
+        //val = new PdfTextElement("Reg.", FieldBldFont, PdfBrushes.Black);                                       // 0-3
+        val = new PdfTextElement("", FieldBldFont, PdfBrushes.Black);                                       // 0-3
+        HeadPdfGrid.Rows[0].Cells[3].Value = val;
+        HeadPdfGrid.Rows[0].Cells[3].Style = HeadFieldStyle;
+
+        val = new PdfTextElement("", FieldRegFont, PdfBrushes.Black);                                           // 0-4
+        HeadPdfGrid.Rows[0].Cells[4].Value = val;
+        HeadPdfGrid.Rows[0].Cells[4].Style = HeadFieldStyle;
+
+        //val = new PdfTextElement("N.", FieldBldFont, PdfBrushes.Black);                                         // 0-5
+        val = new PdfTextElement("", FieldBldFont, PdfBrushes.Black);                                         // 0-5
+        HeadPdfGrid.Rows[0].Cells[5].Value = val;
+        HeadPdfGrid.Rows[0].Cells[5].Style = HeadFieldStyle;
+
+        val = new PdfTextElement("", FieldRegFont, PdfBrushes.Black);                                           // 0-6
+        HeadPdfGrid.Rows[0].Cells[6].Value = val;
+        HeadPdfGrid.Rows[0].Cells[6].Style = HeadFieldStyle;
+
+        val = new PdfTextElement("", FieldBldFont, PdfBrushes.Black);                                           // 0-7
+        HeadPdfGrid.Rows[0].Cells[7].Value = val;
+        HeadPdfGrid.Rows[0].Cells[7].Style = HeadEmptyStyle;
+
+        val = new PdfTextElement("", FieldBldFont, PdfBrushes.Black);                                           // 1-0
+        HeadPdfGrid.Rows[1].Cells[0].Value = val;
+        HeadPdfGrid.Rows[1].Cells[0].Style = HeadEmptyStyle;
+
+        val = new PdfTextElement("", FieldBldFont, PdfBrushes.Black);                                           // 1-1
+        HeadPdfGrid.Rows[1].Cells[1].Value = val;
+        HeadPdfGrid.Rows[1].Cells[1].Style = HeadEmptyStyle;
+
+        val = new PdfTextElement("", FieldBldFont, PdfBrushes.Black);                                           // 1-2
+        HeadPdfGrid.Rows[1].Cells[2].Value = val;
+        HeadPdfGrid.Rows[1].Cells[2].Style = HeadEmptyStyle;
+
+        val = new PdfTextElement("Data.", FieldItaBldFont, PdfBrushes.Black);                                   // 1-3
+        HeadPdfGrid.Rows[1].Cells[3].Value = val;
+        HeadPdfGrid.Rows[1].Cells[3].Style = HeadFieldStyle;
+
+        val = new PdfTextElement(DataVisita, FieldRegFont, PdfBrushes.Black);                                   // 1-4
+        HeadPdfGrid.Rows[1].Cells[4].Value = val;
+        HeadPdfGrid.Rows[1].Cells[4].Style = HeadFieldStyle;
+
+        val = new PdfTextElement("", FieldBldFont, PdfBrushes.Black);                                           // 1-5
+        HeadPdfGrid.Rows[1].Cells[5].Value = val;
+        HeadPdfGrid.Rows[1].Cells[5].Style = HeadEmptyStyle;
+
+        val = new PdfTextElement("", FieldBldFont, PdfBrushes.Black);                                           // 2-0
+        HeadPdfGrid.Rows[2].Cells[0].Value = val;
+        HeadPdfGrid.Rows[2].Cells[0].Style = HeadEmptyStyle;
+
+        val = new PdfTextElement("", FieldBldFont, PdfBrushes.Black);                                           // 3-0
+        HeadPdfGrid.Rows[3].Cells[0].Value = val;
+        HeadPdfGrid.Rows[3].Cells[0].Style = HeadEmptyStyle;
+
+        val = new PdfTextElement("PRESCRIZIONE LENTI", TitleFont, PdfBrushes.Black);                            // 3-1
+        HeadPdfGrid.Rows[3].Cells[1].Value = val;
+        HeadPdfGrid.Rows[3].Cells[1].Style = HeadTitleStyle;
+
+        val = new PdfTextElement("", FieldBldFont, PdfBrushes.Black);                                           // 3-7
+        HeadPdfGrid.Rows[3].Cells[7].Value = val;
+        HeadPdfGrid.Rows[3].Cells[7].Style = HeadEmptyStyle;
+
+        val = new PdfTextElement("", FieldBldFont, PdfBrushes.Black);                                           // 4-0
+        HeadPdfGrid.Rows[4].Cells[0].Value = val;
+        HeadPdfGrid.Rows[4].Cells[0].Style = HeadEmptyStyle;
+
+        val = new PdfTextElement("Sig.", FieldBldFont, PdfBrushes.Black);                                       // 4-1
+        HeadPdfGrid.Rows[4].Cells[1].Value = val;
+        HeadPdfGrid.Rows[4].Cells[1].Style = HeadFieldStyle;
+
+        val = new PdfTextElement(@LName + " " + @FName, FieldRegFont, PdfBrushes.Black);                        // 4-2
+        HeadPdfGrid.Rows[4].Cells[2].Value = val;
+        HeadPdfGrid.Rows[4].Cells[2].Style = HeadFieldStyle;
+
+        val = new PdfTextElement("", FieldBldFont, PdfBrushes.Black);                                           // 4-7
+        HeadPdfGrid.Rows[4].Cells[7].Value = val;
+        HeadPdfGrid.Rows[4].Cells[7].Style = HeadEmptyStyle;
+
+        PdfLayoutResult result = HeadPdfGrid.Draw(page, new Syncfusion.Drawing.PointF(0, 0));
+        #endregion
+        #endregion
+
+        #region Seconda parte: Dati PRESCRIZIONE LENTI
+        #region Definizione stili celle PRESCRIZIONE LENTI
+        // Create field's name and field's font
+        // ------------------------------------------------------------------------------------------------------------------------
+        PdfStandardFont MisEyeFont = new PdfStandardFont(PdfFontFamily.Helvetica, 11, PdfFontStyle.Bold);
+        PdfStandardFont MisBldFont = new PdfStandardFont(PdfFontFamily.Helvetica, 10, PdfFontStyle.Bold);
+        PdfStandardFont MisRegFont = new PdfStandardFont(PdfFontFamily.Helvetica, 10, PdfFontStyle.Regular);
+
+        // Specify the style for head's cell
+        PdfGridCellStyle CellStyleE = new PdfGridCellStyle();
+        CellStyleE.Borders.Left.Width = 0F;
+        CellStyleE.Borders.Right.Width = 0F;
+        CellStyleE.Borders.Top.Width = 0F;
+        CellStyleE.Borders.Bottom.Width = 0F;
+        CellStyleE.CellPadding = new PdfPaddings(0, 0, 0, 0);
+
+        PdfGridCellStyle CellStyleGr = new PdfGridCellStyle();
+        CellStyleGr.Borders.Left.Width = 0F;
+        CellStyleGr.Borders.Right.Width = 0F;
+        CellStyleGr.Borders.Top.Width = 0F;
+        CellStyleGr.Borders.Bottom.Width = 0F;
+        CellStyleGr.CellPadding = new PdfPaddings(0, 0, 0, 0);
+
+        PdfGridCellStyle CellStyleGrH = new PdfGridCellStyle();
+        CellStyleGrH.Borders.Left.Width = 0F;
+        CellStyleGrH.Borders.Right.Width = 0F;
+        CellStyleGrH.Borders.Top.Width = 0F;
+        CellStyleGrH.Borders.Bottom.Width = 0F;
+        CellStyleGrH.CellPadding = new PdfPaddings(65, 0, 6, 0);
+        CellStyleGrH.StringFormat = new PdfStringFormat(PdfTextAlignment.Center);
+
+        // Specify the style for head's cell
+        PdfGridCellStyle CellStyleHSf = new PdfGridCellStyle();
+        CellStyleHSf.Borders.Left.Width = 0.1F;
+        CellStyleHSf.Borders.Right.Width = 0.1F;
+        CellStyleHSf.Borders.Top.Width = 0.1F;
+        CellStyleHSf.Borders.Bottom.Width = 0.1F;
+        CellStyleHSf.CellPadding = new PdfPaddings(24, 0, 4, 0);
+        CellStyleHSf.StringFormat = new PdfStringFormat(PdfTextAlignment.Center);
+
+        PdfGridCellStyle CellStyleHCl = new PdfGridCellStyle();
+        CellStyleHCl.Borders.Left.Width = 0.1F;
+        CellStyleHCl.Borders.Right.Width = 0.1F;
+        CellStyleHCl.Borders.Top.Width = 0.1F;
+        CellStyleHCl.Borders.Bottom.Width = 0.1F;
+        CellStyleHCl.CellPadding = new PdfPaddings(18, 0, 4, 0);
+        CellStyleHCl.StringFormat = new PdfStringFormat(PdfTextAlignment.Center);
+
+        PdfGridCellStyle CellStyleHAs = new PdfGridCellStyle();
+        CellStyleHAs.Borders.Left.Width = 0.1F;
+        CellStyleHAs.Borders.Right.Width = 0.1F;
+        CellStyleHAs.Borders.Top.Width = 0.1F;
+        CellStyleHAs.Borders.Bottom.Width = 0.1F;
+        CellStyleHAs.CellPadding = new PdfPaddings(25, 0, 4, 0);
+        CellStyleHAs.StringFormat = new PdfStringFormat(PdfTextAlignment.Center);
+
+        PdfGridCellStyle CellStyleHbD = new PdfGridCellStyle();
+        CellStyleHbD.Borders.Left.Width = 0.1F;
+        CellStyleHbD.Borders.Right.Width = 0.1F;
+        CellStyleHbD.Borders.Top.Width = 0.1F;
+        CellStyleHbD.Borders.Bottom.Width = 0F;
+        CellStyleHbD.CellPadding = new PdfPaddings(186, 0, 1, 0);
+        CellStyleHbD.StringFormat = new PdfStringFormat(PdfTextAlignment.Center);
+
+        PdfGridCellStyle CellStyleHbP = new PdfGridCellStyle();
+        CellStyleHbP.Borders.Left.Width = 0.1F;
+        CellStyleHbP.Borders.Right.Width = 0.1F;
+        CellStyleHbP.Borders.Top.Width = 0.1F;
+        CellStyleHbP.Borders.Bottom.Width = 0F;
+        CellStyleHbP.CellPadding = new PdfPaddings(182, 0, 1, 0);
+        CellStyleHbP.StringFormat = new PdfStringFormat(PdfTextAlignment.Center);
+
+        PdfGridCellStyle CellStyleHbV = new PdfGridCellStyle();
+        CellStyleHbV.Borders.Left.Width = 0.1F;
+        CellStyleHbV.Borders.Right.Width = 0.1F;
+        CellStyleHbV.Borders.Top.Width = 0.1F;
+        CellStyleHbV.Borders.Bottom.Width = 0F;
+        CellStyleHbV.CellPadding = new PdfPaddings(187, 0, 1, 0);
+        CellStyleHbV.StringFormat = new PdfStringFormat(PdfTextAlignment.Center);
+
+        // Specify the style for value's cell
+        PdfGridCellStyle CellStyleVal = new PdfGridCellStyle();
+        CellStyleVal.Borders.Left.Width = 0.1F;
+        CellStyleVal.Borders.Right.Width = 0.1F;
+        CellStyleVal.Borders.Top.Width = 0F;
+        CellStyleVal.Borders.Bottom.Width = 0.1F;
+        CellStyleVal.CellPadding = new PdfPaddings(27, 0, 11, 0);
+        CellStyleVal.StringFormat = new PdfStringFormat(PdfTextAlignment.Right);
+        #endregion
+
+        #region Imposta griglia PRESCRIZIONE LENTI
+        // Create Grid
+        PdfGrid LentiPdfGrid = new PdfGrid();
+
+        //Adding grid style
+        LentiPdfGrid.Style = gridStyle;
+
+        // Add Rows
+        PdfGridRow rowCL0 = LentiPdfGrid.Rows.Add();
+        PdfGridRow rowCL1 = LentiPdfGrid.Rows.Add();
+        PdfGridRow rowCL2 = LentiPdfGrid.Rows.Add();
+        PdfGridRow rowCL3 = LentiPdfGrid.Rows.Add();
+        PdfGridRow rowCL4 = LentiPdfGrid.Rows.Add();
+        PdfGridRow rowCL5 = LentiPdfGrid.Rows.Add();
+        PdfGridRow rowCL6 = LentiPdfGrid.Rows.Add();
+        PdfGridRow rowCL7 = LentiPdfGrid.Rows.Add();
+        PdfGridRow rowCL8 = LentiPdfGrid.Rows.Add();
+
+        // Add Columns
+        LentiPdfGrid.Columns.Add(8);
+
+        // Set Rows's height
+        rowCL0.Height = 125;
+        rowCL1.Height = 24;
+        rowCL2.Height = 20;
+        rowCL3.Height = 14;
+        rowCL4.Height = 33;
+        rowCL5.Height = 14;
+        rowCL6.Height = 33;
+        rowCL7.Height = 14;
+        rowCL8.Height = 33;
+
+        // Set Columns's width
+        LentiPdfGrid.Columns[0].Width = 33;
+        LentiPdfGrid.Columns[1].Width = 74;
+        LentiPdfGrid.Columns[2].Width = 74;
+        LentiPdfGrid.Columns[3].Width = 74;
+        LentiPdfGrid.Columns[4].Width = 74;
+        LentiPdfGrid.Columns[5].Width = 74;
+        LentiPdfGrid.Columns[6].Width = 74;
+        LentiPdfGrid.Columns[7].Width = 33;
+
+        // Set columns merged (ColumnSpan & RowSpan)
+        LentiPdfGrid.Rows[0].Cells[1].ColumnSpan = 3;
+        LentiPdfGrid.Rows[0].Cells[4].ColumnSpan = 3;
+        LentiPdfGrid.Rows[1].Cells[1].ColumnSpan = 3;
+        LentiPdfGrid.Rows[1].Cells[4].ColumnSpan = 3;
+        LentiPdfGrid.Rows[3].Cells[1].ColumnSpan = 6;
+        LentiPdfGrid.Rows[5].Cells[1].ColumnSpan = 6;
+        LentiPdfGrid.Rows[7].Cells[1].ColumnSpan = 6;
+        #endregion
+
+        #region Inserimento Dati PRESCRIZIONE LENTI
+        // Set the HeadPdfGrid's value
+        PdfTextElement value;
+
+        LentiPdfGrid.Rows[0].Cells[0].Style = CellStyleE;
+        LentiPdfGrid.Rows[0].Cells[1].Style = CellStyleGr;
+        LentiPdfGrid.Rows[0].Cells[4].Style = CellStyleGr;
+        LentiPdfGrid.Rows[0].Cells[7].Style = CellStyleE;
+
+        value = new PdfTextElement("", MisRegFont, PdfBrushes.Black);                               //  0 - 0
+        LentiPdfGrid.Rows[0].Cells[0].Value = value;
+        value = new PdfTextElement("", MisRegFont, PdfBrushes.Black);                               //  0 - 1
+        LentiPdfGrid.Rows[0].Cells[1].Value = value;
+        value = new PdfTextElement("", MisRegFont, PdfBrushes.Black);                               //  0 - 4
+        LentiPdfGrid.Rows[0].Cells[4].Value = value;
+        value = new PdfTextElement("", MisRegFont, PdfBrushes.Black);                               //  0 - 7
+        LentiPdfGrid.Rows[0].Cells[7].Value = value;
+
+        LentiPdfGrid.Rows[1].Cells[0].Style = CellStyleE;
+        LentiPdfGrid.Rows[1].Cells[1].Style = CellStyleGrH;
+        LentiPdfGrid.Rows[1].Cells[4].Style = CellStyleGrH;
+        LentiPdfGrid.Rows[1].Cells[7].Style = CellStyleE;
+
+        value = new PdfTextElement("", MisRegFont, PdfBrushes.Black);                               //  1 - 0
+        LentiPdfGrid.Rows[1].Cells[0].Value = value;
+        value = new PdfTextElement("OCCHIO DESTRO", MisEyeFont, PdfBrushes.Black);                  //  1 - 1
+        LentiPdfGrid.Rows[1].Cells[1].Value = value;
+        value = new PdfTextElement("OCCHIO SINISTRO", MisEyeFont, PdfBrushes.Black);                //  1 - 4
+        LentiPdfGrid.Rows[1].Cells[4].Value = value;
+        value = new PdfTextElement("", MisRegFont, PdfBrushes.Black);                               //  1 - 7
+        LentiPdfGrid.Rows[1].Cells[7].Value = value;
+
+        LentiPdfGrid.Rows[2].Cells[0].Style = CellStyleE;
+        LentiPdfGrid.Rows[2].Cells[1].Style = CellStyleHSf;
+        LentiPdfGrid.Rows[2].Cells[2].Style = CellStyleHCl;
+        LentiPdfGrid.Rows[2].Cells[3].Style = CellStyleHAs;
+        LentiPdfGrid.Rows[2].Cells[4].Style = CellStyleHSf;
+        LentiPdfGrid.Rows[2].Cells[5].Style = CellStyleHCl;
+        LentiPdfGrid.Rows[2].Cells[6].Style = CellStyleHAs;
+        LentiPdfGrid.Rows[2].Cells[7].Style = CellStyleE;
+
+        value = new PdfTextElement("", MisRegFont, PdfBrushes.Black);                               //  2 - 0
+        LentiPdfGrid.Rows[2].Cells[0].Value = value;
+        value = new PdfTextElement("Sfera", MisBldFont, PdfBrushes.Black);                          //  2 - 1
+        LentiPdfGrid.Rows[2].Cells[1].Value = value;
+        value = new PdfTextElement("Cilindro", MisBldFont, PdfBrushes.Black);                       //  2 - 2
+        LentiPdfGrid.Rows[2].Cells[2].Value = value;
+        value = new PdfTextElement("Asse", MisBldFont, PdfBrushes.Black);                           //  2 - 3
+        LentiPdfGrid.Rows[2].Cells[3].Value = value;
+        value = new PdfTextElement("Sfera", MisBldFont, PdfBrushes.Black);                          //  2 - 4
+        LentiPdfGrid.Rows[2].Cells[4].Value = value;
+        value = new PdfTextElement("Cilindro", MisBldFont, PdfBrushes.Black);                       //  2 - 5
+        LentiPdfGrid.Rows[2].Cells[5].Value = value;
+        value = new PdfTextElement("Asse", MisBldFont, PdfBrushes.Black);                           //  2 - 6
+        LentiPdfGrid.Rows[2].Cells[6].Value = value;
+        value = new PdfTextElement("", MisRegFont, PdfBrushes.Black);                               //  2 - 7
+        LentiPdfGrid.Rows[2].Cells[7].Value = value;
+
+        LentiPdfGrid.Rows[3].Cells[0].Style = CellStyleE;
+        LentiPdfGrid.Rows[3].Cells[1].Style = CellStyleHbD;
+        LentiPdfGrid.Rows[3].Cells[7].Style = CellStyleE;
+
+        value = new PdfTextElement("", MisRegFont, PdfBrushes.Black);                               //  3 - 0
+        LentiPdfGrid.Rows[3].Cells[0].Value = value;
+        value = new PdfTextElement("PER DISTANZA", MisBldFont, PdfBrushes.Black);                   //  3 - 1
+        LentiPdfGrid.Rows[3].Cells[1].Value = value;
+        value = new PdfTextElement("", MisRegFont, PdfBrushes.Black);                               //  3 - 7
+        LentiPdfGrid.Rows[3].Cells[7].Value = value;
+
+        LentiPdfGrid.Rows[4].Cells[0].Style = CellStyleE;
+        LentiPdfGrid.Rows[4].Cells[1].Style = CellStyleVal;
+        LentiPdfGrid.Rows[4].Cells[2].Style = CellStyleVal;
+        LentiPdfGrid.Rows[4].Cells[3].Style = CellStyleVal;
+        LentiPdfGrid.Rows[4].Cells[4].Style = CellStyleVal;
+        LentiPdfGrid.Rows[4].Cells[5].Style = CellStyleVal;
+        LentiPdfGrid.Rows[4].Cells[6].Style = CellStyleVal;
+        LentiPdfGrid.Rows[4].Cells[7].Style = CellStyleE;
+
+        value = new PdfTextElement("", MisRegFont, PdfBrushes.Black);                               //  4 - 0
+        LentiPdfGrid.Rows[4].Cells[0].Value = value;
+        value = new PdfTextElement(Visus.ODD_Sf, MisRegFont, PdfBrushes.Black);                     //  4 - 1
+        LentiPdfGrid.Rows[4].Cells[1].Value = value;
+        value = new PdfTextElement(Visus.ODD_Cil, MisRegFont, PdfBrushes.Black);                    //  4 - 2
+        LentiPdfGrid.Rows[4].Cells[2].Value = value;
+        value = new PdfTextElement(Visus.ODD_Asse, MisRegFont, PdfBrushes.Black);                   //  4 - 3
+        LentiPdfGrid.Rows[4].Cells[3].Value = value;
+        value = new PdfTextElement(Visus.OSD_Sf, MisRegFont, PdfBrushes.Black);                     //  4 - 4
+        LentiPdfGrid.Rows[4].Cells[4].Value = value;
+        value = new PdfTextElement(Visus.OSD_Cil, MisRegFont, PdfBrushes.Black);                    //  4 - 5
+        LentiPdfGrid.Rows[4].Cells[5].Value = value;
+        value = new PdfTextElement(Visus.OSD_Asse, MisRegFont, PdfBrushes.Black);                   //  4 - 6
+        LentiPdfGrid.Rows[4].Cells[6].Value = value;
+        value = new PdfTextElement("", MisRegFont, PdfBrushes.Black);                               //  4 - 7
+        LentiPdfGrid.Rows[4].Cells[7].Value = value;
+
+        LentiPdfGrid.Rows[5].Cells[0].Style = CellStyleE;
+        LentiPdfGrid.Rows[5].Cells[1].Style = CellStyleHbP;
+        LentiPdfGrid.Rows[5].Cells[7].Style = CellStyleE;
+
+        value = new PdfTextElement("", MisRegFont, PdfBrushes.Black);                               //  5 - 0
+        LentiPdfGrid.Rows[5].Cells[0].Value = value;
+        value = new PdfTextElement("A PERMANENZA", MisBldFont, PdfBrushes.Black);                   //  5 - 1
+        LentiPdfGrid.Rows[5].Cells[1].Value = value;
+        value = new PdfTextElement("", MisRegFont, PdfBrushes.Black);                               //  5 - 7
+        LentiPdfGrid.Rows[5].Cells[7].Value = value;
+
+        LentiPdfGrid.Rows[6].Cells[0].Style = CellStyleE;
+        LentiPdfGrid.Rows[6].Cells[1].Style = CellStyleVal;
+        LentiPdfGrid.Rows[6].Cells[2].Style = CellStyleVal;
+        LentiPdfGrid.Rows[6].Cells[3].Style = CellStyleVal;
+        LentiPdfGrid.Rows[6].Cells[4].Style = CellStyleVal;
+        LentiPdfGrid.Rows[6].Cells[5].Style = CellStyleVal;
+        LentiPdfGrid.Rows[6].Cells[6].Style = CellStyleVal;
+        LentiPdfGrid.Rows[6].Cells[7].Style = CellStyleE;
+
+        value = new PdfTextElement("", MisRegFont, PdfBrushes.Black);                               //  6 - 0
+        LentiPdfGrid.Rows[6].Cells[0].Value = value;
+        value = new PdfTextElement(Visus.ODP_Sf, MisRegFont, PdfBrushes.Black);                     //  6 - 1
+        LentiPdfGrid.Rows[6].Cells[1].Value = value;
+        value = new PdfTextElement(Visus.ODP_Cil, MisRegFont, PdfBrushes.Black);                    //  6 - 2
+        LentiPdfGrid.Rows[6].Cells[2].Value = value;
+        value = new PdfTextElement(Visus.ODP_Asse, MisRegFont, PdfBrushes.Black);                   //  6 - 3
+        LentiPdfGrid.Rows[6].Cells[3].Value = value;
+        value = new PdfTextElement(Visus.OSP_Sf, MisRegFont, PdfBrushes.Black);                     //  6 - 4
+        LentiPdfGrid.Rows[6].Cells[4].Value = value;
+        value = new PdfTextElement(Visus.OSP_Cil, MisRegFont, PdfBrushes.Black);                    //  6 - 5
+        LentiPdfGrid.Rows[6].Cells[5].Value = value;
+        value = new PdfTextElement(Visus.OSP_Asse, MisRegFont, PdfBrushes.Black);                   //  6 - 6
+        LentiPdfGrid.Rows[6].Cells[6].Value = value;
+        value = new PdfTextElement("", MisRegFont, PdfBrushes.Black);                               //  6 - 7
+        LentiPdfGrid.Rows[6].Cells[7].Value = value;
+
+        LentiPdfGrid.Rows[7].Cells[0].Style = CellStyleE;
+        LentiPdfGrid.Rows[7].Cells[1].Style = CellStyleHbV;
+        LentiPdfGrid.Rows[7].Cells[7].Style = CellStyleE;
+
+        value = new PdfTextElement("", MisRegFont, PdfBrushes.Black);                               //  7 - 0
+        LentiPdfGrid.Rows[7].Cells[0].Value = value;
+        value = new PdfTextElement("PER LETTURA", MisBldFont, PdfBrushes.Black);                    //  7 - 1
+        LentiPdfGrid.Rows[7].Cells[1].Value = value;
+        value = new PdfTextElement("", MisRegFont, PdfBrushes.Black);                               //  7 - 7
+        LentiPdfGrid.Rows[7].Cells[7].Value = value;
+
+        LentiPdfGrid.Rows[8].Cells[0].Style = CellStyleE;
+        LentiPdfGrid.Rows[8].Cells[1].Style = CellStyleVal;
+        LentiPdfGrid.Rows[8].Cells[2].Style = CellStyleVal;
+        LentiPdfGrid.Rows[8].Cells[3].Style = CellStyleVal;
+        LentiPdfGrid.Rows[8].Cells[4].Style = CellStyleVal;
+        LentiPdfGrid.Rows[8].Cells[5].Style = CellStyleVal;
+        LentiPdfGrid.Rows[8].Cells[6].Style = CellStyleVal;
+        LentiPdfGrid.Rows[8].Cells[7].Style = CellStyleE;
+
+        value = new PdfTextElement("", MisRegFont, PdfBrushes.Black);                               //  8 - 0
+        LentiPdfGrid.Rows[8].Cells[0].Value = value;
+        value = new PdfTextElement(Visus.ODL_Sf, MisRegFont, PdfBrushes.Black);                     //  8 - 1
+        LentiPdfGrid.Rows[8].Cells[1].Value = value;
+        value = new PdfTextElement(Visus.ODL_Cil, MisRegFont, PdfBrushes.Black);                    //  8 - 2
+        LentiPdfGrid.Rows[8].Cells[2].Value = value;
+        value = new PdfTextElement(Visus.ODL_Asse, MisRegFont, PdfBrushes.Black);                   //  8 - 3
+        LentiPdfGrid.Rows[8].Cells[3].Value = value;
+        value = new PdfTextElement(Visus.OSL_Sf, MisRegFont, PdfBrushes.Black);                     //  8 - 4
+        LentiPdfGrid.Rows[8].Cells[4].Value = value;
+        value = new PdfTextElement(Visus.OSL_Cil, MisRegFont, PdfBrushes.Black);                    //  8 - 5
+        LentiPdfGrid.Rows[8].Cells[5].Value = value;
+        value = new PdfTextElement(Visus.OSL_Asse, MisRegFont, PdfBrushes.Black);                   //  8 - 6
+        LentiPdfGrid.Rows[8].Cells[6].Value = value;
+        value = new PdfTextElement("", MisRegFont, PdfBrushes.Black);                               //  8 - 7
+        LentiPdfGrid.Rows[8].Cells[7].Value = value;
+        #endregion
+
+        // Draw PDF grid into the PDF page.
+        PdfLayoutResult result2 = LentiPdfGrid.Draw(page, new Syncfusion.Drawing.PointF(0, result.Bounds.Bottom + paragraphAfterSpacing));
+        #endregion
+
+        #region Terza parte: Note PRESCRIZIONE LENTI
+        #region Definizione stili celle Note PRESCRIZIONE LENTI
+        // Specify the style for head's cell
+        PdfGridCellStyle CellStyleH = new PdfGridCellStyle();
+        CellStyleH.Borders.Left.Width = 0;
+        CellStyleH.Borders.Right.Width = 0;
+        CellStyleH.Borders.Top.Width = 0;
+        CellStyleH.Borders.Bottom.Width = 0;
+        CellStyleH.CellPadding = new PdfPaddings(2, 0, 0, 0);
+
+        PdfGridCellStyle CellStyleL = new PdfGridCellStyle();
+        CellStyleL.Borders.Left.Width = 0;
+        CellStyleL.Borders.Right.Width = 0;
+        CellStyleL.Borders.Top.Width = 0;
+        CellStyleL.Borders.Bottom.Width = 0;
+        CellStyleL.CellPadding = new PdfPaddings(2, 0, 0, 0);
+
+        PdfGridCellStyle CellStyleF = new PdfGridCellStyle();
+        CellStyleF.Borders.Left.Width = 0F;
+        CellStyleF.Borders.Right.Width = 0F;
+        CellStyleF.Borders.Top.Width = 0F;
+        CellStyleF.Borders.Bottom.Width = 0F;
+        CellStyleF.CellPadding = new PdfPaddings(90, 0, 16, 0);
+        CellStyleF.StringFormat = new PdfStringFormat(PdfTextAlignment.Center);
+        #endregion
+
+        #region Imposta griglia Note PRESCRIZIONE LENTI
+        // Create Grid
+        PdfGrid NotePdfGrid = new PdfGrid();
+
+        //Adding grid style
+        NotePdfGrid.Style = gridStyle;
+
+        // Add Rows
+        PdfGridRow rowN0 = NotePdfGrid.Rows.Add();
+        PdfGridRow rowN1 = NotePdfGrid.Rows.Add();
+        PdfGridRow rowN2 = NotePdfGrid.Rows.Add();
+        PdfGridRow rowN3 = NotePdfGrid.Rows.Add();
+        PdfGridRow rowN4 = NotePdfGrid.Rows.Add();
+        PdfGridRow rowN5 = NotePdfGrid.Rows.Add();
+        PdfGridRow rowN6 = NotePdfGrid.Rows.Add();
+
+        // Add Columns
+        NotePdfGrid.Columns.Add(6);
+
+        // Set Rows's height
+        rowN0.Height = 20;
+        rowN1.Height = 20;
+        rowN2.Height = 20;
+        rowN3.Height = 20;
+        rowN4.Height = 20;
+        rowN5.Height = 36;
+        rowN6.Height = 48;
+
+        // Set Columns's width
+        NotePdfGrid.Columns[0].Width = 33;
+        NotePdfGrid.Columns[1].Width = 36;
+        NotePdfGrid.Columns[2].Width = 100;
+        NotePdfGrid.Columns[3].Width = 84;
+        NotePdfGrid.Columns[4].Width = 229;
+        NotePdfGrid.Columns[5].Width = 33;
+
+        // Set columns merged (ColumnSpan & RowSpan)
+        NotePdfGrid.Rows[0].Cells[2].ColumnSpan = 3;
+        NotePdfGrid.Rows[1].Cells[1].ColumnSpan = 2;
+        NotePdfGrid.Rows[1].Cells[3].ColumnSpan = 2;
+
+        NotePdfGrid.Rows[2].Cells[2].ColumnSpan = 3;
+        NotePdfGrid.Rows[3].Cells[2].ColumnSpan = 3;
+        NotePdfGrid.Rows[4].Cells[2].ColumnSpan = 3;
+
+        NotePdfGrid.Rows[2].Cells[2].RowSpan = 3;
+
+        NotePdfGrid.Rows[5].Cells[1].ColumnSpan = 3;
+        NotePdfGrid.Rows[6].Cells[1].ColumnSpan = 4;
+        #endregion
+
+        #region Inserimento Note PRESCRIZIONE LENTI
+        NotePdfGrid.Rows[0].Cells[0].Style = CellStyleE;
+        NotePdfGrid.Rows[0].Cells[1].Style = CellStyleH;
+        NotePdfGrid.Rows[0].Cells[2].Style = CellStyleL;
+        // NotePdfGrid.Rows[0].Cells[2].ImagePosition = PdfGridImagePosition.Tile;                     //  0 - 2
+        NotePdfGrid.Rows[0].Cells[5].Style = CellStyleE;
+
+        value = new PdfTextElement("", FieldRegFont, PdfBrushes.Black);                             //  0 - 0
+        NotePdfGrid.Rows[0].Cells[0].Value = value;
+        value = new PdfTextElement("TABO", FieldBldFont, PdfBrushes.Black);                         //  0 - 1
+        NotePdfGrid.Rows[0].Cells[1].Value = value;
+        if (fTabo)
+        {
+            value = new PdfTextElement("Si", FieldRegFont, PdfBrushes.Black);                       //  0 - 2
+        }
+        else
+        {
+            value = new PdfTextElement("No", FieldRegFont, PdfBrushes.Black);                       //  0 - 2
+        }
+        NotePdfGrid.Rows[0].Cells[2].Value = value;
+        value = new PdfTextElement("", FieldRegFont, PdfBrushes.Black);                             //  0 - 5
+        NotePdfGrid.Rows[0].Cells[5].Value = value;
+
+        NotePdfGrid.Rows[1].Cells[0].Style = CellStyleE;
+        NotePdfGrid.Rows[1].Cells[1].Style = CellStyleH;
+        NotePdfGrid.Rows[1].Cells[3].Style = CellStyleL;
+        // NotePdfGrid.Rows[1].Cells[3].ImagePosition = PdfGridImagePosition.Tile;                     //  1 - 3
+        NotePdfGrid.Rows[1].Cells[5].Style = CellStyleE;
+
+        value = new PdfTextElement("", FieldRegFont, PdfBrushes.Black);                             //  1 - 0
+        NotePdfGrid.Rows[1].Cells[0].Value = value;
+        value = new PdfTextElement("Distanza interpupillare mm", FieldBldFont, PdfBrushes.Black);   //  1 - 1
+        NotePdfGrid.Rows[1].Cells[1].Value = value;
+        value = new PdfTextElement(Visus.DI, FieldRegFont, PdfBrushes.Black);                       //  1 - 3
+        NotePdfGrid.Rows[1].Cells[3].Value = value;
+        value = new PdfTextElement("", FieldRegFont, PdfBrushes.Black);                             //  1 - 5
+        NotePdfGrid.Rows[1].Cells[5].Value = value;
+
+        NotePdfGrid.Rows[2].Cells[0].Style = CellStyleE;
+        NotePdfGrid.Rows[2].Cells[1].Style = CellStyleH;
+        NotePdfGrid.Rows[2].Cells[2].Style = CellStyleL;
+        // NotePdfGrid.Rows[2].Cells[2].ImagePosition = PdfGridImagePosition.Tile;                     //  2 - 2
+        NotePdfGrid.Rows[2].Cells[5].Style = CellStyleE;
+
+        value = new PdfTextElement("", FieldRegFont, PdfBrushes.Black);                             //  2 - 0
+        NotePdfGrid.Rows[2].Cells[0].Value = value;
+        value = new PdfTextElement("NOTE", FieldBldFont, PdfBrushes.Black);                         //  2 - 1
+        NotePdfGrid.Rows[2].Cells[1].Value = value;
+        value = new PdfTextElement(Visus.Note, FieldRegFont, PdfBrushes.Black);                     //  2 - 2
+        NotePdfGrid.Rows[2].Cells[2].Value = value;
+        value = new PdfTextElement("", FieldRegFont, PdfBrushes.Black);                             //  2 - 5
+        NotePdfGrid.Rows[2].Cells[5].Value = value;
+
+        NotePdfGrid.Rows[3].Cells[0].Style = CellStyleE;
+        NotePdfGrid.Rows[3].Cells[1].Style = CellStyleE;
+        // NotePdfGrid.Rows[3].Cells[2].Style = CellStyleH;
+        NotePdfGrid.Rows[3].Cells[5].Style = CellStyleE;
+
+        value = new PdfTextElement("", FieldRegFont, PdfBrushes.Black);                             //  3 - 0
+        NotePdfGrid.Rows[3].Cells[0].Value = value;
+        value = new PdfTextElement("", FieldBldFont, PdfBrushes.Black);                             //  3 - 1
+        NotePdfGrid.Rows[3].Cells[1].Value = value;
+        // value = new PdfTextElement("", FieldRegFont, PdfBrushes.Black);                             //  3 - 2
+        // NotePdfGrid.Rows[3].Cells[2].Value = value;
+        value = new PdfTextElement("", FieldRegFont, PdfBrushes.Black);                             //  3 - 5
+        NotePdfGrid.Rows[3].Cells[5].Value = value;
+
+        NotePdfGrid.Rows[4].Cells[0].Style = CellStyleE;
+        NotePdfGrid.Rows[4].Cells[1].Style = CellStyleE;
+        // NotePdfGrid.Rows[4].Cells[2].Style = CellStyleH;
+        NotePdfGrid.Rows[4].Cells[5].Style = CellStyleE;
+
+        value = new PdfTextElement("", FieldRegFont, PdfBrushes.Black);                             //  4 - 0
+        NotePdfGrid.Rows[4].Cells[0].Value = value;
+        value = new PdfTextElement("", FieldBldFont, PdfBrushes.Black);                             //  4 - 1
+        NotePdfGrid.Rows[4].Cells[1].Value = value;
+        // value = new PdfTextElement("", FieldRegFont, PdfBrushes.Black);                             //  4 - 2
+        // NotePdfGrid.Rows[4].Cells[2].Value = value;
+        value = new PdfTextElement("", FieldRegFont, PdfBrushes.Black);                             //  4 - 5
+        NotePdfGrid.Rows[4].Cells[5].Value = value;
+
+        NotePdfGrid.Rows[5].Cells[0].Style = CellStyleE;
+        NotePdfGrid.Rows[5].Cells[1].Style = CellStyleE;
+        NotePdfGrid.Rows[5].Cells[4].Style = CellStyleU; //CellStyleH;
+        NotePdfGrid.Rows[5].Cells[4].ImagePosition = PdfGridImagePosition.Tile;                     //  5 - 4
+        NotePdfGrid.Rows[5].Cells[5].Style = CellStyleE;
+
+        value = new PdfTextElement("", FieldRegFont, PdfBrushes.Black);                             //  5 - 0
+        NotePdfGrid.Rows[5].Cells[0].Value = value;
+        value = new PdfTextElement("", FieldBldFont, PdfBrushes.Black);                             //  5 - 1
+        NotePdfGrid.Rows[5].Cells[1].Value = value;
+        value = new PdfTextElement("", FieldRegFont, PdfBrushes.Black);                             //  5 - 4
+        NotePdfGrid.Rows[5].Cells[4].Value = value;
+        value = new PdfTextElement("", FieldRegFont, PdfBrushes.Black);                             //  5 - 5
+        NotePdfGrid.Rows[5].Cells[5].Value = value;
+
+        NotePdfGrid.Rows[6].Cells[0].Style = CellStyleE;
+        NotePdfGrid.Rows[6].Cells[1].Style = CellStyleF;
+        NotePdfGrid.Rows[6].Cells[5].Style = CellStyleE;
+
+        value = new PdfTextElement("", FieldRegFont, PdfBrushes.Black);                             //  6 - 0
+        NotePdfGrid.Rows[6].Cells[0].Value = value;
+        value = new PdfTextElement("Riportare la presente prescrizione nelle visite successive", FieldItaBldFont, PdfBrushes.Black);                             //  6 - 1
+        NotePdfGrid.Rows[6].Cells[1].Value = value;
+        value = new PdfTextElement("", FieldRegFont, PdfBrushes.Black);                             //  6 - 5
+        NotePdfGrid.Rows[6].Cells[5].Value = value;
+        #endregion
+
+        // Draw PDF grid into the PDF page.
+        NotePdfGrid.Draw(page, new Syncfusion.Drawing.PointF(0, result2.Bounds.Bottom + paragraphAfterSpacing));
+        #endregion
+
+        //Create memory stream.
+        MemoryStream memoryStream = new MemoryStream();
+
+        //Save the PDF document.
+        pdfDocument.Save(memoryStream);
+
+        //Download the PDF document
+        await JS.SaveAs("Prescrizione Lenti " + LName + " " + FName + "_" + ListaVisite[VisitaCorrente].Val.ToString("dd.MM.yyyy") + ".pdf", memoryStream.ToArray());
     }
     #endregion
 }

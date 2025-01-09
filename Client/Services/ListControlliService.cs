@@ -10,8 +10,10 @@ public class ListControlliService
         _httpClient = httpClient;
     }
 
-    public async Task<List<CoppiaDecDat>> ListControlliByVisit(decimal id)
+    public async Task<List<TriplaDecDatStr>> ListControlliByVisit(decimal id)
     {
-        return await _httpClient.GetFromJsonAsync<List<CoppiaDecDat>>($"https://ophthalapi02-dcafg8d7hhekfkb0.italynorth-01.azurewebsites.net/api/lstcntr/{id}");
+        //return await _httpClient.GetFromJsonAsync<List<CoppiaDecDat>>($"https://ophthalapi02-dcafg8d7hhekfkb0.italynorth-01.azurewebsites.net/api/lstcntr/{id}");
+
+        return await _httpClient.GetFromJsonAsync<List<TriplaDecDatStr>>($"https://ophthalapi02-dcafg8d7hhekfkb0.italynorth-01.azurewebsites.net/api/lstcntr/{id}");
     }
 }
