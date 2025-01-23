@@ -25,15 +25,15 @@
 		</div>
 
 		<div class="col-sm-2">
-            <SfTextBox ID="fname" @bind-Value="@FName" Placeholder="Nome" FloatLabelType="@FloatLabelType.Auto"></SfTextBox>
+			<SfTextBox ID="fname" @bind-Value="@FName" Placeholder="Nome" FloatLabelType="@FloatLabelType.Auto"></SfTextBox>
 		</div>
 
 		<div class="col-sm-1">
-            <SfMaskedTextBox ID="bithdate" @bind-Value="@datanascita" Mask="00/00/0000" Placeholder="Data di nascita" FloatLabelType="@FloatLabelType.Auto"></SfMaskedTextBox>
+			<SfMaskedTextBox ID="bithdate" @bind-Value="@datanascita" Mask="00/00/0000" Placeholder="Data di nascita" FloatLabelType="@FloatLabelType.Auto"></SfMaskedTextBox>
 		</div>
 
 		<div class="col-sm-2">
-            <SfTextBox ID="telefono" @bind-Value="@Phone" Placeholder="Telefono" FloatLabelType="@FloatLabelType.Auto"></SfTextBox>
+			<SfTextBox ID="telefono" @bind-Value="@Phone" Placeholder="Telefono" FloatLabelType="@FloatLabelType.Auto"></SfTextBox>
 		</div>
     </div>
 
@@ -63,8 +63,8 @@
                     }
                 </Template>
             </GridColumn>
-            <GridColumn Field=@nameof(Patient.LName) HeaderText="Nome" Width="100"></GridColumn>
-            <GridColumn Field=@nameof(Patient.FName) HeaderText="Cognome" Width="100"></GridColumn>
+            <GridColumn Field=@nameof(Patient.LName) HeaderText="Cognome" Width="100"></GridColumn>
+            <GridColumn Field=@nameof(Patient.FName) HeaderText="Nome" Width="100"></GridColumn>
             <GridColumn Field=@nameof(Patient.Cod) HeaderText="Cod" Width="60"></GridColumn>
             <GridColumn Field=@nameof(Patient.Phone) HeaderText="Telefono" Width="100"></GridColumn>
             <GridColumn Field=@nameof(Patient.Mobile) HeaderText="Mobile" Width="100"></GridColumn>

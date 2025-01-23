@@ -28,6 +28,10 @@
 @inject ListOrtoctisService ListOrtoctisService
 @inject OrtoctisService OrtoctisService
 
+@inject ListDrugsService ListDrugsService
+
+@inject PrescrizioniService PrescrizioniService
+
 @using Syncfusion.Pdf
 @using Syncfusion.Pdf.Grid;
 @using Syncfusion.Drawing;
@@ -670,7 +674,7 @@
                             </ChildContent>
                             <ContentTemplate>
                                 <div class="row" style="margin-top: 10px;">
-                                    <div class="col-sm-1"><b>&nbsp;Controllo</b> <i>@(CntrCorrente + 1)</i> <b>di</b> <i>@ListaCntrs.Count</i></div>
+                                    @* <div class="col-sm-1"><b>&nbsp;Controllo</b> <i>@(CntrCorrente + 1)</i> <b>di</b> <i>@ListaCntrs.Count</i></div> *@
 
                                     <div class="col-sm-2">
                                         <div class="btn-toolbar mb-3" role="toolbar" aria-label="Toolbar controlli button groups">
@@ -862,6 +866,133 @@
                                 </div>
                             </ContentTemplate>
                         </TabItem>
+
+                        <!-- Sezione Prescrizioni -->
+                        <TabItem Disabled=@PrescrizioniDisabled>
+                            <ChildContent>
+                                <TabHeader Text="Prescrizioni"></TabHeader>
+                            </ChildContent>
+                            <ContentTemplate>
+                                <SfTab>
+                                    <TabItems>
+                                        <TabItem Visible=@ShowPresc>
+                                            <ChildContent>
+                                                <TabHeader Text="Prescrizione"></TabHeader>
+                                            </ChildContent>
+                                            <ContentTemplate>
+                                                <div class="row" style="margin: 10px 2px 25px 2px; padding-bottom:10px; border-bottom: 1px solid #ddd;">
+                                                    <div class="col-sm-1">&nbsp;</div>
+                                                    <div class="col-sm-2" style="font-size: 16px; font-weight: 500; margin: 3px 0;">Farmaco</div>
+                                                    <div class="col-sm-4" style="font-size: 16px; font-weight: 500; margin: 3px 0;">Somministrazione</div>
+                                                    @* <div class="col-sm-1">&nbsp;@ider</div> *@
+                                                    <div class="col-sm-1">
+                                                        <SfButton IconCss="e-icons e-search icon-slategrey" CssClass="e-flat btn-light" Content="Scelta Farmaco" OnClick="() => ShowFar()"></SfButton>
+                                                    </div>
+                                                    <div class="col-sm-4">
+                                                        <span style="float: right;">
+                                                            <SfButton IconCss="e-icons icon-navy e-print" CssClass="e-flat btn-light" Content=" Stampa Prescrizione" OnClick="() => StampaPrescrizione()" Disabled="@PrintPrescrDisabled"></SfButton>
+                                                        </span>
+                                                    </div>
+                                                </div>
+
+                                                @if (@Prescriptions.Count > 0)
+                                                {
+                                                    @for (var ip = 0; ip < @Prescriptions.Count; ip++)
+                                                    {
+                                                        decimal questo = @Prescriptions[ip].IdPrescrizione;
+                                                        int myId = ip;
+
+                                                        <div class="row" style="margin-top: 10px;">
+                                                            <div class="col-sm-1" style="text-align:right; padding-right:6px;">@(ip + 1)</div>
+                                                            <div class="col-sm-2">
+                                                                <SfTextBox @bind-Value="@Prescriptions[ip].Farmaco" Readonly="true" style="border:0px;"></SfTextBox>
+                                                            </div>
+                                                            <div class="col-sm-4">
+                                                                @* <SfTextBox ID="valutazione" @bind-Value="@Prescriptions[ip].Uso" Multiline=true style="height: 72px;" ></SfTextBox> *@
+                                                                <SfTextBox Value="@Prescriptions[ip].Uso" ValueChanged="@(value => UpdateUso(myId, value))" Multiline=true style="height: 72px;"></SfTextBox>
+                                                            </div>
+
+                                                            @if (ip < @Prescriptions.Count - 1)
+                                                            {
+                                                                <div class="col-sm-1">
+                                                                    <SfButton IconCss="e-icons e-erase icon-red" CssClass="e-flat btn-light" Content="Rimuovi" OnClick="() => DeleteFar(questo)"></SfButton>
+                                                                </div>
+                                                            }
+                                                        </div>
+
+                                                        <br />
+                                                    }
+                                                }
+
+                                                <div class="row" style="margin-top: 14px;">
+                                                    <div class="col-sm-1" style="text-align:right; padding-right:6px;">Nota:</div>
+                                                    <div class="col-sm-6">
+                                                        <SfTextBox @bind-Value="@NotaPrescrizione" Multiline="true" style="height: 96px;"></SfTextBox>
+                                                    </div>
+                                                </div>
+
+
+                                            </ContentTemplate>
+                                        </TabItem>
+
+                                        <TabItem Visible=@ShowDrugs>
+                                            <ChildContent>
+                                                <TabHeader Text="Lista Farmaci"></TabHeader>
+                                            </ChildContent>
+                                            <ContentTemplate>
+                                                <div class="container-fluid form-farmfilter" style="padding: 4px 10px 14px 10px;">
+                                                    <div class="row">
+                                                        <div class="col-sm-1">
+                                                            <SfButton IconCss="e-icons e-chevron-left icon-green" CssClass="e-flat btn-light" style="margin-top:24px;" Content="Prescrizione" OnClick="() => BackPresc()"></SfButton>
+                                                        </div>
+
+                                                        <div class="col-sm-7">
+                                                            <span style="display:inline-block; width:300px;">
+                                                                <SfTextBox ID="fFar" @bind-Value="@fFar" Placeholder="Farmaco" FloatLabelType="@FloatLabelType.Auto"></SfTextBox>
+                                                            </span>
+                                                            <span style="display:inline-block; width:50px;">&nbsp;</span>
+                                                            <SfButton IconCss="e-icons e-search icon-slategrey" CssClass="e-flat btn-light" style="margin-top:24px;" Content="Cerca" OnClick="() => SearchFar()"></SfButton>
+                                                            <span style="display:inline-block; width:25px;">&nbsp;</span>
+                                                            <SfButton IconCss="e-icons e-repeat icon-green" CssClass="e-flat btn-light" style="margin-top:24px;" Content="Ripristina" OnClick="() => ResetFar()"></SfButton>
+                                                        </div>
+                                                    </div>
+
+                                                    <br />
+
+                                                    <div class="row">
+                                                        <div class="col-sm-12">
+                                                            <SfGrid ID="DrugsGrid" @ref="RefDrugsGrid" DataSource="@drugs" AllowPaging="true" Width="auto">@* RowHeight="20"  *@
+                                                                <GridPageSettings PageCount="PAGE_COUNT" PageSize="DEFAULT_PAGE_SIZE" PageSizes="PageSizes"></GridPageSettings>
+                                                                <GridColumns>
+                                                                    <GridColumn HeaderText="" Width="60">
+                                                                        <Template>
+                                                                            @{
+                                                                                var drugInfo = (context as DrugSearch);
+                                                                                var idF = drugInfo.IdFarmaco;
+                                                                                var idU = drugInfo.IdFarmacoUso;
+
+                                                                                var far = drugInfo.Farmaco;
+                                                                                var use = drugInfo.Uso;
+
+                                                                                <SfButton IconCss="e-icons e-plus icon-green" CssClass="e-small e-flat btn-white" Content="" OnClick="() => AssignDrug(idF, idU, far, use)" title="Assegna a Prescrizione"></SfButton>
+                                                                            }
+                                                                        </Template>
+                                                                    </GridColumn>
+                                                                    <GridColumn Field=@nameof(DrugSearch.Farmaco) HeaderText="Farmaco" Width="20%"></GridColumn>
+                                                                    <GridColumn Field=@nameof(DrugSearch.Uso) HeaderText="Somministrazione" Width="80%"></GridColumn>
+                                                                </GridColumns>
+                                                            </SfGrid>
+                                                        </div>
+
+                                                        @* <div class="col-sm-1">&nbsp;</div> *@
+                                                    </div>
+                                                </div>
+                                            </ContentTemplate>
+                                        </TabItem>
+                                    </TabItems>
+                                </SfTab>
+                            </ContentTemplate>
+                        </TabItem>
                     </TabItems>
                 </SfTab>
             </div>
@@ -937,8 +1068,8 @@
     }
 
         .e-tab .e-tab-header .e-toolbar-items .e-active .e-tab-wrap:hover {
-        border-bottom: 4px solid #0d6efd;
-    }
+            border-bottom: 4px solid #0d6efd;
+        }
 
     .e-tab .e-tab-header .e-toolbar-item:not(.e-active) {
         border-bottom: 0px;
@@ -953,18 +1084,18 @@
         border-bottom: 4px solid #0d6efd !important;
     }*/
     *@
-    
+
     .e-btn.e-flat.e-primary, .e-btn.e-flat.e-primary:focus {
         background-color: #317ab9;
         border-color: #265f91;
         color: #fff;
     }
 
-        .e-btn.e-flat.e-primary:hover, .e-btn.e-flat.e-primary:active {
-            background-color: #21527d;
-            border-color: #163854;
-            color: #fff;
-        }
+    .e-btn.e-flat.e-primary:hover, .e-btn.e-flat.e-primary:active {
+        background-color: #21527d;
+        border-color: #163854;
+        color: #fff;
+    }
 
     .e-circle-close {
         width: 24px;
@@ -1004,7 +1135,7 @@
         bottom: 18px; e-circle-info
     }*/
     *@
-    
+
     .e-icons.e-circle-close.col-lg-2:before {
         font-size: 20px;
         color: #d9534f;
@@ -1053,20 +1184,23 @@
         background-color: #ededed;
         border: 1px solid #d9d9d9;
     }
+
     .e-tooltip-wrap .e-tip-content {
         color: #3d3d3d;
     }
+
     .customtooltip.e-tooltip-wrap .e-arrow-tip-outer {
         border-bottom: 12px solid transparent;
         border-left: 12px solid transparent;
         border-top: 12px solid transparent;
         border-right: 12px solid transparent;
     }
+
     .customtooltip.e-tooltip-wrap .e-arrow-tip-inner {
         color: #ededed;
         font-size: 25.9px;
     }
-    </style>
+</style>
 
 
 @code {
@@ -1233,6 +1367,7 @@
     public string DataOrtottica = "";
 
     public Boolean OrtotticaDisabled = true;
+    public Boolean PrintOrtotDisabled = true;
 
     public Boolean SaveOrtoctisDisabled = false;
     public Boolean IsNewOrtoctis = false;
@@ -1241,6 +1376,28 @@
 
     private List<CoppiaDecDat> ListaOrtoctis;
     private int OrtoctisCorrente = -1;
+    #endregion
+
+    #region binding dati prescrizioni
+    public Boolean PrescrizioniDisabled = true;
+    public Boolean PrintPrescrDisabled = true;
+
+    public Boolean ShowPresc = true;
+    public Boolean ShowDrugs = false;
+
+    public string fFar = "";
+
+    private List<DrugSearch>? drugs;
+
+    private SfGrid<DrugSearch> RefDrugsGrid;
+
+    private List<Prescrizioni>? Prescriptions;
+
+    private int LastPrescr = 0;
+
+    private string? NotaPrescrizione;
+
+    decimal ider;
     #endregion
 
     #region Funzioni di supporto
@@ -1430,6 +1587,8 @@
 
             SessionID = arUser[4];
 
+            fFar = "";
+
             // gRoleUser = arUser[n].Split(",");
 
             if (id == 0)
@@ -1496,6 +1655,7 @@
                     PrescrizioneDisabled = false;
                     ControlliDisabled = false;
                     OrtotticaDisabled = false;
+                    PrescrizioniDisabled = false;
 
                     VisitaCorrente = 0;
 
@@ -1553,6 +1713,8 @@
                     AddCntrDisabled = false;
 
                     LoadOrtoctis();
+
+                    LoadPrescrizioni(ListaVisite[VisitaCorrente].ID);
                 }
                 else
                 {
@@ -1566,6 +1728,7 @@
                     PrescrizioneDisabled = true;
                     ControlliDisabled = true;
                     OrtotticaDisabled = true;
+                    PrescrizioniDisabled = true;
 
                     IndexVisita = " - ";
                 }
@@ -2033,6 +2196,8 @@
 
         LoadOrtoctis();
 
+        LoadPrescrizioni(ListaVisite[VisitaCorrente].ID);
+
         // load date e id storico controlli e dati ultimo controllo
         DataControllo = "";
         Controllo = new Controlli();
@@ -2176,6 +2341,7 @@
             PrescrizioneDisabled = false;
             ControlliDisabled = false;
             OrtotticaDisabled = false;
+            PrescrizioniDisabled = false;
 
             VisitaCorrente = 0;
 
@@ -2184,6 +2350,8 @@
             DataVisita = ListaVisite[0].Val.ToString("dd/MM/yyyy");
 
             LoadVisit(ListaVisite[VisitaCorrente].ID);
+
+            LoadPrescrizioni(ListaVisite[VisitaCorrente].ID);
         }
 
         AddVisitDisabled = false;
@@ -2664,6 +2832,160 @@
 
         StateHasChanged();
    }
+    #endregion
+
+    #region Prescrizioni
+    private async void ShowFar()
+    {
+        ShowPresc = !ShowPresc;
+        ShowDrugs = !ShowDrugs;
+
+        StateHasChanged();
+    }
+
+    private async void BackPresc()
+    {
+        ShowPresc = !ShowPresc;
+        ShowDrugs = !ShowDrugs;
+
+        StateHasChanged();
+    }
+
+    private async void SearchFar()
+    {
+        bool AllowSearch = false;//ShowPresc
+
+        AllowSearch = (!string.IsNullOrEmpty(fFar)) ? true : false;
+
+        if (AllowSearch)
+        {
+            try
+            {
+                drugs = await ListDrugsService.ListDrugsAndUse(fFar);
+
+                StateHasChanged();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+        }
+    }
+
+    public async void ResetFar()
+    {
+        fFar = "";
+
+        // drugs.Clear();
+
+        // drugs = await PatientService.PatList(p);
+
+        StateHasChanged();
+    }
+
+    public async void AssignDrug(decimal idF, decimal idU, string far, string use)
+    {
+        Prescrizione NewPrescSec = new Prescrizione
+            {
+                ptIdUser = Decimal.Parse(gIdUser),
+                InsertDate = DateTime.Now,
+                ptIdVisit = Visita.IdVisit,
+                ptIdFarmaco = idF,
+                ptIdFarmacoUso = idU
+            };
+
+        // Ottieni la prescrizione restituita con l'ID generato
+        var createdPresc = await PrescrizioniService.PostPrescrizione(NewPrescSec);
+
+        // Usa l'ID generato se necessario
+        var idPrescrizione = createdPresc.IdPrescrizione;
+
+        ider = idPrescrizione;
+
+        // Logica successiva
+        ShowPresc = !ShowPresc;
+        ShowDrugs = !ShowDrugs;
+
+        LoadPrescrizioni(Visita.IdVisit);
+    }
+
+    private void UpdateUso(int index, string value)
+    {
+        // Console.WriteLine($"Index: {index}, New Value: {value}");
+        Prescriptions[index].Uso = value;
+    }
+
+    public async void DeleteFar(decimal id)
+    {
+        for (var np = 0; np < Prescriptions.Count; np++)
+        {
+            if (Prescriptions[np].IdPrescrizione == id && np == 0 && Prescriptions.Count > 1)
+            {
+                NotaPrescrizione = Prescriptions[np].NotePrescr;
+
+                Prescrizione FirstPresc = new Prescrizione
+                    {
+                        IdPrescrizione = Prescriptions[np + 1].IdPrescrizione,
+                        ptIdUser = Prescriptions[np + 1].ptIdUser,
+                        InsertDate = Prescriptions[np + 1].InsertDate,
+                        ptIdVisit = Prescriptions[np + 1].ptIdVisit,
+                        ptIdFarmaco = Prescriptions[np + 1].ptIdFarmaco,
+                        ptIdFarmacoUso = Prescriptions[np + 1].ptIdFarmacoUso,
+                        NotePrescr = NotaPrescrizione
+                    };
+
+                await PrescrizioniService.PutPrescrizione(Prescriptions[np + 1].IdPrescrizione, FirstPresc);
+
+                np = Prescriptions.Count;
+            }
+        }
+
+        await PrescrizioniService.DeletePrescrizione(id);
+
+        LoadPrescrizioni(Visita.IdVisit);
+    }
+
+    public async void LoadPrescrizioni(decimal idv)
+    {
+        Prescriptions = await PrescrizioniService.GetPrescrByVisit(idv);
+
+        if (Prescriptions.Count > 0)
+        {
+            PrintPrescrDisabled = false;
+
+            NotaPrescrizione = Prescriptions[0].NotePrescr;
+        }
+        else
+        {
+            PrintPrescrDisabled = true;
+
+            NotaPrescrizione = "";
+        }
+
+        Prescrizioni LastPresc = new();
+
+        Prescriptions.Add(LastPresc);
+
+        StateHasChanged();
+    }
+
+    public async void StampaPrescrizione()
+    {
+        Prescrizione FirstPresc = new Prescrizione
+            {
+                IdPrescrizione = Prescriptions[0].IdPrescrizione,
+                ptIdUser = Prescriptions[0].ptIdUser,
+                InsertDate = Prescriptions[0].InsertDate,
+                ptIdVisit = Prescriptions[0].ptIdVisit,
+                ptIdFarmaco = Prescriptions[0].ptIdFarmaco,
+                ptIdFarmacoUso = Prescriptions[0].ptIdFarmacoUso,
+                NotePrescr = NotaPrescrizione
+            };
+
+        await PrescrizioniService.PutPrescrizione(Prescriptions[0].IdPrescrizione, FirstPresc);
+
+        PrintPrescrizione();
+    }
     #endregion
 
     #region pdf
@@ -5837,6 +6159,364 @@
 
         //Download the PDF document
         await JS.SaveAs("Prescrizione Lenti " + LName + " " + FName + "_" + ListaVisite[VisitaCorrente].Val.ToString("dd.MM.yyyy") + ".pdf", memoryStream.ToArray());
+    }
+
+    async void PrintPrescrizione()
+    {
+        int paragraphAfterSpacing = 8;
+        int cellMargin = 8;
+
+        //Create a new PDF document.
+        PdfDocument pdfDocument = new PdfDocument();
+
+        #region Definizione documento pdf
+        // Set document information
+        // ------------------------------------------------------------------------------------------------------------------------
+        pdfDocument.DocumentInformation.Author = "Powered by Phoenix";
+        pdfDocument.DocumentInformation.CreationDate = DateTime.Now;
+        pdfDocument.DocumentInformation.Creator = "Ophthal";
+        pdfDocument.DocumentInformation.Keywords = "Dott. La Bruna";
+        pdfDocument.DocumentInformation.Subject = "Scheda Prescrizione";
+        pdfDocument.DocumentInformation.Title = "Prescrizione " + LName + " " + FName + "_" + ListaVisite[VisitaCorrente].Val.ToString("dd.MM.yyyy");
+
+        // Set page size
+        // ------------------------------------------------------------------------------------------------------------------------
+        pdfDocument.PageSettings.Size = Syncfusion.Pdf.PdfPageSize.A4;
+
+        // Set margin for all the pages
+        // pdfDocument.PageSettings.Margins.Left = 10;
+        // pdfDocument.PageSettings.Margins.Right = 10;
+        // pdfDocument.PageSettings.Margins.Top = 10;
+        // pdfDocument.PageSettings.Margins.Bottom = 10;
+
+        pdfDocument.PageSettings.Margins.All = 40F;
+
+        // Set page orientation
+        // ------------------------------------------------------------------------------------------------------------------------
+        pdfDocument.PageSettings.Orientation = PdfPageOrientation.Portrait;
+
+        // Set paginate layout
+        // ------------------------------------------------------------------------------------------------------------------------
+        PdfLayoutFormat format = new PdfLayoutFormat();
+        format.Layout = PdfLayoutType.Paginate;
+
+        // Add page to the PDF document
+        PdfPage page = pdfDocument.Pages.Add();
+        #endregion
+
+        #region Header & Footer
+        // Create Header and Footer font
+        // ------------------------------------------------------------------------------------------------------------------------
+        PdfFont fontHeader = new PdfStandardFont(PdfFontFamily.Helvetica, 14, PdfFontStyle.Regular);
+        PdfFont fontFooter = new PdfStandardFont(PdfFontFamily.Helvetica, 7, PdfFontStyle.Regular);
+
+        #region Header
+        // Get document's bounds
+        // ------------------------------------------------------------------------------------------------------------------------
+        RectangleF bounds = new RectangleF(0, 0, pdfDocument.Pages[0].GetClientSize().Width, 50);
+
+        // Create a Page template that can be used as header.
+        // ------------------------------------------------------------------------------------------------------------------------
+        PdfPageTemplateElement header = new PdfPageTemplateElement(bounds);
+
+        // Load image for header
+        // Scarica l'immagine dal server
+        var httpClient = new HttpClient();
+        string imageUrl = $"{Env.BaseAddress}/img/LB_Logo_25.png";                      // URL dell'immagine
+        var imageBytes = await httpClient.GetByteArrayAsync(imageUrl);
+
+        PdfGridCellStyle HeadLogoStyle = new PdfGridCellStyle();
+        HeadLogoStyle.Borders.Left.Width = 0;
+        HeadLogoStyle.Borders.Right.Width = 0;
+        HeadLogoStyle.Borders.Top.Width = 0;
+        HeadLogoStyle.Borders.Bottom.Width = 0.1F;
+        HeadLogoStyle.CellPadding = new PdfPaddings(0, 0, 0, 0);
+
+        // Setup font for Dati Testata
+        PdfStandardFont hHeadFont = new PdfStandardFont(PdfFontFamily.Helvetica, 14, PdfFontStyle.Bold);
+        PdfStandardFont hNameFont = new PdfStandardFont(PdfFontFamily.Helvetica, 7, PdfFontStyle.Bold);
+        PdfStandardFont hValueFont = new PdfStandardFont(PdfFontFamily.Helvetica, 7, PdfFontStyle.Regular);
+
+        // Specify the style for bottom
+        PdfGridCellStyle HeadStyle = new PdfGridCellStyle();
+        HeadStyle.Borders.Left.Width = 0;
+        HeadStyle.Borders.Right.Width = 0;
+        HeadStyle.Borders.Top.Width = 0;
+        HeadStyle.Borders.Bottom.Width = 0.1F;
+        HeadStyle.CellPadding = new PdfPaddings(162, 10, 0, 20);
+        HeadStyle.StringFormat = new PdfStringFormat(PdfTextAlignment.Center);
+
+        // Usa un MemoryStream per creare il PdfBitmap
+        using (MemoryStream imageStream = new MemoryStream(imageBytes))
+        {
+            PdfImage image = new PdfBitmap(imageStream);
+
+            HeadLogoStyle.BackgroundImage = new PdfBitmap(imageStream);
+
+            // Draw the image in the header.
+            header.Graphics.DrawImage(image, new PointF(0, 0), new SizeF(46, 25));      // (46, 25) = width, height immagine
+        }
+
+        // Add the header at the top.
+        //pdfDocument.Template.Top = header;
+        #endregion
+
+        #region Footer
+        // Create a Page template that can be used as footer.
+        // ------------------------------------------------------------------------------------------------------------------------
+        PdfPageTemplateElement footer = new PdfPageTemplateElement(bounds);
+
+        PdfBrush brush = new PdfSolidBrush(Color.Black);
+
+        // Create page date of printing field.
+        PdfTextElement pageDatePrint = new PdfTextElement("Printed on " + DateTime.Now.ToShortDateString(), fontFooter, brush);
+
+
+        // Create page number field.
+        PdfPageNumberField pageNumber = new PdfPageNumberField(fontFooter, brush);
+
+        // Create page count field.
+        PdfPageCountField count = new PdfPageCountField(fontFooter, brush);
+
+        // Add the fields in composite fields.
+        PdfCompositeField compositeField = new PdfCompositeField(fontFooter, brush, "Page {0} of {1}", pageNumber, count);
+
+        compositeField.Bounds = footer.Bounds;
+
+        // Draw the text element and store its layout information
+        pageDatePrint.Draw(footer.Graphics, new PointF(0, 40));
+
+        // Draw the composite field in footer.
+        compositeField.Draw(footer.Graphics, new PointF(270, 40));
+
+        // Add the footer template at the bottom.
+        pdfDocument.Template.Bottom = footer;
+        #endregion
+        #endregion
+
+        #region Prima parte: Dati Testata
+        #region Imposta griglia Dati Testata
+        // Create the head grid
+        PdfGrid HeadPdfGrid = new PdfGrid();
+
+        // Add the rows to head grid
+        PdfGridRow row = HeadPdfGrid.Rows.Add();
+
+        //Adding grid style
+        PdfGridStyle gridStyle = new PdfGridStyle();
+
+        //Allow grid to overflow horizontally
+        gridStyle.AllowHorizontalOverflow = true;
+
+        //Adding cell spacing between cells
+        gridStyle.CellSpacing = 0F;
+
+        HeadPdfGrid.Style = gridStyle;
+
+        // Set rows's height
+        // row.Height = 18;
+
+        // Add the columns to head grid
+        HeadPdfGrid.Columns.Add(2);
+
+        // Set columns's width
+        HeadPdfGrid.Columns[0].Width = 50;
+        HeadPdfGrid.Columns[1].Width = 465;
+
+        // Set columns merged
+        // HeadPdfGrid.Rows[0].Cells[0].RowSpan = 2;
+        #endregion
+
+        #region Inserimento Dati Testata
+        // Set the HeadPdfGrid's value
+        PdfTextElement val;
+
+        HeadPdfGrid.Rows[0].Cells[0].Style = HeadLogoStyle;
+        HeadPdfGrid.Rows[0].Cells[0].ImagePosition = PdfGridImagePosition.Tile;                                     // 0-0
+
+        HeadPdfGrid.Rows[0].Cells[1].Style = HeadStyle;
+
+        val = new PdfTextElement(" ", hHeadFont, PdfBrushes.Black);                                                  // 0-1
+        HeadPdfGrid.Rows[0].Cells[1].Value = val;
+
+        PdfLayoutResult result = HeadPdfGrid.Draw(page, new Syncfusion.Drawing.PointF(0, 0));
+        #endregion
+        #endregion
+
+        #region Seconda parte: Dati Prescrizione
+        // Create field's name and field's font
+        // ------------------------------------------------------------------------------------------------------------------------
+        PdfFont fieldDateFont = new PdfStandardFont(PdfFontFamily.Helvetica, 11, PdfFontStyle.Bold);
+        PdfFont fieldValueFont = new PdfStandardFont(PdfFontFamily.Helvetica, 11, PdfFontStyle.Regular);
+
+        PdfFont fieldNameFont = new PdfStandardFont(PdfFontFamily.Helvetica, 10, PdfFontStyle.Bold);
+        PdfFont fieldFont = new PdfStandardFont(PdfFontFamily.Helvetica, 10, PdfFontStyle.Regular);
+        PdfFont italicdFont = new PdfStandardFont(PdfFontFamily.Helvetica, 10, PdfFontStyle.Italic);
+
+        #region Definizione stile celle Prescrizione
+        PdfGridCellStyle HStyle = new PdfGridCellStyle();
+        HStyle.Borders.Left.Width = 0;
+        HStyle.Borders.Right.Width = 0;
+        HStyle.Borders.Top.Width = 0;
+        HStyle.Borders.Bottom.Width = 0F;
+        HStyle.CellPadding = new PdfPaddings(215, 10, 0, 14);
+        HStyle.StringFormat = new PdfStringFormat(PdfTextAlignment.Center);
+
+        // Specify the style for head's cell
+        PdfGridCellStyle posCellStyleHH = new PdfGridCellStyle();
+        posCellStyleHH.Borders.Left.Width = 0;
+        posCellStyleHH.Borders.Right.Width = 0;
+        posCellStyleHH.Borders.Top.Width = 0;
+        posCellStyleHH.Borders.Bottom.Width = 0F;
+        posCellStyleHH.CellPadding = new PdfPaddings(0, 3, 6, 6);
+        posCellStyleHH.StringFormat = new PdfStringFormat(PdfTextAlignment.Right);
+
+        // Specify the style for value's cell
+        PdfGridCellStyle posCellStyleVV = new PdfGridCellStyle();
+        posCellStyleVV.Borders.Left.Width = 0;
+        posCellStyleVV.Borders.Right.Width = 0;
+        posCellStyleVV.Borders.Top.Width = 0;
+        posCellStyleVV.Borders.Bottom.Width = 0F;
+        posCellStyleVV.CellPadding = new PdfPaddings(3, 3, 6, 6);
+
+        // Specify the style for head's cell
+        PdfGridCellStyle posCellStyleH = new PdfGridCellStyle();
+        posCellStyleH.Borders.Left.Width = 0;
+        posCellStyleH.Borders.Right.Width = 0;
+        posCellStyleH.Borders.Top.Width = 0;
+        posCellStyleH.Borders.Bottom.Width = 0F;
+        posCellStyleH.CellPadding = new PdfPaddings(0, 3, 14, 0);
+        posCellStyleH.StringFormat = new PdfStringFormat(PdfTextAlignment.Right);
+
+        // Specify the style for value's cell
+        PdfGridCellStyle posCellStyleVi = new PdfGridCellStyle();
+        posCellStyleVi.Borders.Left.Width = 0;
+        posCellStyleVi.Borders.Right.Width = 0;
+        posCellStyleVi.Borders.Top.Width = 0;
+        posCellStyleVi.Borders.Bottom.Width = 0F;
+        posCellStyleVi.CellPadding = new PdfPaddings(0, 3, 0, 0);
+
+        // Specify the style for value's cell
+        PdfGridCellStyle posCellStyleV = new PdfGridCellStyle();
+        posCellStyleV.Borders.Left.Width = 0;
+        posCellStyleV.Borders.Right.Width = 0;
+        posCellStyleV.Borders.Top.Width = 0;
+        posCellStyleV.Borders.Bottom.Width = 0F;
+        posCellStyleV.CellPadding = new PdfPaddings(15, 3, 0, 0);
+
+        // Specify the style for note's cell
+        PdfGridCellStyle posCellStyleN = new PdfGridCellStyle();
+        posCellStyleN.Borders.Left.Width = 0;
+        posCellStyleN.Borders.Right.Width = 0;
+        posCellStyleN.Borders.Top.Width = 0;
+        posCellStyleN.Borders.Bottom.Width = 0F;
+        posCellStyleN.CellPadding = new PdfPaddings(3, 3, 14, 0);
+        #endregion
+
+        #region Imposta griglia Prescrizioni
+        // Create Grid
+        PdfGrid PrescrPdfGrid = new PdfGrid();
+
+        // Add Columns
+        PrescrPdfGrid.Columns.Add(3);
+
+        // Add Rows
+        PrescrPdfGrid.Rows.Add();
+        PrescrPdfGrid.Rows.Add();
+
+        // Set Rows's height
+        // rowHead.Height = 35;
+
+        // Set Columns's width
+        PrescrPdfGrid.Columns[0].Width = 20;
+        PrescrPdfGrid.Columns[1].Width = 35;
+        PrescrPdfGrid.Columns[2].Width = 455;
+        #endregion
+
+        #region Inserimento Dati Prescrizioni
+        // Set the HeadPdfGrid's value
+        PdfTextElement value;
+
+        PrescrPdfGrid.Rows[0].Cells[0].ColumnSpan = 3;
+        PrescrPdfGrid.Rows[0].Cells[0].Style = HStyle;
+
+        value = new PdfTextElement("Prescrizione", hHeadFont, PdfBrushes.Black);                                                //  0 - 0
+        PrescrPdfGrid.Rows[0].Cells[0].Value = value;
+
+        PrescrPdfGrid.Rows[1].Cells[0].Style = posCellStyleHH;
+        PrescrPdfGrid.Rows[1].Cells[1].Style = posCellStyleHH;                                                                  // Intestazione Prescrizione Data (Visita a cui si riferisce la prescrizione)
+        PrescrPdfGrid.Rows[1].Cells[2].Style = posCellStyleVV;
+
+        value = new PdfTextElement("Data:", fieldNameFont, PdfBrushes.Black);                                                   //  1 - 1
+        PrescrPdfGrid.Rows[1].Cells[1].Value = value;
+        value = new PdfTextElement(ListaVisite[VisitaCorrente].Val.ToString("dd/MM/yyyy"), fieldNameFont, PdfBrushes.Black);    //  1 - 2
+        PrescrPdfGrid.Rows[1].Cells[2].Value = value;
+
+        for (var np = 0; np < Prescriptions.Count - 1; np++)
+        {
+            // riga farmaco
+            PdfGridRow fRow = PrescrPdfGrid.Rows.Add();
+
+            fRow.Height = 28;
+            fRow.Cells[1].ColumnSpan = 2;
+
+            fRow.Cells[0].Style = posCellStyleH;
+            fRow.Cells[1].Style = posCellStyleH;
+
+            val = new PdfTextElement("Pr./ ", fieldFont, PdfBrushes.Black);
+            fRow.Cells[0].Value = val;
+
+            val = new PdfTextElement(Prescriptions[np].Farmaco.Trim(), fieldFont, PdfBrushes.Black);
+            fRow.Cells[1].Value = val;
+
+            // riga somministrazione
+            PdfGridRow uRow = PrescrPdfGrid.Rows.Add();
+
+            uRow.Cells[1].ColumnSpan = 2;
+
+            uRow.Cells[0].Style = posCellStyleVi;
+            uRow.Cells[1].Style = posCellStyleV;
+
+            val = new PdfTextElement("S./ ", fieldFont, PdfBrushes.Black);
+            uRow.Cells[0].Value = val;
+
+            val = new PdfTextElement(Prescriptions[np].Uso.Trim(), fieldFont, PdfBrushes.Black);
+            uRow.Cells[1].Value = val;
+        }
+
+        // riga vuota
+        PdfGridRow eRow = PrescrPdfGrid.Rows.Add();
+
+        eRow.Cells[0].ColumnSpan = 3;
+
+        eRow.Cells[0].Style = posCellStyleH;
+
+        val = new PdfTextElement("", fieldFont, PdfBrushes.Black);
+        eRow.Cells[0].Value = val;
+
+        // riga delle note
+        PdfGridRow nRow = PrescrPdfGrid.Rows.Add();
+
+        nRow.Cells[0].ColumnSpan = 3;
+
+        nRow.Cells[0].Style = posCellStyleN;
+
+        val = new PdfTextElement(NotaPrescrizione, italicdFont, PdfBrushes.Black);
+        nRow.Cells[0].Value = val;
+        #endregion
+
+        // Draw PDF grid into the PDF page.
+        PrescrPdfGrid.Draw(page, new Syncfusion.Drawing.PointF(0, result.Bounds.Bottom + paragraphAfterSpacing));
+        #endregion
+
+        //Create memory stream.
+        MemoryStream memoryStream = new MemoryStream();
+
+        //Save the PDF document.
+        pdfDocument.Save(memoryStream);
+
+        //Download the PDF document
+        await JS.SaveAs("Prescrizione " + LName + " " + FName + "_" + ListaVisite[VisitaCorrente].Val.ToString("dd.MM.yyyy") + ".pdf", memoryStream.ToArray());
     }
     #endregion
 }

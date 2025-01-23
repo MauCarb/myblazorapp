@@ -40,6 +40,10 @@ builder.Services.AddScoped<OrtoctisService>();
 
 builder.Services.AddScoped<ListOrtoctisService>();
 
+builder.Services.AddScoped<ListDrugsService>();
+
+builder.Services.AddScoped<PrescrizioniService>();
+
 builder.Services.AddSyncfusionBlazor();
 
 await builder.Build().RunAsync();
