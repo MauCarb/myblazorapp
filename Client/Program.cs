@@ -44,6 +44,8 @@ builder.Services.AddScoped<ListDrugsService>();
 
 builder.Services.AddScoped<PrescrizioniService>();
 
+builder.Services.AddScoped<RelazioniService>();
+
 builder.Services.AddSyncfusionBlazor();
 
 await builder.Build().RunAsync();
