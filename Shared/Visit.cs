@@ -15,6 +15,7 @@ namespace BlazorApp.Shared
         public decimal ptIdPatient { get; set; }
         public decimal ptIdAppointment { get; set; }
         public DateTime DataVisita { get; set; }
+        public string Operatore { get; set; }
         public string DiagnosiOD { get; set; }
         public string DiagnosiOS { get; set; }
         public string Anamnesi { get; set; }

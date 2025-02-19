@@ -28,5 +28,6 @@ namespace BlazorApp.Shared
         public string Email { get; set; }
         public string Note { get; set; }
         public Boolean fPrivacy { get; set; }
+        public string Studio { get; set; }
     }
 }

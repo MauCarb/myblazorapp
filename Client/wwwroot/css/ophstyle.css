@@ -391,6 +391,16 @@
     .form-filter > .menten {
         margin-bottom: -10px;
     }
+
+.form-farmfilter {
+    background-color: #fff;
+    font-size: 90%;
+/*    
+    border-top: 1px solid #f4f4ff;
+    border-bottom: 1px solid #f4f4ff;
+*/
+    margin-top: 2px;
+}
 /* ------------------------------------ */
 
 /* sections's style                     */

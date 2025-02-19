@@ -14,6 +14,7 @@ namespace BlazorApp.Shared
         public DateTime InsertDate { get; set; }
         public decimal ptIdVisit { get; set; }
         public DateTime DataRelazione { get; set; }
+        public DateTime PrintDate { get; set; }
         public string DiagnosiOD { get; set; }
         public string DiagnosiOS { get; set; }
         public string SHIRMER_Od { get; set; }

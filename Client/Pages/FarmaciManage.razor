@@ -1,0 +1,828 @@
+﻿@page "/farmacimanage/{id:decimal}"
+@using Blazored.SessionStorage
+@using Microsoft.AspNetCore.Components.WebAssembly.Hosting
+@using Newtonsoft.Json
+
+@using Syncfusion.Blazor.Navigations
+
+@using BlazorApp.Shared
+@using BlazorApp.Client.Models
+
+@inject NavigationManager Navigation
+@inject ISessionStorageService sessionStorage
+
+@inject HttpClient Http
+
+@inject FarmaciManageService FarmaciManageService
+@inject FarmaciUsoListService FarmaciUsoListService
+@inject FarmaciUsoManageService FarmaciUsoManageService
+
+<h5>
+    @TitlePage
+
+    <span style="float: right;">
+        <SfButton IconCss="e-icons e-save icon-navy" CssClass="e-flat btn-light" Content="@SaveText" OnClick="() => SaveFarmaco()"></SfButton>
+        &nbsp;&nbsp;&nbsp;
+        <SfButton IconCss="e-icons e-chevron-left icon-green" CssClass="e-flat btn-light" Content="Elenco Farmaci" OnClick="() => GoToFarmaciList(0)"></SfButton>
+    </span>
+
+</h5>
+
+<!-- Sezione farmaco -->
+<div class="container-fluid bg-light" style="padding: 0 10px 10px 10px; margin-top:20px;">
+    <div class="row">
+        <div class="col-sm-5">
+            <SfTextBox ID="nFarmaco" @bind-Value="@nFarmaco" Placeholder="Nome Farmaco" FloatLabelType="@FloatLabelType.Always"></SfTextBox>
+        </div>
+
+        <div class="col-sm-7">
+            <span style="color: rgba(0, 0, 0, 0.54); font-size: 13px;line-height: 1.4; display:block; margin-bottom:2px;">Disponibilità</span>
+            <div class="col-sm-5">
+                <label style="font-size: 11pt; padding: 0 8px 8px 0; vertical-align: super;">@switchFarmaco</label>
+                <SfSwitch @bind-Checked="@fStato" ValueChange="ManagePrivacy" TChecked="bool"></SfSwitch>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Sezione somministrazioni -->
+@if (ShowUse)
+{
+    <div class="container-fluid" style="padding: 10px 10px; margin-top: 30px;">
+        <div class="row">
+            <div class="col-md-12">
+                <SfTab>
+                    <TabItems>
+                        <TabItem>
+                            <ChildContent>
+                                <TabHeader Text="Somministrazioni"></TabHeader>
+                            </ChildContent>
+
+                            <ContentTemplate>
+                                <div class="row" style="margin: 10px 2px 25px 2px; padding-bottom:10px; border-bottom: 1px solid #ddd;">
+                                    <div class="col-sm-1">&nbsp;</div>
+                                    <div class="col-sm-1" style="font-size: 16px; font-weight: 500; margin: 3px 0;"></div>
+                                    <div class="col-sm-4" style="font-size: 16px; font-weight: 500; margin: 3px 0;">Somministrazione</div>
+                                    <div class="col-sm-1" style="font-size: 16px; font-weight: 500; margin: 3px 0;"></div>
+                                </div>
+
+                                @if (@SomminiStraz != null) //.Count > 0
+                                {
+                                    @for (var ip = 0; ip < @SomminiStraz.Count; ip++)
+                                    {
+                                        decimal questo = @SomminiStraz[ip].IdFarmacoUso;
+                                        int myId = ip;
+
+                                        <div class="row" style="margin-top: 10px;">
+                                            <div class="col-sm-1" style="text-align:right; padding-right:6px;">@(ip + 1)</div>
+                                            @if (ip < @SomminiStraz.Count - 1)
+                                            {
+                                                <div class="col-sm-1">
+                                                    <SfButton IconCss="e-icons e-save icon-green" CssClass="e-flat btn-light" Content="Aggiorna" OnClick="() => UpdateSomministr(questo, myId)"></SfButton>
+                                                </div>
+                                            }
+                                            else
+                                            {
+                                                <div class="col-sm-1">
+                                                    <SfButton IconCss="e-icons e-plus icon-green" CssClass="e-flat btn-light" Content="Inserisci" OnClick="() => InsertSomministr(myId)"></SfButton>
+                                                </div>
+                                            }
+                                            <div class="col-sm-4">
+                                                @* <SfTextBox ID="valutazione" @bind-Value="@SomminiStraz[ip].Uso" Multiline=true style="height: 72px;" ></SfTextBox> *@
+                                                <SfTextBox Value="@SomminiStraz[ip].Uso" ValueChanged="@(value => UpdateUso(myId, value))" Multiline=true style="height: 72px;"></SfTextBox>
+                                            </div>
+
+                                            @if (ip < @SomminiStraz.Count - 1)
+                                            {
+                                                <div class="col-sm-1">
+                                                    <SfButton IconCss="e-icons e-erase icon-red" CssClass="e-flat btn-light" Content="Rimuovi" OnClick="() => DeleteSomministr(questo)"></SfButton>
+                                                </div>
+                                            }
+                                        </div>
+
+                                        <br />
+                                    }
+                                }
+
+                            </ContentTemplate>
+                        </TabItem>
+                    </TabItems>
+                </SfTab>
+            </div>
+        </div>
+    </div>
+}
+
+
+<SfDialog Width="400px" Target="#target" ShowCloseIcon="true" @bind-Visible="DialogVisible">
+    <DialogTemplates>
+        <Header> @DialogHeader </Header>
+        <Content>
+            <div class='msg-wrapper col-lg-12'>
+                <span class='@DialogIcon'></span>
+                <span class='error-msg col-lg-10'>@DialogText</span>
+            </div>
+            <div class='error-detail col-lg-8'>
+                <span>@DialogDetail</span>
+            </div>
+        </Content>
+    </DialogTemplates>
+    <DialogButtons>
+        <DialogButton Content="OK" IsPrimary="true" OnClick="@CloseDialog" />
+    </DialogButtons>
+</SfDialog>
+
+<style>
+    .vstepper {
+    display: inline-block;
+    margin: 0 10px 0 8px;
+    border: 1px solid #ccc;
+    width: 80px;
+    text-align: center;
+    font-size: 13px;
+    padding-top: 3px;
+    }
+
+    .default-tab {
+    border: 1px solid #d7d7d7;
+    }
+
+    .default-tab .e-content .e-item {
+    padding: 10px;
+    text-align: justify;
+    }
+
+    .default-tab-control-section {
+    margin: 20px 20% 20px 20%;
+    }
+
+    @@media screen and (max-width: 480px) {
+    .default-tab-control-section {
+    margin: 20px 0 20px 0;
+    }
+    }
+
+    .bootstrap5 .default-tab,
+    .bootstrap .default-tab,
+    .bootstrap4 .default-tab {
+    border: none;
+    }
+
+    .bootstrap5 .default-tab .e-content > .e-item.e-active,
+    .bootstrap4 .default-tab .e-content > .e-item.e-active,
+    .bootstrap .default-tab .e-content > .e-item.e-active {
+    background: #FAF9F8;
+    }
+
+    .e-tab .e-tab-header .e-toolbar-items .e-active .e-tab-wrap {
+    border-bottom: 4px solid #0d6efd;
+    }
+
+    .e-tab .e-tab-header .e-toolbar-items .e-active .e-tab-wrap:hover {
+    border-bottom: 4px solid #0d6efd;
+    }
+
+    .e-tab .e-tab-header .e-toolbar-item:not(.e-active) {
+    border-bottom: 0px;
+    }
+
+    .e-btn.e-flat.e-primary, .e-btn.e-flat.e-primary:focus {
+    background-color: #317ab9;
+    border-color: #265f91;
+    color: #fff;
+    }
+
+    .e-btn.e-flat.e-primary:hover, .e-btn.e-flat.e-primary:active {
+    background-color: #21527d;
+    border-color: #163854;
+    color: #fff;
+    }
+
+    .e-circle-close {
+    width: 24px;
+    height: 24px;
+    position: relative;
+    display: inline-block;
+    }
+
+    .e-circle-info {
+    width: 24px;
+    height: 24px;
+    position: relative;
+    display: inline-block;
+    }
+
+    .error-msg {
+    color: #66afe9;
+    display: inline-block;
+    position: relative;
+    top: -20px;
+    left: 10px;
+    }
+
+    .error-detail {
+    position: relative;
+    left: 36px;
+    margin: 0 0 21px;
+    }
+
+    .e-icons.e-circle-close.col-lg-2:before {
+    font-size: 20px;
+    color: #d9534f;
+    position: relative;
+    left: 4px;
+    bottom: 18px;
+    }
+
+    .e-icons.e-circle-info.col-lg-2:before {
+    font-size: 20px;
+    color: #228e1f;
+    position: relative;
+    left: 4px;
+    bottom: 18px;
+    }
+
+    .e-dialog .e-footer-content {
+    background-color: #f8f8f8;
+    }
+
+    .e-dialog.e-control.e-popup, .e-dialog.e-control.e-popup .e-dlg-header-content {
+    background-color: #d9edf7;
+    }
+
+    .e-dialog.e-control.e-popup {
+    padding: 3px;
+    }
+
+    .e-dialog.e-control .e-dlg-header-content {
+    padding: 10px;
+    }
+
+    .e-dialog.e-control .e-footer-content {
+    padding: 8px 12px;
+    }
+
+    .e-dialog.e-control .e-dlg-content {
+    padding: 15px 0 0;
+    }
+
+    .msg-wrapper.col-lg-12 {
+    margin-top: 20px;
+    }
+
+    .customtooltip.e-tooltip-wrap.e-popup {
+    background-color: #ededed;
+    border: 1px solid #d9d9d9;
+    }
+
+    .e-tooltip-wrap .e-tip-content {
+    color: #3d3d3d;
+    }
+
+    .customtooltip.e-tooltip-wrap .e-arrow-tip-outer {
+    border-bottom: 12px solid transparent;
+    border-left: 12px solid transparent;
+    border-top: 12px solid transparent;
+    border-right: 12px solid transparent;
+    }
+
+    .customtooltip.e-tooltip-wrap .e-arrow-tip-inner {
+    color: #ededed;
+    font-size: 25.9px;
+    }
+</style>
+
+@code {
+    [Parameter]
+    public decimal id { get; set; }
+
+    string TitlePage = "";
+
+    public const int PAGE_COUNT = 10;
+    public const int DEFAULT_PAGE_SIZE = 10;
+    public string[] PageSizes = new string[] { "Tutti", "5", "10", "20", "50" };
+
+    private List<TabData> TabStyles { get; set; } = new List<TabData>() {
+        new TabData { StyleMode = "Default Tab", StyleClass = "" },
+        new TabData { StyleMode = "Fill Tab Header", StyleClass = "e-fill" },
+        new TabData { StyleMode = "Background Tab Header", StyleClass = "e-background" }
+    };
+    public class TabData
+    {
+        public string StyleMode { get; set; }
+        public string StyleClass { get; set; }
+    }
+
+    private string SaveText = "";
+
+    Boolean ShowUse = false;
+
+    #region dialog
+    private bool DialogVisible { get; set; } = false;
+
+    private string DialogHeader { get; set; } = "";
+    private string DialogIcon { get; set; } = "";
+    private string DialogText { get; set; } = "";
+    private string DialogDetail { get; set; } = "";
+
+    private void CloseDialog()
+    {
+        DialogVisible = false;
+    }
+    #endregion
+
+    #region logging
+    string? LoggedUser;
+    string[]? arUser;
+
+    private string? gIdUser;
+    private string? gFName;
+    private string? gLName;
+    private string? gSuperUser;
+
+    private string? SessionID;
+
+    //private string[] gRoleUser;
+
+    private string sessionLoggedUser { get; set; }
+    #endregion
+
+    #region binding farmaco
+    private Farmaci LFarmaco = new Farmaci();
+
+    public Boolean FarmacoValido = false;
+
+    public string nFarmaco = "";
+
+    public string StatoFarmaco = "";
+
+    private string switchFarmaco = "Disponibile";
+
+    private bool fStato = false;
+    #endregion
+
+    #region binding somministrazioni
+    private List<FarmaciUso>? SomminiStraz;
+
+    
+    #endregion
+
+    #region Funzioni di supporto
+    private void ManagePrivacy(Syncfusion.Blazor.Buttons.ChangeEventArgs<bool> obj)
+    {
+        if (fStato)
+        {
+            switchFarmaco = "NON Disponibile";
+        }
+        else
+        {
+            switchFarmaco = "Disponibile";
+        }
+    }
+
+    private string SetObjNullToStr(object obj)
+    {
+        string result = "";
+
+        if ((obj == null) || (obj.Equals(System.DBNull.Value)))
+        {
+            result = "";
+        }
+        else
+        {
+            result = obj.ToString();
+        }
+
+        return result;
+    }
+
+    public static int GetDaysInMonth(int year, int month)
+    {
+        // Verifica che il mese sia compreso tra 1 e 12
+        if (month < 1 || month > 12)
+        {
+            throw new ArgumentOutOfRangeException(nameof(month), "Il mese deve essere compreso tra 1 e 12.");
+        }
+
+        // Anni bisestili: divisibili per 4, ma non per 100, a meno che siano divisibili per 400
+        bool isLeapYear = year % 4 == 0 && (year % 100 != 0 || year % 400 == 0);
+
+        // Numero di giorni per ogni mese
+        int[] daysInMonth = { 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
+
+        // Aggiungi un giorno a febbraio se è un anno bisestile
+        if (isLeapYear && month == 2)
+        {
+            return daysInMonth[month - 1] + 1;
+        }
+
+        return daysInMonth[month - 1];
+    }
+
+    private Boolean CheckDate(string myDate)
+    {
+        Boolean result = false;
+        string myYear, myMonth, myDay;
+        int GiorniMese;
+
+        if (myDate.Length == 8)
+        {
+            myYear = myDate.Substring(4, 4);
+            myMonth = myDate.Substring(2, 2);
+            myDay = myDate.Substring(0, 2);
+
+            if (int.Parse(myYear) > 1900)
+            {
+                if ((int.Parse(myMonth) >= 1) && (int.Parse(myMonth) <= 12))
+                {
+                    GiorniMese = (GetDaysInMonth(int.Parse(myYear), int.Parse(myMonth)));
+
+                    if ((int.Parse(myDay) >= 1) && (int.Parse(myDay) <= GiorniMese))
+                    {
+                        result = true;
+                    }
+                    else
+                    {
+                        // giorno non compreso tra 1 e numero giorni previsto per il mese esci con false
+                        DialogHeader = " Attenzione ";
+                        DialogIcon = "e-icons e-circle-close col-lg-2";
+                        DialogText = "Giorno data di nascita non valido";
+                        DialogDetail = "";
+                        DialogVisible = true;
+                    }
+                }
+                else
+                {
+                    // mese non compreso tra 1 e 12 esci con false
+                    DialogHeader = " Attenzione ";
+                    DialogIcon = "e-icons e-circle-close col-lg-2";
+                    DialogText = "Mese data di nascita non valido";
+                    DialogDetail = "";
+                    DialogVisible = true;
+                }
+            }
+            else
+            {
+                // anno inferiore al 190 esci con false
+                DialogHeader = " Attenzione ";
+                DialogIcon = "e-icons e-circle-close col-lg-2";
+                DialogText = "Anno data di nascita non valido";
+                DialogDetail = "";
+                DialogVisible = true;
+            }
+        }
+        else
+        {
+            // anno inferiore al 190 esci con false
+            DialogHeader = " Attenzione ";
+            DialogIcon = "e-icons e-circle-close col-lg-2";
+            DialogText = "Data di nascita non valida";
+            DialogDetail = "";
+            DialogVisible = true;
+        }
+
+        return result;
+    }
+
+    public async void GoToFarmaciList(decimal id)
+    {
+        await Task.Delay(10);
+        Navigation.NavigateTo("/farmacilist/" + id.ToString());
+    }
+    #endregion
+
+    protected override async Task OnInitializedAsync()
+    {
+        sessionLoggedUser = await sessionStorage.GetItemAsStringAsync("sessionLoggedUser");
+
+        if (string.IsNullOrEmpty(sessionLoggedUser))
+        {
+            Navigation.NavigateTo("/auth/login");
+        }
+        else
+        {
+            LoggedUser = sessionLoggedUser.Substring(1, sessionLoggedUser.Length - 2);
+
+            arUser = LoggedUser.Split(",");
+
+            gIdUser = arUser[0];
+            gFName = arUser[1];
+            gLName = arUser[2];
+            gSuperUser = arUser[3];
+
+            SessionID = arUser[4];
+
+            // fFar = "";
+
+            // gRoleUser = arUser[n].Split(",");
+
+            if (id == 0)
+            {
+                TitlePage = "Inserimento Nuovo Farmaco";
+
+                fStato = false;
+                switchFarmaco = "Disponibile";
+
+                SaveText = "Inserisci dati Farmaco";
+
+                ShowUse = false;
+            }
+            else
+            {
+                TitlePage = "Dati Farmaco";
+
+                SaveText = "Aggiorna dati Farmaco";
+
+                ShowUse = true;
+
+                // load dati paziente
+                LoadFarmaco();
+
+                // load somministrazioni
+                LoadSomministrazioni(); 
+
+                StateHasChanged();
+            }
+        }
+    }
+
+    #region Farmaco
+    public async void LoadFarmaco()
+    {
+        LFarmaco = await FarmaciManageService.GetFarmaco(id);
+
+        nFarmaco = LFarmaco.Farmaco;
+
+        if (LFarmaco.Stato == 0)
+        {
+            fStato = false;
+        }
+        else
+        {
+            fStato = true;
+        }
+
+        if (fStato)
+        {
+            switchFarmaco = "NON Disponibile";
+        }
+
+        Console.WriteLine($"LoadFarmaco, i: {id}");
+        Console.WriteLine($"nFarmaco: {nFarmaco}, LFarmaco.Stato: {LFarmaco.Stato}");
+
+        StateHasChanged();
+    }
+
+    // async
+    public void CheckFarmaco()
+    {
+        Boolean result = true;
+
+        FarmacoValido = true;
+
+        DialogHeader = "";
+        DialogIcon = "";
+        DialogText = "";
+        DialogDetail = "";
+
+        // controllo nome e cognome ed esistenza stesso nominativo in archivio
+        if (String.IsNullOrEmpty(nFarmaco))
+        {
+            result &= false;
+            FarmacoValido &= false;
+
+            DialogHeader = " Attenzione ";
+            DialogIcon = "e-icons e-circle-close col-lg-2";
+            DialogText = "Il nome del Farmaco è obbligatorio";
+            DialogDetail = "Inserire nome del Farmaco.";
+        }
+
+        // Console.WriteLine($"------------------------------------------------");
+        // Console.WriteLine($"-          Controllo dati paziente             -");
+        // Console.WriteLine($"------------------------------------------------");
+        // Console.WriteLine($"FName: {FName}, String.IsNullOrEmpty(FName): {String.IsNullOrEmpty(FName)}");
+        // Console.WriteLine($"LName: {LName}, String.IsNullOrEmpty(LName): {String.IsNullOrEmpty(LName)}");
+        // Console.WriteLine($"CodFisc: {CodFisc}, String.IsNullOrEmpty(CodFisc): {String.IsNullOrEmpty(CodFisc)}");
+        // Console.WriteLine($" ");
+        // Console.WriteLine($"Pazienti.Count: {Pazienti.Count}");
+        // Console.WriteLine($" ");
+        // Console.WriteLine($"Phone: {Phone}, String.IsNullOrEmpty(Phone): {String.IsNullOrEmpty(Phone)}");
+        // Console.WriteLine($"Mobile: {Mobile}, String.IsNullOrEmpty(Mobile): {String.IsNullOrEmpty(Mobile)}");
+        // Console.WriteLine($"------------------------------------------------");
+
+        StateHasChanged();
+    }
+
+    public async void SaveFarmaco()
+    {
+        string TmpDate;
+        Boolean ContinueIns = true;
+
+        CheckFarmaco();
+
+        if (!FarmacoValido)
+        {
+            DialogVisible = true;
+        }
+        else
+        {
+            LFarmaco.Farmaco = nFarmaco;
+
+            if (fStato)
+            {
+                LFarmaco.Stato = 1;
+            }
+            else
+            {
+                LFarmaco.Stato = 0;
+            }
+
+            if (id == 0)
+            {
+                LFarmaco.ptIdUser = Decimal.Parse(gIdUser);
+
+                LFarmaco.InsertDate = DateTime.Now;
+
+                // Ottieni la prescrizione restituita con l'ID generato
+                var FarmacoCreato = await FarmaciManageService.PostFarmaco(LFarmaco);
+
+                // Usa l'ID generato se necessario
+                var idCreato = FarmacoCreato.IdFarmaco;
+
+                // TitlePage = "Dati Farmaco";
+
+                // SaveText = "Aggiorna dati Farmaco";
+
+                // LoadSomministrazioni();
+
+                // ShowUse = true;
+
+                // await Task.Run(() =>
+                // {
+                //     DialogHeader = " Informazioni ";
+                //     DialogIcon = "e-icons e-circle-info col-lg-2";
+                //     DialogText = "Dati Farmaco inseriti";
+                //     DialogDetail = "";
+                //     DialogVisible = true;
+                // });
+
+                Navigation.NavigateTo("/farmacilist/0");
+            }
+            else
+            {
+                await FarmaciManageService.PutFarmaco(id, LFarmaco);
+
+                // await Task.Run(() =>
+                // {
+                //     DialogHeader = " Informazioni ";
+                //     DialogIcon = "e-icons e-circle-info col-lg-2";
+                //     DialogText = "Dati Farmaco salvati";
+                //     DialogDetail = "";
+                //     DialogVisible = true;
+                // });
+
+                // LoadSomministrazioni();
+
+                Navigation.NavigateTo("/farmacilist/0");
+            }
+        }
+
+        StateHasChanged();
+    }
+    #endregion
+
+    #region Somministrazioni
+    private void UpdateUso(int index, string value)
+    {
+        Console.WriteLine($"Aggiornamento valore somministrazione");
+        Console.WriteLine($"Index: {index}, New Value: {value}");
+        SomminiStraz[index].Uso = value;
+    }
+
+    private async void UpdateSomministr(decimal ids, int pos)
+    {
+        Console.WriteLine($"-----------------------");
+        Console.WriteLine($" ");
+
+        Console.WriteLine($"Aggiorna Somministrazione");
+        Console.WriteLine($"SomminiStraz: {SomminiStraz.Count}");
+        Console.WriteLine($"ids: {ids}");
+        Console.WriteLine($"pos: {pos}");
+        Console.WriteLine($"SomminiStraz[pos].IdFarmacoUso: {SomminiStraz[pos].IdFarmacoUso}");
+        Console.WriteLine($"SomminiStraz[pos].Uso: {SomminiStraz[pos].Uso}");
+        Console.WriteLine($" ");
+
+        if (SomminiStraz[pos].Uso != "")
+        {
+
+            await FarmaciUsoManageService.PutFarmacoUso(ids, SomminiStraz[pos]);
+
+            LoadSomministrazioni();
+
+            await Task.Run(() =>
+            {
+                DialogHeader = " Informazioni ";
+                DialogIcon = "e-icons e-circle-info col-lg-2";
+                DialogText = "Dati Somministrazione aggiornati";
+                DialogDetail = "";
+                DialogVisible = true;
+            });
+        }
+        else
+        {
+            await Task.Run(() =>
+            {
+                DialogHeader = " Attenzione ";
+                DialogIcon = "e-icons e-circle-close col-lg-2";
+                DialogText = "La Somministrazione è obbligatoria";
+                DialogDetail = "Inserire la Somministrazione.";
+                DialogVisible = true;
+            });
+        }
+    }
+
+    private async void InsertSomministr(int pos)
+    {
+        Console.WriteLine($"-----------------------");
+        Console.WriteLine($" ");
+
+        Console.WriteLine($"Inserimento Somministrazione");
+        Console.WriteLine($"SomminiStraz: {SomminiStraz.Count}");
+        Console.WriteLine($"pos: {pos}");
+        Console.WriteLine($"SomminiStraz[pos].Uso: {SomminiStraz[pos].Uso}");
+        Console.WriteLine($" ");
+
+        if (SomminiStraz[pos].Uso != "")
+        {
+            SomminiStraz[pos].InsertDate = DateTime.Now;
+            SomminiStraz[pos].ptIdUser = Decimal.Parse(gIdUser);
+            SomminiStraz[pos].ptIdFarmaco = id;
+
+            await FarmaciUsoManageService.PostFarmacoUso(SomminiStraz[pos]);
+
+            LoadSomministrazioni();
+
+            await Task.Run(() =>
+            {
+                DialogHeader = " Informazioni ";
+                DialogIcon = "e-icons e-circle-info col-lg-2";
+                DialogText = "Dati Somministrazione inseriti";
+                DialogDetail = "";
+                DialogVisible = true;
+            });
+        }
+        else
+        {
+            await Task.Run(() =>
+            {
+                DialogHeader = " Attenzione ";
+                DialogIcon = "e-icons e-circle-close col-lg-2";
+                DialogText = "La Somministrazione è obbligatoria";
+                DialogDetail = "Inserire la Somministrazione.";
+                DialogVisible = true;
+            });
+        }
+    }
+
+    public async void DeleteSomministr(decimal ids)
+    {
+        Console.WriteLine($"-----------------------");
+        Console.WriteLine($" ");
+
+        Console.WriteLine($"Cancellazione Somministrazione");
+        Console.WriteLine($"ids: {ids}");
+        Console.WriteLine($" ");
+
+        await FarmaciUsoManageService.DeleteFarmacoUso(ids);
+
+        LoadSomministrazioni();
+
+        await Task.Run(() =>
+        {
+            DialogHeader = " Informazioni ";
+            DialogIcon = "e-icons e-circle-info col-lg-2";
+            DialogText = "Dati Somministrazione eliminati";
+            DialogDetail = "";
+            DialogVisible = true;
+        });
+    }
+
+    public async void LoadSomministrazioni()
+    {
+        Console.WriteLine($"-----------------------");
+        Console.WriteLine($" ");
+
+        Console.WriteLine($"Load Somministrazione");
+        Console.WriteLine($"id: {id}");
+        Console.WriteLine($" ");
+
+        SomminiStraz = await FarmaciUsoListService.ListFarmaciUso(id);
+
+        FarmaciUso LastSomminiStraz = new();
+
+        SomminiStraz.Add(LastSomminiStraz);
+
+        StateHasChanged();
+    }
+    #endregion
+}

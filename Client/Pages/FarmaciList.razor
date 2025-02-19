@@ -1,0 +1,287 @@
+﻿@page "/farmacilist/{d:decimal}"
+@using Blazored.SessionStorage
+
+@using BlazorApp.Shared
+@using BlazorApp.Client.Models
+
+@inject NavigationManager Navigation
+@inject ISessionStorageService sessionStorage
+
+@inject HttpClient Http
+
+@inject FarmaciListService FarmaciListService
+
+<h5>Elenco Farmaci</h5>
+
+<div class="form-row add-item">
+    <div class="form-group col-sm-12" style="border-bottom: 1px solid #ff6a00;">
+        <SfButton IconCss="e-icons e-circle-add icon-navy" CssClass="e-flat btn-light" Content="Inserisci farmaco" OnClick="() => AddFarmaco()"></SfButton>
+    </div>
+</div>
+
+<div class="container-fluid form-filter" style="padding: 4px 10px 14px 10px;">
+    <div class="row">
+        <div class="col-sm-3">
+            <SfTextBox ID="lname" @bind-Value="@nFarmaco" Placeholder="Farmaco" FloatLabelType="@FloatLabelType.Auto"></SfTextBox>
+        </div>
+    </div>
+
+    <div class="row" style="margin-top: 20px;">
+        <div class="col-sm-1">
+            <SfButton IconCss="e-icons e-search icon-slategrey" CssClass="e-flat btn-light" Content="Cerca" OnClick="() => Search()"></SfButton>
+        </div>
+        <div class="col-sm-1">
+            <SfButton IconCss="e-icons e-repeat icon-green" CssClass="e-flat btn-light" Content="Ripristina" OnClick="() => Reset()"></SfButton>
+        </div>
+    </div>
+</div>
+
+<br />
+
+<div id="target">
+    <SfGrid ID="FarmacoGrid" @ref="RefFarmacoGrid" DataSource="@drugs" AllowPaging="true" Width="auto" RowHeight="20" AllowExcelExport="true" Locale="it-IT">
+        <GridPageSettings PageCount="PAGE_COUNT" PageSize="DEFAULT_PAGE_SIZE" PageSizes="PageSizes"></GridPageSettings>
+        <GridColumns>
+            <GridColumn HeaderText="Dett" TextAlign="TextAlign.Center" Width="60">
+                <Template>
+                    @{
+                        var Info = (context as Farmaci);
+                        var id = Info.IdFarmaco;
+
+                        <SfButton IconCss="e-icons e-eye icon-darkcyan" CssClass="e-small e-flat btn-white" Content="" OnClick="() => GoToFarmaco(id)"></SfButton>
+                    }
+                </Template>
+            </GridColumn>
+            <GridColumn Field=@nameof(Farmaci.Farmaco) HeaderText="Farmaco" Width="200"></GridColumn>
+            <GridColumn HeaderText="Disponibilità" Width="100" TextAlign="TextAlign.Center">
+                <Template>
+                    @{
+                        var Info2 = (context as Farmaci);
+                        var state = Info2.Stato;
+
+                        switch (state)
+                        {
+                            case 0:
+                                <span>disponibile</span>
+                                break;
+                            case 1:
+                                <span>non disponibile</span>
+                                break;
+                        }
+                    }
+                </Template>
+            </GridColumn>
+        </GridColumns>
+    </SfGrid>
+
+    <br />
+    <br />
+
+    <!-- Dialog for alert -->
+    <SfDialog @bind-Visible="AlertVisible" Width="400px" IsModal="true" ShowCloseIcon="true">
+        <DialogTemplates>
+            <Header> Attenzione </Header>
+            <Content> @AlertText </Content>
+        </DialogTemplates>
+        <DialogButtons>
+            <DialogButton Content="OK" IsPrimary="true" OnClick="@CloseDialog" />
+        </DialogButtons>
+    </SfDialog>
+</div>
+
+@code {
+    [Parameter]
+    public decimal d { get; set; }
+
+    public const int PAGE_COUNT = 10;
+    public const int DEFAULT_PAGE_SIZE = 10;
+    public string[] PageSizes = new string[] { "Tutti", "5", "10", "20", "50" };
+
+    #region logging
+    string? LoggedUser;
+    string[]? arUser;
+
+    private string? gIdUser;
+    private string? gFName;
+    private string? gLName;
+    private string? gSuperUser;
+
+    private string? SessionID;
+
+    //private string[] gRoleUser;
+
+    private string sessionLoggedUser { get; set; }
+    #endregion
+
+    #region alert dialog
+    private bool AlertVisible { get; set; } = false;
+
+    private string AlertText { get; set; } = "";
+
+    private void CloseDialog()
+    {
+        AlertVisible = false;
+    }
+    #endregion
+
+    private List<Farmaci>? drugs;
+
+    private SfGrid<Farmaci> RefFarmacoGrid;
+
+    #region binding variables
+    public string nFarmaco = "";
+    #endregion
+
+    #region funzioni di supporto
+    public static int GetDaysInMonth(int year, int month)
+    {
+        // Verifica che il mese sia compreso tra 1 e 12
+        if (month < 1 || month > 12)
+        {
+            throw new ArgumentOutOfRangeException(nameof(month), "Il mese deve essere compreso tra 1 e 12.");
+        }
+
+        // Anni bisestili: divisibili per 4, ma non per 100, a meno che siano divisibili per 400
+        bool isLeapYear = year % 4 == 0 && (year % 100 != 0 || year % 400 == 0);
+
+        // Numero di giorni per ogni mese
+        int[] daysInMonth = { 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
+
+        // Aggiungi un giorno a febbraio se è un anno bisestile
+        if (isLeapYear && month == 2)
+        {
+            return daysInMonth[month - 1] + 1;
+        }
+
+        return daysInMonth[month - 1];
+    }
+
+    private Boolean CheckDate(string myDate)
+    {
+        Boolean result = false;
+        string myYear, myMonth, myDay;
+        int GiorniMese;
+
+        if (myDate.Length == 8)
+        {
+            myYear = myDate.Substring(4, 4);
+            myMonth = myDate.Substring(2, 2);
+            myDay = myDate.Substring(0, 2);
+
+            if (int.Parse(myYear) > 1900)
+            {
+                if ((int.Parse(myMonth) >= 1) && (int.Parse(myMonth) <= 12))
+                {
+                    GiorniMese = (GetDaysInMonth(int.Parse(myYear), int.Parse(myMonth)));
+
+                    if ((int.Parse(myDay) >= 1) && (int.Parse(myDay) <= GiorniMese))
+                    {
+                        result = true;
+                    }
+                    else
+                    {
+                        // giorno non compreso tra 1 e numero giorni previsto per il mese esci con false
+                        AlertText = "Giorno data di nascita non valido";
+                        AlertVisible = true;
+                    }
+                }
+                else
+                {
+                    // mese non compreso tra 1 e 12 esci con false
+                    AlertText = "Mese data di nascita non valido";
+                    AlertVisible = true;
+                }
+            }
+            else
+            {
+                // anno inferiore al 190 esci con false
+                AlertText = "Anno data di nascita non valido";
+                AlertVisible = true;
+            }
+        }
+        else
+        {
+            // anno inferiore al 190 esci con false
+            AlertText = "Data di nascita non valida";
+            AlertVisible = true;
+        }
+
+        return result;
+    }
+    #endregion region
+
+    protected override async Task OnInitializedAsync()
+    {
+        sessionLoggedUser = await sessionStorage.GetItemAsStringAsync("sessionLoggedUser");
+
+        if (string.IsNullOrEmpty(sessionLoggedUser))
+        {
+            Navigation.NavigateTo("/auth/login");
+        }
+        else
+        {
+            LoggedUser = sessionLoggedUser.Substring(1, sessionLoggedUser.Length - 2);
+
+            arUser = LoggedUser.Split(",");
+
+            gIdUser = arUser[0];
+            gFName = arUser[1];
+            gLName = arUser[2];
+            gSuperUser = arUser[3];
+
+            SessionID = arUser[4];
+
+            // gRoleUser = arUser[n].Split(",");
+        }
+    }
+
+    private void AddFarmaco() //async
+    {
+        Navigation.NavigateTo("/farmacimanage/0");
+    }
+
+    private async void Search()
+    {
+        bool AllowSearch = false;
+        double s_idUser;
+
+        Boolean ContinueIns = true;
+        string vDate = "";
+
+        s_idUser = Convert.ToDouble(gIdUser);
+
+        AllowSearch = (!string.IsNullOrEmpty(nFarmaco)) ? true : false;
+
+        if (AllowSearch)
+        {
+            try
+            {
+                // Console.WriteLine($"nFarmaco: {nFarmaco}");
+
+                drugs = await FarmaciListService.ListFarmaci(nFarmaco);
+
+                StateHasChanged();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+        }
+    }
+
+    public async void Reset()
+    {
+        nFarmaco = "";
+
+        // Console.WriteLine($"p: {p}");
+
+        drugs = await FarmaciListService.ListFarmaci("ZZZZZZZZZZZZZZZ");
+
+        StateHasChanged();
+    }
+
+    public void GoToFarmaco(decimal id)
+    {
+        Navigation.NavigateTo("/farmacimanage/" + id.ToString());
+    }
+}

@@ -35,6 +35,10 @@
 		<div class="col-sm-2">
 			<SfTextBox ID="telefono" @bind-Value="@Phone" Placeholder="Telefono" FloatLabelType="@FloatLabelType.Auto"></SfTextBox>
 		</div>
+
+        <div class="col-sm-2">
+            <SfTextBox ID="diagnosi" @bind-Value="@Diagnosi" Placeholder="Diagnosi" FloatLabelType="@FloatLabelType.Auto"></SfTextBox>
+        </div>
     </div>
 
 	<div class="row" style="margin-top: 20px;">
@@ -65,13 +69,29 @@
             </GridColumn>
             <GridColumn Field=@nameof(Patient.LName) HeaderText="Cognome" Width="100"></GridColumn>
             <GridColumn Field=@nameof(Patient.FName) HeaderText="Nome" Width="100"></GridColumn>
-            <GridColumn Field=@nameof(Patient.Cod) HeaderText="Cod" Width="60"></GridColumn>
+            <GridColumn Field=@nameof(Patient.BirthDate) Format="d" Type="ColumnType.Date" HeaderText="Data" TextAlign="TextAlign.Center" Width="80"></GridColumn>
             <GridColumn Field=@nameof(Patient.Phone) HeaderText="Telefono" Width="100"></GridColumn>
             <GridColumn Field=@nameof(Patient.Mobile) HeaderText="Mobile" Width="100"></GridColumn>
             <GridColumn Field=@nameof(Patient.Address) HeaderText="Indirizzo" Width="140"></GridColumn>
 			<GridColumn Field=@nameof(Patient.ZipCode) HeaderText="CAP" Width="80"></GridColumn>
 			<GridColumn Field=@nameof(Patient.City) HeaderText="Città" Width="100"></GridColumn>
-            <GridColumn Field=@nameof(Patient.fPrivacy) HeaderText="Privacy" Width="80"></GridColumn>
+            <GridColumn HeaderText="Privacy" Width="80" TextAlign="TextAlign.Center">
+                <Template>
+                    @{
+                        var patInfo2 = (context as Patient);
+                        var privacy = patInfo2.fPrivacy;
+
+                        if (privacy)
+                        {
+                            <span>Si</span>
+                        }
+                        else
+                        {
+                            <span>No</span>
+                        }
+                    }
+                </Template>
+            </GridColumn>
         </GridColumns>
     </SfGrid>
 
@@ -149,6 +169,8 @@
     public string City = "";        // ignorata al momento da aggiungere dopo
     
     public string Address = "";     // ignorata al momento
+
+    public string Diagnosi = "";
     #endregion
 
     #region funzioni di supporto
@@ -317,7 +339,7 @@
 
         s_idUser = Convert.ToDouble(gIdUser);
 
-        AllowSearch = (!string.IsNullOrEmpty(LName) || !string.IsNullOrEmpty(FName) || !string.IsNullOrEmpty(datanascita) || !string.IsNullOrEmpty(Phone)) ? true : false;
+        AllowSearch = (!string.IsNullOrEmpty(LName) || !string.IsNullOrEmpty(FName) || !string.IsNullOrEmpty(datanascita) || !string.IsNullOrEmpty(Phone) || !string.IsNullOrEmpty(Diagnosi)) ? true : false;
 
         if (AllowSearch)
         {
@@ -337,9 +359,9 @@
             {
                 try
                 {
-                    // Richieste = await RdAService.ListRdAForGroup(s_idUser, CodFornitore, SubAppalt, FromDate, ToDate, s_nextuser, s_nobozza, s_whoApp, LFromDate, LToDate, fLastDate, Convert.ToDouble(gIdUser));
+                    string pp = FName + "|" + LName + "|" + vDate + "|" + Phone + "|" + Diagnosi;
 
-                    string pp = FName + "|" + LName + "|" + vDate + "|" + "|" + "|" + Phone;
+                    // Console.WriteLine($"pp: {pp}");
 
                     patients = await PatientService.PatList(pp);
 
@@ -362,7 +384,11 @@
 
         Phone = "";
 
-        string p = "||2268-07-20|||";
+        Diagnosi = "";
+
+        string p = "||2268-07-20||";
+
+        // Console.WriteLine($"p: {p}");
 
         patients = await PatientService.PatList(p);
 

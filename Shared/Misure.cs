@@ -12,8 +12,10 @@ namespace BlazorApp.Shared
         public decimal IdMisura { get; set; }
         public decimal ptIdUser { get; set; }
         public DateTime InsertDate { get; set; }
+        public decimal ptIdVisit { get; set; }
         public decimal ptIdPatient { get; set; }
         public DateTime DataMisura { get; set; }
+        public DateTime PrintDate { get; set; }
         public String ODD_Sf { get; set; }
         public String ODD_Cil { get; set; }
         public String ODD_Asse { get; set; }
