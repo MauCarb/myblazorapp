@@ -65,23 +65,23 @@
 <div class="container-fluid bg-light" style="padding: 0 10px 10px 10px;">
     <div class="row">
         <div class="col-sm-1">
-            <SfTextBox ID="cod" @bind-Value="@Cod" Placeholder="Cod" FloatLabelType="@FloatLabelType.Always"></SfTextBox>
+            <SfTextBox ID="cod" @bind-Value="@Cod" Placeholder="Cod" FloatLabelType="@FloatLabelType.Always" CssClass="sftext"></SfTextBox>
         </div>
 
         <div class="col-sm-4">
-            <SfTextBox ID="lname" @bind-Value="@LName" Placeholder="Cognome" FloatLabelType="@FloatLabelType.Always"></SfTextBox>
+            <SfTextBox ID="lname" @bind-Value="@LName" Placeholder="Cognome" FloatLabelType="@FloatLabelType.Always" CssClass="sftext"></SfTextBox>
         </div>
 
         <div class="col-sm-3">
-            <SfTextBox ID="fname" @bind-Value="@FName" Placeholder="Nome" FloatLabelType="@FloatLabelType.Always"></SfTextBox>
+            <SfTextBox ID="fname" @bind-Value="@FName" Placeholder="Nome" FloatLabelType="@FloatLabelType.Always" CssClass="sftext"></SfTextBox>
         </div>
 
         <div class="col-sm-1">
-            <SfMaskedTextBox ID="datanascita" @bind-Value="@BirthDate" Mask="00/00/0000" Placeholder="Data di nascita" FloatLabelType="@FloatLabelType.Always"></SfMaskedTextBox>
+            <SfMaskedTextBox ID="datanascita" @bind-Value="@BirthDate" Mask="00/00/0000" Placeholder="Data di nascita" FloatLabelType="@FloatLabelType.Always" CssClass="sftext"></SfMaskedTextBox>
         </div>
 
         <div class="col-sm-2">
-            <SfTextBox ID="codfisc" @bind-Value="@CodFisc" Placeholder="Cod Fiscale" FloatLabelType="@FloatLabelType.Always"></SfTextBox>
+            <SfTextBox ID="codfisc" @bind-Value="@CodFisc" Placeholder="Cod Fiscale" FloatLabelType="@FloatLabelType.Always"> CssClass="sftext"</SfTextBox>
         </div>
     </div>
 
@@ -145,12 +145,12 @@
 {
     <div class="container-fluid" style="padding: 10px 10px; margin-top: 30px;">
         <div class="row">
-@*             <div class="col-sm-2">
+            @*             <div class="col-sm-2">
                 <span style="font-weight:600;">Data:&nbsp;</span><span style="font-size: 14px; color:midnightblue;">@DataVisita</span>
             </div>
-*@            
-            <div class="col-sm-1" style="width: 118px;">
-                <SfMaskedTextBox ID="datavisita" @bind-Value="@DataVisita" Mask="00/00/0000" Placeholder="Data" FloatLabelType="@FloatLabelType.Always" style="color: #000; font-weight: 500;"></SfMaskedTextBox>
+ *@            
+                <div class="col-sm-1" style="width: 118px;">
+                <SfMaskedTextBox ID="datavisita" @bind-Value="@DataVisita" Mask="00/00/0000" Placeholder="Data" FloatLabelType="@FloatLabelType.Always" CssClass="sftext" style="color: #000;"></SfMaskedTextBox>
             </div>
 
             <div class="col-sm-2" style="padding-top: 28px;">
@@ -171,7 +171,7 @@
         <div class="row">
             <div class="col-md-12">
                 <SfTab>
-                    <TabItems>                                                  
+                    <TabItems>
                         <!-- Sezione Visite -->
                         <TabItem>
                             <ChildContent>
@@ -239,7 +239,7 @@
                                 <!-- Operatore -->
                                 <div class="row" style="margin-top: 10px;">
                                     <div class="col-sm-2">
-                                        <SfTextBox ID="operatore" @bind-Value="@Visita.Operatore" Placeholder="Operatore" FloatLabelType="@FloatLabelType.Always" style="color: #000; font-weight: 500;"></SfTextBox>
+                                        <SfTextBox ID="operatore" @bind-Value="@Visita.Operatore" Placeholder="Operatore" FloatLabelType="@FloatLabelType.Always" CssClass="sftext" style="font-weight: 500;"></SfTextBox>
                                     </div>
                                 </div>
 
@@ -249,103 +249,103 @@
                                         <!-- Diagnosi OD -->
                                         <div class="row" style="margin-top: 10px;">
                                             <div class="col">
-                                                <SfTextBox ID="diagnosiod" @bind-Value="@Visita.DiagnosiOD" Placeholder="Diagnosi OD" FloatLabelType="@FloatLabelType.Always" title="@Visita.DiagnosiOD" Multiline="true" style="height: 30px;"></SfTextBox>
+                                                <SfTextBox ID="diagnosiod" @bind-Value="@Visita.DiagnosiOD" Placeholder="Diagnosi OD" FloatLabelType="@FloatLabelType.Always" title="@Visita.DiagnosiOD" Multiline="true" CssClass="sftext" style="height: 30px;"></SfTextBox>
                                             </div>
                                         </div>
                                         <!-- Diagnosi OS -->
                                         <div class="row" style="margin-top: 10px;">
                                             <div class="col">
-                                                <SfTextBox ID="diagnosios" @bind-Value="@Visita.DiagnosiOS" Placeholder="Diagnosi OS" FloatLabelType="@FloatLabelType.Always" title="@Visita.DiagnosiOS" Multiline="true" style="height: 30px; color: #000;"></SfTextBox>
+                                                <SfTextBox ID="diagnosios" @bind-Value="@Visita.DiagnosiOS" Placeholder="Diagnosi OS" FloatLabelType="@FloatLabelType.Always" title="@Visita.DiagnosiOS" Multiline="true" CssClass="sftext" style="height: 30px;"></SfTextBox>
                                             </div>
                                         </div>
                                         <!-- Anamnesi -->
                                         <div class="row" style="margin-top: 10px;">
                                             <div class="col">
-                                                <SfTextBox ID="anamnesi" @bind-Value="@Visita.Anamnesi" Placeholder="Anamnesi" FloatLabelType="@FloatLabelType.Always" Multiline="true" style="height: 30px; color: #000;"></SfTextBox>
+                                                <SfTextBox ID="anamnesi" @bind-Value="@Visita.Anamnesi" Placeholder="Anamnesi" FloatLabelType="@FloatLabelType.Always" Multiline="true" CssClass="sftext" style="height: 30px;"></SfTextBox>
                                             </div>
                                         </div>
                                         <!-- Annessi OD -->
                                         <div class="row" style="margin-top: 10px;">
                                             <div class="col">
-                                                <SfTextBox ID="annessiod" @bind-Value="@Visita.Annessi_Od" Placeholder="Annessi OD" FloatLabelType="@FloatLabelType.Always" Multiline="true" style="height: 30px; color: #000; font-weight: 500;"></SfTextBox>
+                                                <SfTextBox ID="annessiod" @bind-Value="@Visita.Annessi_Od" Placeholder="Annessi OD" FloatLabelType="@FloatLabelType.Always" Multiline="true" CssClass="sftext" style="height: 30px;"></SfTextBox>
                                             </div>
                                         </div>
                                         <!-- Annessi OS -->
                                         <div class="row" style="margin-top: 10px;">
                                             <div class="col">
-                                                <SfTextBox ID="annessios" @bind-Value="@Visita.Annessi_Os" Placeholder="Annessi OS" FloatLabelType="@FloatLabelType.Always" Multiline="true" style="height: 30px; color: #000; font-weight: 800;"></SfTextBox>
+                                                <SfTextBox ID="annessios" @bind-Value="@Visita.Annessi_Os" Placeholder="Annessi OS" FloatLabelType="@FloatLabelType.Always" Multiline="true" CssClass="sftext" style="height: 30px;"></SfTextBox>
                                             </div>
                                         </div>
                                         <!-- Seg.Ant. OD -->
                                         <div class="row" style="margin-top: 10px;">
                                             <div class="col">
-                                                <SfTextBox ID="segantod" @bind-Value="@Visita.Seg_Ant_Od" Placeholder="Seg.Ant. OD" FloatLabelType="@FloatLabelType.Always" Multiline="true" style="height: 30px; color: #000; font-weight: bold;"></SfTextBox>
+                                                <SfTextBox ID="segantod" @bind-Value="@Visita.Seg_Ant_Od" Placeholder="Seg.Ant. OD" FloatLabelType="@FloatLabelType.Always" Multiline="true" CssClass="sftext" style="height: 30px;"></SfTextBox>
                                             </div>
                                         </div>
                                         <!-- Seg.Ant. OS -->
                                         <div class="row" style="margin-top: 10px;">
                                             <div class="col">
-                                                <SfTextBox ID="segantos" @bind-Value="@Visita.Seg_Ant_Os" Placeholder="Seg.Ant. OS" FloatLabelType="@FloatLabelType.Always" Multiline="true" style="height: 30px; color: #000;"></SfTextBox>
+                                                <SfTextBox ID="segantos" @bind-Value="@Visita.Seg_Ant_Os" Placeholder="Seg.Ant. OS" FloatLabelType="@FloatLabelType.Always" Multiline="true" CssClass="sftext" style="height: 30px;"></SfTextBox>
                                             </div>
                                         </div>
                                         <!-- Fundus OD -->
                                         <div class="row" style="margin-top: 10px;">
                                             <div class="col">
-                                                <SfTextBox ID="fundusod" @bind-Value="@Visita.Fundus_Od" Placeholder="Fundus OD" FloatLabelType="@FloatLabelType.Always" Multiline="true" style="height: 30px; color: #000;"></SfTextBox>
+                                                <SfTextBox ID="fundusod" @bind-Value="@Visita.Fundus_Od" Placeholder="Fundus OD" FloatLabelType="@FloatLabelType.Always" Multiline="true" CssClass="sftext" style="height: 30px;"></SfTextBox>
                                             </div>
                                         </div>
                                         <!-- Fundus OS -->
                                         <div class="row" style="margin-top: 10px;">
                                             <div class="col">
-                                                <SfTextBox ID="fundusos" @bind-Value="@Visita.Fundus_Os" Placeholder="Fundus OS" FloatLabelType="@FloatLabelType.Always" Multiline="true" style="height: 30px; color: #000;"></SfTextBox>
+                                                <SfTextBox ID="fundusos" @bind-Value="@Visita.Fundus_Os" Placeholder="Fundus OS" FloatLabelType="@FloatLabelType.Always" Multiline="true" CssClass="sftext" style="height: 30px"></SfTextBox>
                                             </div>
                                         </div>
                                         <!-- Visus OD -->
                                         <div class="row" style="margin-top: 10px;">
                                             <div class="col">
-                                                <SfTextBox ID="visusod" @bind-Value="@Visita.Visus_Od" Placeholder="Visus OD" FloatLabelType="@FloatLabelType.Always" Multiline="true" style="height: 30px; color: #000;"></SfTextBox>
+                                                <SfTextBox ID="visusod" @bind-Value="@Visita.Visus_Od" Placeholder="Visus OD" FloatLabelType="@FloatLabelType.Always" Multiline="true" CssClass="sftext" style="height: 30px;"></SfTextBox>
                                             </div>
                                         </div>
                                         <!-- Visus OS -->
                                         <div class="row" style="margin-top: 10px;">
                                             <div class="col">
-                                                <SfTextBox ID="visusos" @bind-Value="@Visita.Visus_Os" Placeholder="Visus OS" FloatLabelType="@FloatLabelType.Always" Multiline="true" style="height: 30px; color: #000;"></SfTextBox>
+                                                <SfTextBox ID="visusos" @bind-Value="@Visita.Visus_Os" Placeholder="Visus OS" FloatLabelType="@FloatLabelType.Always" Multiline="true" CssClass="sftext" style="height: 30px;"></SfTextBox>
                                             </div>
                                         </div>
                                         <!-- Terapia -->
                                         <div class="row" style="margin-top: 10px;">
                                             <div class="col">
-                                                <SfTextBox ID="terapia" @bind-Value="@Visita.Terapia" Placeholder="Terapia" FloatLabelType="@FloatLabelType.Always" Multiline="true" style="height: 30px; color: #000;"></SfTextBox>
+                                                <SfTextBox ID="terapia" @bind-Value="@Visita.Terapia" Placeholder="Terapia" FloatLabelType="@FloatLabelType.Always" Multiline="true" CssClass="sftext" style="height: 30px;"></SfTextBox>
                                             </div>
                                         </div>
                                         <!-- OD: SUE LENTI -->
                                         <div class="row" style="margin-top: 10px;">
                                             <!-- OD: SUE LENTI PL -->
                                             <div class="col-sm-4">
-                                                <SfTextBox ID="odpl" @bind-Value="@Visita.ODPL" Placeholder="OD: SUE LENTI PL" FloatLabelType="@FloatLabelType.Always" Multiline="true" style="height: 30px; color: #000;"></SfTextBox>
+                                                <SfTextBox ID="odpl" @bind-Value="@Visita.ODPL" Placeholder="OD: SUE LENTI PL" FloatLabelType="@FloatLabelType.Always" Multiline="true" CssClass="sftext" style="height: 30px;"></SfTextBox>
                                             </div>
                                             <!-- OD: SUE LENTI PV -->
                                             <div class="col-sm-4">
-                                                <SfTextBox ID="odpv" @bind-Value="@Visita.ODPV" Placeholder="OD: SUE LENTI PV" FloatLabelType="@FloatLabelType.Always" Multiline="true" style="height: 30px; color: #000;"></SfTextBox>
+                                                <SfTextBox ID="odpv" @bind-Value="@Visita.ODPV" Placeholder="OD: SUE LENTI PV" FloatLabelType="@FloatLabelType.Always" Multiline="true" CssClass="sftext" style="height: 30px;"></SfTextBox>
                                             </div>
                                             <!-- OD: SUE LENTI MEDIA DIST. -->
                                             <div class="col-sm-4">
-                                                <SfTextBox ID="odmd" @bind-Value="@Visita.ODMD" Placeholder="OD: SUE LENTI MEDIA DIST." FloatLabelType="@FloatLabelType.Always" Multiline="true" style="height: 30px; color: #000;"></SfTextBox>
+                                                <SfTextBox ID="odmd" @bind-Value="@Visita.ODMD" Placeholder="OD: SUE LENTI MEDIA DIST." FloatLabelType="@FloatLabelType.Always" Multiline="true" CssClass="sftext" style="height: 30px;"></SfTextBox>
                                             </div>
                                         </div>
                                         <!-- OS: SUE LENTI -->
                                         <div class="row" style="margin-top: 10px;">
                                             <!-- OS: SUE LENTI PL -->
                                             <div class="col-sm-4">
-                                                <SfTextBox ID="ospl" @bind-Value="@Visita.OSPL" Placeholder="OS: SUE LENTI PL" FloatLabelType="@FloatLabelType.Always" Multiline="true" style="height: 30px; color: #000;"></SfTextBox>
+                                                <SfTextBox ID="ospl" @bind-Value="@Visita.OSPL" Placeholder="OS: SUE LENTI PL" FloatLabelType="@FloatLabelType.Always" Multiline="true" CssClass="sftext" style="height: 30px;"></SfTextBox>
                                             </div>
                                             <!-- OS: SUE LENTI PV -->
                                             <div class="col-sm-4">
-                                                <SfTextBox ID="ospv" @bind-Value="@Visita.OSPV" Placeholder="OS: SUE LENTI PV" FloatLabelType="@FloatLabelType.Always" Multiline="true" style="height: 30px; color: #000;"></SfTextBox>
+                                                <SfTextBox ID="ospv" @bind-Value="@Visita.OSPV" Placeholder="OS: SUE LENTI PV" FloatLabelType="@FloatLabelType.Always" Multiline="true" CssClass="sftext" style="height: 30px;"></SfTextBox>
                                             </div>
                                             <!-- OS: SUE LENTI MEDIA DIST. -->
                                             <div class="col-sm-4">
-                                                <SfTextBox ID="osmd" @bind-Value="@Visita.OSMD" Placeholder="OS: SUE LENTI MEDIA DIST." FloatLabelType="@FloatLabelType.Always" Multiline="true" style="height: 30px; color: #000;"></SfTextBox>
+                                                <SfTextBox ID="osmd" @bind-Value="@Visita.OSMD" Placeholder="OS: SUE LENTI MEDIA DIST." FloatLabelType="@FloatLabelType.Always" Multiline="true" CssClass="sftext" style="height: 30px;"></SfTextBox>
                                             </div>
                                         </div>
                                         <!-- Motivo Visita -->
@@ -360,34 +360,34 @@
                                         <!-- Interventi -->
                                         <div class="row" style="margin-top: 10px;">
                                             <div class="col">
-                                                <SfTextBox ID="interventi" @bind-Value="@Visita.Interventi" Placeholder="Interventi" FloatLabelType="@FloatLabelType.Always" Multiline="true" style="height: 30px; color: #000;"></SfTextBox>
+                                                <SfTextBox ID="interventi" @bind-Value="@Visita.Interventi" Placeholder="Interventi" FloatLabelType="@FloatLabelType.Always" Multiline="true" CssClass="sftext" style="height: 30px;"></SfTextBox>
                                             </div>
                                         </div>
                                         <!-- Curva Tonometrica OD e Argon -->
                                         <div class="row" style="margin-top: 10px;">
                                             <div class="col-sm-7">
-                                                <SfTextBox ID="curvatonood" @bind-Value="@Visita.CurvaTono_Od" Placeholder="Curva Tonometrica OD" FloatLabelType="@FloatLabelType.Always" Multiline="true" style="height: 30px; color: #000;"></SfTextBox>
+                                                <SfTextBox ID="curvatonood" @bind-Value="@Visita.CurvaTono_Od" Placeholder="Curva Tonometrica OD" FloatLabelType="@FloatLabelType.Always" Multiline="true" CssClass="sftext" style="height: 30px;"></SfTextBox>
                                             </div>
                                             <div class="col-sm-5">
-                                                <SfTextBox ID="argon" @bind-Value="@Visita.CurvaArgon" Placeholder="Argon" FloatLabelType="@FloatLabelType.Always" Multiline="true" style="height: 30px; color: #000;"></SfTextBox>
+                                                <SfTextBox ID="argon" @bind-Value="@Visita.CurvaArgon" Placeholder="Argon" FloatLabelType="@FloatLabelType.Always" Multiline="true" CssClass="sftext" style="height: 30px;"></SfTextBox>
                                             </div>
                                         </div>
                                         <!-- Curva Tonometrica OS -->
                                         <div class="row" style="margin-top: 10px;">
                                             <div class="col-sm-7">
-                                                <SfTextBox ID="curvatonoos" @bind-Value="@Visita.CurvaTono_Os" Placeholder="Curva Tonometrica OS" FloatLabelType="@FloatLabelType.Always" Multiline="true" style="height: 30px; color: #000;"></SfTextBox>
+                                                <SfTextBox ID="curvatonoos" @bind-Value="@Visita.CurvaTono_Os" Placeholder="Curva Tonometrica OS" FloatLabelType="@FloatLabelType.Always" Multiline="true" CssClass="sftext" style="height: 30px;"></SfTextBox>
                                             </div>
                                         </div>
                                         <!-- Visus corretto OD -->
                                         <div class="row" style="margin-top: 10px; display: none;">
                                             <div class="col">
-                                                <SfTextBox ID="vortotticaod" @bind-Value="@Visita.VOrtotticaOD" Placeholder="Visus corretto OD" FloatLabelType="@FloatLabelType.Always" Multiline="true" style="height: 30px; color: #000;"></SfTextBox>
+                                                <SfTextBox ID="vortotticaod" @bind-Value="@Visita.VOrtotticaOD" Placeholder="Visus corretto OD" FloatLabelType="@FloatLabelType.Always" Multiline="true" CssClass="sftext" style="height: 30px;"></SfTextBox>
                                             </div>
                                         </div>
                                         <!-- Visus corretto OS -->
                                         <div class="row" style="margin-top: 10px; display: none;">
                                             <div class="col">
-                                                <SfTextBox ID="vortotticaos" @bind-Value="@Visita.VOrtotticaOS" Placeholder="Visus corretto OS" FloatLabelType="@FloatLabelType.Always" Multiline="true" style="height: 30px; color: #000;"></SfTextBox>
+                                                <SfTextBox ID="vortotticaos" @bind-Value="@Visita.VOrtotticaOS" Placeholder="Visus corretto OS" FloatLabelType="@FloatLabelType.Always" Multiline="true" CssClass="sftext" style="height: 30px;"></SfTextBox>
                                             </div>
                                         </div>
                                         <!-- SHIRMER OD e Tono oculare OD -->
@@ -396,7 +396,7 @@
                                                 <SfTextBox ID="shirmerod" @bind-Value="@Visita.SHIRMER_Od" Placeholder="SHIRMER OD" FloatLabelType="@FloatLabelType.Always" Multiline="true" style="height: 30px;"></SfTextBox>
                                             </div>
                                             <div class="col-sm-5">
-                                                <SfTextBox ID="tonood" @bind-Value="@Visita.TONO_Od" Placeholder="Tono oculare OD" FloatLabelType="@FloatLabelType.Always" Multiline="true" style="height: 30px; color: #000;"></SfTextBox>
+                                                <SfTextBox ID="tonood" @bind-Value="@Visita.TONO_Od" Placeholder="Tono oculare OD" FloatLabelType="@FloatLabelType.Always" Multiline="true" CssClass="sftext" style="height: 30px;"></SfTextBox>
                                             </div>
                                         </div>
                                         <!-- SHIRMER OS e Tono oculare OS -->
@@ -405,7 +405,7 @@
                                                 <SfTextBox ID="shirmeros" @bind-Value="@Visita.SHIRMER_Os" Placeholder="SHIRMER OS" FloatLabelType="@FloatLabelType.Always" Multiline="true" style="height: 30px;"></SfTextBox>
                                             </div>
                                             <div class="col-sm-5">
-                                                <SfTextBox ID="tonoos" @bind-Value="@Visita.TONO_Os" Placeholder="Tono oculare OS" FloatLabelType="@FloatLabelType.Always" Multiline="true" style="height: 30px; color: #000;"></SfTextBox>
+                                                <SfTextBox ID="tonoos" @bind-Value="@Visita.TONO_Os" Placeholder="Tono oculare OS" FloatLabelType="@FloatLabelType.Always" Multiline="true" CssClass="sftext" style="height: 30px;"></SfTextBox>
                                             </div>
                                         </div>
                                         <!-- Vie lacrimali OD e Topografia OD -->
@@ -414,88 +414,88 @@
                                                 <SfTextBox ID="lavaggiood" @bind-Value="@Visita.Lavaggio_Od" Placeholder="Vie lacrimali OD" FloatLabelType="@FloatLabelType.Always" Multiline="true" style="height: 30px;"></SfTextBox>
                                             </div>
                                             <div class="col-sm-5">
-                                                <SfTextBox ID="topografiaod" @bind-Value="@Visita.Topografia_Od" Placeholder="Topografia OD" FloatLabelType="@FloatLabelType.Always" Multiline="true" style="height: 30px; color: #000;"></SfTextBox>
+                                                <SfTextBox ID="topografiaod" @bind-Value="@Visita.Topografia_Od" Placeholder="Topografia OD" FloatLabelType="@FloatLabelType.Always" Multiline="true" CssClass="sftext" style="height: 30px;"></SfTextBox>
                                             </div>
                                         </div>
                                         <!-- Vie lacrimali OS e Topografia OS -->
                                         <div class="row" style="margin-top: 10px;">
                                             <div class="col-sm-7">
-                                                <SfTextBox ID="lavaggioos" @bind-Value="@Visita.Lavaggio_Os" Placeholder="Vie lacrimali OS" FloatLabelType="@FloatLabelType.Always" Multiline="true" style="height: 30px; color: #000;"></SfTextBox>
+                                                <SfTextBox ID="lavaggioos" @bind-Value="@Visita.Lavaggio_Os" Placeholder="Vie lacrimali OS" FloatLabelType="@FloatLabelType.Always" Multiline="true" CssClass="sftext" style="height: 30px;"></SfTextBox>
                                             </div>
                                             <div class="col-sm-5">
-                                                <SfTextBox ID="topografiaos" @bind-Value="@Visita.Topografia_Os" Placeholder="Topografia OS" FloatLabelType="@FloatLabelType.Always" Multiline="true" style="height: 30px; color: #000;"></SfTextBox>
+                                                <SfTextBox ID="topografiaos" @bind-Value="@Visita.Topografia_Os" Placeholder="Topografia OS" FloatLabelType="@FloatLabelType.Always" Multiline="true" CssClass="sftext" style="height: 30px;"></SfTextBox>
                                             </div>
                                         </div>
                                         <!-- Fag OD e Fag OS -->
                                         <div class="row" style="margin-top: 10px;">
                                             <div class="col-sm-6">
-                                                <SfTextBox ID="fagod" @bind-Value="@Visita.FAG_Od" Placeholder="Fag OD" FloatLabelType="@FloatLabelType.Always" Multiline="true" style="height: 30px; color: #000;"></SfTextBox>
+                                                <SfTextBox ID="fagod" @bind-Value="@Visita.FAG_Od" Placeholder="Fag OD" FloatLabelType="@FloatLabelType.Always" Multiline="true" CssClass="sftext" style="height: 30px;"></SfTextBox>
                                             </div>
                                             <div class="col-sm-6">
-                                                <SfTextBox ID="fagos" @bind-Value="@Visita.FAG_Os" Placeholder="Fag OS" FloatLabelType="@FloatLabelType.Always" Multiline="true" style="height: 30px; color: #000;"></SfTextBox>
+                                                <SfTextBox ID="fagos" @bind-Value="@Visita.FAG_Os" Placeholder="Fag OS" FloatLabelType="@FloatLabelType.Always" Multiline="true" CssClass="sftext" style="height: 30px;"></SfTextBox>
                                             </div>
                                         </div>
                                         <!-- Biometria e IV -->
                                         <div class="row" style="margin-top: 10px;">
                                             <div class="col-sm-7">
-                                                <SfTextBox ID="biometria" @bind-Value="@Visita.Biometria" Placeholder="Biometria" FloatLabelType="@FloatLabelType.Always" Multiline="true" style="height: 30px; color: #000;"></SfTextBox>
+                                                <SfTextBox ID="biometria" @bind-Value="@Visita.Biometria" Placeholder="Biometria" FloatLabelType="@FloatLabelType.Always" Multiline="true" CssClass="sftext" style="height: 30px;"></SfTextBox>
                                             </div>
                                             <div class="col-sm-5">
-                                                <SfTextBox ID="iv" @bind-Value="@Visita.IV" Placeholder="IV" FloatLabelType="@FloatLabelType.Always" Multiline="true" style="height: 30px; color: #000;"></SfTextBox>
+                                                <SfTextBox ID="iv" @bind-Value="@Visita.IV" Placeholder="IV" FloatLabelType="@FloatLabelType.Always" Multiline="true" CssClass="sftext" style="height: 30px;"></SfTextBox>
                                             </div>
                                         </div>
                                         <!-- Oct OD e Oct OS -->
                                         <div class="row" style="margin-top: 10px;">
                                             <div class="col-sm-6">
-                                                <SfTextBox ID="octod" @bind-Value="@Visita.OCT_Od" Placeholder="Oct OD" FloatLabelType="@FloatLabelType.Always" Multiline="true" style="height: 30px; color: #000;"></SfTextBox>
+                                                <SfTextBox ID="octod" @bind-Value="@Visita.OCT_Od" Placeholder="Oct OD" FloatLabelType="@FloatLabelType.Always" Multiline="true" CssClass="sftext" style="height: 30px;"></SfTextBox>
                                             </div>
                                             <div class="col-sm-6">
-                                                <SfTextBox ID="octos" @bind-Value="@Visita.OCT_Os" Placeholder="Oct OS" FloatLabelType="@FloatLabelType.Always" Multiline="true" style="height: 30px; color: #000;"></SfTextBox>
+                                                <SfTextBox ID="octos" @bind-Value="@Visita.OCT_Os" Placeholder="Oct OS" FloatLabelType="@FloatLabelType.Always" Multiline="true" CssClass="sftext" style="height: 30px;"></SfTextBox>
                                             </div>
                                         </div>
                                         <!-- RNFL OD e RNFL OS -->
                                         <div class="row" style="margin-top: 10px;">
                                             <div class="col-sm-6">
-                                                <SfTextBox ID="rnflod" @bind-Value="@Visita.RNFL_Od" Placeholder="RNFL OD" FloatLabelType="@FloatLabelType.Always" Multiline="true" style="height: 30px; color: #000;"></SfTextBox>
+                                                <SfTextBox ID="rnflod" @bind-Value="@Visita.RNFL_Od" Placeholder="RNFL OD" FloatLabelType="@FloatLabelType.Always" Multiline="true" CssClass="sftext" style="height: 30px;"></SfTextBox>
                                             </div>
                                             <div class="col-sm-6">
-                                                <SfTextBox ID="rnflos" @bind-Value="@Visita.RNFL_Os" Placeholder="RNFL OS" FloatLabelType="@FloatLabelType.Always" Multiline="true" style="height: 30px; color: #000;"></SfTextBox>
+                                                <SfTextBox ID="rnflos" @bind-Value="@Visita.RNFL_Os" Placeholder="RNFL OS" FloatLabelType="@FloatLabelType.Always" Multiline="true" CssClass="sftext" style="height: 30px;"></SfTextBox>
                                             </div>
                                         </div>
                                         <!-- CV OD e CV OS -->
                                         <div class="row" style="margin-top: 10px;">
                                             <div class="col-sm-6">
-                                                <SfTextBox ID="cvod" @bind-Value="@Visita.CV_Od" Placeholder="CV OD" FloatLabelType="@FloatLabelType.Always" Multiline="true" style="height: 30px; color: #000;"></SfTextBox>
+                                                <SfTextBox ID="cvod" @bind-Value="@Visita.CV_Od" Placeholder="CV OD" FloatLabelType="@FloatLabelType.Always" Multiline="true" CssClass="sftext" style="height: 30px;"></SfTextBox>
                                             </div>
                                             <div class="col-sm-6">
-                                                <SfTextBox ID="cvos" @bind-Value="@Visita.CV_Os" Placeholder="CV OS" FloatLabelType="@FloatLabelType.Always" Multiline="true" style="height: 30px; color: #000;"></SfTextBox>
+                                                <SfTextBox ID="cvos" @bind-Value="@Visita.CV_Os" Placeholder="CV OS" FloatLabelType="@FloatLabelType.Always" Multiline="true" CssClass="sftext" style="height: 30px;"></SfTextBox>
                                             </div>
                                         </div>
                                         <!-- Pachimetria OD, Pachimetria OS, C/D OD e C/D OS -->
                                         <div class="row" style="margin-top: 10px;">
                                             <div class="col-sm-3">
-                                                <SfTextBox ID="pachimetriaod" @bind-Value="@Visita.PACH_Od" Placeholder="Pachimetria OD" FloatLabelType="@FloatLabelType.Always" Multiline="true" style="height: 30px; color: #000;"></SfTextBox>
+                                                <SfTextBox ID="pachimetriaod" @bind-Value="@Visita.PACH_Od" Placeholder="Pachimetria OD" FloatLabelType="@FloatLabelType.Always" Multiline="true" CssClass="sftext" style="height: 30px;"></SfTextBox>
                                             </div>
                                             <div class="col-sm-3">
-                                                <SfTextBox ID="pachimetriaos" @bind-Value="@Visita.PACH_Os" Placeholder="Pachimetria OS" FloatLabelType="@FloatLabelType.Always" Multiline="true" style="height: 30px; color: #000;"></SfTextBox>
+                                                <SfTextBox ID="pachimetriaos" @bind-Value="@Visita.PACH_Os" Placeholder="Pachimetria OS" FloatLabelType="@FloatLabelType.Always" Multiline="true" CssClass="sftext" style="height: 30px;"></SfTextBox>
                                             </div>
                                             <div class="col-sm-3">
-                                                <SfTextBox ID="cdod" @bind-Value="@Visita.CD_Od" Placeholder="C/D OD" FloatLabelType="@FloatLabelType.Always" Multiline="true" style="height: 30px; color: #000;"></SfTextBox>
+                                                <SfTextBox ID="cdod" @bind-Value="@Visita.CD_Od" Placeholder="C/D OD" FloatLabelType="@FloatLabelType.Always" Multiline="true" CssClass="sftext" style="height: 30px;"></SfTextBox>
                                             </div>
                                             <div class="col-sm-3">
-                                                <SfTextBox ID="cdos" @bind-Value="@Visita.CD_Os" Placeholder="C/D OS" FloatLabelType="@FloatLabelType.Always" Multiline="true" style="height: 30px; color: #000;"></SfTextBox>
+                                                <SfTextBox ID="cdos" @bind-Value="@Visita.CD_Os" Placeholder="C/D OS" FloatLabelType="@FloatLabelType.Always" Multiline="true" CssClass="sftext" style="height: 30px;"></SfTextBox>
                                             </div>
                                         </div>
                                         <!-- AUTOREFRATTOMETRIA -->
                                         <div class="row" style="margin-top: 10px;">
                                             <div class="col">
-                                                <SfTextBox ID="auto" @bind-Value="@Visita.Auto" Placeholder="AUTOREFRATTOMETRIA" FloatLabelType="@FloatLabelType.Always" Multiline="true" style="height: 30px; color: #000;"></SfTextBox>
+                                                <SfTextBox ID="auto" @bind-Value="@Visita.Auto" Placeholder="AUTOREFRATTOMETRIA" FloatLabelType="@FloatLabelType.Always" Multiline="true" CssClass="sftext" style="height: 30px;"></SfTextBox>
                                             </div>
                                         </div>
                                         <!-- Conclusioni -->
                                         <div class="row" style="margin-top: 10px;">
                                             <div class="col">
-                                                <SfTextBox ID="conclusioni" @bind-Value="@Visita.Conclusioni" Placeholder="Conclusioni" FloatLabelType="@FloatLabelType.Always" Multiline="true" style="height: 30px; color: #000;"></SfTextBox>
+                                                <SfTextBox ID="conclusioni" @bind-Value="@Visita.Conclusioni" Placeholder="Conclusioni" FloatLabelType="@FloatLabelType.Always" Multiline="true" CssClass="sftext" style="height: 30px;"></SfTextBox>
                                             </div>
                                         </div>
                                     </div>
@@ -504,7 +504,7 @@
                                 <!-- Note visita -->
                                 <div class="row" style="margin-top: 10px;">
                                     <div class="col">
-                                        <SfTextBox ID="notevisita" @bind-Value="@Visita.Note" Placeholder="NOTE" FloatLabelType="@FloatLabelType.Always" Multiline="true" style="height: 30px; color: #000;"></SfTextBox>
+                                        <SfTextBox ID="notevisita" @bind-Value="@Visita.Note" Placeholder="NOTE" FloatLabelType="@FloatLabelType.Always" Multiline="true" CssClass="sftext" style="height: 30px;"></SfTextBox>
                                     </div>
                                 </div>
                             </ContentTemplate>
@@ -522,14 +522,22 @@
                                             Data di Stampa
                                         </span>
                                         <span style="float: left; width: 94px; display: inline-block;">
-                                            <SfMaskedTextBox ID="data_occhiali" @bind-Value="@pDataOcchiali" Mask="00/00/0000" ></SfMaskedTextBox>
+                                            <SfMaskedTextBox ID="data_occhiali" @bind-Value="@pDataOcchiali" Mask="00/00/0000" CssClass="sftext"></SfMaskedTextBox>
                                         </span>
 
                                         <span style="float: right;">
                                             <SfButton IconCss="e-icons icon-navy e-save" CssClass="e-flat btn-light" Content=" Salva Prescrizione" OnClick="() => SaveVisus()" Disabled="@SaveVisusDisabled"></SfButton>
                                         </span>
+
                                         <span style="float: right;">
-                                            <SfButton IconCss="e-icons icon-navy e-print" CssClass="e-flat btn-light" Content=" Stampa Prescrizione Occhiali" OnClick="() => PrintOcchiali()" Disabled="@PrintVisusDisabled"></SfButton>
+                                            <SfButton IconCss="e-icons icon-navy e-print" CssClass="e-flat btn-light" Content=" Stampa Prescrizione Occhiali" OnClick="() => PrintOcchiali(DropDownTemplate)" Disabled="@PrintVisusDisabled"></SfButton>
+                                        </span>
+
+                                        <span style="float: right; width: 110px; margin-right: 10px;">
+                                            <SfDropDownList TItem="PrintTemplates" TValue="string" PopupHeight="230px" Placeholder="es. Template 1" @bind-Value="@DropDownTemplate" DataSource="@ListTemplates">
+                                                <DropDownListEvents TItem="PrintTemplates" TValue="string" ValueChange="OnLensChange" />
+                                                <DropDownListFieldSettings Text="Text" Value="Id" />
+                                            </SfDropDownList>
                                         </span>
                                     </div>
                                 </div>
@@ -539,7 +547,7 @@
                                     <!-- Occhio Destro -->
                                     <div class="col-sm-6">
                                         <div class="row" style="margin-top: 10px;">
-                                            <div class="col-sm-3">&nbsp;</div> 
+                                            <div class="col-sm-3">&nbsp;</div>
                                             <!-- style="border:1px solid #f90;"-->
                                             <div class="col" style="text-align: center; font-size: larger;">
                                                 <!-- border:1px solid #09f;-->
@@ -563,13 +571,13 @@
                                                 <span>PER DISTANZA</span>
                                             </div>
                                             <div class="col-sm-3">
-                                                <SfTextBox ID="ODD_Sf" @bind-Value="@Visus.ODD_Sf"></SfTextBox>
+                                                <SfTextBox ID="ODD_Sf" @bind-Value="@Visus.ODD_Sf" CssClass="sftext"></SfTextBox>
                                             </div>
                                             <div class="col-sm-3">
-                                                <SfTextBox ID="ODD_Cil" @bind-Value="@Visus.ODD_Cil"></SfTextBox>
+                                                <SfTextBox ID="ODD_Cil" @bind-Value="@Visus.ODD_Cil" CssClass="sftext"></SfTextBox>
                                             </div>
                                             <div class="col-sm-3">
-                                                <SfTextBox ID="ODD_Asse" @bind-Value="@Visus.ODD_Asse"></SfTextBox>
+                                                <SfTextBox ID="ODD_Asse" @bind-Value="@Visus.ODD_Asse" CssClass="sftext"></SfTextBox>
                                             </div>
                                         </div>
                                         <div class="row" style="margin-top: 10px;">
@@ -577,13 +585,13 @@
                                                 <span>A PERMANENZA</span>
                                             </div>
                                             <div class="col-sm-3">
-                                                <SfTextBox ID="ODP_Sf" @bind-Value="@Visus.ODP_Sf"></SfTextBox>
+                                                <SfTextBox ID="ODP_Sf" @bind-Value="@Visus.ODP_Sf" CssClass="sftext"></SfTextBox>
                                             </div>
                                             <div class="col-sm-3">
-                                                <SfTextBox ID="ODP_Cil" @bind-Value="@Visus.ODP_Cil"></SfTextBox>
+                                                <SfTextBox ID="ODP_Cil" @bind-Value="@Visus.ODP_Cil" CssClass="sftext"></SfTextBox>
                                             </div>
                                             <div class="col-sm-3">
-                                                <SfTextBox ID="ODP_Asse" @bind-Value="@Visus.ODP_Asse"></SfTextBox>
+                                                <SfTextBox ID="ODP_Asse" @bind-Value="@Visus.ODP_Asse" CssClass="sftext"></SfTextBox>
                                             </div>
                                         </div>
                                         <div class="row" style="margin-top: 10px;">
@@ -591,13 +599,13 @@
                                                 <span>PER LETTURA</span>
                                             </div>
                                             <div class="col-sm-3">
-                                                <SfTextBox ID="ODL_Sf" @bind-Value="@Visus.ODL_Sf"></SfTextBox>
+                                                <SfTextBox ID="ODL_Sf" @bind-Value="@Visus.ODL_Sf" CssClass="sftext"></SfTextBox>
                                             </div>
                                             <div class="col-sm-3">
-                                                <SfTextBox ID="ODL_Cil" @bind-Value="@Visus.ODL_Cil"></SfTextBox>
+                                                <SfTextBox ID="ODL_Cil" @bind-Value="@Visus.ODL_Cil" CssClass="sftext"></SfTextBox>
                                             </div>
                                             <div class="col-sm-3">
-                                                <SfTextBox ID="ODL_Asse" @bind-Value="@Visus.ODL_Asse"></SfTextBox>
+                                                <SfTextBox ID="ODL_Asse" @bind-Value="@Visus.ODL_Asse" CssClass="sftext"></SfTextBox>
                                             </div>
                                         </div>
                                     </div>
@@ -605,11 +613,11 @@
                                     <!-- Occhio Sinistro -->
                                     <div class="col-sm-6">
                                         <div class="row" style="margin-top: 10px;">
-                                            <div class="col" style="text-align: center; font-size: larger;"> 
+                                            <div class="col" style="text-align: center; font-size: larger;">
                                                 <!--  border:1px solid #09f; -->
                                                 Occhio Sinistro
                                             </div>
-                                            <div class="col-sm-3">&nbsp;</div> 
+                                            <div class="col-sm-3">&nbsp;</div>
                                             <!-- style="border:1px solid #f90;"-->
                                         </div>
                                         <div class="row" style="margin-top: 10px;">
@@ -626,37 +634,37 @@
                                         </div>
                                         <div class="row" style="margin-top: 10px;">
                                             <div class="col-sm-3">
-                                                <SfTextBox ID="OSD_Sf" @bind-Value="@Visus.OSD_Sf"></SfTextBox>
+                                                <SfTextBox ID="OSD_Sf" @bind-Value="@Visus.OSD_Sf" CssClass="sftext"></SfTextBox>
                                             </div>
                                             <div class="col-sm-3">
-                                                <SfTextBox ID="OSD_Cil" @bind-Value="@Visus.OSD_Cil"></SfTextBox>
+                                                <SfTextBox ID="OSD_Cil" @bind-Value="@Visus.OSD_Cil" CssClass="sftext"></SfTextBox>
                                             </div>
                                             <div class="col-sm-3">
-                                                <SfTextBox ID="OSD_Asse" @bind-Value="@Visus.OSD_Asse"></SfTextBox>
-                                            </div>
-                                            <div class="col-sm-3">&nbsp;</div>
-                                        </div>
-                                        <div class="row" style="margin-top: 10px;">
-                                            <div class="col-sm-3">
-                                                <SfTextBox ID="OSP_Sf" @bind-Value="@Visus.OSP_Sf"></SfTextBox>
-                                            </div>
-                                            <div class="col-sm-3">
-                                                <SfTextBox ID="OSP_Cil" @bind-Value="@Visus.OSP_Cil"></SfTextBox>
-                                            </div>
-                                            <div class="col-sm-3">
-                                                <SfTextBox ID="OSP_Asse" @bind-Value="@Visus.OSP_Asse"></SfTextBox>
+                                                <SfTextBox ID="OSD_Asse" @bind-Value="@Visus.OSD_Asse" CssClass="sftext"></SfTextBox>
                                             </div>
                                             <div class="col-sm-3">&nbsp;</div>
                                         </div>
                                         <div class="row" style="margin-top: 10px;">
                                             <div class="col-sm-3">
-                                                <SfTextBox ID="OSL_Sf" @bind-Value="@Visus.OSL_Sf"></SfTextBox>
+                                                <SfTextBox ID="OSP_Sf" @bind-Value="@Visus.OSP_Sf" CssClass="sftext"></SfTextBox>
                                             </div>
                                             <div class="col-sm-3">
-                                                <SfTextBox ID="OSL_Cil" @bind-Value="@Visus.OSL_Cil"></SfTextBox>
+                                                <SfTextBox ID="OSP_Cil" @bind-Value="@Visus.OSP_Cil" CssClass="sftext"></SfTextBox>
                                             </div>
                                             <div class="col-sm-3">
-                                                <SfTextBox ID="OSL_Asse" @bind-Value="@Visus.OSL_Asse"></SfTextBox>
+                                                <SfTextBox ID="OSP_Asse" @bind-Value="@Visus.OSP_Asse" CssClass="sftext"></SfTextBox>
+                                            </div>
+                                            <div class="col-sm-3">&nbsp;</div>
+                                        </div>
+                                        <div class="row" style="margin-top: 10px;">
+                                            <div class="col-sm-3">
+                                                <SfTextBox ID="OSL_Sf" @bind-Value="@Visus.OSL_Sf" CssClass="sftext"></SfTextBox>
+                                            </div>
+                                            <div class="col-sm-3">
+                                                <SfTextBox ID="OSL_Cil" @bind-Value="@Visus.OSL_Cil" CssClass="sftext"></SfTextBox>
+                                            </div>
+                                            <div class="col-sm-3">
+                                                <SfTextBox ID="OSL_Asse" @bind-Value="@Visus.OSL_Asse" CssClass="sftext"></SfTextBox>
                                             </div>
                                             <div class="col-sm-3">&nbsp;</div>
                                         </div>
@@ -683,14 +691,14 @@
                                 <!-- Distanza interpupillare -->
                                 <div class="row" style="margin-top: 10px;">
                                     <div class="col-sm-2">
-                                        <SfTextBox ID="Distanza" @bind-Value="@Visus.DI" Placeholder="Distanza interpupillare (mm)" FloatLabelType="@FloatLabelType.Always"></SfTextBox>
+                                        <SfTextBox ID="Distanza" @bind-Value="@Visus.DI" Placeholder="Distanza interpupillare (mm)" FloatLabelType="@FloatLabelType.Always" CssClass="sftext"></SfTextBox>
                                     </div>
                                 </div>
 
                                 <!-- Note visus -->
                                 <div class="row" style="margin-top: 20px;">
                                     <div class="col">
-                                        <SfTextBox ID="NoteVisus" @bind-Value="@Visus.Note" Placeholder="NOTE" FloatLabelType="@FloatLabelType.Always" Multiline="true"></SfTextBox>
+                                        <SfTextBox ID="NoteVisus" @bind-Value="@Visus.Note" Placeholder="NOTE" FloatLabelType="@FloatLabelType.Always" Multiline="true" CssClass="sftext"></SfTextBox>
                                     </div>
                                 </div>
                             </ContentTemplate>
@@ -728,8 +736,16 @@
                                         <span style="float: right;">
                                             <SfButton IconCss="e-icons icon-navy e-save" CssClass="e-flat btn-light" Content=" Salva Controllo" OnClick="() => SaveControl()" Disabled="@SaveCntrDisabled"></SfButton>
                                         </span>
+
                                         <span style="float: right;">
-                                            <SfButton IconCss="e-icons icon-navy e-print" CssClass="e-flat btn-light" Content=" Stampa Controlli" OnClick="() => PrintControlli()" Disabled="@PrintCntrDisabled"></SfButton>
+                                            <SfButton IconCss="e-icons icon-navy e-print" CssClass="e-flat btn-light" Content=" Stampa Controlli" OnClick="() => PrintControlli(DropDownTemplate)" Disabled="@PrintCntrDisabled"></SfButton>
+                                        </span>
+
+                                        <span style="float: right; width: 110px; margin-right: 10px;">
+                                            <SfDropDownList TItem="PrintTemplates" TValue="string" PopupHeight="230px" Placeholder="es. Template 1" @bind-Value="@DropDownTemplate" DataSource="@ListTemplates">
+                                                <DropDownListEvents TItem="PrintTemplates" TValue="string" ValueChange="OnContrChange" />
+                                                <DropDownListFieldSettings Text="Text" Value="Id" />
+                                            </SfDropDownList>
                                         </span>
                                     </div>
                                 </div>
@@ -773,17 +789,17 @@
                                 <!-- Dati controllo -->
                                 <div class="row" style="margin-top: 10px;">
                                     <div class="col-sm-1">
-                                        <SfMaskedTextBox ID="datacontrollo" @bind-Value="@DataControllo" Mask="00/00/0000" Placeholder="Data controllo" FloatLabelType="@FloatLabelType.Always"></SfMaskedTextBox>
+                                        <SfMaskedTextBox ID="datacontrollo" @bind-Value="@DataControllo" Mask="00/00/0000" Placeholder="Data controllo" FloatLabelType="@FloatLabelType.Always" CssClass="sftext"></SfMaskedTextBox>
                                     </div>
                                     <div class="col-sm-4">
                                         <label id="label_valutazione" for="valutazione" style="color: #343a40; font-weight: 500; margin: 3px 0;">Valutazione</label>
-                                        <SfTextBox ID="valutazione" @bind-Value="@Controllo.Valutazione" Multiline=true></SfTextBox>
+                                        <SfTextBox ID="valutazione" @bind-Value="@Controllo.Valutazione" Multiline=true CssClass="sftext"></SfTextBox>
                                     </div>
                                 </div>
                             </ContentTemplate>
                         </TabItem>
 
-                        <!-- Sezione Ortottica -->                                      
+                        <!-- Sezione Ortottica -->
                         <TabItem Disabled=@OrtotticaDisabled>
                             <ChildContent>
                                 <TabHeader Text="Ortottica"></TabHeader>
@@ -794,15 +810,24 @@
                                         <span style="float: left; display: inline-block; margin-left: 10px;  margin-right: 10px; padding-top: 6px; font-weight:bold;">
                                             Data di Stampa
                                         </span>
+
                                         <span style="float: left; width: 94px; display: inline-block;">
-                                            <SfMaskedTextBox ID="data_ortottica" @bind-Value="@pDataOrtottica" Mask="00/00/0000"></SfMaskedTextBox>
+                                            <SfMaskedTextBox ID="data_ortottica" @bind-Value="@pDataOrtottica" Mask="00/00/0000" CssClass="sftext"></SfMaskedTextBox>
                                         </span>
 
                                         <span style="float: right;">
                                             <SfButton IconCss="e-icons icon-navy e-save" CssClass="e-flat btn-light" Content=" Salva Ortottica" OnClick="() => SaveOrtoctis()" Disabled="@SaveOrtoctisDisabled"></SfButton>
                                         </span>
+
                                         <span style="float: right;">
-                                            <SfButton IconCss="e-icons icon-navy e-print" CssClass="e-flat btn-light" Content=" Stampa Ortottica" OnClick="() => PrintOrtottica()" Disabled="@PrintVisitDisabled"></SfButton>
+                                            <SfButton IconCss="e-icons icon-navy e-print" CssClass="e-flat btn-light" Content=" Stampa Ortottica" OnClick="() => PrintOrtottica(DropDownTemplate)" Disabled="@PrintVisitDisabled"></SfButton>
+                                        </span>
+
+                                        <span style="float: right; width: 110px; margin-right: 10px;">
+                                            <SfDropDownList TItem="PrintTemplates" TValue="string" PopupHeight="230px" Placeholder="es. Template 1" @bind-Value="@DropDownTemplate" DataSource="@ListTemplates">
+                                                <DropDownListEvents TItem="PrintTemplates" TValue="string" ValueChange="OnOrthChange" />
+                                                <DropDownListFieldSettings Text="Text" Value="Id" />
+                                            </SfDropDownList>
                                         </span>
                                     </div>
                                 </div>
@@ -810,70 +835,70 @@
                                 <!-- Posizione Primaria -->
                                 <div class="row" style="margin-top: 12px;">
                                     <div class="col-sm-8">
-                                        <SfTextBox ID="oPosizione" @bind-Value="@Ortoctis.Posizione" Placeholder="Posizione Primaria" FloatLabelType="@FloatLabelType.Always" Multiline="true"></SfTextBox>
+                                        <SfTextBox ID="oPosizione" @bind-Value="@Ortoctis.Posizione" Placeholder="Posizione Primaria" FloatLabelType="@FloatLabelType.Always" Multiline="true" CssClass="sftext"></SfTextBox>
                                     </div>
                                 </div>
 
                                 <!-- Motilità Attiva -->
                                 <div class="row" style="margin-top: 12px;">
                                     <div class="col-sm-8">
-                                        <SfTextBox ID="oMotilita" @bind-Value="@Ortoctis.Motilita" Placeholder="Motilità Attiva" FloatLabelType="@FloatLabelType.Always" Multiline="true"></SfTextBox>
+                                        <SfTextBox ID="oMotilita" @bind-Value="@Ortoctis.Motilita" Placeholder="Motilità Attiva" FloatLabelType="@FloatLabelType.Always" Multiline="true" CssClass="sftext"></SfTextBox>
                                     </div>
                                 </div>
 
                                 <!-- Convergenza -->
                                 <div class="row" style="margin-top: 12px;">
                                     <div class="col-sm-8">
-                                        <SfTextBox ID="oConvergenza" @bind-Value="@Ortoctis.Convergenza" Placeholder="Convergenza" FloatLabelType="@FloatLabelType.Always" Multiline="true"></SfTextBox>
+                                        <SfTextBox ID="oConvergenza" @bind-Value="@Ortoctis.Convergenza" Placeholder="Convergenza" FloatLabelType="@FloatLabelType.Always" Multiline="true" CssClass="sftext"></SfTextBox>
                                     </div>
                                 </div>
 
                                 <!-- Cover Test -->
                                 <div class="row" style="margin-top: 12px;">
                                     <div class="col-sm-8">
-                                        <SfTextBox ID="oCover" @bind-Value="@Ortoctis.Cover" Placeholder="Cover Test" FloatLabelType="@FloatLabelType.Always" Multiline="true"></SfTextBox>
+                                        <SfTextBox ID="oCover" @bind-Value="@Ortoctis.Cover" Placeholder="Cover Test" FloatLabelType="@FloatLabelType.Always" Multiline="true" CssClass="sftext"></SfTextBox>
                                     </div>
                                 </div>
 
                                 <!-- Prisma Cover Test -->
                                 <div class="row" style="margin-top: 12px;">
                                     <div class="col-sm-8">
-                                        <SfTextBox ID="oPrismaCover" @bind-Value="@Ortoctis.PrismaCover" Placeholder="Prisma Cover Test" FloatLabelType="@FloatLabelType.Always" Multiline="true"></SfTextBox>
+                                        <SfTextBox ID="oPrismaCover" @bind-Value="@Ortoctis.PrismaCover" Placeholder="Prisma Cover Test" FloatLabelType="@FloatLabelType.Always" Multiline="true" CssClass="sftext"></SfTextBox>
                                     </div>
                                 </div>
 
                                 <!-- Ampiezza Fusiva -->
                                 <div class="row" style="margin-top: 12px;">
                                     <div class="col-sm-8">
-                                        <SfTextBox ID="oAmpiezza" @bind-Value="@Ortoctis.Ampiezza" Placeholder="Ampiezza Fusiva" FloatLabelType="@FloatLabelType.Always" Multiline="true"></SfTextBox>
+                                        <SfTextBox ID="oAmpiezza" @bind-Value="@Ortoctis.Ampiezza" Placeholder="Ampiezza Fusiva" FloatLabelType="@FloatLabelType.Always" Multiline="true" CssClass="sftext"></SfTextBox>
                                     </div>
                                 </div>
 
                                 <!-- Vetro Rosso -->
                                 <div class="row" style="margin-top: 12px;">
                                     <div class="col-sm-8">
-                                        <SfTextBox ID="oVetro" @bind-Value="@Ortoctis.Vetro" Placeholder="Vetro Rosso" FloatLabelType="@FloatLabelType.Always" Multiline="true"></SfTextBox>
+                                        <SfTextBox ID="oVetro" @bind-Value="@Ortoctis.Vetro" Placeholder="Vetro Rosso" FloatLabelType="@FloatLabelType.Always" Multiline="true" CssClass="sftext"></SfTextBox>
                                     </div>
                                 </div>
 
                                 <!-- Lang Test -->
                                 <div class="row" style="margin-top: 12px;">
                                     <div class="col-sm-8">
-                                        <SfTextBox ID="oLang" @bind-Value="@Ortoctis.Lang" Placeholder="Lang Test" FloatLabelType="@FloatLabelType.Always" Multiline="true"></SfTextBox>
+                                        <SfTextBox ID="oLang" @bind-Value="@Ortoctis.Lang" Placeholder="Lang Test" FloatLabelType="@FloatLabelType.Always" Multiline="true" CssClass="sftext"></SfTextBox>
                                     </div>
                                 </div>
 
                                 <!-- Titmus Test -->
                                 <div class="row" style="margin-top: 12px;">
                                     <div class="col-sm-8">
-                                        <SfTextBox ID="oTitmus" @bind-Value="@Ortoctis.Titmus" Placeholder="Titmus Test" FloatLabelType="@FloatLabelType.Always" Multiline="true"></SfTextBox>
+                                        <SfTextBox ID="oTitmus" @bind-Value="@Ortoctis.Titmus" Placeholder="Titmus Test" FloatLabelType="@FloatLabelType.Always" Multiline="true" CssClass="sftext"></SfTextBox>
                                     </div>
                                 </div>
 
                                 <!-- Altri test per la visione binoculare -->
                                 <div class="row" style="margin-top: 12px;">
                                     <div class="col-sm-8">
-                                        <SfTextBox ID="oAltriTest" @bind-Value="@Ortoctis.AltriTest" Placeholder="Altri test per la visione binoculare" FloatLabelType="@FloatLabelType.Always" Multiline="true"></SfTextBox>
+                                        <SfTextBox ID="oAltriTest" @bind-Value="@Ortoctis.AltriTest" Placeholder="Altri test per la visione binoculare" FloatLabelType="@FloatLabelType.Always" Multiline="true" CssClass="sftext"></SfTextBox>
                                     </div>
                                 </div>
 
@@ -881,7 +906,7 @@
                                 <div class="row" style="margin-top: 12px;">
                                     <div class="col-sm-8">
                                         <label class="e-label-top" style="color: #343a40; font-weight: 500; font-size: 12px; padding-bottom:3px;" id="label_Conclusioni" for="oConclusioni">Conclusioni</label>
-                                        <SfTextBox ID="oConclusioni" @bind-Value="@Ortoctis.Conclusioni" Multiline="true"></SfTextBox>
+                                        <SfTextBox ID="oConclusioni" @bind-Value="@Ortoctis.Conclusioni" Multiline="true" CssClass="sftext"></SfTextBox>
                                     </div>
                                 </div>
 
@@ -889,7 +914,7 @@
                                 <div class="row" style="margin-top: 12px;">
                                     <div class="col-sm-8">
                                         <label class="e-label-top" style="color: #343a40; font-weight: 500; font-size: 12px; padding-bottom:3px;" id="label_Diagnosi" for="oDiagnosi">Diagnosi</label>
-                                        <SfTextBox ID="oDiagnosi" @bind-Value="@Ortoctis.Diagnosi" Multiline="true"></SfTextBox>
+                                        <SfTextBox ID="oDiagnosi" @bind-Value="@Ortoctis.Diagnosi" Multiline="true" CssClass="sftext"></SfTextBox>
                                     </div>
                                 </div>
 
@@ -897,7 +922,7 @@
                                 <div class="row" style="margin-top: 12px;">
                                     <div class="col-sm-8">
                                         <label class="e-label-top" style="color: #343a40; font-weight: 500; font-size: 12px; padding-bottom:3px;" id="label_Terapia" for="oTerapia">Terapia</label>
-                                        <SfTextBox ID="oTerapia" @bind-Value="@Ortoctis.Terapia" Multiline="true"></SfTextBox>
+                                        <SfTextBox ID="oTerapia" @bind-Value="@Ortoctis.Terapia" Multiline="true" CssClass="sftext"></SfTextBox>
                                     </div>
                                 </div>
                             </ContentTemplate>
@@ -921,29 +946,38 @@
                                                     <div class="col-sm-2" style="font-size: 16px; font-weight: 500; margin: 3px 0;">Farmaco</div>
                                                     <div class="col-sm-4" style="font-size: 16px; font-weight: 500; margin: 3px 0;">Somministrazione</div>
                                                     @* <div class="col-sm-1">&nbsp;@ider</div> *@
+
                                                     <div class="col-sm-3">
                                                         <span style="float: left;">
                                                             <SfButton IconCss="e-icons e-search icon-slategrey" CssClass="e-flat btn-light" Content="Scelta Farmaco" OnClick="() => ShowFar()"></SfButton>
                                                         </span>
 
                                                         <span style="float: right; width: 94px; display: inline-block;">
-                                                            <SfMaskedTextBox ID="data_prescrizione" @bind-Value="@pDataPrescrizione" Mask="00/00/0000"></SfMaskedTextBox>
+                                                            <SfMaskedTextBox ID="data_prescrizione" @bind-Value="@pDataPrescrizione" Mask="00/00/0000" CssClass="sftext"></SfMaskedTextBox>
                                                         </span>
 
                                                         <span style="float: right; display: inline-block; margin-left: 10px;  margin-right: 10px; padding-top: 6px; font-weight:bold;">
                                                             Data di Stampa
                                                         </span>
                                                     </div>
-                                                    <div class="col-sm-2">
-                                                        <span style="float: right;">
-                                                            <SfButton IconCss="e-icons icon-navy e-print" CssClass="e-flat btn-light" Content=" Stampa Prescrizione" OnClick="() => StampaPrescrizione()" Disabled="@PrintPrescrDisabled"></SfButton>
+
+                                                    <div class="col-sm-2" style="padding: 0;">
+                                                        <span style="float: right; width: 110px;">
+                                                            <SfButton IconCss="e-icons icon-navy e-print" CssClass="e-flat btn-light" Content=" Prescrizione" OnClick="() => StampaPrescrizione()" Disabled="@PrintPrescrDisabled"></SfButton>
+                                                        </span>
+
+                                                        <span style="float: right; width: 110px; margin-right: 10px;">
+                                                            <SfDropDownList TItem="PrintTemplates" TValue="string" PopupHeight="230px" Placeholder="es. Template 1" @bind-Value="@DropDownTemplate" DataSource="@ListTemplates">
+                                                                <DropDownListEvents TItem="PrintTemplates" TValue="string" ValueChange="OnPrescChange" />
+                                                                <DropDownListFieldSettings Text="Text" Value="Id" />
+                                                            </SfDropDownList>
                                                         </span>
                                                     </div>
                                                 </div>
 
                                                 @if (@Prescriptions.Count > 0)
                                                 {
-                                                    @for(var ip = 0; ip < @Prescriptions.Count; ip++)
+                                                    @for (var ip = 0; ip < @Prescriptions.Count; ip++)
                                                     {
                                                         decimal questo = @Prescriptions[ip].IdPrescrizione;
                                                         int myId = ip;
@@ -951,11 +985,11 @@
                                                         <div class="row" style="margin-top: 10px;">
                                                             <div class="col-sm-1" style="text-align:right; padding-right:6px;">@(ip + 1)</div>
                                                             <div class="col-sm-2">
-                                                                <SfTextBox @bind-Value="@Prescriptions[ip].Farmaco" Readonly="true" style="border:0px;"></SfTextBox>
+                                                                <SfTextBox @bind-Value="@Prescriptions[ip].Farmaco" Readonly="true" CssClass="sftext" style="border:0px;"></SfTextBox>
                                                             </div>
                                                             <div class="col-sm-4">
                                                                 @* <SfTextBox ID="valutazione" @bind-Value="@Prescriptions[ip].Uso" Multiline=true style="height: 72px;" ></SfTextBox> *@
-                                                                <SfTextBox Value="@Prescriptions[ip].Uso" ValueChanged="@(value => UpdateUso(myId, value))" Multiline=true style="height: 72px;"></SfTextBox>
+                                                                <SfTextBox Value="@Prescriptions[ip].Uso" ValueChanged="@(value => UpdateUso(myId, value))" Multiline=true CssClass="sftext" style="height: 72px;"></SfTextBox>
                                                             </div>
 
                                                             @if (ip < @Prescriptions.Count - 1)
@@ -973,7 +1007,7 @@
                                                 <div class="row" style="margin-top: 14px;">
                                                     <div class="col-sm-1" style="text-align:right; padding-right:6px;">Nota:</div>
                                                     <div class="col-sm-6">
-                                                        <SfTextBox @bind-Value="@NotaPrescrizione" Multiline="true" style="height: 96px;"></SfTextBox>
+                                                        <SfTextBox @bind-Value="@NotaPrescrizione" Multiline="true" CssClass="sftext" style="height: 96px;"></SfTextBox>
                                                     </div>
                                                 </div>
                                             </ContentTemplate>
@@ -992,7 +1026,7 @@
 
                                                         <div class="col-sm-7">
                                                             <span style="display:inline-block; width:300px;">
-                                                                <SfTextBox ID="fFar" @bind-Value="@fFar" Placeholder="Farmaco" FloatLabelType="@FloatLabelType.Auto"></SfTextBox>
+                                                                <SfTextBox ID="fFar" @bind-Value="@fFar" Placeholder="Farmaco" FloatLabelType="@FloatLabelType.Auto" CssClass="sftext"></SfTextBox>
                                                             </span>
                                                             <span style="display:inline-block; width:50px;">&nbsp;</span>
                                                             <SfButton IconCss="e-icons e-search icon-slategrey" CssClass="e-flat btn-light" style="margin-top:24px;" Content="Cerca" OnClick="() => SearchFar()"></SfButton>
@@ -1049,12 +1083,20 @@
                                         <span style="float: left; display: inline-block; margin-left: 10px;  margin-right: 10px; padding-top: 6px; font-weight:bold;">
                                             Data di Stampa
                                         </span>
+
                                         <span style="float: left; width: 94px; display: inline-block;">
-                                            <SfMaskedTextBox ID="data_relazione" @bind-Value="@pDataRelazione" Mask="00/00/0000"></SfMaskedTextBox>
+                                            <SfMaskedTextBox ID="data_relazione" @bind-Value="@pDataRelazione" Mask="00/00/0000" CssClass="sftext"></SfMaskedTextBox>
                                         </span>
 
                                         <span style="float: right;">
-                                            <SfButton IconCss="e-icons icon-navy e-print" CssClass="e-flat btn-light" Content=" Stampa Relazione" OnClick="() => StampaRelazione(0)" Disabled="@PrintVisitDisabled"></SfButton>
+                                            <SfButton IconCss="e-icons icon-navy e-print" CssClass="e-flat btn-light" Content=" Stampa Relazione" OnClick="() => StampaRelazione(DropDownTemplate)" Disabled="@PrintVisitDisabled"></SfButton>
+                                        </span>
+
+                                        <span style="float: right; width: 110px; margin-right: 10px;">
+                                            <SfDropDownList TItem="PrintTemplates" TValue="string" PopupHeight="230px" Placeholder="es. Template 1" @bind-Value="@DropDownTemplate" DataSource="@ListTemplates">
+                                                <DropDownListEvents TItem="PrintTemplates" TValue="string" ValueChange="OnRelChange" />
+                                                <DropDownListFieldSettings Text="Text" Value="Id" />
+                                            </SfDropDownList>
                                         </span>
                                     </div>
                                 </div>
@@ -1062,40 +1104,40 @@
                                 <!-- Diagnosi -->
                                 <div class="row" style="margin-top: 12px;">
                                     <div class="col-sm-6">
-                                        <SfTextBox ID="rdiagnosiod" @bind-Value="@Relazione.DiagnosiOD" Placeholder="Diagnosi OD" FloatLabelType="@FloatLabelType.Always" title="@Relazione.DiagnosiOD" Multiline="true" style="height: 48px;"></SfTextBox>
+                                        <SfTextBox ID="rdiagnosiod" @bind-Value="@Relazione.DiagnosiOD" Placeholder="Diagnosi OD" FloatLabelType="@FloatLabelType.Always" title="@Relazione.DiagnosiOD" Multiline="true" CssClass="sftext" style="height: 48px;"></SfTextBox>
                                     </div>
                                     <div class="col-sm-6">
-                                        <SfTextBox ID="rdiagnosios" @bind-Value="@Relazione.DiagnosiOS" Placeholder="Diagnosi OS" FloatLabelType="@FloatLabelType.Always" title="@Relazione.DiagnosiOS" Multiline="true" style="height: 48px;"></SfTextBox>
+                                        <SfTextBox ID="rdiagnosios" @bind-Value="@Relazione.DiagnosiOS" Placeholder="Diagnosi OS" FloatLabelType="@FloatLabelType.Always" title="@Relazione.DiagnosiOS" Multiline="true" CssClass="sftext" style="height: 48px;"></SfTextBox>
                                     </div>
                                 </div>
 
                                 <!-- SHIRMER -->
                                 <div class="row" style="margin-top: 12px;">
                                     <div class="col-sm-6">
-                                        <SfTextBox ID="shirmerod" @bind-Value="@Relazione.SHIRMER_Od" Placeholder="SHIRMER OD" FloatLabelType="@FloatLabelType.Always" title="@Relazione.SHIRMER_Od" Multiline="true" style="height: 48px;"></SfTextBox>
+                                        <SfTextBox ID="shirmerod" @bind-Value="@Relazione.SHIRMER_Od" Placeholder="SHIRMER OD" FloatLabelType="@FloatLabelType.Always" title="@Relazione.SHIRMER_Od" Multiline="true" CssClass="sftext" style="height: 48px;"></SfTextBox>
                                     </div>
                                     <div class="col-sm-6">
-                                        <SfTextBox ID="shirmeros" @bind-Value="@Relazione.SHIRMER_Os" Placeholder="SHIRMER OS" FloatLabelType="@FloatLabelType.Always" title="@Relazione.SHIRMER_Os" Multiline="true" style="height: 48px;"></SfTextBox>
+                                        <SfTextBox ID="shirmeros" @bind-Value="@Relazione.SHIRMER_Os" Placeholder="SHIRMER OS" FloatLabelType="@FloatLabelType.Always" title="@Relazione.SHIRMER_Os" Multiline="true" CssClass="sftext" style="height: 48px;"></SfTextBox>
                                     </div>
                                 </div>
 
                                 <!-- Seg.Ant. -->
                                 <div class="row" style="margin-top: 12px;">
                                     <div class="col-sm-6">
-                                        <SfTextBox ID="segantod" @bind-Value="@Relazione.Seg_Ant_Od" Placeholder="Seg.Ant. OD" FloatLabelType="@FloatLabelType.Always" title="@Relazione.Seg_Ant_Od" Multiline="true" style="height: 48px;"></SfTextBox>
+                                        <SfTextBox ID="segantod" @bind-Value="@Relazione.Seg_Ant_Od" Placeholder="Seg.Ant. OD" FloatLabelType="@FloatLabelType.Always" title="@Relazione.Seg_Ant_Od" Multiline="true" CssClass="sftext" style="height: 48px;"></SfTextBox>
                                     </div>
                                     <div class="col-sm-6">
-                                        <SfTextBox ID="segantos" @bind-Value="@Relazione.Seg_Ant_Os" Placeholder="Seg.Ant. OS" FloatLabelType="@FloatLabelType.Always" title="@Relazione.Seg_Ant_Os" Multiline="true" style="height: 48px;"></SfTextBox>
+                                        <SfTextBox ID="segantos" @bind-Value="@Relazione.Seg_Ant_Os" Placeholder="Seg.Ant. OS" FloatLabelType="@FloatLabelType.Always" title="@Relazione.Seg_Ant_Os" Multiline="true" CssClass="sftext" style="height: 48px;"></SfTextBox>
                                     </div>
                                 </div>
 
                                 <!-- Visus -->
                                 <div class="row" style="margin-top: 12px;">
                                     <div class="col-sm-6">
-                                        <SfTextBox ID="visusod" @bind-Value="@Relazione.Visus_Od" Placeholder="Visus OD" FloatLabelType="@FloatLabelType.Always" title="@Relazione.Visus_Od" Multiline="true" style="height: 48px;"></SfTextBox>
+                                        <SfTextBox ID="visusod" @bind-Value="@Relazione.Visus_Od" Placeholder="Visus OD" FloatLabelType="@FloatLabelType.Always" title="@Relazione.Visus_Od" Multiline="true" CssClass="sftext" style="height: 48px;"></SfTextBox>
                                     </div>
                                     <div class="col-sm-6">
-                                        <SfTextBox ID="visusos" @bind-Value="@Relazione.Visus_Os" Placeholder="Visus OS" FloatLabelType="@FloatLabelType.Always" title="@Relazione.Visus_Os" Multiline="true" style="height: 48px;"></SfTextBox>
+                                        <SfTextBox ID="visusos" @bind-Value="@Relazione.Visus_Os" Placeholder="Visus OS" FloatLabelType="@FloatLabelType.Always" title="@Relazione.Visus_Os" Multiline="true" CssClass="sftext" style="height: 48px;"></SfTextBox>
                                     </div>
                                 </div>
 
@@ -1112,10 +1154,10 @@
                                 <!-- Fundus -->
                                 <div class="row" style="margin-top: 12px;">
                                     <div class="col-sm-6">
-                                        <SfTextBox ID="fundusod" @bind-Value="@Relazione.Fundus_Od" Placeholder="Fundus OD" FloatLabelType="@FloatLabelType.Always" title="@Relazione.Fundus_Od" Multiline="true" style="height: 48px;"></SfTextBox>
+                                        <SfTextBox ID="fundusod" @bind-Value="@Relazione.Fundus_Od" Placeholder="Fundus OD" FloatLabelType="@FloatLabelType.Always" title="@Relazione.Fundus_Od" Multiline="true" CssClass="sftext" style="height: 48px;"></SfTextBox>
                                     </div>
                                     <div class="col-sm-6">
-                                        <SfTextBox ID="fundusod" @bind-Value="@Relazione.Fundus_Os" Placeholder="Fundus OS" FloatLabelType="@FloatLabelType.Always" title="@Relazione.Fundus_Os" Multiline="true" style="height: 48px;"></SfTextBox>
+                                        <SfTextBox ID="fundusod" @bind-Value="@Relazione.Fundus_Os" Placeholder="Fundus OS" FloatLabelType="@FloatLabelType.Always" title="@Relazione.Fundus_Os" Multiline="true" CssClass="sftext" style="height: 48px;"></SfTextBox>
                                     </div>
                                 </div>
                             </ContentTemplate>
@@ -1133,7 +1175,7 @@
 <SfDialog Width="400px" Target="#target" ShowCloseIcon="true" @bind-Visible="DialogVisible">
     <DialogTemplates>
         <Header> @DialogHeader </Header>
-        <Content> 
+        <Content>
             <div class='msg-wrapper col-lg-12'>
                 <span class='@DialogIcon'></span>
                 <span class='error-msg col-lg-10'>@DialogText</span>
@@ -1149,57 +1191,57 @@
 </SfDialog>
 
 <style>
-    .vstepper{
-    display: inline-block;
-    margin: 0 10px 0 8px;
-    border: 1px solid #ccc;
-    width: 80px;
-    text-align: center;
-    font-size: 13px;
-    padding-top: 3px;
+    .vstepper {
+        display: inline-block;
+        margin: 0 10px 0 8px;
+        border: 1px solid #ccc;
+        width: 80px;
+        text-align: center;
+        font-size: 13px;
+        padding-top: 3px;
     }
 
     .default-tab {
-    border: 1px solid #d7d7d7;
+        border: 1px solid #d7d7d7;
     }
 
-    .default-tab .e-content .e-item {
-    padding: 10px;
-    text-align: justify;
-    }
+        .default-tab .e-content .e-item {
+            padding: 10px;
+            text-align: justify;
+        }
 
     .default-tab-control-section {
-    margin: 20px 20% 20px 20%;
+        margin: 20px 20% 20px 20%;
     }
 
     @@media screen and (max-width: 480px) {
-    .default-tab-control-section {
-    margin: 20px 0 20px 0;
-    }
+        .default-tab-control-section {
+            margin: 20px 0 20px 0;
+        }
     }
 
     .bootstrap5 .default-tab,
     .bootstrap .default-tab,
     .bootstrap4 .default-tab {
-    border: none;
+        border: none;
     }
 
-    .bootstrap5 .default-tab .e-content > .e-item.e-active,
-    .bootstrap4 .default-tab .e-content > .e-item.e-active,
-    .bootstrap .default-tab .e-content > .e-item.e-active {
-    background: #FAF9F8;
-    }
+        .bootstrap5 .default-tab .e-content > .e-item.e-active,
+        .bootstrap4 .default-tab .e-content > .e-item.e-active,
+        .bootstrap .default-tab .e-content > .e-item.e-active {
+            background: #FAF9F8;
+        }
 
     .e-tab .e-tab-header .e-toolbar-items .e-active .e-tab-wrap {
-    border-bottom: 4px solid #0d6efd;
+        border-bottom: 4px solid #0d6efd;
     }
 
-    .e-tab .e-tab-header .e-toolbar-items .e-active .e-tab-wrap:hover {
-    border-bottom: 4px solid #0d6efd;
-    }
+        .e-tab .e-tab-header .e-toolbar-items .e-active .e-tab-wrap:hover {
+            border-bottom: 4px solid #0d6efd;
+        }
 
     .e-tab .e-tab-header .e-toolbar-item:not(.e-active) {
-    border-bottom: 0px;
+        border-bottom: 0px;
     }
 
     @*/*
@@ -1213,43 +1255,43 @@
     *@
 
     .e-btn.e-flat.e-primary, .e-btn.e-flat.e-primary:focus {
-    background-color: #317ab9;
-    border-color: #265f91;
-    color: #fff;
+        background-color: #317ab9;
+        border-color: #265f91;
+        color: #fff;
     }
 
     .e-btn.e-flat.e-primary:hover, .e-btn.e-flat.e-primary:active {
-    background-color: #21527d;
-    border-color: #163854;
-    color: #fff;
+        background-color: #21527d;
+        border-color: #163854;
+        color: #fff;
     }
 
     .e-circle-close {
-    width: 24px;
-    height: 24px;
-    position: relative;
-    display: inline-block;
+        width: 24px;
+        height: 24px;
+        position: relative;
+        display: inline-block;
     }
 
     .e-circle-info {
-    width: 24px;
-    height: 24px;
-    position: relative;
-    display: inline-block;
+        width: 24px;
+        height: 24px;
+        position: relative;
+        display: inline-block;
     }
 
     .error-msg {
-    color: #66afe9;
-    display: inline-block;
-    position: relative;
-    top: -20px;
-    left: 10px;
+        color: #66afe9;
+        display: inline-block;
+        position: relative;
+        top: -20px;
+        left: 10px;
     }
 
     .error-detail {
-    position: relative;
-    left: 36px;
-    margin: 0 0 21px;
+        position: relative;
+        left: 36px;
+        margin: 0 0 21px;
     }
 
     @*/*
@@ -1264,68 +1306,68 @@
     *@
 
     .e-icons.e-circle-close.col-lg-2:before {
-    font-size: 20px;
-    color: #d9534f;
-    position: relative;
-    left: 4px;
-    bottom: 18px;
+        font-size: 20px;
+        color: #d9534f;
+        position: relative;
+        left: 4px;
+        bottom: 18px;
     }
 
     .e-icons.e-circle-info.col-lg-2:before {
-    font-size: 20px;
-    color: #228e1f;
-    position: relative;
-    left: 4px;
-    bottom: 18px;
+        font-size: 20px;
+        color: #228e1f;
+        position: relative;
+        left: 4px;
+        bottom: 18px;
     }
 
     .e-dialog .e-footer-content {
-    background-color: #f8f8f8;
+        background-color: #f8f8f8;
     }
 
     .e-dialog.e-control.e-popup, .e-dialog.e-control.e-popup .e-dlg-header-content {
-    background-color: #d9edf7;
+        background-color: #d9edf7;
     }
 
     .e-dialog.e-control.e-popup {
-    padding: 3px;
+        padding: 3px;
     }
 
     .e-dialog.e-control .e-dlg-header-content {
-    padding: 10px;
+        padding: 10px;
     }
 
     .e-dialog.e-control .e-footer-content {
-    padding: 8px 12px;
+        padding: 8px 12px;
     }
 
     .e-dialog.e-control .e-dlg-content {
-    padding: 15px 0 0;
+        padding: 15px 0 0;
     }
 
     .msg-wrapper.col-lg-12 {
-    margin-top: 20px;
+        margin-top: 20px;
     }
 
     .customtooltip.e-tooltip-wrap.e-popup {
-    background-color: #ededed;
-    border: 1px solid #d9d9d9;
+        background-color: #ededed;
+        border: 1px solid #d9d9d9;
     }
 
     .e-tooltip-wrap .e-tip-content {
-    color: #3d3d3d;
+        color: #3d3d3d;
     }
 
     .customtooltip.e-tooltip-wrap .e-arrow-tip-outer {
-    border-bottom: 12px solid transparent;
-    border-left: 12px solid transparent;
-    border-top: 12px solid transparent;
-    border-right: 12px solid transparent;
+        border-bottom: 12px solid transparent;
+        border-left: 12px solid transparent;
+        border-top: 12px solid transparent;
+        border-right: 12px solid transparent;
     }
 
     .customtooltip.e-tooltip-wrap .e-arrow-tip-inner {
-    color: #ededed;
-    font-size: 25.9px;
+        color: #ededed;
+        font-size: 25.9px;
     }
 </style>
 
@@ -1539,6 +1581,62 @@
     public Boolean RelazioniDisabled = true;
     public string pDataRelazione = "";
     private Relazioni Relazione = new Relazioni();
+    #endregion
+
+    #region template di stampa
+    public class PrintTemplates
+    {
+        public string Id { get; set; }
+        public string Text { get; set; }
+    }
+
+    private List<PrintTemplates> ListTemplates = new List<PrintTemplates>()
+    {
+        new PrintTemplates(){ Id= "1", Text= "Template 1" },
+        new PrintTemplates(){ Id= "2", Text= "Template 2" },
+     };
+
+    public string DropDownTemplate = "1";       // unico per tutte le drop down così scelto per una vale per tutte le altre
+
+    // Occhiali
+    public string LensChangeValue { get; set; } = "Template 1";
+
+    public void OnLensChange(Syncfusion.Blazor.DropDowns.ChangeEventArgs<string, PrintTemplates> args)
+    {
+        this.LensChangeValue = args.ItemData.Text;
+    }
+
+    // Controlli
+    public string ContrChangeValue { get; set; } = "Template 1";
+
+    public void OnContrChange(Syncfusion.Blazor.DropDowns.ChangeEventArgs<string, PrintTemplates> args)
+    {
+        this.ContrChangeValue = args.ItemData.Text;
+    }
+
+    // Ortottica
+    public string OrthChangeValue { get; set; } = "Template 1";
+
+    public void OnOrthChange(Syncfusion.Blazor.DropDowns.ChangeEventArgs<string, PrintTemplates> args)
+    {
+        this.OrthChangeValue = args.ItemData.Text;
+    }
+
+    // Prescrizioni
+    public string PrescChangeValue { get; set; } = "Template 1";
+
+    public void OnPrescChange(Syncfusion.Blazor.DropDowns.ChangeEventArgs<string, PrintTemplates> args)
+    {
+        this.PrescChangeValue = args.ItemData.Text;
+    }
+
+    // Relazione
+    public string RelChangeValue { get; set; } = "Template 1";
+
+    public void OnRelChange(Syncfusion.Blazor.DropDowns.ChangeEventArgs<string, PrintTemplates> args)
+    {
+        this.RelChangeValue = args.ItemData.Text;
+    }
     #endregion
 
     #region Funzioni di supporto
@@ -2072,7 +2170,8 @@
         string TmpDate;
         Boolean ContinueIns = true;
 
-        if (!String.IsNullOrEmpty(FName) && !String.IsNullOrEmpty(LName)){
+        if (!String.IsNullOrEmpty(FName) && !String.IsNullOrEmpty(LName))
+        {
             Pazienti = await PatientService.PatList(FName + "|" + LName + "|||");
 
             Console.WriteLine($"------------------------------------------------");
@@ -2087,7 +2186,8 @@
         {
             DialogVisible = true;
         }
-        else{
+        else
+        {
             Paziente.Cod = Cod;
 
             Paziente.FName = FName.Trim();
@@ -2646,7 +2746,8 @@
 
         await Task.Run(() =>
         {
-            if (ContinueOp){
+            if (ContinueOp)
+            {
                 DialogHeader = " Informazioni ";
                 DialogIcon = "e-icons e-circle-info col-lg-2";
                 DialogText = "Dati Visita salvati";
@@ -2654,7 +2755,8 @@
             }
             else
             {
-                if (FailReason == "operatore"){
+                if (FailReason == "operatore")
+                {
                     DialogHeader = " Attenzione ";
                     DialogIcon = "e-icons e-circle-close icon-red col-lg-2";
                     DialogText = "Dati Visita NON salvati";
@@ -2689,7 +2791,7 @@
 
         Visus = await VisusService.GetVisus(idv);
 
-        if(Visus.IdMisura != 0)
+        if (Visus.IdMisura != 0)
         {
             Visus.ODD_Sf = SetObjNullToStr(Visus.ODD_Sf);       // Occhio Destro Distanza
 
@@ -2864,7 +2966,8 @@
                 ContinueOp = false;
             }
 
-            if (ContinueOp){
+            if (ContinueOp)
+            {
                 Console.WriteLine($"Aggiornamento Visus");
                 Console.WriteLine($"Visus.IdMisura: {Visus.IdMisura}");
 
@@ -3308,13 +3411,14 @@
             ContinueOp = false;
         }
 
-        if (ContinueOp){
+        if (ContinueOp)
+        {
             Prescrizione NewPrescSec = new Prescrizione
                 {
                     ptIdUser = Decimal.Parse(gIdUser),
                     InsertDate = DateTime.Now,
                     ptIdVisit = Visita.IdVisit,
-                    DataPrescrizione = DateTime.Now, 
+                    DataPrescrizione = DateTime.Now,
                     PrintDate = printDate,
                     ptIdFarmaco = idF,
                     ptIdFarmacoUso = idU
@@ -3322,7 +3426,7 @@
 
             Console.WriteLine($"Inserimento Prescrizione");
             Console.WriteLine($"ptIdVisit: {Visita.IdVisit}");
-            Console.WriteLine($"DataPrescrizione: { DateTime.Now}");
+            Console.WriteLine($"DataPrescrizione: {DateTime.Now}");
             Console.WriteLine($"PrintDate: {printDate}");
             Console.WriteLine($"ptIdFarmaco: {idF}");
             Console.WriteLine($"ptIdFarmacoUso: {idU}");
@@ -3429,7 +3533,7 @@
 
         Prescriptions = await PrescrizioniService.GetPrescrByVisit(idv);
 
-        if(Prescriptions.Count > 0)
+        if (Prescriptions.Count > 0)
         {
             PrintPrescrDisabled = false;
 
@@ -3485,7 +3589,7 @@
 
             await PrescrizioniService.PutPrescrizione(Prescriptions[0].IdPrescrizione, FirstPresc);
 
-            PrintPrescrizione();
+            PrintPrescrizione(DropDownTemplate);
         }
     }
     #endregion
@@ -3566,7 +3670,7 @@
         StateHasChanged();
     }
 
-    public async void StampaRelazione(int extra)
+    public async void StampaRelazione(string who)
     {
         string TmpDate;
         DateTime printDate = DateTime.Now;
@@ -3590,7 +3694,8 @@
 
         if (Relazione.IdRelazione != 0)
         {
-            if (ContinueOp){
+            if (ContinueOp)
+            {
                 Relazione.PrintDate = printDate;
 
                 Console.WriteLine($"Aggiornamento Relazione ...");
@@ -3606,7 +3711,8 @@
         }
         else
         {
-            if (ContinueOp){
+            if (ContinueOp)
+            {
                 Relazione.ptIdUser = Decimal.Parse(gIdUser);
                 Relazione.InsertDate = DateTime.Now;
                 Relazione.ptIdVisit = Visita.IdVisit;
@@ -3632,7 +3738,7 @@
         pDataRelazione = printDate.ToShortDateString();
         Console.WriteLine($"printDate: {printDate}");
 
-        PrintRelazione(extra);
+        PrintRelazione(who);
 
         //pDataRelazione = DateTime.Now.ToString("dd/MM/yyyy");
     }
@@ -3675,7 +3781,8 @@
 
         g.DrawLine(pen, p1, p2);
 
-        // // linea verticale destra
+        //
+        // linea verticale destra
         // p1.X = 545;
         // p1.Y = 0;
 
@@ -3684,7 +3791,7 @@
 
         // g.DrawLine(pen, p1, p2);
 
-        // // 1a linea orizzontale
+        // 1a linea orizzontale
         // p1.X = 0;
         // p1.Y = 70 - FirstLay * 70;
 
@@ -3693,7 +3800,7 @@
 
         // g.DrawLine(pen, p1, p2);
 
-        // // 2a linea orizzontale
+        // 2a linea orizzontale
         // p1.X = 0;
         // p1.Y = 710;
 
@@ -3705,115 +3812,115 @@
         // PdfPen penT = new PdfPen(Color.Orange);
         // penT.Width = 0.1F;
 
-        // // Microchirurgia Oculare up
+        // Microchirurgia Oculare up
         // p1.X = 0;
-        // p1.Y = 106;
+        // p1.Y = 100;
 
         // p2.X = 545;
-        // p2.Y = 106;
+        // p2.Y = 100;
 
         // g.DrawLine(penT, p1, p2);
 
-        // // Microchirurgia Oculare down
+        // Microchirurgia Oculare down
         // p1.X = 0;
-        // p1.Y = 126;
+        // p1.Y = 120;
 
         // p2.X = 545;
-        // p2.Y = 126;
+        // p2.Y = 120;
 
         // g.DrawLine(penT, p1, p2);
 
-        // // Chirurgia Palpebrale up
+        // Chirurgia Oftalmoplastica up
         // p1.X = 0;
-        // p1.Y = 168;
+        // p1.Y = 153;
 
         // p2.X = 545;
-        // p2.Y = 168;
+        // p2.Y = 153;
 
         // g.DrawLine(penT, p1, p2);
 
-        // // Chirurgia Palpebrale down
+        // Chirurgia Oftalmoplastica down
         // p1.X = 0;
-        // p1.Y = 188;
+        // p1.Y = 173;
 
         // p2.X = 545;
-        // p2.Y = 188;
+        // p2.Y = 173;
 
         // g.DrawLine(penT, p1, p2);
 
-        // // Chirurgia Refrattiva up
+        // Chirurgia Refrattiva, Miopia, Ipermetropia, Astigmatismo up
         // p1.X = 0;
-        // p1.Y = 230;
+        // p1.Y = 206;
 
         // p2.X = 545;
-        // p2.Y = 230;
+        // p2.Y = 206;
 
         // g.DrawLine(penT, p1, p2);
 
-        // // Chirurgia Refrattiva down
+        // Chirurgia Refrattiva, Miopia, Ipermetropia, Astigmatismo down
         // p1.X = 0;
-        // p1.Y = 250;
+        // p1.Y = 262;
 
         // p2.X = 545;
-        // p2.Y = 250;
+        // p2.Y = 262;
 
         // g.DrawLine(penT, p1, p2);
 
-        // // Laser Terapia up
+        // Laser Terapia, Chirurgia, Vitreo-Retinica up
         // p1.X = 0;
-        // p1.Y = 292;
+        // p1.Y = 295;
 
         // p2.X = 545;
-        // p2.Y = 292;
+        // p2.Y = 295;
 
         // g.DrawLine(penT, p1, p2);
 
-        // // Laser Terapia down
+        // Laser Terapia, Chirurgia, Vitreo-Retinica down
         // p1.X = 0;
-        // p1.Y = 300;
+        // p1.Y = 327;
 
         // p2.X = 545;
-        // p2.Y = 300;
+        // p2.Y = 327;
 
         // g.DrawLine(penT, p1, p2);
 
-        // // Topografia Corneale up
+        // Topografia Corneale up
         // p1.X = 0;
-        // p1.Y = 342;
+        // p1.Y = 360;
 
         // p2.X = 545;
-        // p2.Y = 342;
+        // p2.Y = 360;
 
         // g.DrawLine(penT, p1, p2);
 
-        // // Topografia Corneale down
+        // Topografia Corneale down
         // p1.X = 0;
-        // p1.Y = 362;
+        // p1.Y = 380;
 
         // p2.X = 545;
-        // p2.Y = 362;
+        // p2.Y = 380;
 
         // g.DrawLine(penT, p1, p2);
 
-        // // Ecografia up
+        // Ecografia up
         // p1.X = 0;
-        // p1.Y = 404;
+        // p1.Y = 413;
 
         // p2.X = 545;
-        // p2.Y = 404;
+        // p2.Y = 413;
 
         // g.DrawLine(penT, p1, p2);
 
-        // // Ecografia down
+        // Ecografia down
         // p1.X = 0;
-        // p1.Y = 412;
+        // p1.Y = 421;
 
         // p2.X = 545;
-        // p2.Y = 412;
+        // p2.Y = 421;
 
         // g.DrawLine(penT, p1, p2);
 
-        // // Fluorangiografia up
+        // Fluorangiografia, Angiografia con, verde di, indocianina up
         // p1.X = 0;
         // p1.Y = 454;
 
@@ -3822,52 +3929,43 @@
 
         // g.DrawLine(penT, p1, p2);
 
-        // // Fluorangiografia down
+        // Fluorangiografia, Angiografia con, verde di, indocianina down
         // p1.X = 0;
-        // p1.Y = 462;
+        // p1.Y = 498;
 
         // p2.X = 545;
-        // p2.Y = 462;
+        // p2.Y = 498;
 
         // g.DrawLine(penT, p1, p2);
 
-        // // Campo Visivo up
+        // Campo Visivo up
         // p1.X = 0;
-        // p1.Y = 504;
+        // p1.Y = 531;
 
         // p2.X = 545;
-        // p2.Y = 504;
+        // p2.Y = 531;
 
         // g.DrawLine(penT, p1, p2);
 
-        // // Campo Visivo down
+        // Campo Visivo down
         // p1.X = 0;
-        // p1.Y = 512;
+        // p1.Y = 539;
 
         // p2.X = 545;
-        // p2.Y = 512;
+        // p2.Y = 539;
 
         // g.DrawLine(penT, p1, p2);
 
-        // // E.R.G e P.E.V. up
+        // Tomografia Coerenza Ottica (O.C.T.). up
         // p1.X = 0;
-        // p1.Y = 554;
+        // p1.Y = 572;
 
         // p2.X = 545;
-        // p2.Y = 554;
+        // p2.Y = 572;
 
         // g.DrawLine(penT, p1, p2);
 
-        // // E.R.G e P.E.V. down
-        // p1.X = 0;
-        // p1.Y = 562;
-
-        // p2.X = 545;
-        // p2.Y = 562;
-
-        // g.DrawLine(penT, p1, p2);
-
-        // // Tomografia Coerenza Ottica (O.C.T.) up
+        // Tomografia Coerenza Ottica (O.C.T.) down
         // p1.X = 0;
         // p1.Y = 604;
 
@@ -3876,16 +3974,25 @@
 
         // g.DrawLine(penT, p1, p2);
 
-        // // Tomografia Coerenza Ottica (O.C.T.) down
+        // Angio - O.C.T. up
         // p1.X = 0;
-        // p1.Y = 636;
+        // p1.Y = 637;
 
         // p2.X = 545;
-        // p2.Y = 636;
+        // p2.Y = 637;
 
         // g.DrawLine(penT, p1, p2);
 
-        // // H.R.T. up
+        // Angio - O.C.T. down
+        // p1.X = 0;
+        // p1.Y = 645;
+
+        // p2.X = 545;
+        // p2.Y = 645;
+
+        // g.DrawLine(penT, p1, p2);
+
+        // R.N.F.L. up
         // p1.X = 0;
         // p1.Y = 678;
 
@@ -3894,7 +4001,7 @@
 
         // g.DrawLine(penT, p1, p2);
 
-        // // H.R.T. down
+        // R.N.F.L. down
         // p1.X = 0;
         // p1.Y = 686;
 
@@ -3902,34 +4009,43 @@
         // p2.Y = 686;
 
         // g.DrawLine(penT, p1, p2);
+        //
 
-        g.DrawString("Microchirurgia", SideFont, PdfBrushes.Black, 0, 104 - FirstLay * 70);
-        g.DrawString("Oculare", SideFont, PdfBrushes.Black, 0, 116 - FirstLay * 70);
+        g.DrawString("Microchirurgia", SideFont, PdfBrushes.Black, 0, 98 - FirstLay * 70);
+        g.DrawString("Oculare", SideFont, PdfBrushes.Black, 0, 110 - FirstLay * 70);
 
-        g.DrawString("Chirurgia", SideFont, PdfBrushes.Black, 0, 166 - FirstLay * 70);
-        g.DrawString("Palpebrale", SideFont, PdfBrushes.Black, 0, 178 - FirstLay * 70);
+        g.DrawString("Chirurgia", SideFont, PdfBrushes.Black, 0, 151 - FirstLay * 70);
+        g.DrawString("Oftalmoplastica", SideFont, PdfBrushes.Black, 0, 163 - FirstLay * 70);
 
-        g.DrawString("Chirurgia", SideFont, PdfBrushes.Black, 0, 228 - FirstLay * 70);
-        g.DrawString("Refrattiva", SideFont, PdfBrushes.Black, 0, 240 - FirstLay * 70);
+        g.DrawString("Chirurgia", SideFont, PdfBrushes.Black, 0, 204 - FirstLay * 70);
+        g.DrawString("Refrattiva", SideFont, PdfBrushes.Black, 0, 216 - FirstLay * 70);
+        g.DrawString("Miopia", SideFont, PdfBrushes.Black, 0, 228 - FirstLay * 70);
+        g.DrawString("Ipermetropia", SideFont, PdfBrushes.Black, 0, 240 - FirstLay * 70);
+        g.DrawString("Astigmatismo", SideFont, PdfBrushes.Black, 0, 252 - FirstLay * 70);
 
-        g.DrawString("Laser Terapia", SideFont, PdfBrushes.Black, 0, 290 - FirstLay * 70);
+        g.DrawString("Laser Terapia", SideFont, PdfBrushes.Black, 0, 293 - FirstLay * 70);
+        g.DrawString("Chirurgia", SideFont, PdfBrushes.Black, 0, 305 - FirstLay * 70);
+        g.DrawString("Vitreo-Retinica", SideFont, PdfBrushes.Black, 0, 317 - FirstLay * 70);
 
-        g.DrawString("Topografia", SideFont, PdfBrushes.Black, 0, 340 - FirstLay * 70);
-        g.DrawString("Corneale", SideFont, PdfBrushes.Black, 0, 352 - FirstLay * 70);
+        g.DrawString("Topografia", SideFont, PdfBrushes.Black, 0, 358 - FirstLay * 70);
+        g.DrawString("Corneale", SideFont, PdfBrushes.Black, 0, 370 - FirstLay * 70);
 
-        g.DrawString("Ecografia", SideFont, PdfBrushes.Black, 0, 402 - FirstLay * 70);
+        g.DrawString("Ecografia", SideFont, PdfBrushes.Black, 0, 411 - FirstLay * 70);
 
         g.DrawString("Fluorangiografia", SideFont, PdfBrushes.Black, 0, 452 - FirstLay * 70);
+        g.DrawString("Angiografia con", SideFont, PdfBrushes.Black, 0, 464 - FirstLay * 70);
+        g.DrawString("verde di", SideFont, PdfBrushes.Black, 0, 476 - FirstLay * 70);
+        g.DrawString("indocianina", SideFont, PdfBrushes.Black, 0, 488 - FirstLay * 70);
 
-        g.DrawString("Campo Visivo", SideFont, PdfBrushes.Black, 0, 502 - FirstLay * 70);
+        g.DrawString("Campo Visivo", SideFont, PdfBrushes.Black, 0, 529 - FirstLay * 70);
 
-        g.DrawString("E.R.G e P.E.V.", SideFont, PdfBrushes.Black, 0, 552 - FirstLay * 70);
+        g.DrawString("Tomografia", SideFont, PdfBrushes.Black, 0, 570 - FirstLay * 70);
+        g.DrawString("Coerenza Ottica", SideFont, PdfBrushes.Black, 0, 582 - FirstLay * 70);
+        g.DrawString("(O.C.T.)", SideFont, PdfBrushes.Black, 0, 594 - FirstLay * 70);
 
-        g.DrawString("Tomografia", SideFont, PdfBrushes.Black, 0, 602 - FirstLay * 70);
-        g.DrawString("Coerenza Ottica", SideFont, PdfBrushes.Black, 0, 614 - FirstLay * 70);
-        g.DrawString("(O.C.T.)", SideFont, PdfBrushes.Black, 0, 626 - FirstLay * 70);
+        g.DrawString("Angio - O.C.T.", SideFont, PdfBrushes.Black, 0, 635 - FirstLay * 70);
 
-        g.DrawString("H.R.T.", SideFont, PdfBrushes.Black, 0, 676 - FirstLay * 70);
+        g.DrawString("R.N.F.L.", SideFont, PdfBrushes.Black, 0, 676 - FirstLay * 70);
 
         // g.DrawString("Viale Raffaello Sanzio, 60 – scala C, 5° piano – (Piazza Michelangelo) - 95128 Catania (CT)", FootFont, PdfBrushes.Red, 141, 719);
         // g.DrawString("Riceve per appuntamento – Tel/Fax: 095371701", FootFont, PdfBrushes.Red, 220, 732);
@@ -4210,7 +4326,7 @@
         PdfTextElement val;
 
         HeadPdfGrid.Rows[0].Cells[0].Style = HeadLogoStyle;
-        HeadPdfGrid.Rows[0].Cells[0].ImagePosition = PdfGridImagePosition.Tile;                                         // 0-0   
+        HeadPdfGrid.Rows[0].Cells[0].ImagePosition = PdfGridImagePosition.Tile;                                         // 0-0
 
         HeadPdfGrid.Rows[0].Cells[1].Style = HeadStyle;
         HeadPdfGrid.Rows[0].Cells[2].Style = HeadStyle;
@@ -4272,7 +4388,7 @@
         val = new PdfTextElement("Anni", hNameFont, PdfBrushes.Black);                                                  // 1-3
         HeadPdfGrid.Rows[1].Cells[3].Value = val;
 
-        if((BirthDate != "") && (DataVisita != ""))
+        if ((BirthDate != "") && (DataVisita != ""))
         {
             val = new PdfTextElement(Eta(CustomDate(BirthDate), DataVisita), hValueFont, PdfBrushes.Black);             // 1-4
             HeadPdfGrid.Rows[1].Cells[4].Value = val;
@@ -4545,7 +4661,7 @@
         VisitPdfGrid.Rows[0].Cells[5].Style = posCellStyleS;                                        // vuoto
         VisitPdfGrid.Rows[0].Cells[6].Style = posCellStyleH;                                        // INTERVENTI
 
-        VisitPdfGrid.Rows[1].Cells[0].Style = posCellStyleV;                                    
+        VisitPdfGrid.Rows[1].Cells[0].Style = posCellStyleV;
         VisitPdfGrid.Rows[1].Cells[5].Style = posCellStyleS;
         VisitPdfGrid.Rows[1].Cells[6].Style = posCellStyleV;
 
@@ -5127,7 +5243,7 @@
         // PdfLayoutResult result = title.Draw(page, new PointF(0, 0));
         // PdfStandardFont contentFont = new PdfStandardFont(PdfFontFamily.TimesRoman, 12);
 
-        // //Create text element. 
+        // //Create text element.
         // PdfTextElement content = new PdfTextElement("This component demonstrates fetching data from a client side and Exporting the data to PDF document using Syncfusion .NET PDF library.", contentFont, PdfBrushes.Black);
         // // PdfLayoutFormat format = new PdfLayoutFormat();
         // // format.Layout = PdfLayoutType.Paginate;
@@ -5147,7 +5263,7 @@
         // //Draw PDF grid into the PDF page.
         // pdfGrid.Draw(page, new Syncfusion.Drawing.PointF(0, result.Bounds.Bottom + paragraphAfterSpacing));
 
-        //Create memory stream. 
+        //Create memory stream.
         MemoryStream memoryStream = new MemoryStream();
         //Save the PDF document.
         pdfDocument.Save(memoryStream);
@@ -5155,10 +5271,24 @@
         await JS.SaveAs("Scheda " + LName + " " + FName + "_" + ListaVisite[VisitaCorrente].Val.ToString("dd.MM.yyyy") + ".pdf", memoryStream.ToArray());
     }
 
-    async void PrintOrtottica()
+    async void PrintOrtottica(string who)
     {
         int paragraphAfterSpacing = 8;
         int cellMargin = 8;
+
+        string doctor = "";
+        string iscrOrdine = "";
+
+        if (who == "1")
+        {
+            doctor = "PIETRO";
+            iscrOrdine = "Iscriz. Ord. Dei Medici di CT - Pietro La Bruna n° 5133";
+        }
+        else
+        {
+            doctor = "MARCO";
+            iscrOrdine = "Iscriz. Ord. Dei Medici di CT - Marco La Bruna n° 14037";
+        }
 
         FirstPage = true;
 
@@ -5257,15 +5387,12 @@
         {
             PdfBitmap image = new PdfBitmap(imageStream);
 
-            // g.DrawImage(image, 0, 0);
-            //g.DrawImage(image, 5, 0);
-
             // Draw the image in the header.
             header.Graphics.DrawImage(image, 5, 15);
         }
 
-        header.Graphics.DrawString("STUDIO OCULISTICO", hHeadFont, PdfBrushes.Black, 120, 14);
-        header.Graphics.DrawString("DOTT. PIETRO LA BRUNA", hHeadFont, PdfBrushes.Black, 120, 36);
+        // header.Graphics.DrawString("STUDIO OCULISTICO", hHeadFont, PdfBrushes.Black, 120, 14); 36
+        header.Graphics.DrawString("DOTT. " + doctor + " LA BRUNA", hHeadFont, PdfBrushes.Black, 100, 25);
 
         PdfPen hPen = new PdfPen(Color.Black);
         hPen.Width = 0.1F;
@@ -5325,7 +5452,7 @@
         footer.Graphics.DrawString("Viale Raffaello Sanzio, 60 – scala C, 5° piano – (Piazza Michelangelo) - 95128 Catania (CT)", FootFont, PdfBrushes.Black, 151, 8);
         footer.Graphics.DrawString("Riceve per appuntamento – Tel/Fax: 095371701", FootFont, PdfBrushes.Black, 230, 22);
         footer.Graphics.DrawString("Sito Web: http://www.studiolabruna.it – email: info@studiolabruna.it", FootFont, PdfBrushes.Black, 190, 36);
-        footer.Graphics.DrawString("Iscriz. Ord. Dei Medici di CT- Pietro La Bruna n° 5133 / Marco La Bruna n° 14037", FootFont, PdfBrushes.Black, 162, 50);
+        footer.Graphics.DrawString(iscrOrdine, FootFont, PdfBrushes.Black, 212, 50);
 
         PdfPen fPen = new PdfPen(Color.Black);
         fPen.Width = 0.1F;
@@ -5376,7 +5503,7 @@
         posCellStyleP1.Borders.Right.Width = 0;
         posCellStyleP1.Borders.Top.Width = 0;
         posCellStyleP1.Borders.Bottom.Width = 0;
-        posCellStyleP1.CellPadding = new PdfPaddings(0, 3, 0, 12);
+        posCellStyleP1.CellPadding = new PdfPaddings(0, 3, 12, 0);
 
 
         // Add the rows to head grid
@@ -5402,25 +5529,29 @@
         HeadPdfGrid.Columns[1].Width = 430;
 
         // Set columns merged
-        HeadPdfGrid.Rows[0].Cells[0].RowSpan = 2;
+        // HeadPdfGrid.Rows[0].Cells[0].RowSpan = 2;
         #endregion
 
         #region Inserimento Dati Testata
         // Set the HeadPdfGrid's value
         PdfTextElement val;
 
-        // HeadPdfGrid.Rows[0].Cells[0].ImagePosition = PdfGridImagePosition.Tile;              // 0 - 0
         HeadPdfGrid.Rows[0].Cells[0].Style = posCellStyleP0;
         HeadPdfGrid.Rows[0].Cells[1].Style = posCellStyleP0;
 
-        val = new PdfTextElement(LName + " " + FName, fieldPaziente, PdfBrushes.Black);         // 0 - 1
+        val = new PdfTextElement(" ", fieldPaziente, PdfBrushes.Black);                     // 0-0
+        HeadPdfGrid.Rows[0].Cells[0].Value = val;
+
+        val = new PdfTextElement(LName + " " + FName, fieldPaziente, PdfBrushes.Black);     // 0-1
         HeadPdfGrid.Rows[0].Cells[1].Value = val;
 
-        // HeadPdfGrid.Rows[1].Cells[0].Style = HeadStyle;
         HeadPdfGrid.Rows[1].Cells[0].Style = posCellStyleP1;
         HeadPdfGrid.Rows[1].Cells[1].Style = posCellStyleP1;
 
-        val = new PdfTextElement("Visita Ortottica", fieldHelvBold, PdfBrushes.Black);          // 0 - 1
+        val = new PdfTextElement(" ", fieldPaziente, PdfBrushes.Black);                     // 1-0
+        HeadPdfGrid.Rows[1].Cells[0].Value = val;
+
+        val = new PdfTextElement("Visita Ortottica", fieldHelvBold, PdfBrushes.Black);      // 1-1
         HeadPdfGrid.Rows[1].Cells[1].Value = val;
 
         PdfLayoutResult result = HeadPdfGrid.Draw(page, new Syncfusion.Drawing.PointF(0, 80));
@@ -5654,10 +5785,24 @@
         await JS.SaveAs("Scheda Ortottica " + LName + " " + FName + "_" + ListaVisite[VisitaCorrente].Val.ToString("dd.MM.yyyy") + ".pdf", memoryStream.ToArray());
     }
 
-    async void PrintControlli()
+    async void PrintControlli(string who)
     {
         int paragraphAfterSpacing = 8;
         int cellMargin = 8;
+
+        string doctor = "";
+        string iscrOrdine = "";
+
+        if (who == "1")
+        {
+            doctor = "PIETRO";
+            iscrOrdine = "Iscriz. Ord. Dei Medici di CT - Pietro La Bruna n° 5133";
+        }
+        else
+        {
+            doctor = "MARCO";
+            iscrOrdine = "Iscriz. Ord. Dei Medici di CT - Marco La Bruna n° 14037";
+        }
 
         FirstPage = true;
 
@@ -5763,8 +5908,8 @@
             header.Graphics.DrawImage(image, 5, 15);
         }
 
-        header.Graphics.DrawString("STUDIO OCULISTICO", hHeadFont, PdfBrushes.Black, 120, 14);
-        header.Graphics.DrawString("DOTT. PIETRO LA BRUNA", hHeadFont, PdfBrushes.Black, 120, 36);
+        // header.Graphics.DrawString("STUDIO OCULISTICO", hHeadFont, PdfBrushes.Black, 120, 14); 36
+        header.Graphics.DrawString("DOTT. " + doctor + " LA BRUNA", hHeadFont, PdfBrushes.Black, 100, 25);
 
         PdfPen hPen = new PdfPen(Color.Black);
         hPen.Width = 0.1F;
@@ -5824,7 +5969,7 @@
         footer.Graphics.DrawString("Viale Raffaello Sanzio, 60 – scala C, 5° piano – (Piazza Michelangelo) - 95128 Catania (CT)", FootFont, PdfBrushes.Black, 151, 8);
         footer.Graphics.DrawString("Riceve per appuntamento – Tel/Fax: 095371701", FootFont, PdfBrushes.Black, 230, 22);
         footer.Graphics.DrawString("Sito Web: http://www.studiolabruna.it – email: info@studiolabruna.it", FootFont, PdfBrushes.Black, 190, 36);
-        footer.Graphics.DrawString("Iscriz. Ord. Dei Medici di CT- Pietro La Bruna n° 5133 / Marco La Bruna n° 14037", FootFont, PdfBrushes.Black, 162, 50);
+        footer.Graphics.DrawString(iscrOrdine, FootFont, PdfBrushes.Black, 212, 50);
 
         PdfPen fPen = new PdfPen(Color.Black);
         fPen.Width = 0.1F;
@@ -5875,7 +6020,7 @@
         posCellStyleP1.Borders.Right.Width = 0;
         posCellStyleP1.Borders.Top.Width = 0;
         posCellStyleP1.Borders.Bottom.Width = 0;
-        posCellStyleP1.CellPadding = new PdfPaddings(0, 3, 0, 12);
+        posCellStyleP1.CellPadding = new PdfPaddings(0, 3, 12, 0);
 
         // Add the rows to head grid
         PdfGridRow row0 = HeadPdfGrid.Rows.Add();
@@ -5900,24 +6045,29 @@
         HeadPdfGrid.Columns[1].Width = 430;
 
         // Set columns merged
-        HeadPdfGrid.Rows[0].Cells[0].RowSpan = 2;
+        // HeadPdfGrid.Rows[0].Cells[0].RowSpan = 2;
         #endregion
 
         #region Inserimento Dati Testata
         // Set the HeadPdfGrid's value
         PdfTextElement val;
 
-        HeadPdfGrid.Rows[0].Cells[0].Style = posCellStyleP0;                                    // 0 - 0
+        HeadPdfGrid.Rows[0].Cells[0].Style = posCellStyleP0;
         HeadPdfGrid.Rows[0].Cells[1].Style = posCellStyleP0;
 
-        val = new PdfTextElement(LName + " " + FName, fieldPaziente, PdfBrushes.Black);         // 0 - 1
+        val = new PdfTextElement(" ", fieldPaziente, PdfBrushes.Black);                     // 0-0
+        HeadPdfGrid.Rows[0].Cells[0].Value = val;
+
+        val = new PdfTextElement(LName + " " + FName, fieldPaziente, PdfBrushes.Black);     // 0-1
         HeadPdfGrid.Rows[0].Cells[1].Value = val;
 
-        // HeadPdfGrid.Rows[1].Cells[0].Style = HeadStyle;
         HeadPdfGrid.Rows[1].Cells[0].Style = posCellStyleP1;
         HeadPdfGrid.Rows[1].Cells[1].Style = posCellStyleP1;
 
-        val = new PdfTextElement("Lista Controlli", fieldHelvBold, PdfBrushes.Black);           // 1 - 1
+        val = new PdfTextElement(" ", fieldPaziente, PdfBrushes.Black);                     // 1-0
+        HeadPdfGrid.Rows[1].Cells[0].Value = val;
+
+        val = new PdfTextElement("Lista Controlli", fieldHelvBold, PdfBrushes.Black);          // 1-1
         HeadPdfGrid.Rows[1].Cells[1].Value = val;
 
         PdfLayoutResult result = HeadPdfGrid.Draw(page, new Syncfusion.Drawing.PointF(0, 80));
@@ -6032,10 +6182,24 @@
         await JS.SaveAs("Scheda Controlli " + LName + " " + FName + "_" + ListaVisite[VisitaCorrente].Val.ToString("dd.MM.yyyy") + ".pdf", memoryStream.ToArray());
     }
 
-    async void PrintOcchiali()
+    async void PrintOcchiali(string who)
     {
         int paragraphAfterSpacing = 16;
         // int cellMargin = 8;
+
+        string doctor = "";
+        string iscrOrdine = "";
+
+        if (who == "1")
+        {
+            doctor = "PIETRO";
+            iscrOrdine = "Iscriz. Ord. Dei Medici di CT - Pietro La Bruna n° 5133";
+        }
+        else
+        {
+            doctor = "MARCO";
+            iscrOrdine = "Iscriz. Ord. Dei Medici di CT - Marco La Bruna n° 14037";
+        }
 
         FirstPage = true;
 
@@ -6144,8 +6308,8 @@
             header.Graphics.DrawImage(image, 5, 15);
         }
 
-        header.Graphics.DrawString("STUDIO OCULISTICO", hHeadFont, PdfBrushes.Black, 120, 14);
-        header.Graphics.DrawString("DOTT. PIETRO LA BRUNA", hHeadFont, PdfBrushes.Black, 120, 36);
+        // header.Graphics.DrawString("STUDIO OCULISTICO", hHeadFont, PdfBrushes.Black, 120, 14); 36
+        header.Graphics.DrawString("DOTT. " + doctor + " LA BRUNA", hHeadFont, PdfBrushes.Black, 100, 25);
 
         PdfPen hPen = new PdfPen(Color.Black);
         hPen.Width = 0.1F;
@@ -6205,7 +6369,7 @@
         footer.Graphics.DrawString("Viale Raffaello Sanzio, 60 – scala C, 5° piano – (Piazza Michelangelo) - 95128 Catania (CT)", FootFont, PdfBrushes.Black, 151, 8);
         footer.Graphics.DrawString("Riceve per appuntamento – Tel/Fax: 095371701", FootFont, PdfBrushes.Black, 230, 22);
         footer.Graphics.DrawString("Sito Web: http://www.studiolabruna.it – email: info@studiolabruna.it", FootFont, PdfBrushes.Black, 190, 36);
-        footer.Graphics.DrawString("Iscriz. Ord. Dei Medici di CT- Pietro La Bruna n° 5133 / Marco La Bruna n° 14037", FootFont, PdfBrushes.Black, 162, 50);
+        footer.Graphics.DrawString(iscrOrdine, FootFont, PdfBrushes.Black, 212, 50);
 
         PdfPen fPen = new PdfPen(Color.Black);
         fPen.Width = 0.1F;
@@ -6598,7 +6762,8 @@
         pen.LineCap = PdfLineCap.Square;
 
         // occhio destro
-        if (SetObjNullToStr(Visus.ODD_Asse) != ""){
+        if (SetObjNullToStr(Visus.ODD_Asse) != "")
+        {
             pen.Color = Color.DarkBlue;
 
             double aa = Convert.ToDouble(SetObjNullToStr(Visus.ODD_Asse));
@@ -6623,20 +6788,21 @@
             // Console.WriteLine($"p2.X: {p2.X}, p2.Y: {p2.Y}");
             // Console.WriteLine($" ");
 
-            pb.X = (float)(Math.Cos(Math.PI * ab / 180) * 15 + p2.X);
-            pb.Y = (float)(p2.Y - Math.Sin(Math.PI * ab / 180) * 15);
+            pb.X = (float)(Math.Cos(Math.PI * ab / 180) * 10 + p2.X);
+            pb.Y = (float)(p2.Y - Math.Sin(Math.PI * ab / 180) * 10);
 
             g.DrawLine(pen, p2, pb);
 
-            pc.X = (float)(Math.Cos(Math.PI * ac / 180) * 15 + p2.X);
-            pc.Y = (float)(p2.Y - Math.Sin(Math.PI * ac / 180) * 15);
+            pc.X = (float)(Math.Cos(Math.PI * ac / 180) * 10 + p2.X);
+            pc.Y = (float)(p2.Y - Math.Sin(Math.PI * ac / 180) * 10);
 
             g.DrawLine(pen, p2, pc);
 
             // g.DrawLine(pen, pb, pc);
         }
 
-        if (SetObjNullToStr(Visus.ODP_Asse) != ""){
+        if (SetObjNullToStr(Visus.ODP_Asse) != "")
+        {
             pen.Color = Color.DarkRed;
 
             double aa = Convert.ToDouble(SetObjNullToStr(Visus.ODP_Asse));
@@ -6653,13 +6819,13 @@
 
             g.DrawLine(pen, p1, p2);
 
-            pb.X = (float)(Math.Cos(Math.PI * ab / 180) * 15 + p2.X);
-            pb.Y = (float)(p2.Y - Math.Sin(Math.PI * ab / 180) * 15);
+            pb.X = (float)(Math.Cos(Math.PI * ab / 180) * 10 + p2.X);
+            pb.Y = (float)(p2.Y - Math.Sin(Math.PI * ab / 180) * 10);
 
             g.DrawLine(pen, p2, pb);
 
-            pc.X = (float)(Math.Cos(Math.PI * ac / 180) * 15 + p2.X);
-            pc.Y = (float)(p2.Y - Math.Sin(Math.PI * ac / 180) * 15);
+            pc.X = (float)(Math.Cos(Math.PI * ac / 180) * 10 + p2.X);
+            pc.Y = (float)(p2.Y - Math.Sin(Math.PI * ac / 180) * 10);
 
             g.DrawLine(pen, p2, pc);
         }
@@ -6682,13 +6848,13 @@
 
             g.DrawLine(pen, p1, p2);
 
-            pb.X = (float)(Math.Cos(Math.PI * ab / 180) * 15 + p2.X);
-            pb.Y = (float)(p2.Y - Math.Sin(Math.PI * ab / 180) * 15);
+            pb.X = (float)(Math.Cos(Math.PI * ab / 180) * 10 + p2.X);
+            pb.Y = (float)(p2.Y - Math.Sin(Math.PI * ab / 180) * 10);
 
             g.DrawLine(pen, p2, pb);
 
-            pc.X = (float)(Math.Cos(Math.PI * ac / 180) * 15 + p2.X);
-            pc.Y = (float)(p2.Y - Math.Sin(Math.PI * ac / 180) * 15);
+            pc.X = (float)(Math.Cos(Math.PI * ac / 180) * 10 + p2.X);
+            pc.Y = (float)(p2.Y - Math.Sin(Math.PI * ac / 180) * 10);
 
             g.DrawLine(pen, p2, pc);
         }
@@ -6713,13 +6879,13 @@
 
             g.DrawLine(pen, p1, p2);
 
-            pb.X = (float)(Math.Cos(Math.PI * ab / 180) * 15 + p2.X);
-            pb.Y = (float)(p2.Y - Math.Sin(Math.PI * ab / 180) * 15);
+            pb.X = (float)(Math.Cos(Math.PI * ab / 180) * 10 + p2.X);
+            pb.Y = (float)(p2.Y - Math.Sin(Math.PI * ab / 180) * 10);
 
             g.DrawLine(pen, p2, pb);
 
-            pc.X = (float)(Math.Cos(Math.PI * ac / 180) * 15 + p2.X);
-            pc.Y = (float)(p2.Y - Math.Sin(Math.PI * ac / 180) * 15);
+            pc.X = (float)(Math.Cos(Math.PI * ac / 180) * 10 + p2.X);
+            pc.Y = (float)(p2.Y - Math.Sin(Math.PI * ac / 180) * 10);
 
             g.DrawLine(pen, p2, pc);
         }
@@ -6743,13 +6909,13 @@
 
             g.DrawLine(pen, p1, p2);
 
-            pb.X = (float)(Math.Cos(Math.PI * ab / 180) * 15 + p2.X);
-            pb.Y = (float)(p2.Y - Math.Sin(Math.PI * ab / 180) * 15);
+            pb.X = (float)(Math.Cos(Math.PI * ab / 180) * 10 + p2.X);
+            pb.Y = (float)(p2.Y - Math.Sin(Math.PI * ab / 180) * 10);
 
             g.DrawLine(pen, p2, pb);
 
-            pc.X = (float)(Math.Cos(Math.PI * ac / 180) * 15 + p2.X);
-            pc.Y = (float)(p2.Y - Math.Sin(Math.PI * ac / 180) * 15);
+            pc.X = (float)(Math.Cos(Math.PI * ac / 180) * 10 + p2.X);
+            pc.Y = (float)(p2.Y - Math.Sin(Math.PI * ac / 180) * 10);
 
             g.DrawLine(pen, p2, pc);
         }
@@ -6773,13 +6939,13 @@
 
             g.DrawLine(pen, p1, p2);
 
-            pb.X = (float)(Math.Cos(Math.PI * ab / 180) * 15 + p2.X);
-            pb.Y = (float)(p2.Y - Math.Sin(Math.PI * ab / 180) * 15);
+            pb.X = (float)(Math.Cos(Math.PI * ab / 180) * 10 + p2.X);
+            pb.Y = (float)(p2.Y - Math.Sin(Math.PI * ab / 180) * 10);
 
             g.DrawLine(pen, p2, pb);
 
-            pc.X = (float)(Math.Cos(Math.PI * ac / 180) * 15 + p2.X);
-            pc.Y = (float)(p2.Y - Math.Sin(Math.PI * ac / 180) * 15);
+            pc.X = (float)(Math.Cos(Math.PI * ac / 180) * 10 + p2.X);
+            pc.Y = (float)(p2.Y - Math.Sin(Math.PI * ac / 180) * 10);
 
             g.DrawLine(pen, p2, pc);
         }
@@ -6812,7 +6978,7 @@
         HeadTitleStyle.CellPadding = new PdfPaddings(150, 0, 15, 0);
 
         PdfGridCellStyle HeadEmptyStyle = new PdfGridCellStyle();
-        HeadEmptyStyle.Borders.Left.Width = 0F;             
+        HeadEmptyStyle.Borders.Left.Width = 0F;
         HeadEmptyStyle.Borders.Right.Width = 0F;
         HeadEmptyStyle.Borders.Top.Width = 0F;
         HeadEmptyStyle.Borders.Bottom.Width = 0F;
@@ -7299,7 +7465,8 @@
         NotePdfGrid.Rows[0].Cells[0].Value = value;
         value = new PdfTextElement("TABO", FieldBldFont, PdfBrushes.Black);                         //  0 - 1
         NotePdfGrid.Rows[0].Cells[1].Value = value;
-        if(fTabo){
+        if (fTabo)
+        {
             value = new PdfTextElement("Si", FieldRegFont, PdfBrushes.Black);                       //  0 - 2
         }
         else
@@ -7381,10 +7548,24 @@
         await JS.SaveAs("Prescrizione Lenti " + LName + " " + FName + "_" + ListaVisite[VisitaCorrente].Val.ToString("dd.MM.yyyy") + ".pdf", memoryStream.ToArray());
     }
 
-    async void PrintPrescrizione()
+    async void PrintPrescrizione(string who)
     {
         int paragraphAfterSpacing = 8;
         int cellMargin = 8;
+
+        string doctor = "";
+        string iscrOrdine = "";
+
+        if (who == "1")
+        {
+            doctor = "PIETRO";
+            iscrOrdine = "Iscriz. Ord. Dei Medici di CT - Pietro La Bruna n° 5133";
+        }
+        else
+        {
+            doctor = "MARCO";
+            iscrOrdine = "Iscriz. Ord. Dei Medici di CT - Marco La Bruna n° 14037";
+        }
 
         FirstPage = true;
 
@@ -7402,7 +7583,7 @@
         pdfDocument.DocumentInformation.Author = "Powered by Phoenix";
         pdfDocument.DocumentInformation.CreationDate = DateTime.Now;
         pdfDocument.DocumentInformation.Creator = "Ophthal";
-        pdfDocument.DocumentInformation.Keywords = "Dott. La Bruna";
+        pdfDocument.DocumentInformation.Keywords = "Dott. " + doctor + " La Bruna";
         pdfDocument.DocumentInformation.Subject = "Scheda Prescrizione"; //pDataPrescrizione
         pdfDocument.DocumentInformation.Title = "Prescrizione " + LName + " " + FName + "_" + pDataPrescrizione.Substring(0, 2) + "." + pDataPrescrizione.Substring(2, 2) + "." + pDataPrescrizione.Substring(4, 4);
 
@@ -7485,15 +7666,12 @@
         {
             PdfBitmap image = new PdfBitmap(imageStream);
 
-            // g.DrawImage(image, 0, 0);
-            //g.DrawImage(image, 5, 0);
-
             // Draw the image in the header.
             header.Graphics.DrawImage(image, 5, 15);
         }
 
-        header.Graphics.DrawString("STUDIO OCULISTICO", hHeadFont, PdfBrushes.Black, 120, 14);
-        header.Graphics.DrawString("DOTT. PIETRO LA BRUNA", hHeadFont, PdfBrushes.Black, 120, 36);
+        // header.Graphics.DrawString("STUDIO OCULISTICO", hHeadFont, PdfBrushes.Black, 120, 14); 36
+        header.Graphics.DrawString("DOTT. " + doctor + " LA BRUNA", hHeadFont, PdfBrushes.Black, 100, 25);
 
         PdfPen hPen = new PdfPen(Color.Black);
         hPen.Width = 0.1F;
@@ -7553,7 +7731,7 @@
         footer.Graphics.DrawString("Viale Raffaello Sanzio, 60 – scala C, 5° piano – (Piazza Michelangelo) - 95128 Catania (CT)", FootFont, PdfBrushes.Black, 151, 8);
         footer.Graphics.DrawString("Riceve per appuntamento – Tel/Fax: 095371701", FootFont, PdfBrushes.Black, 230, 22);
         footer.Graphics.DrawString("Sito Web: http://www.studiolabruna.it – email: info@studiolabruna.it", FootFont, PdfBrushes.Black, 190, 36);
-        footer.Graphics.DrawString("Iscriz. Ord. Dei Medici di CT- Pietro La Bruna n° 5133 / Marco La Bruna n° 14037", FootFont, PdfBrushes.Black, 162, 50);
+        footer.Graphics.DrawString(iscrOrdine, FootFont, PdfBrushes.Black, 212, 50);
 
         PdfPen fPen = new PdfPen(Color.Black);
         fPen.Width = 0.1F;
@@ -7604,7 +7782,7 @@
         posCellStyleP1.Borders.Right.Width = 0;
         posCellStyleP1.Borders.Top.Width = 0;
         posCellStyleP1.Borders.Bottom.Width = 0;
-        posCellStyleP1.CellPadding = new PdfPaddings(0, 3, 0, 12);
+        posCellStyleP1.CellPadding = new PdfPaddings(0, 3, 12, 0);
 
 
         // Add the rows to head grid
@@ -7630,25 +7808,29 @@
         HeadPdfGrid.Columns[1].Width = 430;
 
         // Set columns merged
-        HeadPdfGrid.Rows[0].Cells[0].RowSpan = 2;
+        //HeadPdfGrid.Rows[0].Cells[0].RowSpan = 2;
         #endregion
 
         #region Inserimento Dati Testata
         // Set the HeadPdfGrid's value
         PdfTextElement val;
 
-        // HeadPdfGrid.Rows[0].Cells[0].ImagePosition = PdfGridImagePosition.Tile;             // 0-0
         HeadPdfGrid.Rows[0].Cells[0].Style = posCellStyleP0;
         HeadPdfGrid.Rows[0].Cells[1].Style = posCellStyleP0;
+
+        val = new PdfTextElement(" ", fieldPaziente, PdfBrushes.Black);                     // 0-0
+        HeadPdfGrid.Rows[0].Cells[0].Value = val;
 
         val = new PdfTextElement(LName + " " + FName, fieldPaziente, PdfBrushes.Black);     // 0-1
         HeadPdfGrid.Rows[0].Cells[1].Value = val;
 
-        // HeadPdfGrid.Rows[1].Cells[0].Style = HeadStyle;
         HeadPdfGrid.Rows[1].Cells[0].Style = posCellStyleP1;
         HeadPdfGrid.Rows[1].Cells[1].Style = posCellStyleP1;
 
-        val = new PdfTextElement("Prescrizione", fieldHelvBold, PdfBrushes.Black);          // 0-1
+        val = new PdfTextElement(" ", fieldPaziente, PdfBrushes.Black);                     // 1-0
+        HeadPdfGrid.Rows[1].Cells[0].Value = val;
+
+        val = new PdfTextElement("Prescrizione", fieldHelvBold, PdfBrushes.Black);          // 1-1
         HeadPdfGrid.Rows[1].Cells[1].Value = val;
 
         PdfLayoutResult result = HeadPdfGrid.Draw(page, new Syncfusion.Drawing.PointF(0, 80));
@@ -7667,68 +7849,47 @@
         PdfFont italicdFont = new PdfStandardFont(PdfFontFamily.Helvetica, 10, PdfFontStyle.Italic);
 
         #region Definizione stile celle Prescrizione
-        PdfGridCellStyle posCellStyleH = new PdfGridCellStyle();
-        posCellStyleH.Borders.Left.Width = 0;
-        posCellStyleH.Borders.Right.Width = 0;
-        posCellStyleH.Borders.Top.Width = 0;
-        posCellStyleH.Borders.Bottom.Width = 0;
-        posCellStyleH.CellPadding = new PdfPaddings(0, 3, 6, 2);
-
-        PdfGridCellStyle posCellStyleV = new PdfGridCellStyle();
-        posCellStyleV.Borders.Left.Width = 0;
-        posCellStyleV.Borders.Right.Width = 0;
-        posCellStyleV.Borders.Top.Width = 0;
-        posCellStyleV.Borders.Bottom.Width = 0;
-        posCellStyleV.CellPadding = new PdfPaddings(0, 3, 6, 2);
-
         PdfGridCellStyle posCellStyleH1 = new PdfGridCellStyle();
         posCellStyleH1.Borders.Left.Width = 0;
         posCellStyleH1.Borders.Right.Width = 0;
         posCellStyleH1.Borders.Top.Width = 0;
         posCellStyleH1.Borders.Bottom.Width = 0;
-        posCellStyleH1.CellPadding = new PdfPaddings(0, 3, 0, 2);
+        posCellStyleH1.CellPadding = new PdfPaddings(0, 3, 0, 0);
 
         PdfGridCellStyle posCellStyleV1 = new PdfGridCellStyle();
         posCellStyleV1.Borders.Left.Width = 0;
         posCellStyleV1.Borders.Right.Width = 0;
         posCellStyleV1.Borders.Top.Width = 0;
         posCellStyleV1.Borders.Bottom.Width = 0;
-        posCellStyleV1.CellPadding = new PdfPaddings(0, 3, 0, 2);
+        posCellStyleV1.CellPadding = new PdfPaddings(0, 3, 0, 0);
 
         PdfGridCellStyle posCellStyleH2 = new PdfGridCellStyle();
         posCellStyleH2.Borders.Left.Width = 0;
         posCellStyleH2.Borders.Right.Width = 0;
         posCellStyleH2.Borders.Top.Width = 0;
         posCellStyleH2.Borders.Bottom.Width = 0;
-        posCellStyleH2.CellPadding = new PdfPaddings(0, 3, 0, 16);
+        posCellStyleH2.CellPadding = new PdfPaddings(0, 3, 0, 0);
 
         PdfGridCellStyle posCellStyleV2 = new PdfGridCellStyle();
         posCellStyleV2.Borders.Left.Width = 0;
         posCellStyleV2.Borders.Right.Width = 0;
         posCellStyleV2.Borders.Top.Width = 0;
         posCellStyleV2.Borders.Bottom.Width = 0;
-        posCellStyleV2.CellPadding = new PdfPaddings(0, 3, 0, 16);
-
-        PdfGridCellStyle posCellStyleH3 = new PdfGridCellStyle();
-        posCellStyleH3.Borders.Left.Width = 0;
-        posCellStyleH3.Borders.Right.Width = 0;
-        posCellStyleH3.Borders.Top.Width = 0;
-        posCellStyleH3.Borders.Bottom.Width = 0;
-        posCellStyleH3.CellPadding = new PdfPaddings(0, 3, 12, 6);
-
-        PdfGridCellStyle posCellStyleH4 = new PdfGridCellStyle();
-        posCellStyleH4.Borders.Left.Width = 0;
-        posCellStyleH4.Borders.Right.Width = 0;
-        posCellStyleH4.Borders.Top.Width = 0;
-        posCellStyleH4.Borders.Bottom.Width = 0;
-        posCellStyleH4.CellPadding = new PdfPaddings(0, 3, 6, 6);
+        posCellStyleV2.CellPadding = new PdfPaddings(0, 3, 0, 0);
 
         PdfGridCellStyle posCellStyleN = new PdfGridCellStyle();
         posCellStyleN.Borders.Left.Width = 0;
         posCellStyleN.Borders.Right.Width = 0;
         posCellStyleN.Borders.Top.Width = 0;
         posCellStyleN.Borders.Bottom.Width = 0F;
-        posCellStyleN.CellPadding = new PdfPaddings(3, 3, 14, 0);
+        posCellStyleN.CellPadding = new PdfPaddings(3, 3, 16, 0);
+
+        PdfGridCellStyle posCellStyleD = new PdfGridCellStyle();
+        posCellStyleD.Borders.Left.Width = 0;
+        posCellStyleD.Borders.Right.Width = 0;
+        posCellStyleD.Borders.Top.Width = 0;
+        posCellStyleD.Borders.Bottom.Width = 0F;
+        posCellStyleD.CellPadding = new PdfPaddings(3, 3, 36, 0);
         #endregion
 
         #region Imposta griglia Prescrizioni
@@ -7736,95 +7897,86 @@
         PdfGrid PrescrPdfGrid = new PdfGrid();
 
         // Add Columns
-        PrescrPdfGrid.Columns.Add(4);
-
-        // Set Rows's height
-        // rowHead.Height = 35;
+        PrescrPdfGrid.Columns.Add(2);
 
         // Set Columns's width
-        PrescrPdfGrid.Columns[0].Width = 100;       // cella nel side bar
-        PrescrPdfGrid.Columns[1].Width = 35;        // Pr./ o S. /
-        PrescrPdfGrid.Columns[2].Width = 35;        // farmaco
-        PrescrPdfGrid.Columns[3].Width = 340;       // somministrazione
+        PrescrPdfGrid.Columns[0].Width = 35;        // Pr./ o S. /
+        PrescrPdfGrid.Columns[1].Width = 375;       // somministrazione
         #endregion
 
         #region Inserimento Dati Prescrizioni
         // Set the HeadPdfGrid's value
         PdfTextElement value;
 
-        for (var np = 0; np < Prescriptions.Count-1; np++)
+        Console.WriteLine($"📌 Prescrizione - Inizio Farmaci ");
+        for (var np = 0; np < Prescriptions.Count - 1; np++)
         {
             // riga farmaco
             PdfGridRow fRow = PrescrPdfGrid.Rows.Add();
 
-            // fRow.Height = 28;
-            fRow.Cells[2].ColumnSpan = 2;
-
             fRow.Cells[0].Style = posCellStyleH1;
-            fRow.Cells[1].Style = posCellStyleH1;
-            fRow.Cells[2].Style = posCellStyleV1;
-
-            val = new PdfTextElement("", fieldFont, PdfBrushes.Black);
-            fRow.Cells[0].Value = val;
+            fRow.Cells[1].Style = posCellStyleV1;
 
             val = new PdfTextElement("Pr./ ", fieldFont, PdfBrushes.Black);
-            fRow.Cells[1].Value = val;
+            fRow.Cells[0].Value = val;
 
             val = new PdfTextElement(Prescriptions[np].Farmaco.Trim(), fieldFont, PdfBrushes.Black);
-            fRow.Cells[2].Value = val;
+            fRow.Cells[1].Value = val;
+
+            Console.WriteLine($"🔷\t np: {np}\t Pr./ [Farmaco]: {Prescriptions[np].Farmaco.Trim()}");
 
             // riga somministrazione
             PdfGridRow uRow = PrescrPdfGrid.Rows.Add();
 
             uRow.Cells[0].Style = posCellStyleH2;
-            uRow.Cells[1].Style = posCellStyleH2;
-            uRow.Cells[2].Style = posCellStyleH2;
-            uRow.Cells[3].Style = posCellStyleV2;
-
-            val = new PdfTextElement("", fieldFont, PdfBrushes.Black);
-            uRow.Cells[0].Value = val;
+            uRow.Cells[1].Style = posCellStyleV2;
 
             val = new PdfTextElement("S. /", fieldFont, PdfBrushes.Black);
-            uRow.Cells[1].Value = val;
-
-            val = new PdfTextElement("", fieldFont, PdfBrushes.Black);
-            uRow.Cells[2].Value = val;
+            uRow.Cells[0].Value = val;
 
             val = new PdfTextElement(Prescriptions[np].Uso.Trim(), fieldFont, PdfBrushes.Black);
-            uRow.Cells[3].Value = val;
+            uRow.Cells[1].Value = val;
+
+            Console.WriteLine($"🔥\t :\t\t S. / [Uso]: {Prescriptions[np].Uso.Trim()}");
+
+            // riga vuota
+            PdfGridRow eRow = PrescrPdfGrid.Rows.Add();
+
+            // eRow.Cells[0].ColumnSpan = 3;
+            eRow.Cells[0].ColumnSpan = 2;
+
+            eRow.Cells[0].Style = posCellStyleH1;
+
+            val = new PdfTextElement(" ", fieldFont, PdfBrushes.Black);
+            eRow.Cells[0].Value = val;
+
+            if (np < Prescriptions.Count - 2)
+            {
+                Console.WriteLine($" ");
+            }
         }
-
-        // riga vuota
-        PdfGridRow eRow = PrescrPdfGrid.Rows.Add();
-
-        eRow.Cells[0].ColumnSpan = 4;
-
-        eRow.Cells[0].Style = posCellStyleH;
-
-        val = new PdfTextElement("", fieldFont, PdfBrushes.Black);
-        eRow.Cells[0].Value = val;
+        Console.WriteLine($"📌 Prescrizione - Farmaci Completati ");
+        Console.WriteLine($" ");
 
         // riga delle note
-        PdfGridRow nRow = PrescrPdfGrid.Rows.Add();
+        if (NotaPrescrizione != "")
+        {
+            PdfGridRow nRow = PrescrPdfGrid.Rows.Add();
+            nRow.Cells[0].ColumnSpan = 2;
+            nRow.Cells[0].Style = posCellStyleN;
 
-        nRow.Cells[1].ColumnSpan = 3;
-
-        nRow.Cells[0].Style = posCellStyleN;
-        nRow.Cells[1].Style = posCellStyleN;
-
-        val = new PdfTextElement("", fieldFont, PdfBrushes.Black);
-        nRow.Cells[0].Value = val;
-
-        val = new PdfTextElement(NotaPrescrizione, italicdFont, PdfBrushes.Black);
-        nRow.Cells[1].Value = val;
+            val = new PdfTextElement(NotaPrescrizione, italicdFont, PdfBrushes.Black);
+            nRow.Cells[0].Value = val;
+        }
 
         // riga della data
         PdfGridRow dRow = PrescrPdfGrid.Rows.Add();
+        dRow.Height = 36F;
+        dRow.Cells[0].Style = posCellStyleD;
+        dRow.Cells[1].Style = posCellStyleD;
 
-        dRow.Cells[1].ColumnSpan = 3;
-
-        dRow.Cells[0].Style = posCellStyleN;
-        dRow.Cells[1].Style = posCellStyleN;
+        val = new PdfTextElement(" ", fieldFont, PdfBrushes.Black);
+        dRow.Cells[0].Value = val;
 
         var TmpDate = pDataPrescrizione.Substring(0, 2) + "/" + pDataPrescrizione.Substring(2, 2) + "/" + pDataPrescrizione.Substring(4, 4);
         Console.WriteLine($"pDataRelazione: {pDataRelazione}");
@@ -7834,7 +7986,7 @@
         #endregion
 
         // Draw PDF grid into the PDF page.
-        PrescrPdfGrid.Draw(page, new Syncfusion.Drawing.PointF(0, result.Bounds.Bottom + 24));
+        PrescrPdfGrid.Draw(page, new Syncfusion.Drawing.PointF(100, result.Bounds.Bottom + 24));
         #endregion
 
         //Create memory stream.
@@ -7847,12 +7999,32 @@
         await JS.SaveAs("Prescrizione " + LName + " " + FName + "_" + pDataPrescrizione.Substring(0, 2) + "." + pDataPrescrizione.Substring(2, 2) + "." + pDataPrescrizione.Substring(4, 4) + ".pdf", memoryStream.ToArray());
     }
 
-    async void PrintRelazione(int extra)
+    async void PrintRelazione(string who)
     {
         int paragraphAfterSpacing = 8;
         int cellMargin = 8;
 
+        string doctor = "";
+        string iscrOrdine = "";
+
+        if (who == "1")
+        {
+            doctor = "PIETRO";
+            iscrOrdine = "Iscriz. Ord. Dei Medici di CT - Pietro La Bruna n° 5133";
+        }
+        else
+        {
+            doctor = "MARCO";
+            iscrOrdine = "Iscriz. Ord. Dei Medici di CT - Marco La Bruna n° 14037";
+        }
+
         FirstPage = true;
+
+        if (pDataRelazione.Length > 8)
+        {
+            var dds = pDataRelazione.Substring(0, 2) + "." + pDataRelazione.Substring(3, 2) + "." + pDataRelazione.Substring(6, 4);
+            pDataRelazione = dds;
+        }
 
         //Create a new PDF document.
         PdfDocument pdfDocument = new PdfDocument();
@@ -7868,9 +8040,8 @@
         pdfDocument.DocumentInformation.Author = "Powered by Phoenix";
         pdfDocument.DocumentInformation.CreationDate = DateTime.Now;
         pdfDocument.DocumentInformation.Creator = "Ophthal";
-        pdfDocument.DocumentInformation.Keywords = "Dott. La Bruna";
+        pdfDocument.DocumentInformation.Keywords = "Dott. " + doctor + " La Bruna";
         pdfDocument.DocumentInformation.Subject = "Relazione";
-
         pdfDocument.DocumentInformation.Title = "Relazione " + LName + " " + FName + "_" + pDataRelazione.Substring(0, 2) + "." + pDataRelazione.Substring(2, 2) + "." + pDataRelazione.Substring(4, 4);
 
         // Set page size
@@ -7951,15 +8122,12 @@
         {
             PdfBitmap image = new PdfBitmap(imageStream);
 
-            // g.DrawImage(image, 0, 0);
-            //g.DrawImage(image, 5, 0);
-
             // Draw the image in the header.
             header.Graphics.DrawImage(image, 5, 15);
         }
 
-        header.Graphics.DrawString("STUDIO OCULISTICO", hHeadFont, PdfBrushes.Black, 120, 14);
-        header.Graphics.DrawString("DOTT. PIETRO LA BRUNA", hHeadFont, PdfBrushes.Black, 120, 36);
+        // header.Graphics.DrawString("STUDIO OCULISTICO", hHeadFont, PdfBrushes.Black, 120, 14); 36
+        header.Graphics.DrawString("DOTT. " + doctor + " LA BRUNA", hHeadFont, PdfBrushes.Black, 100, 25);
 
         PdfPen hPen = new PdfPen(Color.Black);
         hPen.Width = 0.1F;
@@ -8019,7 +8187,7 @@
         footer.Graphics.DrawString("Viale Raffaello Sanzio, 60 – scala C, 5° piano – (Piazza Michelangelo) - 95128 Catania (CT)", FootFont, PdfBrushes.Black, 151, 8);
         footer.Graphics.DrawString("Riceve per appuntamento – Tel/Fax: 095371701", FootFont, PdfBrushes.Black, 230, 22);
         footer.Graphics.DrawString("Sito Web: http://www.studiolabruna.it – email: info@studiolabruna.it", FootFont, PdfBrushes.Black, 190, 36);
-        footer.Graphics.DrawString("Iscriz. Ord. Dei Medici di CT- Pietro La Bruna n° 5133 / Marco La Bruna n° 14037", FootFont, PdfBrushes.Black, 162, 50);
+        footer.Graphics.DrawString(iscrOrdine, FootFont, PdfBrushes.Black, 212, 50);
 
         PdfPen fPen = new PdfPen(Color.Black);
         fPen.Width = 0.1F;
@@ -8070,7 +8238,7 @@
         posCellStyleP1.Borders.Right.Width = 0;
         posCellStyleP1.Borders.Top.Width = 0;
         posCellStyleP1.Borders.Bottom.Width = 0;
-        posCellStyleP1.CellPadding = new PdfPaddings(0, 3, 0, 12);
+        posCellStyleP1.CellPadding = new PdfPaddings(0, 3, 12, 0);
 
 
         // Add the rows to head grid
@@ -8096,24 +8264,29 @@
         HeadPdfGrid.Columns[1].Width = 430;
 
         // Set columns merged
-        HeadPdfGrid.Rows[0].Cells[0].RowSpan = 2;
+        // HeadPdfGrid.Rows[0].Cells[0].RowSpan = 2;
         #endregion
 
         #region Inserimento Dati Testata
         // Set the HeadPdfGrid's value
         PdfTextElement val;
 
-        HeadPdfGrid.Rows[0].Cells[0].Style = posCellStyleP0;                                                // 0 - 0
-        HeadPdfGrid.Rows[0].Cells[1].Style = posCellStyleP0;                                                // 0 - 1
+        HeadPdfGrid.Rows[0].Cells[0].Style = posCellStyleP0;
+        HeadPdfGrid.Rows[0].Cells[1].Style = posCellStyleP0;
 
-        val = new PdfTextElement(LName + " " + FName, fieldPaziente, PdfBrushes.Black);                     // 0 - 0
+        val = new PdfTextElement(" ", fieldPaziente, PdfBrushes.Black);                     // 0-0
+        HeadPdfGrid.Rows[0].Cells[0].Value = val;
+
+        val = new PdfTextElement(LName + " " + FName, fieldPaziente, PdfBrushes.Black);     // 0-1
         HeadPdfGrid.Rows[0].Cells[1].Value = val;
 
-        // HeadPdfGrid.Rows[1].Cells[0].Style = HeadStyle;
         HeadPdfGrid.Rows[1].Cells[0].Style = posCellStyleP1;
         HeadPdfGrid.Rows[1].Cells[1].Style = posCellStyleP1;
 
-        val = new PdfTextElement("presenta il seguente quadro oculare:", fieldHelvBold, PdfBrushes.Black);  // 0 - 1
+        val = new PdfTextElement(" ", fieldPaziente, PdfBrushes.Black);                     // 1-0
+        HeadPdfGrid.Rows[1].Cells[0].Value = val;
+
+        val = new PdfTextElement("presenta il seguente quadro oculare:", fieldHelvBold, PdfBrushes.Black);          // 1-1
         HeadPdfGrid.Rows[1].Cells[1].Value = val;
 
         PdfLayoutResult result = HeadPdfGrid.Draw(page, new Syncfusion.Drawing.PointF(0, 80));
@@ -8261,11 +8434,11 @@
 
         RelPdfGrid.Rows[0].Cells[0].Style = posCellStyleEH;           // colonna side bar
         RelPdfGrid.Rows[0].Cells[1].Style = posCellStyleH;            // "Diagnosi"
-        
+
         RelPdfGrid.Rows[1].Cells[0].Style = posCellStyleEH;           // colonna side bar
         RelPdfGrid.Rows[1].Cells[1].Style = posCellStyleH1;           // "OD,"
         RelPdfGrid.Rows[1].Cells[2].Style = posCellStyleV1;           // DiagnosiOD
-        
+
         RelPdfGrid.Rows[2].Cells[0].Style = posCellStyleEH;           // colonna side bar
         RelPdfGrid.Rows[2].Cells[1].Style = posCellStyleH2;           // "OS,"
         RelPdfGrid.Rows[2].Cells[2].Style = posCellStyleV2;           // DiagnosiOS
@@ -8287,7 +8460,7 @@
         RelPdfGrid.Rows[7].Cells[0].Style = posCellStyleEH;           // colonna side bar
         RelPdfGrid.Rows[7].Cells[1].Style = posCellStyleH1;           // "OD,"
         RelPdfGrid.Rows[7].Cells[2].Style = posCellStyleV1;           // Seg_Ant_Od
-    
+
         RelPdfGrid.Rows[8].Cells[0].Style = posCellStyleEH;           // colonna side bar
         RelPdfGrid.Rows[8].Cells[1].Style = posCellStyleH2;           // "OS,"
         RelPdfGrid.Rows[8].Cells[2].Style = posCellStyleV2;           // Seg_Ant_Os
@@ -8472,14 +8645,7 @@
         pdfDocument.Save(memoryStream);
 
         //Download the PDF document
-        if(extra == 0)
-        {
-            await JS.SaveAs("Relazione " + LName + " " + FName + "_" + pDataRelazione.Substring(0, 2) + "." + pDataRelazione.Substring(2, 2) + "." + pDataRelazione.Substring(4, 4) + ".pdf", memoryStream.ToArray());
-        }
-        else
-        {
-            await JS.SaveAs("Relazione_1 " + LName + " " + FName + "_" + pDataRelazione.Substring(0, 2) + "." + pDataRelazione.Substring(2, 2) + "." + pDataRelazione.Substring(4, 4) + ".pdf", memoryStream.ToArray());
-        }
+        await JS.SaveAs("Relazione " + LName + " " + FName + "_" + pDataRelazione.Substring(0, 2) + "." + pDataRelazione.Substring(2, 2) + "." + pDataRelazione.Substring(4, 4) + ".pdf", memoryStream.ToArray());
     }
 
     async void PrintRel()

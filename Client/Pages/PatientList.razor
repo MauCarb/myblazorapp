@@ -20,28 +20,28 @@
 
 <div class="container-fluid form-filter" style="padding: 4px 10px 14px 10px;">
     <div class="row">
-		<div class="col-sm-3">
-			<SfTextBox ID="lname" @bind-Value="@LName" Placeholder="Cognome" FloatLabelType="@FloatLabelType.Auto"></SfTextBox>
-		</div>
-
-		<div class="col-sm-2">
-			<SfTextBox ID="fname" @bind-Value="@FName" Placeholder="Nome" FloatLabelType="@FloatLabelType.Auto"></SfTextBox>
-		</div>
-
-		<div class="col-sm-1">
-			<SfMaskedTextBox ID="bithdate" @bind-Value="@datanascita" Mask="00/00/0000" Placeholder="Data di nascita" FloatLabelType="@FloatLabelType.Auto"></SfMaskedTextBox>
-		</div>
-
-		<div class="col-sm-2">
-			<SfTextBox ID="telefono" @bind-Value="@Phone" Placeholder="Telefono" FloatLabelType="@FloatLabelType.Auto"></SfTextBox>
-		</div>
+        <div class="col-sm-2">
+            <SfTextBox ID="lname" @bind-Value="@LName" Placeholder="Cognome" FloatLabelType="@FloatLabelType.Auto" CssClass="sftext"></SfTextBox>
+        </div>
 
         <div class="col-sm-2">
-            <SfTextBox ID="diagnosi" @bind-Value="@Diagnosi" Placeholder="Diagnosi" FloatLabelType="@FloatLabelType.Auto"></SfTextBox>
+            <SfTextBox ID="fname" @bind-Value="@FName" Placeholder="Nome" FloatLabelType="@FloatLabelType.Auto" CssClass="sftext"></SfTextBox>
+        </div>
+
+        <div class="col-sm-1">
+            <SfMaskedTextBox ID="bithdate" @bind-Value="@datanascita" Mask="00/00/0000" Placeholder="Data di nascita" FloatLabelType="@FloatLabelType.Auto" CssClass="sftext"></SfMaskedTextBox>
+        </div>
+
+        <div class="col-sm-2">
+            <SfTextBox ID="telefono" @bind-Value="@Phone" Placeholder="Telefono/Mobile" FloatLabelType="@FloatLabelType.Auto" CssClass="sftext"></SfTextBox>
+        </div>
+
+        <div class="col-sm-2">
+            <SfTextBox ID="diagnosi" @bind-Value="@Diagnosi" Placeholder="Diagnosi" FloatLabelType="@FloatLabelType.Auto" CssClass="sftext"></SfTextBox>
         </div>
     </div>
 
-	<div class="row" style="margin-top: 20px;">
+    <div class="row" style="margin-top: 20px;">
         <div class="col-sm-1">
             <SfButton IconCss="e-icons e-search icon-slategrey" CssClass="e-flat btn-light" Content="Cerca" OnClick="() => Search()"></SfButton>
         </div>
@@ -67,14 +67,14 @@
                     }
                 </Template>
             </GridColumn>
-            <GridColumn Field=@nameof(Patient.LName) HeaderText="Cognome" Width="100"></GridColumn>
-            <GridColumn Field=@nameof(Patient.FName) HeaderText="Nome" Width="100"></GridColumn>
+            <GridColumn Field=@nameof(Patient.LName) HeaderText="Cognome" Width="90"></GridColumn>
+            <GridColumn Field=@nameof(Patient.FName) HeaderText="Nome" Width="110"></GridColumn>
             <GridColumn Field=@nameof(Patient.BirthDate) Format="d" Type="ColumnType.Date" HeaderText="Data" TextAlign="TextAlign.Center" Width="80"></GridColumn>
             <GridColumn Field=@nameof(Patient.Phone) HeaderText="Telefono" Width="100"></GridColumn>
             <GridColumn Field=@nameof(Patient.Mobile) HeaderText="Mobile" Width="100"></GridColumn>
             <GridColumn Field=@nameof(Patient.Address) HeaderText="Indirizzo" Width="140"></GridColumn>
-			<GridColumn Field=@nameof(Patient.ZipCode) HeaderText="CAP" Width="80"></GridColumn>
-			<GridColumn Field=@nameof(Patient.City) HeaderText="Città" Width="100"></GridColumn>
+            <GridColumn Field=@nameof(Patient.ZipCode) HeaderText="CAP" Width="80" TextAlign="TextAlign.Center"></GridColumn>
+            <GridColumn Field=@nameof(Patient.City) HeaderText="Città" Width="100"></GridColumn>
             <GridColumn HeaderText="Privacy" Width="80" TextAlign="TextAlign.Center">
                 <Template>
                     @{
@@ -95,19 +95,19 @@
         </GridColumns>
     </SfGrid>
 
-	<br />
-	<br />
+    <br />
+    <br />
 
     <!-- Dialog for alert -->
-	<SfDialog @bind-Visible="AlertVisible" Width="400px" IsModal="true" ShowCloseIcon="true">
-		<DialogTemplates>
-			<Header> Attenzione </Header>
-			<Content> @AlertText </Content>
-		</DialogTemplates>
-		<DialogButtons>
-			<DialogButton Content="OK" IsPrimary="true" OnClick="@CloseDialog" />
-		</DialogButtons>
-	</SfDialog>
+    <SfDialog @bind-Visible="AlertVisible" Width="400px" IsModal="true" ShowCloseIcon="true">
+        <DialogTemplates>
+            <Header> Attenzione </Header>
+            <Content> @AlertText </Content>
+        </DialogTemplates>
+        <DialogButtons>
+            <DialogButton Content="OK" IsPrimary="true" OnClick="@CloseDialog" />
+        </DialogButtons>
+    </SfDialog>
 </div>
 
 
@@ -167,7 +167,7 @@
     public string datanascita = "";
 
     public string City = "";        // ignorata al momento da aggiungere dopo
-    
+
     public string Address = "";     // ignorata al momento
 
     public string Diagnosi = "";

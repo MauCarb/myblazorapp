@@ -32,7 +32,7 @@
 <div class="container-fluid bg-light" style="padding: 0 10px 10px 10px; margin-top:20px;">
     <div class="row">
         <div class="col-sm-5">
-            <SfTextBox ID="nFarmaco" @bind-Value="@nFarmaco" Placeholder="Nome Farmaco" FloatLabelType="@FloatLabelType.Always"></SfTextBox>
+            <SfTextBox ID="nFarmaco" @bind-Value="@nFarmaco" Placeholder="Nome Farmaco" FloatLabelType="@FloatLabelType.Always" CssClass="sftext"></SfTextBox>
         </div>
 
         <div class="col-sm-7">
@@ -89,7 +89,7 @@
                                             }
                                             <div class="col-sm-4">
                                                 @* <SfTextBox ID="valutazione" @bind-Value="@SomminiStraz[ip].Uso" Multiline=true style="height: 72px;" ></SfTextBox> *@
-                                                <SfTextBox Value="@SomminiStraz[ip].Uso" ValueChanged="@(value => UpdateUso(myId, value))" Multiline=true style="height: 72px;"></SfTextBox>
+                                                <SfTextBox Value="@SomminiStraz[ip].Uso" ValueChanged="@(value => UpdateUso(myId, value))" Multiline=true CssClass="sftext" style="height: 72px;"></SfTextBox>
                                             </div>
 
                                             @if (ip < @SomminiStraz.Count - 1)
@@ -134,161 +134,161 @@
 
 <style>
     .vstepper {
-    display: inline-block;
-    margin: 0 10px 0 8px;
-    border: 1px solid #ccc;
-    width: 80px;
-    text-align: center;
-    font-size: 13px;
-    padding-top: 3px;
+        display: inline-block;
+        margin: 0 10px 0 8px;
+        border: 1px solid #ccc;
+        width: 80px;
+        text-align: center;
+        font-size: 13px;
+        padding-top: 3px;
     }
 
     .default-tab {
-    border: 1px solid #d7d7d7;
+        border: 1px solid #d7d7d7;
     }
 
-    .default-tab .e-content .e-item {
-    padding: 10px;
-    text-align: justify;
-    }
+        .default-tab .e-content .e-item {
+            padding: 10px;
+            text-align: justify;
+        }
 
     .default-tab-control-section {
-    margin: 20px 20% 20px 20%;
+        margin: 20px 20% 20px 20%;
     }
 
     @@media screen and (max-width: 480px) {
-    .default-tab-control-section {
-    margin: 20px 0 20px 0;
-    }
+        .default-tab-control-section {
+            margin: 20px 0 20px 0;
+        }
     }
 
     .bootstrap5 .default-tab,
     .bootstrap .default-tab,
     .bootstrap4 .default-tab {
-    border: none;
+        border: none;
     }
 
-    .bootstrap5 .default-tab .e-content > .e-item.e-active,
-    .bootstrap4 .default-tab .e-content > .e-item.e-active,
-    .bootstrap .default-tab .e-content > .e-item.e-active {
-    background: #FAF9F8;
-    }
+        .bootstrap5 .default-tab .e-content > .e-item.e-active,
+        .bootstrap4 .default-tab .e-content > .e-item.e-active,
+        .bootstrap .default-tab .e-content > .e-item.e-active {
+            background: #FAF9F8;
+        }
 
     .e-tab .e-tab-header .e-toolbar-items .e-active .e-tab-wrap {
-    border-bottom: 4px solid #0d6efd;
+        border-bottom: 4px solid #0d6efd;
     }
 
-    .e-tab .e-tab-header .e-toolbar-items .e-active .e-tab-wrap:hover {
-    border-bottom: 4px solid #0d6efd;
-    }
+        .e-tab .e-tab-header .e-toolbar-items .e-active .e-tab-wrap:hover {
+            border-bottom: 4px solid #0d6efd;
+        }
 
     .e-tab .e-tab-header .e-toolbar-item:not(.e-active) {
-    border-bottom: 0px;
+        border-bottom: 0px;
     }
 
     .e-btn.e-flat.e-primary, .e-btn.e-flat.e-primary:focus {
-    background-color: #317ab9;
-    border-color: #265f91;
-    color: #fff;
+        background-color: #317ab9;
+        border-color: #265f91;
+        color: #fff;
     }
 
-    .e-btn.e-flat.e-primary:hover, .e-btn.e-flat.e-primary:active {
-    background-color: #21527d;
-    border-color: #163854;
-    color: #fff;
-    }
+        .e-btn.e-flat.e-primary:hover, .e-btn.e-flat.e-primary:active {
+            background-color: #21527d;
+            border-color: #163854;
+            color: #fff;
+        }
 
     .e-circle-close {
-    width: 24px;
-    height: 24px;
-    position: relative;
-    display: inline-block;
+        width: 24px;
+        height: 24px;
+        position: relative;
+        display: inline-block;
     }
 
     .e-circle-info {
-    width: 24px;
-    height: 24px;
-    position: relative;
-    display: inline-block;
+        width: 24px;
+        height: 24px;
+        position: relative;
+        display: inline-block;
     }
 
     .error-msg {
-    color: #66afe9;
-    display: inline-block;
-    position: relative;
-    top: -20px;
-    left: 10px;
+        color: #66afe9;
+        display: inline-block;
+        position: relative;
+        top: -20px;
+        left: 10px;
     }
 
     .error-detail {
-    position: relative;
-    left: 36px;
-    margin: 0 0 21px;
+        position: relative;
+        left: 36px;
+        margin: 0 0 21px;
     }
 
     .e-icons.e-circle-close.col-lg-2:before {
-    font-size: 20px;
-    color: #d9534f;
-    position: relative;
-    left: 4px;
-    bottom: 18px;
+        font-size: 20px;
+        color: #d9534f;
+        position: relative;
+        left: 4px;
+        bottom: 18px;
     }
 
     .e-icons.e-circle-info.col-lg-2:before {
-    font-size: 20px;
-    color: #228e1f;
-    position: relative;
-    left: 4px;
-    bottom: 18px;
+        font-size: 20px;
+        color: #228e1f;
+        position: relative;
+        left: 4px;
+        bottom: 18px;
     }
 
     .e-dialog .e-footer-content {
-    background-color: #f8f8f8;
+        background-color: #f8f8f8;
     }
 
     .e-dialog.e-control.e-popup, .e-dialog.e-control.e-popup .e-dlg-header-content {
-    background-color: #d9edf7;
+        background-color: #d9edf7;
     }
 
     .e-dialog.e-control.e-popup {
-    padding: 3px;
+        padding: 3px;
     }
 
     .e-dialog.e-control .e-dlg-header-content {
-    padding: 10px;
+        padding: 10px;
     }
 
     .e-dialog.e-control .e-footer-content {
-    padding: 8px 12px;
+        padding: 8px 12px;
     }
 
     .e-dialog.e-control .e-dlg-content {
-    padding: 15px 0 0;
+        padding: 15px 0 0;
     }
 
     .msg-wrapper.col-lg-12 {
-    margin-top: 20px;
+        margin-top: 20px;
     }
 
     .customtooltip.e-tooltip-wrap.e-popup {
-    background-color: #ededed;
-    border: 1px solid #d9d9d9;
+        background-color: #ededed;
+        border: 1px solid #d9d9d9;
     }
 
     .e-tooltip-wrap .e-tip-content {
-    color: #3d3d3d;
+        color: #3d3d3d;
     }
 
     .customtooltip.e-tooltip-wrap .e-arrow-tip-outer {
-    border-bottom: 12px solid transparent;
-    border-left: 12px solid transparent;
-    border-top: 12px solid transparent;
-    border-right: 12px solid transparent;
+        border-bottom: 12px solid transparent;
+        border-left: 12px solid transparent;
+        border-top: 12px solid transparent;
+        border-right: 12px solid transparent;
     }
 
     .customtooltip.e-tooltip-wrap .e-arrow-tip-inner {
-    color: #ededed;
-    font-size: 25.9px;
+        color: #ededed;
+        font-size: 25.9px;
     }
 </style>
 
@@ -364,7 +364,7 @@
     #region binding somministrazioni
     private List<FarmaciUso>? SomminiStraz;
 
-    
+
     #endregion
 
     #region Funzioni di supporto
@@ -539,7 +539,7 @@
                 LoadFarmaco();
 
                 // load somministrazioni
-                LoadSomministrazioni(); 
+                LoadSomministrazioni();
 
                 StateHasChanged();
             }
