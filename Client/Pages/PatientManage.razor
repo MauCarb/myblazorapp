@@ -2071,8 +2071,10 @@
         {
             if (Pazienti.Count > 0)     //  sono presenti casi di omonimia
             {
-                if (id == 0){
-                    if (String.IsNullOrEmpty(CodFisc)){
+                if (id == 0)
+                {
+                    if (String.IsNullOrEmpty(CodFisc))
+                    {
                         result &= false;
                         PazienteValido &= false;
 
@@ -2125,7 +2127,8 @@
             }
         }
 
-        if (result){
+        if (result)
+        {
             if (String.IsNullOrEmpty(Phone) && String.IsNullOrEmpty(Mobile))
             {
                 PazienteValido &= false;
@@ -5233,36 +5236,6 @@
         VisitPdfGrid.Draw(page, new Syncfusion.Drawing.PointF(0, result.Bounds.Bottom + paragraphAfterSpacing));
         #endregion
 
-
-
-        // //Create a new font.
-        // PdfStandardFont font = new PdfStandardFont(PdfFontFamily.TimesRoman, 16);
-
-        // //Create a text element to draw a text in PDF page.
-        // PdfTextElement title = new PdfTextElement("Test Visita", font, PdfBrushes.Black);
-        // PdfLayoutResult result = title.Draw(page, new PointF(0, 0));
-        // PdfStandardFont contentFont = new PdfStandardFont(PdfFontFamily.TimesRoman, 12);
-
-        // //Create text element.
-        // PdfTextElement content = new PdfTextElement("This component demonstrates fetching data from a client side and Exporting the data to PDF document using Syncfusion .NET PDF library.", contentFont, PdfBrushes.Black);
-        // // PdfLayoutFormat format = new PdfLayoutFormat();
-        // // format.Layout = PdfLayoutType.Paginate;
-
-        // //Draw a text to the PDF document.
-        // result = content.Draw(page, new RectangleF(0, result.Bounds.Bottom + paragraphAfterSpacing, page.GetClientSize().Width, page.GetClientSize().Height), format);
-
-        // //Create a PdfGrid.
-        // PdfGrid pdfGrid = new PdfGrid();
-        // pdfGrid.Style.CellPadding.Left = cellMargin;
-        // pdfGrid.Style.CellPadding.Right = cellMargin;
-        // //Applying built-in style to the PDF grid
-        // pdfGrid.ApplyBuiltinStyle(PdfGridBuiltinStyle.GridTable4Accent1);
-        // //Assign data source.
-        // pdfGrid.DataSource = forecasts;
-        // pdfGrid.Style.Font = contentFont;
-        // //Draw PDF grid into the PDF page.
-        // pdfGrid.Draw(page, new Syncfusion.Drawing.PointF(0, result.Bounds.Bottom + paragraphAfterSpacing));
-
         //Create memory stream.
         MemoryStream memoryStream = new MemoryStream();
         //Save the PDF document.
@@ -5274,20 +5247,37 @@
     async void PrintOrtottica(string who)
     {
         int paragraphAfterSpacing = 8;
-        int cellMargin = 8;
+        // int cellMargin = 8;
 
         string doctor = "";
+        string specialization = "";
+        string address = "V.le R. Sanzio, 60 Tel 095 371701";
+        string city = "CATANIA";
+        string codfisc = "";
+        string piva = "";
+        string ordine = "";
+
         string iscrOrdine = "";
 
         if (who == "1")
         {
-            doctor = "PIETRO";
-            iscrOrdine = "Iscriz. Ord. Dei Medici di CT - Pietro La Bruna n° 5133";
+            doctor = "MARCO LA BRUNA";
+            specialization = "Specialista in Oftalmologia";
+            codfisc = "Cod. Fisc. LBR MRC 84M31 C351P";
+            piva = "Partita IVA 05289740879";
+            ordine = "Ordine dei Medici CT n° 14037";
+
+            iscrOrdine = "Iscriz. Ord. Dei Medici di CT - Marco La Bruna n° 14037";
         }
         else
         {
-            doctor = "MARCO";
-            iscrOrdine = "Iscriz. Ord. Dei Medici di CT - Marco La Bruna n° 14037";
+            doctor = "PIETRO LA BRUNA";
+            specialization = "Specialista in Oculistica";
+            codfisc = "Cod. Fisc. LBR PTR 49T07 H221S";
+            piva = "Partita IVA 00635170871";
+            // ordine = "Ordine dei Medici CT n° 5133";
+
+            iscrOrdine = "Iscriz. Ord. Dei Medici di CT - Pietro La Bruna n° 5133";
         }
 
         FirstPage = true;
@@ -5391,8 +5381,8 @@
             header.Graphics.DrawImage(image, 5, 15);
         }
 
-        // header.Graphics.DrawString("STUDIO OCULISTICO", hHeadFont, PdfBrushes.Black, 120, 14); 36
-        header.Graphics.DrawString("DOTT. " + doctor + " LA BRUNA", hHeadFont, PdfBrushes.Black, 100, 25);
+        header.Graphics.DrawString("DOTT. " + doctor, hHeadFont, PdfBrushes.Black, 100, 14);
+        header.Graphics.DrawString(specialization, hHeadFont, PdfBrushes.Black, 100, 36);
 
         PdfPen hPen = new PdfPen(Color.Black);
         hPen.Width = 0.1F;
@@ -5486,10 +5476,19 @@
         #region Prima parte: Dati Testata
         PdfFont fieldPaziente = new PdfStandardFont(PdfFontFamily.Helvetica, 14, PdfFontStyle.Bold | PdfFontStyle.Italic);
         PdfFont fieldHelvBold = new PdfStandardFont(PdfFontFamily.Helvetica, 12, PdfFontStyle.Bold | PdfFontStyle.Italic);
+        PdfFont FieldRegFont = new PdfStandardFont(PdfFontFamily.Helvetica, 10, PdfFontStyle.Regular);
+        PdfFont FieldItaBldFont = new PdfStandardFont(PdfFontFamily.Helvetica, 10, PdfFontStyle.Bold | PdfFontStyle.Italic);
 
         #region Imposta griglia Dati Testata
         // Create the head grid
         PdfGrid HeadPdfGrid = new PdfGrid();
+
+        PdfGridCellStyle HeadFieldStyle = new PdfGridCellStyle();
+        HeadFieldStyle.Borders.Left.Width = 0F;
+        HeadFieldStyle.Borders.Right.Width = 0F;
+        HeadFieldStyle.Borders.Top.Width = 0F;
+        HeadFieldStyle.Borders.Bottom.Width = 0F;
+        HeadFieldStyle.CellPadding = new PdfPaddings(0, 0, 4, 0);
 
         PdfGridCellStyle posCellStyleP0 = new PdfGridCellStyle();
         posCellStyleP0.Borders.Left.Width = 0;
@@ -5509,6 +5508,10 @@
         // Add the rows to head grid
         PdfGridRow row0 = HeadPdfGrid.Rows.Add();
         PdfGridRow row1 = HeadPdfGrid.Rows.Add();
+        PdfGridRow row2 = HeadPdfGrid.Rows.Add();
+
+        // Set rows's height
+        row0.Height = 18;
 
         //Adding grid style
         PdfGridStyle gridStyle = new PdfGridStyle();
@@ -5522,39 +5525,53 @@
         HeadPdfGrid.Style = gridStyle;
 
         // Add the columns to head grid
-        HeadPdfGrid.Columns.Add(2);
+        HeadPdfGrid.Columns.Add(3);
 
         // Set columns's width
-        HeadPdfGrid.Columns[0].Width = 100;
-        HeadPdfGrid.Columns[1].Width = 430;
+        HeadPdfGrid.Columns[0].Width = 300;
+        HeadPdfGrid.Columns[1].Width = 36;
+        HeadPdfGrid.Columns[2].Width = 94;
 
         // Set columns merged
-        // HeadPdfGrid.Rows[0].Cells[0].RowSpan = 2;
+        HeadPdfGrid.Rows[1].Cells[0].ColumnSpan = 3;
+        HeadPdfGrid.Rows[2].Cells[0].ColumnSpan = 3;
         #endregion
 
         #region Inserimento Dati Testata
         // Set the HeadPdfGrid's value
         PdfTextElement val;
 
-        HeadPdfGrid.Rows[0].Cells[0].Style = posCellStyleP0;
-        HeadPdfGrid.Rows[0].Cells[1].Style = posCellStyleP0;
+        HeadPdfGrid.Rows[0].Cells[0].Style = HeadFieldStyle;
+        HeadPdfGrid.Rows[0].Cells[1].Style = HeadFieldStyle;
+        HeadPdfGrid.Rows[0].Cells[2].Style = HeadFieldStyle;
 
-        val = new PdfTextElement(" ", fieldPaziente, PdfBrushes.Black);                     // 0-0
+        val = new PdfTextElement(" ", fieldPaziente, PdfBrushes.Black);                     // 0 - 0
         HeadPdfGrid.Rows[0].Cells[0].Value = val;
 
-        val = new PdfTextElement(LName + " " + FName, fieldPaziente, PdfBrushes.Black);     // 0-1
+        val = new PdfTextElement("Data.", FieldItaBldFont, PdfBrushes.Black);               // 0 - 1
         HeadPdfGrid.Rows[0].Cells[1].Value = val;
 
-        HeadPdfGrid.Rows[1].Cells[0].Style = posCellStyleP1;
-        HeadPdfGrid.Rows[1].Cells[1].Style = posCellStyleP1;
+        var TmpDate = pDataOrtottica.Substring(0, 2) + "/" + pDataOrtottica.Substring(2, 2) + "/" + pDataOrtottica.Substring(4, 4);
+        val = new PdfTextElement(TmpDate, FieldRegFont, PdfBrushes.Black);                  // 0 - 2
+        HeadPdfGrid.Rows[0].Cells[2].Value = val;
 
-        val = new PdfTextElement(" ", fieldPaziente, PdfBrushes.Black);                     // 1-0
+        HeadPdfGrid.Rows[1].Cells[0].Style = posCellStyleP0;
+
+        val = new PdfTextElement(LName + " " + FName, fieldPaziente, PdfBrushes.Black);     // 1 - 0
         HeadPdfGrid.Rows[1].Cells[0].Value = val;
 
-        val = new PdfTextElement("Visita Ortottica", fieldHelvBold, PdfBrushes.Black);      // 1-1
-        HeadPdfGrid.Rows[1].Cells[1].Value = val;
+        HeadPdfGrid.Rows[2].Cells[0].Style = posCellStyleP1;
 
-        PdfLayoutResult result = HeadPdfGrid.Draw(page, new Syncfusion.Drawing.PointF(0, 80));
+        val = new PdfTextElement("Visita Ortottica", fieldHelvBold, PdfBrushes.Black);      // 2 - 0
+        HeadPdfGrid.Rows[2].Cells[0].Value = val;
+
+        PdfLayoutResult result = HeadPdfGrid.Draw(page, new Syncfusion.Drawing.PointF(100, 80));
+        Console.WriteLine($"📌 Ortottica - Testata ");
+        Console.WriteLine($"🔷\t pDataOrtottica: {pDataOrtottica}\t TmpDate: {TmpDate}");
+        Console.WriteLine($"🔷\t X: {100}\t Y: {80}");
+        Console.WriteLine($"🔷\t result.Bounds.X: {result.Bounds.X}\t result.Bounds.Bottom: {result.Bounds.Bottom}");
+        Console.WriteLine($"🔷\t result.Bounds.X: {result.Bounds.X}\t result.Bounds.Y: {result.Bounds.Y}");
+        Console.WriteLine($" ");
         #endregion
         #endregion
 
@@ -5772,7 +5789,167 @@
         #endregion
 
         // Draw PDF grid into the PDF page.
-        VisitPdfGrid.Draw(page, new Syncfusion.Drawing.PointF(0, result.Bounds.Bottom + paragraphAfterSpacing));
+        PdfLayoutResult result2 = VisitPdfGrid.Draw(page, new Syncfusion.Drawing.PointF(0, result.Bounds.Bottom + paragraphAfterSpacing));
+        Console.WriteLine($"📌 Ortottica - Dati Visita ");
+        Console.WriteLine($"🔷\t X: {0}\t Y: {result.Bounds.Y + paragraphAfterSpacing}");
+        Console.WriteLine($"🔷\t X: {0}\t Bottom: {result.Bounds.Bottom + paragraphAfterSpacing}");
+        Console.WriteLine($"🔷\t result2.Bounds.X: {result2.Bounds.X}\t result2.Bounds.Y: {result2.Bounds.Y}");
+        Console.WriteLine($" ");
+        #endregion
+
+        #region Timbro
+        PdfStandardFont TimbroFont = new PdfStandardFont(PdfFontFamily.TimesRoman, 8, PdfFontStyle.Bold);
+
+        PdfGrid TimbroPdfGrid = new PdfGrid();
+
+        TimbroPdfGrid.AllowRowBreakAcrossPages = false;
+
+        PdfGridCellStyle tCellStyle0 = new PdfGridCellStyle();
+        PdfGridCellStyle tCellStyle1 = new PdfGridCellStyle();
+        PdfGridCellStyle tCellStyle2 = new PdfGridCellStyle();
+        PdfGridCellStyle tCellStyle3 = new PdfGridCellStyle();
+        PdfGridCellStyle tCellStyle4 = new PdfGridCellStyle();
+        PdfGridCellStyle tCellStyle5 = new PdfGridCellStyle();
+        PdfGridCellStyle tCellStyle6 = new PdfGridCellStyle();
+
+        tCellStyle2.Borders.Left.Width = 0F;
+        tCellStyle2.Borders.Right.Width = 0F;
+        tCellStyle2.Borders.Top.Width = 0F;
+        tCellStyle2.Borders.Bottom.Width = 0F;
+        tCellStyle2.CellPadding = new PdfPaddings(16F, 0, 1F, 0);
+
+        tCellStyle3.Borders.Left.Width = 0F;
+        tCellStyle3.Borders.Right.Width = 0F;
+        tCellStyle3.Borders.Top.Width = 0F;
+        tCellStyle3.Borders.Bottom.Width = 0F;
+        tCellStyle3.CellPadding = new PdfPaddings(53.2F, 0, 1F, 0);
+
+        if (who == "1")     // Marco
+        {
+            tCellStyle0.Borders.Left.Width = 0F;
+            tCellStyle0.Borders.Right.Width = 0F;
+            tCellStyle0.Borders.Top.Width = 0F;
+            tCellStyle0.Borders.Bottom.Width = 0F;
+            tCellStyle0.CellPadding = new PdfPaddings(25.3F, 0, 0, 0);
+
+            tCellStyle1.Borders.Left.Width = 0F;
+            tCellStyle1.Borders.Right.Width = 0F;
+            tCellStyle1.Borders.Top.Width = 0F;
+            tCellStyle1.Borders.Bottom.Width = 0F;
+            tCellStyle1.CellPadding = new PdfPaddings(26F, 0, 1F, 0);
+
+            tCellStyle4.Borders.Left.Width = 0F;
+            tCellStyle4.Borders.Right.Width = 0F;
+            tCellStyle4.Borders.Top.Width = 0F;
+            tCellStyle4.Borders.Bottom.Width = 0F;
+            tCellStyle4.CellPadding = new PdfPaddings(10.3F, 0, 1F, 0);
+
+            tCellStyle5.Borders.Left.Width = 0F;
+            tCellStyle5.Borders.Right.Width = 0F;
+            tCellStyle5.Borders.Top.Width = 0F;
+            tCellStyle5.Borders.Bottom.Width = 0F;
+            tCellStyle5.CellPadding = new PdfPaddings(28.9F, 0, 1F, 0);
+
+            tCellStyle6.Borders.Left.Width = 0F;
+            tCellStyle6.Borders.Right.Width = 0F;
+            tCellStyle6.Borders.Top.Width = 0F;
+            tCellStyle6.Borders.Bottom.Width = 0F;
+            tCellStyle6.CellPadding = new PdfPaddings(18.9F, 0, 1F, 0);
+        }
+        else                // Pietro
+        {
+            tCellStyle0.Borders.Left.Width = 0F;
+            tCellStyle0.Borders.Right.Width = 0F;
+            tCellStyle0.Borders.Top.Width = 0F;
+            tCellStyle0.Borders.Bottom.Width = 0F;
+            tCellStyle0.CellPadding = new PdfPaddings(25.3F, 0, 0, 0);
+
+            tCellStyle1.Borders.Left.Width = 0F;
+            tCellStyle1.Borders.Right.Width = 0F;
+            tCellStyle1.Borders.Top.Width = 0F;
+            tCellStyle1.Borders.Bottom.Width = 0F;
+            tCellStyle1.CellPadding = new PdfPaddings(31.8F, 0, 1F, 0);
+
+            tCellStyle4.Borders.Left.Width = 0F;
+            tCellStyle4.Borders.Right.Width = 0F;
+            tCellStyle4.Borders.Top.Width = 0F;
+            tCellStyle4.Borders.Bottom.Width = 0F;
+            tCellStyle4.CellPadding = new PdfPaddings(12.5F, 0, 1F, 0);
+
+            tCellStyle5.Borders.Left.Width = 0F;
+            tCellStyle5.Borders.Right.Width = 0F;
+            tCellStyle5.Borders.Top.Width = 0F;
+            tCellStyle5.Borders.Bottom.Width = 0F;
+            tCellStyle5.CellPadding = new PdfPaddings(28.9F, 0, 1F, 0);
+
+            tCellStyle6.Borders.Left.Width = 0F;
+            tCellStyle6.Borders.Right.Width = 0F;
+            tCellStyle6.Borders.Top.Width = 0F;
+            tCellStyle6.Borders.Bottom.Width = 0F;
+            tCellStyle6.CellPadding = new PdfPaddings(20.3F, 0, 1F, 0);
+        }
+
+        // Add rows to the DataTable.
+        PdfGridRow trow0 = TimbroPdfGrid.Rows.Add();
+        PdfGridRow trow1 = TimbroPdfGrid.Rows.Add();
+        PdfGridRow trow2 = TimbroPdfGrid.Rows.Add();
+        PdfGridRow trow3 = TimbroPdfGrid.Rows.Add();
+        PdfGridRow trow4 = TimbroPdfGrid.Rows.Add();
+        PdfGridRow trow5 = TimbroPdfGrid.Rows.Add();
+        PdfGridRow trow6 = TimbroPdfGrid.Rows.Add();
+
+        // Add the columns to head grid
+        TimbroPdfGrid.Columns.Add(1);
+
+        // Adding grid cell style
+        PdfGridCellStyle cellStyle = new PdfGridCellStyle();
+        cellStyle.Borders.Left.Width = 0.1F;
+        cellStyle.Borders.Right.Width = 0.1F;
+        cellStyle.Borders.Top.Width = 0.1F;
+        cellStyle.Borders.Bottom.Width = 0.1F;
+
+        //Set cell paddings.
+        cellStyle.CellPadding = new PdfPaddings(10, 0, 0, 0);
+
+        // Set columns's width
+        TimbroPdfGrid.Columns[0].Width = 150;
+
+        //Applying style to grid
+        TimbroPdfGrid.Rows[0].Cells[0].Style = tCellStyle0;
+        TimbroPdfGrid.Rows[1].Cells[0].Style = tCellStyle1;
+        TimbroPdfGrid.Rows[2].Cells[0].Style = tCellStyle2;
+        TimbroPdfGrid.Rows[3].Cells[0].Style = tCellStyle3;
+        TimbroPdfGrid.Rows[4].Cells[0].Style = tCellStyle4;
+        TimbroPdfGrid.Rows[5].Cells[0].Style = tCellStyle5;
+        TimbroPdfGrid.Rows[6].Cells[0].Style = tCellStyle6;
+
+        // Set rows values
+        val = new PdfTextElement("Dott. " + doctor, TimbroFont, PdfBrushes.Black);       // 0 - 0
+        TimbroPdfGrid.Rows[0].Cells[0].Value = val;
+
+        val = new PdfTextElement(specialization, TimbroFont, PdfBrushes.Black);          // 1 - 0
+        TimbroPdfGrid.Rows[1].Cells[0].Value = val;
+
+        val = new PdfTextElement(address, TimbroFont, PdfBrushes.Black);                 // 2 - 0
+        TimbroPdfGrid.Rows[2].Cells[0].Value = val;
+
+        val = new PdfTextElement(city, TimbroFont, PdfBrushes.Black);                    // 3 - 0
+        TimbroPdfGrid.Rows[3].Cells[0].Value = val;
+
+        val = new PdfTextElement(codfisc, TimbroFont, PdfBrushes.Black);                 // 4 - 0
+        TimbroPdfGrid.Rows[4].Cells[0].Value = val;
+
+        val = new PdfTextElement(piva, TimbroFont, PdfBrushes.Black);                    // 5 - 0
+        TimbroPdfGrid.Rows[5].Cells[0].Value = val;
+
+        val = new PdfTextElement(ordine, TimbroFont, PdfBrushes.Black);                  // 6 - 0
+        TimbroPdfGrid.Rows[6].Cells[0].Value = val;
+
+        // Draw PDF grid into the PDF page.
+        TimbroPdfGrid.Draw(page, new Syncfusion.Drawing.PointF(350, result2.Bounds.Bottom + 20));
+        Console.WriteLine($"📌 Ortottica - Timbro ");
+        Console.WriteLine($"🔷\t X: {350}\t Y: {result2.Bounds.Bottom + 20}");
+        Console.WriteLine($" ");
         #endregion
 
         //Create memory stream.
@@ -5788,20 +5965,37 @@
     async void PrintControlli(string who)
     {
         int paragraphAfterSpacing = 8;
-        int cellMargin = 8;
+        // int cellMargin = 8;
 
         string doctor = "";
+        string specialization = "";
+        string address = "V.le R. Sanzio, 60 Tel 095 371701";
+        string city = "CATANIA";
+        string codfisc = "";
+        string piva = "";
+        string ordine = "";
+
         string iscrOrdine = "";
 
         if (who == "1")
         {
-            doctor = "PIETRO";
-            iscrOrdine = "Iscriz. Ord. Dei Medici di CT - Pietro La Bruna n° 5133";
+            doctor = "MARCO LA BRUNA";
+            specialization = "Specialista in Oftalmologia";
+            codfisc = "Cod. Fisc. LBR MRC 84M31 C351P";
+            piva = "Partita IVA 05289740879";
+            ordine = "Ordine dei Medici CT n° 14037";
+
+            iscrOrdine = "Iscriz. Ord. Dei Medici di CT - Marco La Bruna n° 14037";
         }
         else
         {
-            doctor = "MARCO";
-            iscrOrdine = "Iscriz. Ord. Dei Medici di CT - Marco La Bruna n° 14037";
+            doctor = "PIETRO LA BRUNA";
+            specialization = "Specialista in Oculistica";
+            codfisc = "Cod. Fisc. LBR PTR 49T07 H221S";
+            piva = "Partita IVA 00635170871";
+            // ordine = "Ordine dei Medici CT n° 5133";
+
+            iscrOrdine = "Iscriz. Ord. Dei Medici di CT - Pietro La Bruna n° 5133";
         }
 
         FirstPage = true;
@@ -5908,8 +6102,8 @@
             header.Graphics.DrawImage(image, 5, 15);
         }
 
-        // header.Graphics.DrawString("STUDIO OCULISTICO", hHeadFont, PdfBrushes.Black, 120, 14); 36
-        header.Graphics.DrawString("DOTT. " + doctor + " LA BRUNA", hHeadFont, PdfBrushes.Black, 100, 25);
+        header.Graphics.DrawString("DOTT. " + doctor, hHeadFont, PdfBrushes.Black, 100, 14);
+        header.Graphics.DrawString(specialization, hHeadFont, PdfBrushes.Black, 100, 36);
 
         PdfPen hPen = new PdfPen(Color.Black);
         hPen.Width = 0.1F;
@@ -6169,7 +6363,159 @@
         #endregion
 
         // Draw PDF grid into the PDF page.
-        VisitPdfGrid.Draw(page, new Syncfusion.Drawing.PointF(0, result.Bounds.Bottom + paragraphAfterSpacing));
+        PdfLayoutResult result2 = VisitPdfGrid.Draw(page, new Syncfusion.Drawing.PointF(0, result.Bounds.Bottom + paragraphAfterSpacing));
+        #endregion
+
+        #region Timbro
+        PdfStandardFont TimbroFont = new PdfStandardFont(PdfFontFamily.TimesRoman, 8, PdfFontStyle.Bold);
+
+        PdfGrid TimbroPdfGrid = new PdfGrid();
+
+        TimbroPdfGrid.AllowRowBreakAcrossPages = false;
+
+        PdfGridCellStyle tCellStyle0 = new PdfGridCellStyle();
+        PdfGridCellStyle tCellStyle1 = new PdfGridCellStyle();
+        PdfGridCellStyle tCellStyle2 = new PdfGridCellStyle();
+        PdfGridCellStyle tCellStyle3 = new PdfGridCellStyle();
+        PdfGridCellStyle tCellStyle4 = new PdfGridCellStyle();
+        PdfGridCellStyle tCellStyle5 = new PdfGridCellStyle();
+        PdfGridCellStyle tCellStyle6 = new PdfGridCellStyle();
+
+        tCellStyle2.Borders.Left.Width = 0F;
+        tCellStyle2.Borders.Right.Width = 0F;
+        tCellStyle2.Borders.Top.Width = 0F;
+        tCellStyle2.Borders.Bottom.Width = 0F;
+        tCellStyle2.CellPadding = new PdfPaddings(16F, 0, 1F, 0);
+
+        tCellStyle3.Borders.Left.Width = 0F;
+        tCellStyle3.Borders.Right.Width = 0F;
+        tCellStyle3.Borders.Top.Width = 0F;
+        tCellStyle3.Borders.Bottom.Width = 0F;
+        tCellStyle3.CellPadding = new PdfPaddings(53.2F, 0, 1F, 0);
+
+        if (who == "1")     // Marco
+        {
+            tCellStyle0.Borders.Left.Width = 0F;
+            tCellStyle0.Borders.Right.Width = 0F;
+            tCellStyle0.Borders.Top.Width = 0F;
+            tCellStyle0.Borders.Bottom.Width = 0F;
+            tCellStyle0.CellPadding = new PdfPaddings(25.3F, 0, 0, 0);
+
+            tCellStyle1.Borders.Left.Width = 0F;
+            tCellStyle1.Borders.Right.Width = 0F;
+            tCellStyle1.Borders.Top.Width = 0F;
+            tCellStyle1.Borders.Bottom.Width = 0F;
+            tCellStyle1.CellPadding = new PdfPaddings(26F, 0, 1F, 0);
+
+            tCellStyle4.Borders.Left.Width = 0F;
+            tCellStyle4.Borders.Right.Width = 0F;
+            tCellStyle4.Borders.Top.Width = 0F;
+            tCellStyle4.Borders.Bottom.Width = 0F;
+            tCellStyle4.CellPadding = new PdfPaddings(10.3F, 0, 1F, 0);
+
+            tCellStyle5.Borders.Left.Width = 0F;
+            tCellStyle5.Borders.Right.Width = 0F;
+            tCellStyle5.Borders.Top.Width = 0F;
+            tCellStyle5.Borders.Bottom.Width = 0F;
+            tCellStyle5.CellPadding = new PdfPaddings(28.9F, 0, 1F, 0);
+
+            tCellStyle6.Borders.Left.Width = 0F;
+            tCellStyle6.Borders.Right.Width = 0F;
+            tCellStyle6.Borders.Top.Width = 0F;
+            tCellStyle6.Borders.Bottom.Width = 0F;
+            tCellStyle6.CellPadding = new PdfPaddings(18.9F, 0, 1F, 0);
+        }
+        else                // Pietro
+        {
+            tCellStyle0.Borders.Left.Width = 0F;
+            tCellStyle0.Borders.Right.Width = 0F;
+            tCellStyle0.Borders.Top.Width = 0F;
+            tCellStyle0.Borders.Bottom.Width = 0F;
+            tCellStyle0.CellPadding = new PdfPaddings(25.3F, 0, 0, 0);
+
+            tCellStyle1.Borders.Left.Width = 0F;
+            tCellStyle1.Borders.Right.Width = 0F;
+            tCellStyle1.Borders.Top.Width = 0F;
+            tCellStyle1.Borders.Bottom.Width = 0F;
+            tCellStyle1.CellPadding = new PdfPaddings(31.8F, 0, 1F, 0);
+
+            tCellStyle4.Borders.Left.Width = 0F;
+            tCellStyle4.Borders.Right.Width = 0F;
+            tCellStyle4.Borders.Top.Width = 0F;
+            tCellStyle4.Borders.Bottom.Width = 0F;
+            tCellStyle4.CellPadding = new PdfPaddings(12.5F, 0, 1F, 0);
+
+            tCellStyle5.Borders.Left.Width = 0F;
+            tCellStyle5.Borders.Right.Width = 0F;
+            tCellStyle5.Borders.Top.Width = 0F;
+            tCellStyle5.Borders.Bottom.Width = 0F;
+            tCellStyle5.CellPadding = new PdfPaddings(28.9F, 0, 1F, 0);
+
+            tCellStyle6.Borders.Left.Width = 0F;
+            tCellStyle6.Borders.Right.Width = 0F;
+            tCellStyle6.Borders.Top.Width = 0F;
+            tCellStyle6.Borders.Bottom.Width = 0F;
+            tCellStyle6.CellPadding = new PdfPaddings(20.3F, 0, 1F, 0);
+        }
+
+        // Add rows to the DataTable.
+        PdfGridRow trow0 = TimbroPdfGrid.Rows.Add();
+        PdfGridRow trow1 = TimbroPdfGrid.Rows.Add();
+        PdfGridRow trow2 = TimbroPdfGrid.Rows.Add();
+        PdfGridRow trow3 = TimbroPdfGrid.Rows.Add();
+        PdfGridRow trow4 = TimbroPdfGrid.Rows.Add();
+        PdfGridRow trow5 = TimbroPdfGrid.Rows.Add();
+        PdfGridRow trow6 = TimbroPdfGrid.Rows.Add();
+
+        // Add the columns to head grid
+        TimbroPdfGrid.Columns.Add(1);
+
+        // Adding grid cell style
+        PdfGridCellStyle cellStyle = new PdfGridCellStyle();
+        cellStyle.Borders.Left.Width = 0.1F;
+        cellStyle.Borders.Right.Width = 0.1F;
+        cellStyle.Borders.Top.Width = 0.1F;
+        cellStyle.Borders.Bottom.Width = 0.1F;
+
+        //Set cell paddings.
+        cellStyle.CellPadding = new PdfPaddings(10, 0, 0, 0);
+
+        // Set columns's width
+        TimbroPdfGrid.Columns[0].Width = 150;
+
+        //Applying style to grid
+        TimbroPdfGrid.Rows[0].Cells[0].Style = tCellStyle0;
+        TimbroPdfGrid.Rows[1].Cells[0].Style = tCellStyle1;
+        TimbroPdfGrid.Rows[2].Cells[0].Style = tCellStyle2;
+        TimbroPdfGrid.Rows[3].Cells[0].Style = tCellStyle3;
+        TimbroPdfGrid.Rows[4].Cells[0].Style = tCellStyle4;
+        TimbroPdfGrid.Rows[5].Cells[0].Style = tCellStyle5;
+        TimbroPdfGrid.Rows[6].Cells[0].Style = tCellStyle6;
+
+        // Set rows values
+        val = new PdfTextElement("Dott. " + doctor, TimbroFont, PdfBrushes.Black);       // 0 - 0
+        TimbroPdfGrid.Rows[0].Cells[0].Value = val;
+
+        val = new PdfTextElement(specialization, TimbroFont, PdfBrushes.Black);          // 1 - 0
+        TimbroPdfGrid.Rows[1].Cells[0].Value = val;
+
+        val = new PdfTextElement(address, TimbroFont, PdfBrushes.Black);                 // 2 - 0
+        TimbroPdfGrid.Rows[2].Cells[0].Value = val;
+
+        val = new PdfTextElement(city, TimbroFont, PdfBrushes.Black);                    // 3 - 0
+        TimbroPdfGrid.Rows[3].Cells[0].Value = val;
+
+        val = new PdfTextElement(codfisc, TimbroFont, PdfBrushes.Black);                 // 4 - 0
+        TimbroPdfGrid.Rows[4].Cells[0].Value = val;
+
+        val = new PdfTextElement(piva, TimbroFont, PdfBrushes.Black);                    // 5 - 0
+        TimbroPdfGrid.Rows[5].Cells[0].Value = val;
+
+        val = new PdfTextElement(ordine, TimbroFont, PdfBrushes.Black);                  // 6 - 0
+        TimbroPdfGrid.Rows[6].Cells[0].Value = val;
+
+        // Draw PDF grid into the PDF page.
+        TimbroPdfGrid.Draw(page, new Syncfusion.Drawing.PointF(350, result2.Bounds.Bottom + 20));
         #endregion
 
         //Create memory stream.
@@ -6188,17 +6534,34 @@
         // int cellMargin = 8;
 
         string doctor = "";
+        string specialization = "";
+        string address = "V.le R. Sanzio, 60 Tel 095 371701";
+        string city = "CATANIA";
+        string codfisc = "";
+        string piva = "";
+        string ordine = "";
+
         string iscrOrdine = "";
 
         if (who == "1")
         {
-            doctor = "PIETRO";
-            iscrOrdine = "Iscriz. Ord. Dei Medici di CT - Pietro La Bruna n° 5133";
+            doctor = "MARCO LA BRUNA";
+            specialization = "Specialista in Oftalmologia";
+            codfisc = "Cod. Fisc. LBR MRC 84M31 C351P";
+            piva = "Partita IVA 05289740879";
+            ordine = "Ordine dei Medici CT n° 14037";
+
+            iscrOrdine = "Iscriz. Ord. Dei Medici di CT - Marco La Bruna n° 14037";
         }
         else
         {
-            doctor = "MARCO";
-            iscrOrdine = "Iscriz. Ord. Dei Medici di CT - Marco La Bruna n° 14037";
+            doctor = "PIETRO LA BRUNA";
+            specialization = "Specialista in Oculistica";
+            codfisc = "Cod. Fisc. LBR PTR 49T07 H221S";
+            piva = "Partita IVA 00635170871";
+            // ordine = "Ordine dei Medici CT n° 5133";
+
+            iscrOrdine = "Iscriz. Ord. Dei Medici di CT - Pietro La Bruna n° 5133";
         }
 
         FirstPage = true;
@@ -6308,8 +6671,8 @@
             header.Graphics.DrawImage(image, 5, 15);
         }
 
-        // header.Graphics.DrawString("STUDIO OCULISTICO", hHeadFont, PdfBrushes.Black, 120, 14); 36
-        header.Graphics.DrawString("DOTT. " + doctor + " LA BRUNA", hHeadFont, PdfBrushes.Black, 100, 25);
+        header.Graphics.DrawString("DOTT. " + doctor, hHeadFont, PdfBrushes.Black, 100, 14);
+        header.Graphics.DrawString(specialization, hHeadFont, PdfBrushes.Black, 100, 36);
 
         PdfPen hPen = new PdfPen(Color.Black);
         hPen.Width = 0.1F;
@@ -6957,18 +7320,26 @@
         #region Definizione stili celle Dati Testata
         // Setup font for Dati Testata
         PdfStandardFont DocFont = new PdfStandardFont(PdfFontFamily.Helvetica, 12, PdfFontStyle.Bold);
+        PdfStandardFont SubTitleBoldFont = new PdfStandardFont(PdfFontFamily.Helvetica, 11, PdfFontStyle.Bold);
+        PdfStandardFont SubTitleRegFont = new PdfStandardFont(PdfFontFamily.Helvetica, 11, PdfFontStyle.Regular);
         PdfStandardFont FieldBldFont = new PdfStandardFont(PdfFontFamily.Helvetica, 10, PdfFontStyle.Bold);
         PdfStandardFont FieldRegFont = new PdfStandardFont(PdfFontFamily.Helvetica, 10, PdfFontStyle.Regular);
         PdfStandardFont FieldItaBldFont = new PdfStandardFont(PdfFontFamily.Helvetica, 10, PdfFontStyle.Bold | PdfFontStyle.Italic);
-        PdfStandardFont TitleFont = new PdfStandardFont(PdfFontFamily.Helvetica, 14, PdfFontStyle.Bold);
+        PdfStandardFont TitleFont = new PdfStandardFont(PdfFontFamily.Helvetica, 13, PdfFontStyle.Bold);
 
-        // Specify the style for bottom                             // 0.1F;
         PdfGridCellStyle HeadFieldStyle = new PdfGridCellStyle();
         HeadFieldStyle.Borders.Left.Width = 0F;
         HeadFieldStyle.Borders.Right.Width = 0F;
         HeadFieldStyle.Borders.Top.Width = 0F;
         HeadFieldStyle.Borders.Bottom.Width = 0F;
         HeadFieldStyle.CellPadding = new PdfPaddings(0, 0, 4, 0);
+
+        PdfGridCellStyle HeadFieldStyle2 = new PdfGridCellStyle();
+        HeadFieldStyle2.Borders.Left.Width = 0F;
+        HeadFieldStyle2.Borders.Right.Width = 0F;
+        HeadFieldStyle2.Borders.Top.Width = 0F;
+        HeadFieldStyle2.Borders.Bottom.Width = 0F;
+        HeadFieldStyle2.CellPadding = new PdfPaddings(0, 0, 3, 1);
 
         PdfGridCellStyle HeadTitleStyle = new PdfGridCellStyle();
         HeadTitleStyle.Borders.Left.Width = 0F;
@@ -7049,24 +7420,24 @@
         HeadPdfGrid.Rows[0].Cells[4].Style = HeadFieldStyle;
 
         // 1
-        val = new PdfTextElement("", FieldBldFont, PdfBrushes.Black);                                           // 1-0
+        val = new PdfTextElement("", SubTitleBoldFont, PdfBrushes.Black);                                           // 1-0
         HeadPdfGrid.Rows[1].Cells[0].Value = val;
         HeadPdfGrid.Rows[1].Cells[0].Style = HeadEmptyStyle;
 
-        val = new PdfTextElement("PRESCRIZIONE LENTI", TitleFont, PdfBrushes.Black);                            // 1-1
+        val = new PdfTextElement("PRESCRIZIONE LENTI", TitleFont, PdfBrushes.Black);                                // 1-1
         HeadPdfGrid.Rows[1].Cells[1].Value = val;
         HeadPdfGrid.Rows[1].Cells[1].Style = HeadTitleStyle;
 
         // 2
-        val = new PdfTextElement("", FieldBldFont, PdfBrushes.Black);                                           // 2-0
+        val = new PdfTextElement("", SubTitleBoldFont, PdfBrushes.Black);                                           // 2-0
         HeadPdfGrid.Rows[2].Cells[0].Value = val;
         HeadPdfGrid.Rows[2].Cells[0].Style = HeadEmptyStyle;
 
-        val = new PdfTextElement("Sig.", FieldBldFont, PdfBrushes.Black);                                       // 2-1
+        val = new PdfTextElement("Sig. ", SubTitleBoldFont, PdfBrushes.Black);                                       // 2-1
         HeadPdfGrid.Rows[2].Cells[1].Value = val;
-        HeadPdfGrid.Rows[2].Cells[1].Style = HeadFieldStyle;
+        HeadPdfGrid.Rows[2].Cells[1].Style = HeadFieldStyle2;
 
-        val = new PdfTextElement(@LName + " " + @FName, FieldRegFont, PdfBrushes.Black);                        // 2-2
+        val = new PdfTextElement(" " + @LName + " " + @FName, SubTitleRegFont, PdfBrushes.Black);                        // 2-2
         HeadPdfGrid.Rows[2].Cells[2].Value = val;
         HeadPdfGrid.Rows[2].Cells[2].Style = HeadFieldStyle;
 
@@ -7364,24 +7735,6 @@
 
         #region Terza parte: Note PRESCRIZIONE LENTI
         #region Definizione stili celle Note PRESCRIZIONE LENTI
-        PdfGridCellStyle CellStyleU = new PdfGridCellStyle();
-        CellStyleU.Borders.Left.Width = 0F;
-        CellStyleU.Borders.Right.Width = 0F;
-        CellStyleU.Borders.Top.Width = 0F;
-        CellStyleU.Borders.Bottom.Width = 0.1F;
-        CellStyleU.CellPadding = new PdfPaddings(2, 0, 0, 0);
-
-        string underUrl = $"{Env.BaseAddress}/img/underscore0.png";                      // URL dell'underscore
-        var underImgBytes = await httpClient.GetByteArrayAsync(underUrl);
-
-        // Usa un MemoryStream per creare il PdfBitmap
-        using (MemoryStream underImgStream = new MemoryStream(underImgBytes))
-        {
-            PdfImage image = new PdfBitmap(underImgStream);
-
-            CellStyleU.BackgroundImage = new PdfBitmap(underImgStream);
-        }
-
         // Specify the style for head's cell
         PdfGridCellStyle CellStyleH = new PdfGridCellStyle();
         CellStyleH.Borders.Left.Width = 0F;
@@ -7417,10 +7770,6 @@
         PdfGridRow rowN0 = NotePdfGrid.Rows.Add();
         PdfGridRow rowN1 = NotePdfGrid.Rows.Add();
         PdfGridRow rowN2 = NotePdfGrid.Rows.Add();
-        PdfGridRow rowN3 = NotePdfGrid.Rows.Add();
-        PdfGridRow rowN4 = NotePdfGrid.Rows.Add();
-        PdfGridRow rowN5 = NotePdfGrid.Rows.Add();
-        PdfGridRow rowN6 = NotePdfGrid.Rows.Add();
 
         // Add Columns
         NotePdfGrid.Columns.Add(5);
@@ -7429,10 +7778,6 @@
         rowN0.Height = 16;
         rowN1.Height = 16;
         rowN2.Height = 16;
-        rowN3.Height = 16;
-        rowN4.Height = 16;
-        rowN5.Height = 16;
-        rowN6.Height = 42;
 
         // Set Columns's width
         NotePdfGrid.Columns[0].Width = 100;
@@ -7447,13 +7792,6 @@
         NotePdfGrid.Rows[1].Cells[3].ColumnSpan = 2;
 
         NotePdfGrid.Rows[2].Cells[2].ColumnSpan = 3;
-        NotePdfGrid.Rows[3].Cells[2].ColumnSpan = 3;
-        NotePdfGrid.Rows[4].Cells[2].ColumnSpan = 3;
-
-        NotePdfGrid.Rows[2].Cells[2].RowSpan = 3;
-
-        NotePdfGrid.Rows[5].Cells[1].ColumnSpan = 3;
-        NotePdfGrid.Rows[6].Cells[1].ColumnSpan = 4;
         #endregion
 
         #region Inserimento Note PRESCRIZIONE LENTI
@@ -7496,46 +7834,165 @@
         NotePdfGrid.Rows[2].Cells[1].Value = value;
         value = new PdfTextElement(SetObjNullToStr(Visus.Note), FieldRegFont, PdfBrushes.Black);    //  2 - 2
         NotePdfGrid.Rows[2].Cells[2].Value = value;
-
-        NotePdfGrid.Rows[3].Cells[0].Style = CellStyleE;
-        NotePdfGrid.Rows[3].Cells[1].Style = CellStyleE;
-
-        value = new PdfTextElement("", FieldRegFont, PdfBrushes.Black);                             //  3 - 0
-        NotePdfGrid.Rows[3].Cells[0].Value = value;
-        value = new PdfTextElement("", FieldBldFont, PdfBrushes.Black);                             //  3 - 1
-        NotePdfGrid.Rows[3].Cells[1].Value = value;
-
-        NotePdfGrid.Rows[4].Cells[0].Style = CellStyleE;
-        NotePdfGrid.Rows[4].Cells[1].Style = CellStyleE;
-
-        value = new PdfTextElement("", FieldRegFont, PdfBrushes.Black);                             //  4 - 0
-        NotePdfGrid.Rows[4].Cells[0].Value = value;
-        value = new PdfTextElement("", FieldBldFont, PdfBrushes.Black);                             //  4 - 1
-        NotePdfGrid.Rows[4].Cells[1].Value = value;
-
-        NotePdfGrid.Rows[5].Cells[0].Style = CellStyleE;
-        NotePdfGrid.Rows[5].Cells[1].Style = CellStyleE;
-        NotePdfGrid.Rows[5].Cells[4].Style = CellStyleU; //CellStyleH;
-        NotePdfGrid.Rows[5].Cells[4].ImagePosition = PdfGridImagePosition.Tile;                     //  5 - 4
-
-        value = new PdfTextElement("", FieldRegFont, PdfBrushes.Black);                             //  5 - 0
-        NotePdfGrid.Rows[5].Cells[0].Value = value;
-        value = new PdfTextElement("", FieldBldFont, PdfBrushes.Black);                             //  5 - 1
-        NotePdfGrid.Rows[5].Cells[1].Value = value;
-        value = new PdfTextElement("", FieldRegFont, PdfBrushes.Black);                             //  5 - 4
-        NotePdfGrid.Rows[5].Cells[4].Value = value;
-
-        NotePdfGrid.Rows[6].Cells[0].Style = CellStyleE;
-        NotePdfGrid.Rows[6].Cells[1].Style = CellStyleF;
-
-        value = new PdfTextElement("", FieldRegFont, PdfBrushes.Black);                             //  6 - 0
-        NotePdfGrid.Rows[6].Cells[0].Value = value;
-        value = new PdfTextElement("Riportare la presente prescrizione nelle visite successive", FieldItaBldFont, PdfBrushes.Black);                             //  6 - 1
-        NotePdfGrid.Rows[6].Cells[1].Value = value;
         #endregion
 
         // Draw PDF grid into the PDF page.
-        NotePdfGrid.Draw(page, new Syncfusion.Drawing.PointF(0, result2.Bounds.Bottom + paragraphAfterSpacing));
+        PdfLayoutResult result3 = NotePdfGrid.Draw(page, new Syncfusion.Drawing.PointF(0, result2.Bounds.Bottom + paragraphAfterSpacing));
+        #endregion
+
+        #region Timbro
+        PdfStandardFont TimbroFont = new PdfStandardFont(PdfFontFamily.TimesRoman, 8, PdfFontStyle.Bold);
+
+        PdfGrid TimbroPdfGrid = new PdfGrid();
+
+        TimbroPdfGrid.AllowRowBreakAcrossPages = false;
+
+        PdfGridCellStyle tCellStyle0 = new PdfGridCellStyle();
+        PdfGridCellStyle tCellStyle1 = new PdfGridCellStyle();
+        PdfGridCellStyle tCellStyle2 = new PdfGridCellStyle();
+        PdfGridCellStyle tCellStyle3 = new PdfGridCellStyle();
+        PdfGridCellStyle tCellStyle4 = new PdfGridCellStyle();
+        PdfGridCellStyle tCellStyle5 = new PdfGridCellStyle();
+        PdfGridCellStyle tCellStyle6 = new PdfGridCellStyle();
+
+        tCellStyle2.Borders.Left.Width = 0F;
+        tCellStyle2.Borders.Right.Width = 0F;
+        tCellStyle2.Borders.Top.Width = 0F;
+        tCellStyle2.Borders.Bottom.Width = 0F;
+        tCellStyle2.CellPadding = new PdfPaddings(16F, 0, 1F, 0);
+
+        tCellStyle3.Borders.Left.Width = 0F;
+        tCellStyle3.Borders.Right.Width = 0F;
+        tCellStyle3.Borders.Top.Width = 0F;
+        tCellStyle3.Borders.Bottom.Width = 0F;
+        tCellStyle3.CellPadding = new PdfPaddings(53.2F, 0, 1F, 0);
+
+        if (who == "1")     // Marco
+        {
+            tCellStyle0.Borders.Left.Width = 0F;
+            tCellStyle0.Borders.Right.Width = 0F;
+            tCellStyle0.Borders.Top.Width = 0F;
+            tCellStyle0.Borders.Bottom.Width = 0F;
+            tCellStyle0.CellPadding = new PdfPaddings(25.3F, 0, 0, 0);
+
+            tCellStyle1.Borders.Left.Width = 0F;
+            tCellStyle1.Borders.Right.Width = 0F;
+            tCellStyle1.Borders.Top.Width = 0F;
+            tCellStyle1.Borders.Bottom.Width = 0F;
+            tCellStyle1.CellPadding = new PdfPaddings(26F, 0, 1F, 0);
+
+            tCellStyle4.Borders.Left.Width = 0F;
+            tCellStyle4.Borders.Right.Width = 0F;
+            tCellStyle4.Borders.Top.Width = 0F;
+            tCellStyle4.Borders.Bottom.Width = 0F;
+            tCellStyle4.CellPadding = new PdfPaddings(10.3F, 0, 1F, 0);
+
+            tCellStyle5.Borders.Left.Width = 0F;
+            tCellStyle5.Borders.Right.Width = 0F;
+            tCellStyle5.Borders.Top.Width = 0F;
+            tCellStyle5.Borders.Bottom.Width = 0F;
+            tCellStyle5.CellPadding = new PdfPaddings(28.9F, 0, 1F, 0);
+
+            tCellStyle6.Borders.Left.Width = 0F;
+            tCellStyle6.Borders.Right.Width = 0F;
+            tCellStyle6.Borders.Top.Width = 0F;
+            tCellStyle6.Borders.Bottom.Width = 0F;
+            tCellStyle6.CellPadding = new PdfPaddings(18.9F, 0, 1F, 0);
+        }
+        else                // Pietro
+        {
+            tCellStyle0.Borders.Left.Width = 0F;
+            tCellStyle0.Borders.Right.Width = 0F;
+            tCellStyle0.Borders.Top.Width = 0F;
+            tCellStyle0.Borders.Bottom.Width = 0F;
+            tCellStyle0.CellPadding = new PdfPaddings(25.3F, 0, 0, 0);
+
+            tCellStyle1.Borders.Left.Width = 0F;
+            tCellStyle1.Borders.Right.Width = 0F;
+            tCellStyle1.Borders.Top.Width = 0F;
+            tCellStyle1.Borders.Bottom.Width = 0F;
+            tCellStyle1.CellPadding = new PdfPaddings(31.8F, 0, 1F, 0);
+
+            tCellStyle4.Borders.Left.Width = 0F;
+            tCellStyle4.Borders.Right.Width = 0F;
+            tCellStyle4.Borders.Top.Width = 0F;
+            tCellStyle4.Borders.Bottom.Width = 0F;
+            tCellStyle4.CellPadding = new PdfPaddings(12.5F, 0, 1F, 0);
+
+            tCellStyle5.Borders.Left.Width = 0F;
+            tCellStyle5.Borders.Right.Width = 0F;
+            tCellStyle5.Borders.Top.Width = 0F;
+            tCellStyle5.Borders.Bottom.Width = 0F;
+            tCellStyle5.CellPadding = new PdfPaddings(28.9F, 0, 1F, 0);
+
+            tCellStyle6.Borders.Left.Width = 0F;
+            tCellStyle6.Borders.Right.Width = 0F;
+            tCellStyle6.Borders.Top.Width = 0F;
+            tCellStyle6.Borders.Bottom.Width = 0F;
+            tCellStyle6.CellPadding = new PdfPaddings(20.3F, 0, 1F, 0);
+        }
+
+        // Add rows to the DataTable.
+        PdfGridRow trow0 = TimbroPdfGrid.Rows.Add();
+        PdfGridRow trow1 = TimbroPdfGrid.Rows.Add();
+        PdfGridRow trow2 = TimbroPdfGrid.Rows.Add();
+        PdfGridRow trow3 = TimbroPdfGrid.Rows.Add();
+        PdfGridRow trow4 = TimbroPdfGrid.Rows.Add();
+        PdfGridRow trow5 = TimbroPdfGrid.Rows.Add();
+        PdfGridRow trow6 = TimbroPdfGrid.Rows.Add();
+
+        // Add the columns to head grid
+        TimbroPdfGrid.Columns.Add(1);
+
+        // Adding grid cell style
+        PdfGridCellStyle cellStyle = new PdfGridCellStyle();
+        cellStyle.Borders.Left.Width = 0.1F;
+        cellStyle.Borders.Right.Width = 0.1F;
+        cellStyle.Borders.Top.Width = 0.1F;
+        cellStyle.Borders.Bottom.Width = 0.1F;
+
+        //Set cell paddings.
+        cellStyle.CellPadding = new PdfPaddings(10, 0, 0, 0);
+
+        // Set columns's width
+        TimbroPdfGrid.Columns[0].Width = 150;
+
+        //Applying style to grid
+        TimbroPdfGrid.Rows[0].Cells[0].Style = tCellStyle0;
+        TimbroPdfGrid.Rows[1].Cells[0].Style = tCellStyle1;
+        TimbroPdfGrid.Rows[2].Cells[0].Style = tCellStyle2;
+        TimbroPdfGrid.Rows[3].Cells[0].Style = tCellStyle3;
+        TimbroPdfGrid.Rows[4].Cells[0].Style = tCellStyle4;
+        TimbroPdfGrid.Rows[5].Cells[0].Style = tCellStyle5;
+        TimbroPdfGrid.Rows[6].Cells[0].Style = tCellStyle6;
+
+        // Set rows values
+        val = new PdfTextElement("Dott. " + doctor, TimbroFont, PdfBrushes.Black);       // 0 - 0
+        TimbroPdfGrid.Rows[0].Cells[0].Value = val;
+
+        val = new PdfTextElement(specialization, TimbroFont, PdfBrushes.Black);          // 1 - 0
+        TimbroPdfGrid.Rows[1].Cells[0].Value = val;
+
+        val = new PdfTextElement(address, TimbroFont, PdfBrushes.Black);                 // 2 - 0
+        TimbroPdfGrid.Rows[2].Cells[0].Value = val;
+
+        val = new PdfTextElement(city, TimbroFont, PdfBrushes.Black);                    // 3 - 0
+        TimbroPdfGrid.Rows[3].Cells[0].Value = val;
+
+        val = new PdfTextElement(codfisc, TimbroFont, PdfBrushes.Black);                 // 4 - 0
+        TimbroPdfGrid.Rows[4].Cells[0].Value = val;
+
+        val = new PdfTextElement(piva, TimbroFont, PdfBrushes.Black);                    // 5 - 0
+        TimbroPdfGrid.Rows[5].Cells[0].Value = val;
+
+        val = new PdfTextElement(ordine, TimbroFont, PdfBrushes.Black);                  // 6 - 0
+        TimbroPdfGrid.Rows[6].Cells[0].Value = val;
+
+        // Draw PDF grid into the PDF page.
+        PdfLayoutResult result4 = TimbroPdfGrid.Draw(page, new Syncfusion.Drawing.PointF(350, result3.Bounds.Bottom + paragraphAfterSpacing));
+
+        // Disclaimer
+        g.DrawString("Riportare la presente prescrizione nelle visite successive", FieldItaBldFont, PdfBrushes.Black, 191.18F, result4.Bounds.Bottom + paragraphAfterSpacing + 10);
         #endregion
 
         //Create memory stream.
@@ -7551,20 +8008,37 @@
     async void PrintPrescrizione(string who)
     {
         int paragraphAfterSpacing = 8;
-        int cellMargin = 8;
+        // int cellMargin = 8;
 
         string doctor = "";
+        string specialization = "";
+        string address = "V.le R. Sanzio, 60 Tel 095 371701";
+        string city = "CATANIA";
+        string codfisc = "";
+        string piva = "";
+        string ordine = "";
+
         string iscrOrdine = "";
 
         if (who == "1")
         {
-            doctor = "PIETRO";
-            iscrOrdine = "Iscriz. Ord. Dei Medici di CT - Pietro La Bruna n° 5133";
+            doctor = "MARCO LA BRUNA";
+            specialization = "Specialista in Oftalmologia";
+            codfisc = "Cod. Fisc. LBR MRC 84M31 C351P";
+            piva = "Partita IVA 05289740879";
+            ordine = "Ordine dei Medici CT n° 14037";
+
+            iscrOrdine = "Iscriz. Ord. Dei Medici di CT - Marco La Bruna n° 14037";
         }
         else
         {
-            doctor = "MARCO";
-            iscrOrdine = "Iscriz. Ord. Dei Medici di CT - Marco La Bruna n° 14037";
+            doctor = "PIETRO LA BRUNA";
+            specialization = "Specialista in Oculistica";
+            codfisc = "Cod. Fisc. LBR PTR 49T07 H221S";
+            piva = "Partita IVA 00635170871";
+            // ordine = "Ordine dei Medici CT n° 5133";
+
+            iscrOrdine = "Iscriz. Ord. Dei Medici di CT - Pietro La Bruna n° 5133";
         }
 
         FirstPage = true;
@@ -7670,8 +8144,8 @@
             header.Graphics.DrawImage(image, 5, 15);
         }
 
-        // header.Graphics.DrawString("STUDIO OCULISTICO", hHeadFont, PdfBrushes.Black, 120, 14); 36
-        header.Graphics.DrawString("DOTT. " + doctor + " LA BRUNA", hHeadFont, PdfBrushes.Black, 100, 25);
+        header.Graphics.DrawString("DOTT. " + doctor, hHeadFont, PdfBrushes.Black, 100, 14);
+        header.Graphics.DrawString(specialization, hHeadFont, PdfBrushes.Black, 100, 36);
 
         PdfPen hPen = new PdfPen(Color.Black);
         hPen.Width = 0.1F;
@@ -7986,7 +8460,159 @@
         #endregion
 
         // Draw PDF grid into the PDF page.
-        PrescrPdfGrid.Draw(page, new Syncfusion.Drawing.PointF(100, result.Bounds.Bottom + 24));
+        PdfLayoutResult result2 = PrescrPdfGrid.Draw(page, new Syncfusion.Drawing.PointF(100, result.Bounds.Bottom + 24));
+        #endregion
+
+        #region Timbro
+        PdfStandardFont TimbroFont = new PdfStandardFont(PdfFontFamily.TimesRoman, 8, PdfFontStyle.Bold);
+
+        PdfGrid TimbroPdfGrid = new PdfGrid();
+
+        TimbroPdfGrid.AllowRowBreakAcrossPages = false;
+
+        PdfGridCellStyle tCellStyle0 = new PdfGridCellStyle();
+        PdfGridCellStyle tCellStyle1 = new PdfGridCellStyle();
+        PdfGridCellStyle tCellStyle2 = new PdfGridCellStyle();
+        PdfGridCellStyle tCellStyle3 = new PdfGridCellStyle();
+        PdfGridCellStyle tCellStyle4 = new PdfGridCellStyle();
+        PdfGridCellStyle tCellStyle5 = new PdfGridCellStyle();
+        PdfGridCellStyle tCellStyle6 = new PdfGridCellStyle();
+
+        tCellStyle2.Borders.Left.Width = 0F;
+        tCellStyle2.Borders.Right.Width = 0F;
+        tCellStyle2.Borders.Top.Width = 0F;
+        tCellStyle2.Borders.Bottom.Width = 0F;
+        tCellStyle2.CellPadding = new PdfPaddings(16F, 0, 1F, 0);
+
+        tCellStyle3.Borders.Left.Width = 0F;
+        tCellStyle3.Borders.Right.Width = 0F;
+        tCellStyle3.Borders.Top.Width = 0F;
+        tCellStyle3.Borders.Bottom.Width = 0F;
+        tCellStyle3.CellPadding = new PdfPaddings(53.2F, 0, 1F, 0);
+
+        if (who == "1")     // Marco
+        {
+            tCellStyle0.Borders.Left.Width = 0F;
+            tCellStyle0.Borders.Right.Width = 0F;
+            tCellStyle0.Borders.Top.Width = 0F;
+            tCellStyle0.Borders.Bottom.Width = 0F;
+            tCellStyle0.CellPadding = new PdfPaddings(25.3F, 0, 0, 0);
+
+            tCellStyle1.Borders.Left.Width = 0F;
+            tCellStyle1.Borders.Right.Width = 0F;
+            tCellStyle1.Borders.Top.Width = 0F;
+            tCellStyle1.Borders.Bottom.Width = 0F;
+            tCellStyle1.CellPadding = new PdfPaddings(26F, 0, 1F, 0);
+
+            tCellStyle4.Borders.Left.Width = 0F;
+            tCellStyle4.Borders.Right.Width = 0F;
+            tCellStyle4.Borders.Top.Width = 0F;
+            tCellStyle4.Borders.Bottom.Width = 0F;
+            tCellStyle4.CellPadding = new PdfPaddings(10.3F, 0, 1F, 0);
+
+            tCellStyle5.Borders.Left.Width = 0F;
+            tCellStyle5.Borders.Right.Width = 0F;
+            tCellStyle5.Borders.Top.Width = 0F;
+            tCellStyle5.Borders.Bottom.Width = 0F;
+            tCellStyle5.CellPadding = new PdfPaddings(28.9F, 0, 1F, 0);
+
+            tCellStyle6.Borders.Left.Width = 0F;
+            tCellStyle6.Borders.Right.Width = 0F;
+            tCellStyle6.Borders.Top.Width = 0F;
+            tCellStyle6.Borders.Bottom.Width = 0F;
+            tCellStyle6.CellPadding = new PdfPaddings(18.9F, 0, 1F, 0);
+        }
+        else                // Pietro
+        {
+            tCellStyle0.Borders.Left.Width = 0F;
+            tCellStyle0.Borders.Right.Width = 0F;
+            tCellStyle0.Borders.Top.Width = 0F;
+            tCellStyle0.Borders.Bottom.Width = 0F;
+            tCellStyle0.CellPadding = new PdfPaddings(25.3F, 0, 0, 0);
+
+            tCellStyle1.Borders.Left.Width = 0F;
+            tCellStyle1.Borders.Right.Width = 0F;
+            tCellStyle1.Borders.Top.Width = 0F;
+            tCellStyle1.Borders.Bottom.Width = 0F;
+            tCellStyle1.CellPadding = new PdfPaddings(31.8F, 0, 1F, 0);
+
+            tCellStyle4.Borders.Left.Width = 0F;
+            tCellStyle4.Borders.Right.Width = 0F;
+            tCellStyle4.Borders.Top.Width = 0F;
+            tCellStyle4.Borders.Bottom.Width = 0F;
+            tCellStyle4.CellPadding = new PdfPaddings(12.5F, 0, 1F, 0);
+
+            tCellStyle5.Borders.Left.Width = 0F;
+            tCellStyle5.Borders.Right.Width = 0F;
+            tCellStyle5.Borders.Top.Width = 0F;
+            tCellStyle5.Borders.Bottom.Width = 0F;
+            tCellStyle5.CellPadding = new PdfPaddings(28.9F, 0, 1F, 0);
+
+            tCellStyle6.Borders.Left.Width = 0F;
+            tCellStyle6.Borders.Right.Width = 0F;
+            tCellStyle6.Borders.Top.Width = 0F;
+            tCellStyle6.Borders.Bottom.Width = 0F;
+            tCellStyle6.CellPadding = new PdfPaddings(20.3F, 0, 1F, 0);
+        }
+
+        // Add rows to the DataTable.
+        PdfGridRow trow0 = TimbroPdfGrid.Rows.Add();
+        PdfGridRow trow1 = TimbroPdfGrid.Rows.Add();
+        PdfGridRow trow2 = TimbroPdfGrid.Rows.Add();
+        PdfGridRow trow3 = TimbroPdfGrid.Rows.Add();
+        PdfGridRow trow4 = TimbroPdfGrid.Rows.Add();
+        PdfGridRow trow5 = TimbroPdfGrid.Rows.Add();
+        PdfGridRow trow6 = TimbroPdfGrid.Rows.Add();
+
+        // Add the columns to head grid
+        TimbroPdfGrid.Columns.Add(1);
+
+        // Adding grid cell style
+        PdfGridCellStyle cellStyle = new PdfGridCellStyle();
+        cellStyle.Borders.Left.Width = 0.1F;
+        cellStyle.Borders.Right.Width = 0.1F;
+        cellStyle.Borders.Top.Width = 0.1F;
+        cellStyle.Borders.Bottom.Width = 0.1F;
+
+        //Set cell paddings.
+        cellStyle.CellPadding = new PdfPaddings(10, 0, 0, 0);
+
+        // Set columns's width
+        TimbroPdfGrid.Columns[0].Width = 150;
+
+        //Applying style to grid
+        TimbroPdfGrid.Rows[0].Cells[0].Style = tCellStyle0;
+        TimbroPdfGrid.Rows[1].Cells[0].Style = tCellStyle1;
+        TimbroPdfGrid.Rows[2].Cells[0].Style = tCellStyle2;
+        TimbroPdfGrid.Rows[3].Cells[0].Style = tCellStyle3;
+        TimbroPdfGrid.Rows[4].Cells[0].Style = tCellStyle4;
+        TimbroPdfGrid.Rows[5].Cells[0].Style = tCellStyle5;
+        TimbroPdfGrid.Rows[6].Cells[0].Style = tCellStyle6;
+
+        // Set rows values
+        val = new PdfTextElement("Dott. " + doctor, TimbroFont, PdfBrushes.Black);       // 0 - 0
+        TimbroPdfGrid.Rows[0].Cells[0].Value = val;
+
+        val = new PdfTextElement(specialization, TimbroFont, PdfBrushes.Black);          // 1 - 0
+        TimbroPdfGrid.Rows[1].Cells[0].Value = val;
+
+        val = new PdfTextElement(address, TimbroFont, PdfBrushes.Black);                 // 2 - 0
+        TimbroPdfGrid.Rows[2].Cells[0].Value = val;
+
+        val = new PdfTextElement(city, TimbroFont, PdfBrushes.Black);                    // 3 - 0
+        TimbroPdfGrid.Rows[3].Cells[0].Value = val;
+
+        val = new PdfTextElement(codfisc, TimbroFont, PdfBrushes.Black);                 // 4 - 0
+        TimbroPdfGrid.Rows[4].Cells[0].Value = val;
+
+        val = new PdfTextElement(piva, TimbroFont, PdfBrushes.Black);                    // 5 - 0
+        TimbroPdfGrid.Rows[5].Cells[0].Value = val;
+
+        val = new PdfTextElement(ordine, TimbroFont, PdfBrushes.Black);                  // 6 - 0
+        TimbroPdfGrid.Rows[6].Cells[0].Value = val;
+
+        // Draw PDF grid into the PDF page.
+        TimbroPdfGrid.Draw(page, new Syncfusion.Drawing.PointF(350, result2.Bounds.Bottom + 20));
         #endregion
 
         //Create memory stream.
@@ -8002,20 +8628,37 @@
     async void PrintRelazione(string who)
     {
         int paragraphAfterSpacing = 8;
-        int cellMargin = 8;
+        // int cellMargin = 8;
 
         string doctor = "";
+        string specialization = "";
+        string address = "V.le R. Sanzio, 60 Tel 095 371701";
+        string city = "CATANIA";
+        string codfisc = "";
+        string piva = "";
+        string ordine = "";
+
         string iscrOrdine = "";
 
         if (who == "1")
         {
-            doctor = "PIETRO";
-            iscrOrdine = "Iscriz. Ord. Dei Medici di CT - Pietro La Bruna n° 5133";
+            doctor = "MARCO LA BRUNA";
+            specialization = "Specialista in Oftalmologia";
+            codfisc = "Cod. Fisc. LBR MRC 84M31 C351P";
+            piva = "Partita IVA 05289740879";
+            ordine = "Ordine dei Medici CT n° 14037";
+
+            iscrOrdine = "Iscriz. Ord. Dei Medici di CT - Marco La Bruna n° 14037";
         }
         else
         {
-            doctor = "MARCO";
-            iscrOrdine = "Iscriz. Ord. Dei Medici di CT - Marco La Bruna n° 14037";
+            doctor = "PIETRO LA BRUNA";
+            specialization = "Specialista in Oculistica";
+            codfisc = "Cod. Fisc. LBR PTR 49T07 H221S";
+            piva = "Partita IVA 00635170871";
+            // ordine = "Ordine dei Medici CT n° 5133";
+
+            iscrOrdine = "Iscriz. Ord. Dei Medici di CT - Pietro La Bruna n° 5133";
         }
 
         FirstPage = true;
@@ -8040,7 +8683,7 @@
         pdfDocument.DocumentInformation.Author = "Powered by Phoenix";
         pdfDocument.DocumentInformation.CreationDate = DateTime.Now;
         pdfDocument.DocumentInformation.Creator = "Ophthal";
-        pdfDocument.DocumentInformation.Keywords = "Dott. " + doctor + " La Bruna";
+        pdfDocument.DocumentInformation.Keywords = "Dott. " + doctor;
         pdfDocument.DocumentInformation.Subject = "Relazione";
         pdfDocument.DocumentInformation.Title = "Relazione " + LName + " " + FName + "_" + pDataRelazione.Substring(0, 2) + "." + pDataRelazione.Substring(2, 2) + "." + pDataRelazione.Substring(4, 4);
 
@@ -8126,8 +8769,8 @@
             header.Graphics.DrawImage(image, 5, 15);
         }
 
-        // header.Graphics.DrawString("STUDIO OCULISTICO", hHeadFont, PdfBrushes.Black, 120, 14); 36
-        header.Graphics.DrawString("DOTT. " + doctor + " LA BRUNA", hHeadFont, PdfBrushes.Black, 100, 25);
+        header.Graphics.DrawString("DOTT. " + doctor, hHeadFont, PdfBrushes.Black, 100, 14);
+        header.Graphics.DrawString(specialization, hHeadFont, PdfBrushes.Black, 100, 36);
 
         PdfPen hPen = new PdfPen(Color.Black);
         hPen.Width = 0.1F;
@@ -8635,7 +9278,161 @@
         #endregion
 
         // Draw PDF grid into the PDF page.
-        RelPdfGrid.Draw(page, new Syncfusion.Drawing.PointF(0, result.Bounds.Bottom + 24));
+        // RelPdfGrid.Draw(page, new Syncfusion.Drawing.PointF(0, result.Bounds.Bottom + 24));
+
+        PdfLayoutResult result2 = RelPdfGrid.Draw(page, new Syncfusion.Drawing.PointF(0, result.Bounds.Bottom + 24));
+        #endregion
+
+        #region Timbro
+        PdfStandardFont TimbroFont = new PdfStandardFont(PdfFontFamily.TimesRoman, 8, PdfFontStyle.Bold);
+
+        PdfGrid TimbroPdfGrid = new PdfGrid();
+
+        TimbroPdfGrid.AllowRowBreakAcrossPages = false;
+
+        PdfGridCellStyle tCellStyle0 = new PdfGridCellStyle();
+        PdfGridCellStyle tCellStyle1 = new PdfGridCellStyle();
+        PdfGridCellStyle tCellStyle2 = new PdfGridCellStyle();
+        PdfGridCellStyle tCellStyle3 = new PdfGridCellStyle();
+        PdfGridCellStyle tCellStyle4 = new PdfGridCellStyle();
+        PdfGridCellStyle tCellStyle5 = new PdfGridCellStyle();
+        PdfGridCellStyle tCellStyle6 = new PdfGridCellStyle();
+
+        tCellStyle2.Borders.Left.Width = 0F;
+        tCellStyle2.Borders.Right.Width = 0F;
+        tCellStyle2.Borders.Top.Width = 0F;
+        tCellStyle2.Borders.Bottom.Width = 0F;
+        tCellStyle2.CellPadding = new PdfPaddings(16F, 0, 1F, 0);
+
+        tCellStyle3.Borders.Left.Width = 0F;
+        tCellStyle3.Borders.Right.Width = 0F;
+        tCellStyle3.Borders.Top.Width = 0F;
+        tCellStyle3.Borders.Bottom.Width = 0F;
+        tCellStyle3.CellPadding = new PdfPaddings(53.2F, 0, 1F, 0);
+
+        if (who == "1")     // Marco
+        {
+            tCellStyle0.Borders.Left.Width = 0F;
+            tCellStyle0.Borders.Right.Width = 0F;
+            tCellStyle0.Borders.Top.Width = 0F;
+            tCellStyle0.Borders.Bottom.Width = 0F;
+            tCellStyle0.CellPadding = new PdfPaddings(25.3F, 0, 0, 0);
+
+            tCellStyle1.Borders.Left.Width = 0F;
+            tCellStyle1.Borders.Right.Width = 0F;
+            tCellStyle1.Borders.Top.Width = 0F;
+            tCellStyle1.Borders.Bottom.Width = 0F;
+            tCellStyle1.CellPadding = new PdfPaddings(26F, 0, 1F, 0);
+
+            tCellStyle4.Borders.Left.Width = 0F;
+            tCellStyle4.Borders.Right.Width = 0F;
+            tCellStyle4.Borders.Top.Width = 0F;
+            tCellStyle4.Borders.Bottom.Width = 0F;
+            tCellStyle4.CellPadding = new PdfPaddings(10.3F, 0, 1F, 0);
+
+            tCellStyle5.Borders.Left.Width = 0F;
+            tCellStyle5.Borders.Right.Width = 0F;
+            tCellStyle5.Borders.Top.Width = 0F;
+            tCellStyle5.Borders.Bottom.Width = 0F;
+            tCellStyle5.CellPadding = new PdfPaddings(28.9F, 0, 1F, 0);
+
+            tCellStyle6.Borders.Left.Width = 0F;
+            tCellStyle6.Borders.Right.Width = 0F;
+            tCellStyle6.Borders.Top.Width = 0F;
+            tCellStyle6.Borders.Bottom.Width = 0F;
+            tCellStyle6.CellPadding = new PdfPaddings(18.9F, 0, 1F, 0);
+        }
+        else                // Pietro
+        {
+            tCellStyle0.Borders.Left.Width = 0F;
+            tCellStyle0.Borders.Right.Width = 0F;
+            tCellStyle0.Borders.Top.Width = 0F;
+            tCellStyle0.Borders.Bottom.Width = 0F;
+            tCellStyle0.CellPadding = new PdfPaddings(25.3F, 0, 0, 0);
+
+            tCellStyle1.Borders.Left.Width = 0F;
+            tCellStyle1.Borders.Right.Width = 0F;
+            tCellStyle1.Borders.Top.Width = 0F;
+            tCellStyle1.Borders.Bottom.Width = 0F;
+            tCellStyle1.CellPadding = new PdfPaddings(31.8F, 0, 1F, 0);
+
+            tCellStyle4.Borders.Left.Width = 0F;
+            tCellStyle4.Borders.Right.Width = 0F;
+            tCellStyle4.Borders.Top.Width = 0F;
+            tCellStyle4.Borders.Bottom.Width = 0F;
+            tCellStyle4.CellPadding = new PdfPaddings(12.5F, 0, 1F, 0);
+
+            tCellStyle5.Borders.Left.Width = 0F;
+            tCellStyle5.Borders.Right.Width = 0F;
+            tCellStyle5.Borders.Top.Width = 0F;
+            tCellStyle5.Borders.Bottom.Width = 0F;
+            tCellStyle5.CellPadding = new PdfPaddings(28.9F, 0, 1F, 0);
+
+            tCellStyle6.Borders.Left.Width = 0F;
+            tCellStyle6.Borders.Right.Width = 0F;
+            tCellStyle6.Borders.Top.Width = 0F;
+            tCellStyle6.Borders.Bottom.Width = 0F;
+            tCellStyle6.CellPadding = new PdfPaddings(20.3F, 0, 1F, 0);
+        }
+
+        // Add rows to the DataTable.
+        PdfGridRow trow0 = TimbroPdfGrid.Rows.Add();
+        PdfGridRow trow1 = TimbroPdfGrid.Rows.Add();
+        PdfGridRow trow2 = TimbroPdfGrid.Rows.Add();
+        PdfGridRow trow3 = TimbroPdfGrid.Rows.Add();
+        PdfGridRow trow4 = TimbroPdfGrid.Rows.Add();
+        PdfGridRow trow5 = TimbroPdfGrid.Rows.Add();
+        PdfGridRow trow6 = TimbroPdfGrid.Rows.Add();
+
+        // Add the columns to head grid
+        TimbroPdfGrid.Columns.Add(1);
+
+        // Adding grid cell style
+        PdfGridCellStyle cellStyle = new PdfGridCellStyle();
+        cellStyle.Borders.Left.Width = 0.1F;
+        cellStyle.Borders.Right.Width = 0.1F;
+        cellStyle.Borders.Top.Width = 0.1F;
+        cellStyle.Borders.Bottom.Width = 0.1F;
+
+        //Set cell paddings.
+        cellStyle.CellPadding = new PdfPaddings(10, 0, 0, 0);
+
+        // Set columns's width
+        TimbroPdfGrid.Columns[0].Width = 150;
+
+        //Applying style to grid
+        TimbroPdfGrid.Rows[0].Cells[0].Style = tCellStyle0;
+        TimbroPdfGrid.Rows[1].Cells[0].Style = tCellStyle1;
+        TimbroPdfGrid.Rows[2].Cells[0].Style = tCellStyle2;
+        TimbroPdfGrid.Rows[3].Cells[0].Style = tCellStyle3;
+        TimbroPdfGrid.Rows[4].Cells[0].Style = tCellStyle4;
+        TimbroPdfGrid.Rows[5].Cells[0].Style = tCellStyle5;
+        TimbroPdfGrid.Rows[6].Cells[0].Style = tCellStyle6;
+
+        // Set rows values
+        val = new PdfTextElement("Dott. " + doctor, TimbroFont, PdfBrushes.Black);       // 0 - 0
+        TimbroPdfGrid.Rows[0].Cells[0].Value = val;
+
+        val = new PdfTextElement(specialization, TimbroFont, PdfBrushes.Black);          // 1 - 0
+        TimbroPdfGrid.Rows[1].Cells[0].Value = val;
+
+        val = new PdfTextElement(address, TimbroFont, PdfBrushes.Black);                 // 2 - 0
+        TimbroPdfGrid.Rows[2].Cells[0].Value = val;
+
+        val = new PdfTextElement(city, TimbroFont, PdfBrushes.Black);                    // 3 - 0
+        TimbroPdfGrid.Rows[3].Cells[0].Value = val;
+
+        val = new PdfTextElement(codfisc, TimbroFont, PdfBrushes.Black);                 // 4 - 0
+        TimbroPdfGrid.Rows[4].Cells[0].Value = val;
+
+        val = new PdfTextElement(piva, TimbroFont, PdfBrushes.Black);                    // 5 - 0
+        TimbroPdfGrid.Rows[5].Cells[0].Value = val;
+
+        val = new PdfTextElement(ordine, TimbroFont, PdfBrushes.Black);                  // 6 - 0
+        TimbroPdfGrid.Rows[6].Cells[0].Value = val;
+
+        // Draw PDF grid into the PDF page.
+        TimbroPdfGrid.Draw(page, new Syncfusion.Drawing.PointF(350, result2.Bounds.Bottom + 20));
         #endregion
 
         //Create memory stream.
@@ -8651,7 +9448,7 @@
     async void PrintRel()
     {
         int paragraphAfterSpacing = 8;
-        int cellMargin = 8;
+        // int cellMargin = 8;
 
         //Create a new PDF document.
         PdfDocument pdfDocument = new PdfDocument();
