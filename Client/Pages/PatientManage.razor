@@ -145,11 +145,12 @@
 {
     <div class="container-fluid" style="padding: 10px 10px; margin-top: 30px;">
         <div class="row">
-            @*             <div class="col-sm-2">
+            @*
+            <div class="col-sm-2">
                 <span style="font-weight:600;">Data:&nbsp;</span><span style="font-size: 14px; color:midnightblue;">@DataVisita</span>
             </div>
- *@            
-                <div class="col-sm-1" style="width: 118px;">
+*@            
+                    <div class="col-sm-1" style="width: 118px;">
                 <SfMaskedTextBox ID="datavisita" @bind-Value="@DataVisita" Mask="00/00/0000" Placeholder="Data" FloatLabelType="@FloatLabelType.Always" CssClass="sftext" style="color: #000;"></SfMaskedTextBox>
             </div>
 
@@ -1090,6 +1091,10 @@
 
                                         <span style="float: right;">
                                             <SfButton IconCss="e-icons icon-navy e-print" CssClass="e-flat btn-light" Content=" Stampa Relazione" OnClick="() => StampaRelazione(DropDownTemplate)" Disabled="@PrintVisitDisabled"></SfButton>
+                                        </span>
+
+                                        <span style="float: right;">
+                                            <SfButton IconCss="e-icons icon-small d-word" CssClass="e-flat btn-light" Content=" Stampa Relazione" OnClick="() => CreateRelazioneWord(DropDownTemplate)" Disabled="@PrintVisitDisabled" title="Esporta Realazione in formato Word"></SfButton>
                                         </span>
 
                                         <span style="float: right; width: 110px; margin-right: 10px;">
@@ -10214,6 +10219,504 @@
 
         //Download the PDF document
         await JS.SaveAs("Relazione_" + ListaVisite[VisitaCorrente].Val.ToString("dd.MM.yyyy") + ".pdf", memoryStream.ToArray());
+    }
+    #endregion
+
+    #region docx
+    async void CreateRelazioneWord(string who)
+    {
+        Console.WriteLine($"🔽 loading {Env.BaseAddress}WordLayout/marco.docx");
+
+        // FileStream fileStreamPath = new FileStream($"{Env.BaseAddress}WordLayout/marco.docx", FileMode.Open, FileAccess.Read);
+        var httpClient = new HttpClient();
+        string docUrl = $"{Env.BaseAddress}/WordLayout/marco.docx";                      // URL dell'immagine
+
+        byte[] fileBytes = await httpClient.GetByteArrayAsync(docUrl);
+
+        // WordDocument document = new WordDocument();
+
+        float MarginLeft, MarginRight, MarginTop, MarginBottom;
+
+        string relData = "";
+
+        if (pDataRelazione.Length > 8)
+        {
+            relData = pDataRelazione.Substring(0, 2) + "." + pDataRelazione.Substring(3, 2) + "." + pDataRelazione.Substring(6, 4);
+        }
+        else
+        {
+            relData = pDataRelazione.Substring(0, 2) + "." + pDataRelazione.Substring(2, 2) + "." + pDataRelazione.Substring(4, 4);
+        }
+
+        using (MemoryStream fileStream = new MemoryStream(fileBytes))
+        {
+            // Apri il documento Word dal MemoryStream
+            WordDocument document = new WordDocument(fileStream, FormatType.Docx);
+
+            // ... (Modifica il documento come necessario)
+
+            // Console.WriteLine("✅ Documento caricato con successo!");
+            // Console.WriteLine(" ");
+            // Console.WriteLine("✨ Info Documento");
+            // Console.WriteLine($"📝 document.Count {document.Count}");
+            // Console.WriteLine($"📝 document.Sections.Count {document.Sections.Count}");
+
+            WTextBody textBody = document.Sections[0].Body;
+
+            Console.WriteLine($"📝 textBody.Count {textBody.Count}");
+            Console.WriteLine($"📝 textBody.Paragraphs.Count {textBody.Paragraphs.Count}");
+            Console.WriteLine(" ");
+            Console.WriteLine("✨ document.Sections[0].PageSetup.Margins");
+            Console.WriteLine($"📝 document.Sections[0].PageSetup.Margins.Left {document.Sections[0].PageSetup.Margins.Left}");
+            Console.WriteLine($"📝 document.Sections[0].PageSetup.Margins.Right {document.Sections[0].PageSetup.Margins.Right}");
+            Console.WriteLine($"📝 document.Sections[0].PageSetup.Margins.Top {document.Sections[0].PageSetup.Margins.Top}");
+            Console.WriteLine($"📝 document.Sections[0].PageSetup.Margins.Bottom {document.Sections[0].PageSetup.Margins.Bottom}");
+            Console.WriteLine(" ");
+
+            MarginLeft = document.Sections[0].PageSetup.Margins.Left + 15f;
+            MarginRight = document.Sections[0].PageSetup.Margins.Right + 25f;
+            MarginTop = document.Sections[0].PageSetup.Margins.Top;
+            MarginBottom = document.Sections[0].PageSetup.Margins.Bottom;
+
+            //Adding a new section to the document
+            // WSection section = document.AddSection() as WSection;
+            WSection section = (WSection)document.Sections[0];
+
+            section.PageSetup.Margins.Left = MarginLeft;
+            section.PageSetup.Margins.Right = MarginRight;
+
+            //Appends paragraph
+            IWParagraph paragraph = section.AddParagraph();
+            paragraph.ParagraphFormat.BeforeSpacing = 0;
+            paragraph.ParagraphFormat.AfterSpacing = 0;
+            // paragraph.ParagraphFormat.LineSpacing = 17.6f;
+
+            WTextRange textRange = paragraph.AppendText(LName + " " + FName) as WTextRange;
+            textRange.CharacterFormat.FontSize = 14f;
+            textRange.CharacterFormat.FontName = "Times New Roman";
+            textRange.CharacterFormat.Bold = true;
+            textRange.CharacterFormat.Italic = true;
+
+            //Appends paragraph
+            paragraph = section.AddParagraph();
+            paragraph.ParagraphFormat.BeforeSpacing = 0;
+            paragraph.ParagraphFormat.AfterSpacing = 12;
+
+            textRange = paragraph.AppendText("presenta il seguente quadro oculare:") as WTextRange;
+            textRange.CharacterFormat.FontSize = 12f;
+            textRange.CharacterFormat.FontName = "Times New Roman";
+            textRange.CharacterFormat.Bold = true;
+            textRange.CharacterFormat.Italic = true;
+
+            //Appends paragraph Diagnosi
+            Console.WriteLine($"✅ Diagnosi");
+            paragraph = section.AddParagraph();
+            paragraph.ParagraphFormat.BeforeSpacing = 8;
+            paragraph.ParagraphFormat.AfterSpacing = 0;
+
+            textRange = paragraph.AppendText("Diagnosi") as WTextRange;
+            textRange.CharacterFormat.FontSize = 12f;
+            textRange.CharacterFormat.FontName = "Times New Roman";
+            textRange.CharacterFormat.Bold = true;
+            textRange.CharacterFormat.Italic = true;
+
+            //Appends paragraph
+            paragraph = section.AddParagraph();
+            paragraph.ParagraphFormat.BeforeSpacing = 0;
+            paragraph.ParagraphFormat.AfterSpacing = 0;
+
+            textRange = paragraph.AppendText("OD, ") as WTextRange;
+            textRange.CharacterFormat.FontSize = 12f;
+            textRange.CharacterFormat.FontName = "Times New Roman";
+            textRange.CharacterFormat.Bold = true;
+            textRange.CharacterFormat.Italic = false;
+
+            Console.WriteLine($"✅ Relazione.DiagnosiOD: {Relazione.DiagnosiOD}");
+            textRange = paragraph.AppendText(Relazione.DiagnosiOD) as WTextRange;
+            textRange.CharacterFormat.FontSize = 12f;
+            textRange.CharacterFormat.FontName = "Times New Roman";
+            textRange.CharacterFormat.Bold = false;
+            textRange.CharacterFormat.Italic = false;
+
+            //Appends paragraph
+            paragraph = section.AddParagraph();
+            paragraph.ParagraphFormat.BeforeSpacing = 0;
+            paragraph.ParagraphFormat.AfterSpacing = 0;
+
+            textRange = paragraph.AppendText("OS, ") as WTextRange;
+            textRange.CharacterFormat.FontSize = 12f;
+            textRange.CharacterFormat.FontName = "Times New Roman";
+            textRange.CharacterFormat.Bold = true;
+            textRange.CharacterFormat.Italic = false;
+
+            Console.WriteLine($"✅ Relazione.DiagnosiOS: {Relazione.DiagnosiOS}");
+            textRange = paragraph.AppendText(Relazione.DiagnosiOS) as WTextRange;
+            textRange.CharacterFormat.FontSize = 12f;
+            textRange.CharacterFormat.FontName = "Times New Roman";
+            textRange.CharacterFormat.Bold = false;
+            textRange.CharacterFormat.Italic = false;
+
+            //Appends paragraph Schirmer  test tipo 2 (basale)
+            Console.WriteLine($"✅ Schirmer  test tipo 2 (basale)");
+            paragraph = section.AddParagraph();
+            paragraph.ParagraphFormat.BeforeSpacing = 8;
+            paragraph.ParagraphFormat.AfterSpacing = 0;
+
+            textRange = paragraph.AppendText("Schirmer  test tipo 2 (basale)") as WTextRange;
+            textRange.CharacterFormat.FontSize = 12f;
+            textRange.CharacterFormat.FontName = "Times New Roman";
+            textRange.CharacterFormat.Bold = true;
+            textRange.CharacterFormat.Italic = true;
+
+            //Appends paragraph
+            paragraph = section.AddParagraph();
+            paragraph.ParagraphFormat.BeforeSpacing = 0;
+            paragraph.ParagraphFormat.AfterSpacing = 0;
+
+            textRange = paragraph.AppendText("OD, ") as WTextRange;
+            textRange.CharacterFormat.FontSize = 12f;
+            textRange.CharacterFormat.FontName = "Times New Roman";
+            textRange.CharacterFormat.Bold = true;
+            textRange.CharacterFormat.Italic = false;
+
+            Console.WriteLine($"✅ Relazione.SHIRMER_Od: {Relazione.SHIRMER_Od}");
+            textRange = paragraph.AppendText(Relazione.SHIRMER_Od) as WTextRange;
+            textRange.CharacterFormat.FontSize = 12f;
+            textRange.CharacterFormat.FontName = "Times New Roman";
+            textRange.CharacterFormat.Bold = false;
+            textRange.CharacterFormat.Italic = false;
+
+            //Appends paragraph
+            paragraph = section.AddParagraph();
+            paragraph.ParagraphFormat.BeforeSpacing = 0;
+            paragraph.ParagraphFormat.AfterSpacing = 0;
+
+            textRange = paragraph.AppendText("OS, ") as WTextRange;
+            textRange.CharacterFormat.FontSize = 12f;
+            textRange.CharacterFormat.FontName = "Times New Roman";
+            textRange.CharacterFormat.Bold = true;
+            textRange.CharacterFormat.Italic = false;
+
+            Console.WriteLine($"✅ Relazione.SHIRMER_Os: {Relazione.SHIRMER_Os}");
+            textRange = paragraph.AppendText(Relazione.SHIRMER_Os) as WTextRange;
+            textRange.CharacterFormat.FontSize = 12f;
+            textRange.CharacterFormat.FontName = "Times New Roman";
+            textRange.CharacterFormat.Bold = false;
+            textRange.CharacterFormat.Italic = false;
+
+            //Appends paragraph Segmento anteriore
+            Console.WriteLine($"✅ Segmento anteriore");
+            paragraph = section.AddParagraph();
+            paragraph.ParagraphFormat.BeforeSpacing = 8;
+            paragraph.ParagraphFormat.AfterSpacing = 0;
+
+            textRange = paragraph.AppendText("Segmento anteriore") as WTextRange;
+            textRange.CharacterFormat.FontSize = 12f;
+            textRange.CharacterFormat.FontName = "Times New Roman";
+            textRange.CharacterFormat.Bold = true;
+            textRange.CharacterFormat.Italic = true;
+
+            //Appends paragraph
+            paragraph = section.AddParagraph();
+            paragraph.ParagraphFormat.BeforeSpacing = 0;
+            paragraph.ParagraphFormat.AfterSpacing = 0;
+
+            textRange = paragraph.AppendText("OD, ") as WTextRange;
+            textRange.CharacterFormat.FontSize = 12f;
+            textRange.CharacterFormat.FontName = "Times New Roman";
+            textRange.CharacterFormat.Bold = true;
+            textRange.CharacterFormat.Italic = false;
+
+            Console.WriteLine($"✅ Relazione.Seg_Ant_Od: {Relazione.Seg_Ant_Od}");
+            textRange = paragraph.AppendText(Relazione.Seg_Ant_Od) as WTextRange;
+            textRange.CharacterFormat.FontSize = 12f;
+            textRange.CharacterFormat.FontName = "Times New Roman";
+            textRange.CharacterFormat.Bold = false;
+            textRange.CharacterFormat.Italic = false;
+
+            //Appends paragraph
+            paragraph = section.AddParagraph();
+            paragraph.ParagraphFormat.BeforeSpacing = 0;
+            paragraph.ParagraphFormat.AfterSpacing = 0;
+
+            textRange = paragraph.AppendText("OS, ") as WTextRange;
+            textRange.CharacterFormat.FontSize = 12f;
+            textRange.CharacterFormat.FontName = "Times New Roman";
+            textRange.CharacterFormat.Bold = true;
+            textRange.CharacterFormat.Italic = false;
+
+            Console.WriteLine($"✅ Relazione.Seg_Ant_Os: {Relazione.Seg_Ant_Os}");
+            textRange = paragraph.AppendText(Relazione.Seg_Ant_Os) as WTextRange;
+            textRange.CharacterFormat.FontSize = 12f;
+            textRange.CharacterFormat.FontName = "Times New Roman";
+            textRange.CharacterFormat.Bold = false;
+            textRange.CharacterFormat.Italic = false;
+
+            //Appends paragraph Visus
+            Console.WriteLine($"✅ Visus");
+            paragraph = section.AddParagraph();
+            paragraph.ParagraphFormat.BeforeSpacing = 8;
+            paragraph.ParagraphFormat.AfterSpacing = 0;
+
+            textRange = paragraph.AppendText("Segmento anteriore") as WTextRange;
+            textRange.CharacterFormat.FontSize = 12f;
+            textRange.CharacterFormat.FontName = "Times New Roman";
+            textRange.CharacterFormat.Bold = true;
+            textRange.CharacterFormat.Italic = true;
+
+            //Appends paragraph
+            paragraph = section.AddParagraph();
+            paragraph.ParagraphFormat.BeforeSpacing = 0;
+            paragraph.ParagraphFormat.AfterSpacing = 0;
+
+            textRange = paragraph.AppendText("OD, ") as WTextRange;
+            textRange.CharacterFormat.FontSize = 12f;
+            textRange.CharacterFormat.FontName = "Times New Roman";
+            textRange.CharacterFormat.Bold = true;
+            textRange.CharacterFormat.Italic = false;
+
+            Console.WriteLine($"✅ Relazione.Visus_Od: {Relazione.Visus_Od}");
+            textRange = paragraph.AppendText(Relazione.Visus_Od) as WTextRange;
+            textRange.CharacterFormat.FontSize = 12f;
+            textRange.CharacterFormat.FontName = "Times New Roman";
+            textRange.CharacterFormat.Bold = false;
+            textRange.CharacterFormat.Italic = false;
+
+            //Appends paragraph
+            paragraph = section.AddParagraph();
+            paragraph.ParagraphFormat.BeforeSpacing = 0;
+            paragraph.ParagraphFormat.AfterSpacing = 0;
+
+            textRange = paragraph.AppendText("OS, ") as WTextRange;
+            textRange.CharacterFormat.FontSize = 12f;
+            textRange.CharacterFormat.FontName = "Times New Roman";
+            textRange.CharacterFormat.Bold = true;
+            textRange.CharacterFormat.Italic = false;
+
+            Console.WriteLine($"✅ Relazione.Visus_Os: {Relazione.Visus_Os}");
+            textRange = paragraph.AppendText(Relazione.Visus_Os) as WTextRange;
+            textRange.CharacterFormat.FontSize = 12f;
+            textRange.CharacterFormat.FontName = "Times New Roman";
+            textRange.CharacterFormat.Bold = false;
+            textRange.CharacterFormat.Italic = false;
+
+            //Appends paragraph Tono oculare (valori normali fino a 20)
+            Console.WriteLine($"✅ Tono oculare (valori normali fino a 20)");
+            paragraph = section.AddParagraph();
+            paragraph.ParagraphFormat.BeforeSpacing = 8;
+            paragraph.ParagraphFormat.AfterSpacing = 0;
+
+            textRange = paragraph.AppendText("Tono oculare (valori normali fino a 20)") as WTextRange;
+            textRange.CharacterFormat.FontSize = 12f;
+            textRange.CharacterFormat.FontName = "Times New Roman";
+            textRange.CharacterFormat.Bold = true;
+            textRange.CharacterFormat.Italic = true;
+
+            //Appends paragraph
+            paragraph = section.AddParagraph();
+            paragraph.ParagraphFormat.BeforeSpacing = 0;
+            paragraph.ParagraphFormat.AfterSpacing = 0;
+
+            textRange = paragraph.AppendText("OD, ") as WTextRange;
+            textRange.CharacterFormat.FontSize = 12f;
+            textRange.CharacterFormat.FontName = "Times New Roman";
+            textRange.CharacterFormat.Bold = true;
+            textRange.CharacterFormat.Italic = false;
+
+            Console.WriteLine($"✅ Relazione.TONO_Od: {Relazione.TONO_Od}");
+            textRange = paragraph.AppendText(Relazione.TONO_Od) as WTextRange;
+            textRange.CharacterFormat.FontSize = 12f;
+            textRange.CharacterFormat.FontName = "Times New Roman";
+            textRange.CharacterFormat.Bold = false;
+            textRange.CharacterFormat.Italic = false;
+
+            //Appends paragraph
+            paragraph = section.AddParagraph();
+            paragraph.ParagraphFormat.BeforeSpacing = 0;
+            paragraph.ParagraphFormat.AfterSpacing = 0;
+
+            textRange = paragraph.AppendText("OS, ") as WTextRange;
+            textRange.CharacterFormat.FontSize = 12f;
+            textRange.CharacterFormat.FontName = "Times New Roman";
+            textRange.CharacterFormat.Bold = true;
+            textRange.CharacterFormat.Italic = false;
+
+            Console.WriteLine($"✅ Relazione.TONO_Os: {Relazione.TONO_Os}");
+            textRange = paragraph.AppendText(Relazione.TONO_Os) as WTextRange;
+            textRange.CharacterFormat.FontSize = 12f;
+            textRange.CharacterFormat.FontName = "Times New Roman";
+            textRange.CharacterFormat.Bold = false;
+            textRange.CharacterFormat.Italic = false;
+
+            //Appends paragraph Fundus in midriasi con indentazione
+            Console.WriteLine($"✅ Fundus in midriasi con indentazione");
+            paragraph = section.AddParagraph();
+            paragraph.ParagraphFormat.BeforeSpacing = 8;
+            paragraph.ParagraphFormat.AfterSpacing = 0;
+
+            textRange = paragraph.AppendText("Fundus in midriasi con indentazione") as WTextRange;
+            textRange.CharacterFormat.FontSize = 12f;
+            textRange.CharacterFormat.FontName = "Times New Roman";
+            textRange.CharacterFormat.Bold = true;
+            textRange.CharacterFormat.Italic = true;
+
+            //Appends paragraph
+            paragraph = section.AddParagraph();
+            paragraph.ParagraphFormat.BeforeSpacing = 0;
+            paragraph.ParagraphFormat.AfterSpacing = 0;
+
+            textRange = paragraph.AppendText("OD, ") as WTextRange;
+            textRange.CharacterFormat.FontSize = 12f;
+            textRange.CharacterFormat.FontName = "Times New Roman";
+            textRange.CharacterFormat.Bold = true;
+            textRange.CharacterFormat.Italic = false;
+
+            Console.WriteLine($"✅ Relazione.Fundus_Od: {Relazione.Fundus_Od}");
+            textRange = paragraph.AppendText(Relazione.Fundus_Od) as WTextRange;
+            textRange.CharacterFormat.FontSize = 12f;
+            textRange.CharacterFormat.FontName = "Times New Roman";
+            textRange.CharacterFormat.Bold = false;
+            textRange.CharacterFormat.Italic = false;
+
+            //Appends paragraph
+            paragraph = section.AddParagraph();
+            paragraph.ParagraphFormat.BeforeSpacing = 0;
+            paragraph.ParagraphFormat.AfterSpacing = 0;
+
+            textRange = paragraph.AppendText("OS, ") as WTextRange;
+            textRange.CharacterFormat.FontSize = 12f;
+            textRange.CharacterFormat.FontName = "Times New Roman";
+            textRange.CharacterFormat.Bold = true;
+            textRange.CharacterFormat.Italic = false;
+
+            Console.WriteLine($"✅ Relazione.Fundus_Os: {Relazione.Fundus_Os}");
+            textRange = paragraph.AppendText(Relazione.Fundus_Os) as WTextRange;
+            textRange.CharacterFormat.FontSize = 12f;
+            textRange.CharacterFormat.FontName = "Times New Roman";
+            textRange.CharacterFormat.Bold = false;
+            textRange.CharacterFormat.Italic = false;
+
+            //Appends paragraph Si rilascia su richiesta dell'interessato / a per gli usi consentiti dalla legge
+            Console.WriteLine($"✅ Si rilascia su richiesta dell'interessato / a per gli usi consentiti dalla legge");
+            paragraph = section.AddParagraph();
+            paragraph.ParagraphFormat.BeforeSpacing = 12;
+            paragraph.ParagraphFormat.AfterSpacing = 0;
+
+            textRange = paragraph.AppendText("Si rilascia su richiesta dell'interessato / a per gli usi consentiti dalla legge") as WTextRange;
+            textRange.CharacterFormat.FontSize = 12f;
+            textRange.CharacterFormat.FontName = "Times New Roman";
+            textRange.CharacterFormat.Bold = true;
+            textRange.CharacterFormat.Italic = false;
+
+            //Appends paragraph Data relazione
+            var TmpDate = relData.Replace(".", "/");
+            Console.WriteLine($"✅ Data relazione. {TmpDate}");
+            paragraph = section.AddParagraph();
+            paragraph.ParagraphFormat.BeforeSpacing = 12;
+            paragraph.ParagraphFormat.AfterSpacing = 0;
+
+            textRange = paragraph.AppendText(TmpDate) as WTextRange;
+            textRange.CharacterFormat.FontSize = 12f;
+            textRange.CharacterFormat.FontName = "Times New Roman";
+            textRange.CharacterFormat.Bold = true;
+            textRange.CharacterFormat.Italic = false;
+
+            //Appends paragraph empty
+            paragraph = section.AddParagraph();
+            paragraph.ParagraphFormat.BeforeSpacing = 12;
+            paragraph.ParagraphFormat.AfterSpacing = 0;
+
+            textRange = paragraph.AppendText(" ") as WTextRange;
+            textRange.CharacterFormat.FontSize = 12f;
+            textRange.CharacterFormat.FontName = "Times New Roman";
+
+
+            //Appends paragraph Timbro
+            Console.WriteLine($"✅ Timbro");
+            paragraph = section.AddParagraph();
+            paragraph.ParagraphFormat.BeforeSpacing = 16;
+            paragraph.ParagraphFormat.AfterSpacing = 0;
+            paragraph.ParagraphFormat.HorizontalAlignment = HorizontalAlignment.Center;
+
+            textRange = paragraph.AppendText("Dott. MARCO LA BRUNA") as WTextRange;
+            textRange.CharacterFormat.FontSize = 8f;
+            textRange.CharacterFormat.FontName = "Times New Roman";
+            textRange.CharacterFormat.Bold = true;
+
+            paragraph = section.AddParagraph();
+            paragraph.ParagraphFormat.BeforeSpacing = 0;
+            paragraph.ParagraphFormat.AfterSpacing = 0;
+            paragraph.ParagraphFormat.HorizontalAlignment = HorizontalAlignment.Center;
+
+            textRange = paragraph.AppendText("Specialista in Oftalmologia") as WTextRange;
+            textRange.CharacterFormat.FontSize = 8f;
+            textRange.CharacterFormat.FontName = "Times New Roman";
+            textRange.CharacterFormat.Bold = true;
+
+            paragraph = section.AddParagraph();
+            paragraph.ParagraphFormat.BeforeSpacing = 0;
+            paragraph.ParagraphFormat.AfterSpacing = 0;
+            paragraph.ParagraphFormat.HorizontalAlignment = HorizontalAlignment.Center;
+
+            textRange = paragraph.AppendText("V.le R. Sanzio, 60 Tel 095 371701") as WTextRange;
+            textRange.CharacterFormat.FontSize = 8f;
+            textRange.CharacterFormat.FontName = "Times New Roman";
+            textRange.CharacterFormat.Bold = true;
+
+            paragraph = section.AddParagraph();
+            paragraph.ParagraphFormat.BeforeSpacing = 0;
+            paragraph.ParagraphFormat.AfterSpacing = 0;
+            paragraph.ParagraphFormat.HorizontalAlignment = HorizontalAlignment.Center;
+
+            textRange = paragraph.AppendText("CATANIA") as WTextRange;
+            textRange.CharacterFormat.FontSize = 8f;
+            textRange.CharacterFormat.FontName = "Times New Roman";
+            textRange.CharacterFormat.Bold = true;
+
+            paragraph = section.AddParagraph();
+            paragraph.ParagraphFormat.BeforeSpacing = 0;
+            paragraph.ParagraphFormat.AfterSpacing = 0;
+            paragraph.ParagraphFormat.HorizontalAlignment = HorizontalAlignment.Center;
+
+            textRange = paragraph.AppendText("Cod. Fisc. LBR MRC 84M31 C351P") as WTextRange;
+            textRange.CharacterFormat.FontSize = 8f;
+            textRange.CharacterFormat.FontName = "Times New Roman";
+            textRange.CharacterFormat.Bold = true;
+
+            paragraph = section.AddParagraph();
+            paragraph.ParagraphFormat.BeforeSpacing = 0;
+            paragraph.ParagraphFormat.AfterSpacing = 0;
+            paragraph.ParagraphFormat.HorizontalAlignment = HorizontalAlignment.Center;
+
+            textRange = paragraph.AppendText("Partita IVA 05289740879") as WTextRange;
+            textRange.CharacterFormat.FontSize = 8f;
+            textRange.CharacterFormat.FontName = "Times New Roman";
+            textRange.CharacterFormat.Bold = true;
+
+            paragraph = section.AddParagraph();
+            paragraph.ParagraphFormat.BeforeSpacing = 0;
+            paragraph.ParagraphFormat.AfterSpacing = 0;
+            paragraph.ParagraphFormat.HorizontalAlignment = HorizontalAlignment.Center;
+
+            textRange = paragraph.AppendText("Ordine dei Medici CT n° 14037") as WTextRange;
+            textRange.CharacterFormat.FontSize = 8f;
+            textRange.CharacterFormat.FontName = "Times New Roman";
+            textRange.CharacterFormat.Bold = true;
+
+
+            //Saves the Word document to MemoryStream
+            MemoryStream stream = new MemoryStream();
+            document.Save(stream, FormatType.Docx);
+
+            //Closes the Word document
+            document.Close();
+            stream.Position = 0;
+
+            //Download the Word document in the browser
+            Console.WriteLine($"⏳ saving docx");
+            await JS.SaveAs("Relazione " + LName + " " + FName + "_" + relData + ".docx", stream.ToArray());
+            Console.WriteLine($"📝 saved docx");
+        }
     }
     #endregion
 }
