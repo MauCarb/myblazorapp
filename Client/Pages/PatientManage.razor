@@ -3775,7 +3775,7 @@
         // PdfStandardFont FootFont = new PdfStandardFont(PdfFontFamily.TimesRoman, 9, PdfFontStyle.Bold | PdfFontStyle.Italic);
 
         PdfPen pen = new PdfPen(Color.Black);
-        pen.Width = 0.1F;
+        pen.Width = 1.0f;
 
         PointF p1 = new PointF();
         PointF p2 = new PointF();
@@ -4083,6 +4083,13 @@
     {
         string result = "";
 
+        string relData = data2.Substring(0, 2) + "/" + data2.Substring(2, 2) + "/" + data2.Substring(4, 4);
+
+        Console.WriteLine("✨ Calcolo Età");
+        Console.WriteLine($"📝 data1 {data1}");
+        Console.WriteLine($"📝 data2 {data2}");
+        Console.WriteLine($"📝 relData {relData}");
+
         // Verifica che le date siano valide
         if (!DateTime.TryParse(data1, out DateTime primaData))
         {
@@ -4090,24 +4097,29 @@
             result = "";
         }
 
-        if (!DateTime.TryParse(data2, out DateTime secondaData))
+        if (!DateTime.TryParse(relData, out DateTime secondaData))
         {
             //throw new ArgumentException("La seconda data non è valida.");
             result = "";
         }
+        Console.WriteLine(" ");
+        Console.WriteLine($"👍 primaData {primaData}");
+        Console.WriteLine($"👍 secondaData {secondaData}");
 
         // Calcolo della differenza in anni
         int anniDifferenza = secondaData.Year - primaData.Year;
+        Console.WriteLine($"👍 anniDifferenza {anniDifferenza}");
+
+        Console.WriteLine($"👍 primaData.AddYears(anniDifferenza) {primaData.AddYears(anniDifferenza)}");
 
         // Aggiusta se il compleanno non è ancora passato nell'anno corrente
         if (secondaData < primaData.AddYears(anniDifferenza))
         {
             anniDifferenza--;
+            Console.WriteLine($"👍 correzione anniDifferenza {anniDifferenza}");
         }
 
-        result = Math.Abs(anniDifferenza).ToString();
-
-        // return Math.Abs(anniDifferenza); // Restituisce sempre un valore positivo
+        result = Math.Abs(anniDifferenza).ToString();   // Restituisce sempre un valore positivo
 
         return result;
     }
@@ -5390,7 +5402,7 @@
         header.Graphics.DrawString(specialization, hHeadFont, PdfBrushes.Black, 100, 36);
 
         PdfPen hPen = new PdfPen(Color.Black);
-        hPen.Width = 0.1F;
+        hPen.Width = 1.0f;
 
         PointF hP1 = new PointF();
         PointF hP2 = new PointF();
@@ -5405,6 +5417,7 @@
         header.Graphics.DrawLine(hPen, hP1, hP2);
 
         // top linea orizzontale
+        hPen.Width = 1.6f;
         hP1.X = 0;
         hP1.Y = 70;
 
@@ -5450,7 +5463,7 @@
         footer.Graphics.DrawString(iscrOrdine, FootFont, PdfBrushes.Black, 212, 50);
 
         PdfPen fPen = new PdfPen(Color.Black);
-        fPen.Width = 0.1F;
+        fPen.Width = 1.0f;
 
         PointF fP1 = new PointF();
         PointF fP2 = new PointF();
@@ -5465,6 +5478,7 @@
         footer.Graphics.DrawLine(fPen, fP1, fP2);
 
         // bottom linea orizzontale
+        fPen.Width = 1.6f;
         fP1.X = 0;
         fP1.Y = 0;
 
@@ -6111,7 +6125,7 @@
         header.Graphics.DrawString(specialization, hHeadFont, PdfBrushes.Black, 100, 36);
 
         PdfPen hPen = new PdfPen(Color.Black);
-        hPen.Width = 0.1F;
+        hPen.Width = 1.0f;
 
         PointF hP1 = new PointF();
         PointF hP2 = new PointF();
@@ -6126,6 +6140,7 @@
         header.Graphics.DrawLine(hPen, hP1, hP2);
 
         // top linea orizzontale
+        hPen.Width = 1.6f;
         hP1.X = 0;
         hP1.Y = 70;
 
@@ -6171,7 +6186,7 @@
         footer.Graphics.DrawString(iscrOrdine, FootFont, PdfBrushes.Black, 212, 50);
 
         PdfPen fPen = new PdfPen(Color.Black);
-        fPen.Width = 0.1F;
+        fPen.Width = 1.0f;
 
         PointF fP1 = new PointF();
         PointF fP2 = new PointF();
@@ -6186,6 +6201,7 @@
         footer.Graphics.DrawLine(fPen, fP1, fP2);
 
         // bottom linea orizzontale
+        fPen.Width = 1.6f;
         fP1.X = 0;
         fP1.Y = 0;
 
@@ -6680,7 +6696,7 @@
         header.Graphics.DrawString(specialization, hHeadFont, PdfBrushes.Black, 100, 36);
 
         PdfPen hPen = new PdfPen(Color.Black);
-        hPen.Width = 0.1F;
+        hPen.Width = 1.0f;
 
         PointF hP1 = new PointF();
         PointF hP2 = new PointF();
@@ -6695,6 +6711,7 @@
         header.Graphics.DrawLine(hPen, hP1, hP2);
 
         // top linea orizzontale
+        hPen.Width = 1.6f;
         hP1.X = 0;
         hP1.Y = 70;
 
@@ -6740,7 +6757,7 @@
         footer.Graphics.DrawString(iscrOrdine, FootFont, PdfBrushes.Black, 212, 50);
 
         PdfPen fPen = new PdfPen(Color.Black);
-        fPen.Width = 0.1F;
+        fPen.Width = 1.0f;
 
         PointF fP1 = new PointF();
         PointF fP2 = new PointF();
@@ -6755,6 +6772,7 @@
         footer.Graphics.DrawLine(fPen, fP1, fP2);
 
         // bottom linea orizzontale
+        fPen.Width = 1.6f;
         fP1.X = 0;
         fP1.Y = 0;
 
@@ -6778,7 +6796,7 @@
         // g.DrawString("Arcs", font, PdfBrushes.DarkBlue, new PointF(330, 0));
 
         pen = new PdfPen(Color.Black);
-        pen.Width = 0.5F;
+        pen.Width = 1.0f;
         pen.LineCap = PdfLineCap.Round;
         pen.LineCap = PdfLineCap.Flat;
 
@@ -7318,7 +7336,7 @@
             g.DrawLine(pen, p2, pc);
         }
 
-        pen.Width = 0.5F;
+        pen.Width = 1.0f;
         #endregion
 
         #region Prima parte: Dati Testata
@@ -8153,7 +8171,7 @@
         header.Graphics.DrawString(specialization, hHeadFont, PdfBrushes.Black, 100, 36);
 
         PdfPen hPen = new PdfPen(Color.Black);
-        hPen.Width = 0.1F;
+        hPen.Width = 1.0f;
 
         PointF hP1 = new PointF();
         PointF hP2 = new PointF();
@@ -8168,6 +8186,7 @@
         header.Graphics.DrawLine(hPen, hP1, hP2);
 
         // top linea orizzontale
+        hPen.Width = 1.6f;
         hP1.X = 0;
         hP1.Y = 70;
 
@@ -8213,7 +8232,7 @@
         footer.Graphics.DrawString(iscrOrdine, FootFont, PdfBrushes.Black, 212, 50);
 
         PdfPen fPen = new PdfPen(Color.Black);
-        fPen.Width = 0.1F;
+        fPen.Width = 1.0f;
 
         PointF fP1 = new PointF();
         PointF fP2 = new PointF();
@@ -8228,6 +8247,7 @@
         footer.Graphics.DrawLine(fPen, fP1, fP2);
 
         // bottom linea orizzontale
+        fPen.Width = 1.6f;
         fP1.X = 0;
         fP1.Y = 0;
 
@@ -8668,10 +8688,15 @@
 
         FirstPage = true;
 
+        string relData = "";
+
         if (pDataRelazione.Length > 8)
         {
-            var dds = pDataRelazione.Substring(0, 2) + "." + pDataRelazione.Substring(3, 2) + "." + pDataRelazione.Substring(6, 4);
-            pDataRelazione = dds;
+            relData = pDataRelazione.Substring(0, 2) + "." + pDataRelazione.Substring(3, 2) + "." + pDataRelazione.Substring(6, 4);
+        }
+        else
+        {
+            relData = pDataRelazione.Substring(0, 2) + "." + pDataRelazione.Substring(2, 2) + "." + pDataRelazione.Substring(4, 4);
         }
 
         //Create a new PDF document.
@@ -8690,7 +8715,7 @@
         pdfDocument.DocumentInformation.Creator = "Ophthal";
         pdfDocument.DocumentInformation.Keywords = "Dott. " + doctor;
         pdfDocument.DocumentInformation.Subject = "Relazione";
-        pdfDocument.DocumentInformation.Title = "Relazione " + LName + " " + FName + "_" + pDataRelazione.Substring(0, 2) + "." + pDataRelazione.Substring(2, 2) + "." + pDataRelazione.Substring(4, 4);
+        pdfDocument.DocumentInformation.Title = "Relazione " + LName + " " + FName + "_" + relData;
 
         // Set page size
         // ------------------------------------------------------------------------------------------------------------------------
@@ -8778,7 +8803,7 @@
         header.Graphics.DrawString(specialization, hHeadFont, PdfBrushes.Black, 100, 36);
 
         PdfPen hPen = new PdfPen(Color.Black);
-        hPen.Width = 0.1F;
+        hPen.Width = 1.0f;
 
         PointF hP1 = new PointF();
         PointF hP2 = new PointF();
@@ -8793,6 +8818,7 @@
         header.Graphics.DrawLine(hPen, hP1, hP2);
 
         // top linea orizzontale
+        hPen.Width = 1.6f;
         hP1.X = 0;
         hP1.Y = 70;
 
@@ -8838,7 +8864,7 @@
         footer.Graphics.DrawString(iscrOrdine, FootFont, PdfBrushes.Black, 212, 50);
 
         PdfPen fPen = new PdfPen(Color.Black);
-        fPen.Width = 0.1F;
+        fPen.Width = 1.0f;
 
         PointF fP1 = new PointF();
         PointF fP2 = new PointF();
@@ -8853,6 +8879,7 @@
         footer.Graphics.DrawLine(fPen, fP1, fP2);
 
         // bottom linea orizzontale
+        fPen.Width = 1.6f;
         fP1.X = 0;
         fP1.Y = 0;
 
@@ -9034,28 +9061,28 @@
 
         // Add Rows
         PdfGridRow rowV00 = RelPdfGrid.Rows.Add();    // "Diagnosi"
-        PdfGridRow rowV01 = RelPdfGrid.Rows.Add();    // "OD," + DiagnosiOD
-        PdfGridRow rowV02 = RelPdfGrid.Rows.Add();    // "OS," + DiagnosiOS
+        PdfGridRow rowV01 = RelPdfGrid.Rows.Add();    // "OD:" + DiagnosiOD
+        PdfGridRow rowV02 = RelPdfGrid.Rows.Add();    // "OS:" + DiagnosiOS
 
         PdfGridRow rowV03 = RelPdfGrid.Rows.Add();    // "Schirmer  test tipo 2 (basale)"
-        PdfGridRow rowV04 = RelPdfGrid.Rows.Add();    // "OD," + SHIRMER_Od
-        PdfGridRow rowV05 = RelPdfGrid.Rows.Add();    // "OS," + SHIRMER_Os
+        PdfGridRow rowV04 = RelPdfGrid.Rows.Add();    // "OD:" + SHIRMER_Od
+        PdfGridRow rowV05 = RelPdfGrid.Rows.Add();    // "OS:" + SHIRMER_Os
 
         PdfGridRow rowV06 = RelPdfGrid.Rows.Add();    // "Segmento anteriore"
-        PdfGridRow rowV07 = RelPdfGrid.Rows.Add();    // "OD," + Seg_Ant_Od
-        PdfGridRow rowV08 = RelPdfGrid.Rows.Add();    // "OS," + Seg_Ant_Os
+        PdfGridRow rowV07 = RelPdfGrid.Rows.Add();    // "OD:" + Seg_Ant_Od
+        PdfGridRow rowV08 = RelPdfGrid.Rows.Add();    // "OS:" + Seg_Ant_Os
 
         PdfGridRow rowV09 = RelPdfGrid.Rows.Add();    // "Visus"
-        PdfGridRow rowV10 = RelPdfGrid.Rows.Add();    // "OD," + Visus_Od
-        PdfGridRow rowV11 = RelPdfGrid.Rows.Add();    // "OS," + Visus_Os
+        PdfGridRow rowV10 = RelPdfGrid.Rows.Add();    // "OD:" + Visus_Od
+        PdfGridRow rowV11 = RelPdfGrid.Rows.Add();    // "OS:" + Visus_Os
 
         PdfGridRow rowV12 = RelPdfGrid.Rows.Add();    // "Tono oculare (valori normali fino a 20)"
-        PdfGridRow rowV13 = RelPdfGrid.Rows.Add();    // "OD," + TONO_Od
-        PdfGridRow rowV14 = RelPdfGrid.Rows.Add();    // "OS," + TONO_Os
+        PdfGridRow rowV13 = RelPdfGrid.Rows.Add();    // "OD:" + TONO_Od
+        PdfGridRow rowV14 = RelPdfGrid.Rows.Add();    // "OS:" + TONO_Os
 
         PdfGridRow rowV15 = RelPdfGrid.Rows.Add();    // "Fundus in midriasi con indentazione"
-        PdfGridRow rowV16 = RelPdfGrid.Rows.Add();    // "OD," + Fundus_Od
-        PdfGridRow rowV17 = RelPdfGrid.Rows.Add();    // "OS," + Fundus_Os
+        PdfGridRow rowV16 = RelPdfGrid.Rows.Add();    // "OD:" + Fundus_Od
+        PdfGridRow rowV17 = RelPdfGrid.Rows.Add();    // "OS:" + Fundus_Os
 
         PdfGridRow rowV18 = RelPdfGrid.Rows.Add();    // "Si rilascia su richiesta dell"interessato/a per gli usi consentiti dalla legge"
         PdfGridRow rowV19 = RelPdfGrid.Rows.Add();    // DateTime.Now.ToShortDateString()
@@ -9084,34 +9111,34 @@
         RelPdfGrid.Rows[0].Cells[1].Style = posCellStyleH;            // "Diagnosi"
 
         RelPdfGrid.Rows[1].Cells[0].Style = posCellStyleEH;           // colonna side bar
-        RelPdfGrid.Rows[1].Cells[1].Style = posCellStyleH1;           // "OD,"
+        RelPdfGrid.Rows[1].Cells[1].Style = posCellStyleH1;           // "OD:"
         RelPdfGrid.Rows[1].Cells[2].Style = posCellStyleV1;           // DiagnosiOD
 
         RelPdfGrid.Rows[2].Cells[0].Style = posCellStyleEH;           // colonna side bar
-        RelPdfGrid.Rows[2].Cells[1].Style = posCellStyleH2;           // "OS,"
-        RelPdfGrid.Rows[2].Cells[2].Style = posCellStyleV2;           // DiagnosiOS
+        RelPdfGrid.Rows[2].Cells[1].Style = posCellStyleH1;           // "OS:"
+        RelPdfGrid.Rows[2].Cells[2].Style = posCellStyleV1;           // DiagnosiOS
 
         RelPdfGrid.Rows[3].Cells[0].Style = posCellStyleEH;           // colonna side bar
         RelPdfGrid.Rows[3].Cells[1].Style = posCellStyleH;            // "Schirmer  test tipo 2 (basale)"
 
         RelPdfGrid.Rows[4].Cells[0].Style = posCellStyleEH;           // colonna side bar
-        RelPdfGrid.Rows[4].Cells[1].Style = posCellStyleH1;           // "OD,"
+        RelPdfGrid.Rows[4].Cells[1].Style = posCellStyleH1;           // "OD:"
         RelPdfGrid.Rows[4].Cells[2].Style = posCellStyleV1;           // SHIRMER_Od
 
         RelPdfGrid.Rows[5].Cells[0].Style = posCellStyleEH;           // colonna side bar
-        RelPdfGrid.Rows[5].Cells[1].Style = posCellStyleH2;           // "OS,"
-        RelPdfGrid.Rows[5].Cells[2].Style = posCellStyleV2;           // SHIRMER_Os
+        RelPdfGrid.Rows[5].Cells[1].Style = posCellStyleH1;           // "OS:"
+        RelPdfGrid.Rows[5].Cells[2].Style = posCellStyleV1;           // SHIRMER_Os
 
         RelPdfGrid.Rows[6].Cells[0].Style = posCellStyleEH;           // colonna side bar
         RelPdfGrid.Rows[6].Cells[1].Style = posCellStyleH;            // "Segmento anteriore"
 
         RelPdfGrid.Rows[7].Cells[0].Style = posCellStyleEH;           // colonna side bar
-        RelPdfGrid.Rows[7].Cells[1].Style = posCellStyleH1;           // "OD,"
+        RelPdfGrid.Rows[7].Cells[1].Style = posCellStyleH1;           // "OD:"
         RelPdfGrid.Rows[7].Cells[2].Style = posCellStyleV1;           // Seg_Ant_Od
 
         RelPdfGrid.Rows[8].Cells[0].Style = posCellStyleEH;           // colonna side bar
-        RelPdfGrid.Rows[8].Cells[1].Style = posCellStyleH2;           // "OS,"
-        RelPdfGrid.Rows[8].Cells[2].Style = posCellStyleV2;           // Seg_Ant_Os
+        RelPdfGrid.Rows[8].Cells[1].Style = posCellStyleH1;           // "OS:"
+        RelPdfGrid.Rows[8].Cells[2].Style = posCellStyleV1;           // Seg_Ant_Os
 
         RelPdfGrid.Rows[9].Cells[0].Style = posCellStyleEH;           // colonna side bar
         RelPdfGrid.Rows[9].Cells[1].Style = posCellStyleH;            // "Visus"
@@ -9121,19 +9148,19 @@
         RelPdfGrid.Rows[10].Cells[2].Style = posCellStyleV1;          // Visus_Od
 
         RelPdfGrid.Rows[11].Cells[0].Style = posCellStyleEH;          // colonna side bar
-        RelPdfGrid.Rows[11].Cells[1].Style = posCellStyleH2;          // "OD,"
-        RelPdfGrid.Rows[11].Cells[2].Style = posCellStyleV2;          // Visus_Os
+        RelPdfGrid.Rows[11].Cells[1].Style = posCellStyleH1;          // "OS:"
+        RelPdfGrid.Rows[11].Cells[2].Style = posCellStyleV1;          // Visus_Os
 
         RelPdfGrid.Rows[12].Cells[0].Style = posCellStyleEH;          // colonna side bar
         RelPdfGrid.Rows[12].Cells[1].Style = posCellStyleH;           // "Tono oculare (valori normali fino a 20)"
 
         RelPdfGrid.Rows[13].Cells[0].Style = posCellStyleEH;          // colonna side bar
-        RelPdfGrid.Rows[13].Cells[1].Style = posCellStyleH1;          // "OD,"
+        RelPdfGrid.Rows[13].Cells[1].Style = posCellStyleH1;          // "OD:"
         RelPdfGrid.Rows[13].Cells[2].Style = posCellStyleV1;          // TONO_Od
 
         RelPdfGrid.Rows[14].Cells[0].Style = posCellStyleEH;          // colonna side bar
-        RelPdfGrid.Rows[14].Cells[1].Style = posCellStyleH2;          // "OD,"
-        RelPdfGrid.Rows[14].Cells[2].Style = posCellStyleV2;          // TONO_Os
+        RelPdfGrid.Rows[14].Cells[1].Style = posCellStyleH1;          // "OS:"
+        RelPdfGrid.Rows[14].Cells[2].Style = posCellStyleV1;          // TONO_Os
 
         RelPdfGrid.Rows[15].Cells[0].Style = posCellStyleEH;          // colonna side bar
         RelPdfGrid.Rows[15].Cells[1].Style = posCellStyleH;           // "Fundus in midriasi con indentazione"
@@ -9143,8 +9170,8 @@
         RelPdfGrid.Rows[16].Cells[2].Style = posCellStyleV1;          // Fundus_Od
 
         RelPdfGrid.Rows[17].Cells[0].Style = posCellStyleEH;          // colonna side bar
-        RelPdfGrid.Rows[17].Cells[1].Style = posCellStyleH2;          // "OD,"
-        RelPdfGrid.Rows[17].Cells[2].Style = posCellStyleV2;          // Fundus_Os
+        RelPdfGrid.Rows[17].Cells[1].Style = posCellStyleH1;          // "OS:"
+        RelPdfGrid.Rows[17].Cells[2].Style = posCellStyleV1;          // Fundus_Os
 
         RelPdfGrid.Rows[18].Cells[0].Style = posCellStyleEH;          // colonna side bar
         RelPdfGrid.Rows[18].Cells[1].Style = posCellStyleH3;          // "Si rilascia su richiesta dell"interessato/a per gli usi consentiti dalla legge"
@@ -9160,17 +9187,19 @@
 
         value = new PdfTextElement("", fieldFont, PdfBrushes.Black);
         RelPdfGrid.Rows[1].Cells[0].Value = value;
-        value = new PdfTextElement("OD,", fieldNameFont, PdfBrushes.Black);
+        value = new PdfTextElement("OD:", fieldNameFont, PdfBrushes.Black);
         RelPdfGrid.Rows[1].Cells[1].Value = value;
         value = new PdfTextElement(FillEmpty(Relazione.DiagnosiOD), fieldFont, PdfBrushes.Black);
         RelPdfGrid.Rows[1].Cells[2].Value = value;
+        Console.WriteLine($"📝 Relazione.DiagnosiOD {Relazione.DiagnosiOD}");
 
         value = new PdfTextElement("", fieldFont, PdfBrushes.Black);
         RelPdfGrid.Rows[2].Cells[0].Value = value;
-        value = new PdfTextElement("OS,", fieldNameFont, PdfBrushes.Black);
+        value = new PdfTextElement("OS:", fieldNameFont, PdfBrushes.Black);
         RelPdfGrid.Rows[2].Cells[1].Value = value;
         value = new PdfTextElement(FillEmpty(Relazione.DiagnosiOS), fieldFont, PdfBrushes.Black);
         RelPdfGrid.Rows[2].Cells[2].Value = value;
+        Console.WriteLine($"📝 Relazione.DiagnosiOS {Relazione.DiagnosiOS}");
 
         value = new PdfTextElement("", fieldFont, PdfBrushes.Black);
         RelPdfGrid.Rows[3].Cells[0].Value = value;
@@ -9179,17 +9208,19 @@
 
         value = new PdfTextElement("", fieldFont, PdfBrushes.Black);
         RelPdfGrid.Rows[4].Cells[0].Value = value;
-        value = new PdfTextElement("OD,", fieldNameFont, PdfBrushes.Black);
+        value = new PdfTextElement("OD:", fieldNameFont, PdfBrushes.Black);
         RelPdfGrid.Rows[4].Cells[1].Value = value;
         value = new PdfTextElement(FillEmpty(Relazione.SHIRMER_Od), fieldFont, PdfBrushes.Black);
         RelPdfGrid.Rows[4].Cells[2].Value = value;
+        Console.WriteLine($"📝 Relazione.SHIRMER_Od {Relazione.SHIRMER_Od}");
 
         value = new PdfTextElement("", fieldFont, PdfBrushes.Black);
         RelPdfGrid.Rows[5].Cells[0].Value = value;
-        value = new PdfTextElement("OS,", fieldNameFont, PdfBrushes.Black);
+        value = new PdfTextElement("OS:", fieldNameFont, PdfBrushes.Black);
         RelPdfGrid.Rows[5].Cells[1].Value = value;
         value = new PdfTextElement(FillEmpty(Relazione.SHIRMER_Os), fieldFont, PdfBrushes.Black);
         RelPdfGrid.Rows[5].Cells[2].Value = value;
+        Console.WriteLine($"📝 Relazione.SHIRMER_Os {Relazione.SHIRMER_Os}");
 
         value = new PdfTextElement("", fieldFont, PdfBrushes.Black);
         RelPdfGrid.Rows[6].Cells[0].Value = value;
@@ -9198,17 +9229,19 @@
 
         value = new PdfTextElement("", fieldFont, PdfBrushes.Black);
         RelPdfGrid.Rows[7].Cells[0].Value = value;
-        value = new PdfTextElement("OD,", fieldNameFont, PdfBrushes.Black);
+        value = new PdfTextElement("OD:", fieldNameFont, PdfBrushes.Black);
         RelPdfGrid.Rows[7].Cells[1].Value = value;
         value = new PdfTextElement(FillEmpty(Relazione.Seg_Ant_Od), fieldFont, PdfBrushes.Black);
         RelPdfGrid.Rows[7].Cells[2].Value = value;
+        Console.WriteLine($"📝 Relazione.Seg_Ant_Od {Relazione.Seg_Ant_Od}");
 
         value = new PdfTextElement("", fieldFont, PdfBrushes.Black);
         RelPdfGrid.Rows[8].Cells[0].Value = value;
-        value = new PdfTextElement("OS,", fieldNameFont, PdfBrushes.Black);
+        value = new PdfTextElement("OS:", fieldNameFont, PdfBrushes.Black);
         RelPdfGrid.Rows[8].Cells[1].Value = value;
         value = new PdfTextElement(FillEmpty(Relazione.Seg_Ant_Os), fieldFont, PdfBrushes.Black);
         RelPdfGrid.Rows[8].Cells[2].Value = value;
+        Console.WriteLine($"📝 Relazione.Seg_Ant_Os {Relazione.Seg_Ant_Os}");
 
         value = new PdfTextElement("", fieldFont, PdfBrushes.Black);
         RelPdfGrid.Rows[9].Cells[0].Value = value;
@@ -9217,17 +9250,19 @@
 
         value = new PdfTextElement("", fieldFont, PdfBrushes.Black);
         RelPdfGrid.Rows[10].Cells[0].Value = value;
-        value = new PdfTextElement("OD,", fieldNameFont, PdfBrushes.Black);
+        value = new PdfTextElement("OD:", fieldNameFont, PdfBrushes.Black);
         RelPdfGrid.Rows[10].Cells[1].Value = value;
         value = new PdfTextElement(FillEmpty(Relazione.Visus_Od), fieldFont, PdfBrushes.Black);
         RelPdfGrid.Rows[10].Cells[2].Value = value;
+        Console.WriteLine($"📝 Relazione.Visus_Od {Relazione.Visus_Od}");
 
         value = new PdfTextElement("", fieldFont, PdfBrushes.Black);
         RelPdfGrid.Rows[11].Cells[0].Value = value;
-        value = new PdfTextElement("OS,", fieldNameFont, PdfBrushes.Black);
+        value = new PdfTextElement("OS:", fieldNameFont, PdfBrushes.Black);
         RelPdfGrid.Rows[11].Cells[1].Value = value;
         value = new PdfTextElement(FillEmpty(Relazione.Visus_Os), fieldFont, PdfBrushes.Black);
         RelPdfGrid.Rows[11].Cells[2].Value = value;
+        Console.WriteLine($"📝 Relazione.Visus_Os {Relazione.Visus_Os}");
 
         value = new PdfTextElement("", fieldFont, PdfBrushes.Black);
         RelPdfGrid.Rows[12].Cells[0].Value = value;
@@ -9236,17 +9271,19 @@
 
         value = new PdfTextElement("", fieldFont, PdfBrushes.Black);
         RelPdfGrid.Rows[13].Cells[0].Value = value;
-        value = new PdfTextElement("OD,", fieldNameFont, PdfBrushes.Black);
+        value = new PdfTextElement("OD:", fieldNameFont, PdfBrushes.Black);
         RelPdfGrid.Rows[13].Cells[1].Value = value;
         value = new PdfTextElement(FillEmpty(Relazione.TONO_Od), fieldFont, PdfBrushes.Black);
         RelPdfGrid.Rows[13].Cells[2].Value = value;
+        Console.WriteLine($"📝 Relazione.TONO_Od {Relazione.TONO_Od}");
 
         value = new PdfTextElement("", fieldFont, PdfBrushes.Black);
         RelPdfGrid.Rows[14].Cells[0].Value = value;
-        value = new PdfTextElement("OS,", fieldNameFont, PdfBrushes.Black);
+        value = new PdfTextElement("OS:", fieldNameFont, PdfBrushes.Black);
         RelPdfGrid.Rows[14].Cells[1].Value = value;
         value = new PdfTextElement(FillEmpty(Relazione.TONO_Os), fieldFont, PdfBrushes.Black);
         RelPdfGrid.Rows[14].Cells[2].Value = value;
+        Console.WriteLine($"📝 Relazione.TONO_Os {Relazione.TONO_Os}");
 
         value = new PdfTextElement("", fieldFont, PdfBrushes.Black);
         RelPdfGrid.Rows[15].Cells[0].Value = value;
@@ -9255,17 +9292,19 @@
 
         value = new PdfTextElement("", fieldFont, PdfBrushes.Black);
         RelPdfGrid.Rows[16].Cells[0].Value = value;
-        value = new PdfTextElement("OD,", fieldNameFont, PdfBrushes.Black);
+        value = new PdfTextElement("OD:", fieldNameFont, PdfBrushes.Black);
         RelPdfGrid.Rows[16].Cells[1].Value = value;
         value = new PdfTextElement(FillEmpty(Relazione.Fundus_Od), fieldFont, PdfBrushes.Black);
         RelPdfGrid.Rows[16].Cells[2].Value = value;
+        Console.WriteLine($"📝 Relazione.Fundus_Od {Relazione.Fundus_Od}");
 
         value = new PdfTextElement("", fieldFont, PdfBrushes.Black);
         RelPdfGrid.Rows[17].Cells[0].Value = value;
-        value = new PdfTextElement("OS,", fieldNameFont, PdfBrushes.Black);
+        value = new PdfTextElement("OS:", fieldNameFont, PdfBrushes.Black);
         RelPdfGrid.Rows[17].Cells[1].Value = value;
         value = new PdfTextElement(FillEmpty(Relazione.Fundus_Os), fieldFont, PdfBrushes.Black);
         RelPdfGrid.Rows[17].Cells[2].Value = value;
+        Console.WriteLine($"📝 Relazione.Fundus_Os {Relazione.Fundus_Os}");
 
         value = new PdfTextElement("", fieldFont, PdfBrushes.Black);
         RelPdfGrid.Rows[18].Cells[0].Value = value;
@@ -9275,8 +9314,10 @@
         //value = new PdfTextElement(DateTime.Now.ToShortDateString(), fieldNameFont, PdfBrushes.Black);
         value = new PdfTextElement("", fieldFont, PdfBrushes.Black);
         RelPdfGrid.Rows[19].Cells[0].Value = value;
-        var TmpDate = pDataRelazione.Substring(0, 2) + "/" + pDataRelazione.Substring(2, 2) + "/" + pDataRelazione.Substring(4, 4);
+
+        var TmpDate = relData.Replace(".", "/");
         Console.WriteLine($"pDataRelazione: {pDataRelazione}");
+        Console.WriteLine($"✅ Data relazione. {TmpDate}");
 
         value = new PdfTextElement(TmpDate, fieldNameFont, PdfBrushes.Black);
         RelPdfGrid.Rows[19].Cells[1].Value = value;
@@ -9447,7 +9488,7 @@
         pdfDocument.Save(memoryStream);
 
         //Download the PDF document
-        await JS.SaveAs("Relazione " + LName + " " + FName + "_" + pDataRelazione.Substring(0, 2) + "." + pDataRelazione.Substring(2, 2) + "." + pDataRelazione.Substring(4, 4) + ".pdf", memoryStream.ToArray());
+        await JS.SaveAs("Relazione " + LName + " " + FName + "_" + relData + ".pdf", memoryStream.ToArray());
     }
 
     async void PrintRel()
@@ -9556,7 +9597,7 @@
         header.Graphics.DrawString("DOTT. PIETRO LA BRUNA", fontHeader, PdfBrushes.Red, 120, 36);
 
         PdfPen hPen = new PdfPen(Color.Coral);
-        hPen.Width = 0.1F;
+        hPen.Width = 1.0f;
 
         PointF hP1 = new PointF();
         PointF hP2 = new PointF();
@@ -9571,6 +9612,7 @@
         header.Graphics.DrawLine(hPen, hP1, hP2);
 
         // 1a linea orizzontale
+        hPen.Width = 1.6f;
         hP1.X = 0;
         hP1.Y = 70;
 
@@ -9623,7 +9665,7 @@
         footer.Graphics.DrawString("Iscriz. Ord. Dei Medici di CT- Pietro La Bruna n° 5133 / Marco La Bruna n° 14037", FootFont, PdfBrushes.ForestGreen, 152, 50);
 
         PdfPen fPen = new PdfPen(Color.Coral);
-        fPen.Width = 0.1F;
+        fPen.Width = 1.0f;
 
         PointF fP1 = new PointF();
         PointF fP2 = new PointF();
@@ -9638,6 +9680,7 @@
         footer.Graphics.DrawLine(fPen, fP1, fP2);
 
         // 1a linea orizzontale
+        fPen.Width = 1.6f;
         fP1.X = 0;
         fP1.Y = 0;
 
@@ -10225,11 +10268,38 @@
     #region docx
     async void CreateRelazioneWord(string who)
     {
-        Console.WriteLine($"🔽 loading {Env.BaseAddress}WordLayout/marco.docx");
+        string fileword = "";
+        string doctor = "";
+        string specialization = "";
+        string address = "V.le R. Sanzio, 60 Tel 095 371701";
+        string city = "CATANIA";
+        string codfisc = "";
+        string piva = "";
+        string ordine = "";
 
-        // FileStream fileStreamPath = new FileStream($"{Env.BaseAddress}WordLayout/marco.docx", FileMode.Open, FileAccess.Read);
+        if (who == "1")
+        {
+            fileword = "marco.docx";
+            doctor = "Dott. MARCO LA BRUNA";
+            specialization = "Specialista in Oftalmologia";
+            codfisc = "Cod. Fisc. LBR MRC 84M31 C351P";
+            piva = "Partita IVA 05289740879";
+            ordine = "Ordine dei Medici CT n° 14037";
+        }
+        else
+        {
+            fileword = "pietro.docx";
+            doctor = "Dott. PIETRO LA BRUNA";
+            specialization = "Specialista in Oculistica";
+            codfisc = "Cod. Fisc. LBR PTR 49T07 H221S";
+            piva = "Partita IVA 00635170871";
+        }
+
+        Console.WriteLine($"🔽 Loading {Env.BaseAddress}WordLayout/" + fileword);
+
+        // FileStream fileStreamPath = new FileStream($"{Env.BaseAddress}WordLayout/" + fileword, FileMode.Open, FileAccess.Read);
         var httpClient = new HttpClient();
-        string docUrl = $"{Env.BaseAddress}/WordLayout/marco.docx";                      // URL dell'immagine
+        string docUrl = $"{Env.BaseAddress}/WordLayout/" + fileword;        // URL del file word
 
         byte[] fileBytes = await httpClient.GetByteArrayAsync(docUrl);
 
@@ -10250,21 +10320,22 @@
 
         using (MemoryStream fileStream = new MemoryStream(fileBytes))
         {
+            #region Load word model and setting page
             // Apri il documento Word dal MemoryStream
             WordDocument document = new WordDocument(fileStream, FormatType.Docx);
 
             // ... (Modifica il documento come necessario)
 
-            // Console.WriteLine("✅ Documento caricato con successo!");
-            // Console.WriteLine(" ");
-            // Console.WriteLine("✨ Info Documento");
-            // Console.WriteLine($"📝 document.Count {document.Count}");
-            // Console.WriteLine($"📝 document.Sections.Count {document.Sections.Count}");
+            Console.WriteLine($"✅ Loaded {Env.BaseAddress}WordLayout/" + fileword);
+            Console.WriteLine(" ");
+            Console.WriteLine("✨ Info Documento");
+            Console.WriteLine($"📝 document.Count {document.Count}");
+            Console.WriteLine($"📝 document.Sections.Count {document.Sections.Count}");
 
             WTextBody textBody = document.Sections[0].Body;
 
             Console.WriteLine($"📝 textBody.Count {textBody.Count}");
-            Console.WriteLine($"📝 textBody.Paragraphs.Count {textBody.Paragraphs.Count}");
+            Console.WriteLine($"➡ textBody.Paragraphs.Count {textBody.Paragraphs.Count}");
             Console.WriteLine(" ");
             Console.WriteLine("✨ document.Sections[0].PageSetup.Margins");
             Console.WriteLine($"📝 document.Sections[0].PageSetup.Margins.Left {document.Sections[0].PageSetup.Margins.Left}");
@@ -10281,10 +10352,14 @@
             //Adding a new section to the document
             // WSection section = document.AddSection() as WSection;
             WSection section = (WSection)document.Sections[0];
+            Console.WriteLine($"➡ section.Paragraphs.Count {section.Paragraphs.Count}");
+            Console.WriteLine(" ");
 
             section.PageSetup.Margins.Left = MarginLeft;
             section.PageSetup.Margins.Right = MarginRight;
+            #endregion
 
+            #region Intestazione Relazione
             //Appends paragraph
             IWParagraph paragraph = section.AddParagraph();
             paragraph.ParagraphFormat.BeforeSpacing = 0;
@@ -10300,18 +10375,20 @@
             //Appends paragraph
             paragraph = section.AddParagraph();
             paragraph.ParagraphFormat.BeforeSpacing = 0;
-            paragraph.ParagraphFormat.AfterSpacing = 12;
+            paragraph.ParagraphFormat.AfterSpacing = 24;
 
             textRange = paragraph.AppendText("presenta il seguente quadro oculare:") as WTextRange;
             textRange.CharacterFormat.FontSize = 12f;
             textRange.CharacterFormat.FontName = "Times New Roman";
             textRange.CharacterFormat.Bold = true;
             textRange.CharacterFormat.Italic = true;
+            #endregion
 
+            #region Scrittura dati Relazione
             //Appends paragraph Diagnosi
             Console.WriteLine($"✅ Diagnosi");
             paragraph = section.AddParagraph();
-            paragraph.ParagraphFormat.BeforeSpacing = 8;
+            paragraph.ParagraphFormat.BeforeSpacing = 12f;
             paragraph.ParagraphFormat.AfterSpacing = 0;
 
             textRange = paragraph.AppendText("Diagnosi") as WTextRange;
@@ -10325,7 +10402,7 @@
             paragraph.ParagraphFormat.BeforeSpacing = 0;
             paragraph.ParagraphFormat.AfterSpacing = 0;
 
-            textRange = paragraph.AppendText("OD, ") as WTextRange;
+            textRange = paragraph.AppendText("OD: ") as WTextRange;
             textRange.CharacterFormat.FontSize = 12f;
             textRange.CharacterFormat.FontName = "Times New Roman";
             textRange.CharacterFormat.Bold = true;
@@ -10343,7 +10420,7 @@
             paragraph.ParagraphFormat.BeforeSpacing = 0;
             paragraph.ParagraphFormat.AfterSpacing = 0;
 
-            textRange = paragraph.AppendText("OS, ") as WTextRange;
+            textRange = paragraph.AppendText("OS: ") as WTextRange;
             textRange.CharacterFormat.FontSize = 12f;
             textRange.CharacterFormat.FontName = "Times New Roman";
             textRange.CharacterFormat.Bold = true;
@@ -10359,7 +10436,7 @@
             //Appends paragraph Schirmer  test tipo 2 (basale)
             Console.WriteLine($"✅ Schirmer  test tipo 2 (basale)");
             paragraph = section.AddParagraph();
-            paragraph.ParagraphFormat.BeforeSpacing = 8;
+            paragraph.ParagraphFormat.BeforeSpacing = 12f;
             paragraph.ParagraphFormat.AfterSpacing = 0;
 
             textRange = paragraph.AppendText("Schirmer  test tipo 2 (basale)") as WTextRange;
@@ -10373,7 +10450,7 @@
             paragraph.ParagraphFormat.BeforeSpacing = 0;
             paragraph.ParagraphFormat.AfterSpacing = 0;
 
-            textRange = paragraph.AppendText("OD, ") as WTextRange;
+            textRange = paragraph.AppendText("OD: ") as WTextRange;
             textRange.CharacterFormat.FontSize = 12f;
             textRange.CharacterFormat.FontName = "Times New Roman";
             textRange.CharacterFormat.Bold = true;
@@ -10391,7 +10468,7 @@
             paragraph.ParagraphFormat.BeforeSpacing = 0;
             paragraph.ParagraphFormat.AfterSpacing = 0;
 
-            textRange = paragraph.AppendText("OS, ") as WTextRange;
+            textRange = paragraph.AppendText("OS: ") as WTextRange;
             textRange.CharacterFormat.FontSize = 12f;
             textRange.CharacterFormat.FontName = "Times New Roman";
             textRange.CharacterFormat.Bold = true;
@@ -10407,7 +10484,7 @@
             //Appends paragraph Segmento anteriore
             Console.WriteLine($"✅ Segmento anteriore");
             paragraph = section.AddParagraph();
-            paragraph.ParagraphFormat.BeforeSpacing = 8;
+            paragraph.ParagraphFormat.BeforeSpacing = 12f;
             paragraph.ParagraphFormat.AfterSpacing = 0;
 
             textRange = paragraph.AppendText("Segmento anteriore") as WTextRange;
@@ -10421,7 +10498,7 @@
             paragraph.ParagraphFormat.BeforeSpacing = 0;
             paragraph.ParagraphFormat.AfterSpacing = 0;
 
-            textRange = paragraph.AppendText("OD, ") as WTextRange;
+            textRange = paragraph.AppendText("OD: ") as WTextRange;
             textRange.CharacterFormat.FontSize = 12f;
             textRange.CharacterFormat.FontName = "Times New Roman";
             textRange.CharacterFormat.Bold = true;
@@ -10439,7 +10516,7 @@
             paragraph.ParagraphFormat.BeforeSpacing = 0;
             paragraph.ParagraphFormat.AfterSpacing = 0;
 
-            textRange = paragraph.AppendText("OS, ") as WTextRange;
+            textRange = paragraph.AppendText("OS: ") as WTextRange;
             textRange.CharacterFormat.FontSize = 12f;
             textRange.CharacterFormat.FontName = "Times New Roman";
             textRange.CharacterFormat.Bold = true;
@@ -10455,10 +10532,10 @@
             //Appends paragraph Visus
             Console.WriteLine($"✅ Visus");
             paragraph = section.AddParagraph();
-            paragraph.ParagraphFormat.BeforeSpacing = 8;
+            paragraph.ParagraphFormat.BeforeSpacing = 12f;
             paragraph.ParagraphFormat.AfterSpacing = 0;
 
-            textRange = paragraph.AppendText("Segmento anteriore") as WTextRange;
+            textRange = paragraph.AppendText("Visus") as WTextRange;
             textRange.CharacterFormat.FontSize = 12f;
             textRange.CharacterFormat.FontName = "Times New Roman";
             textRange.CharacterFormat.Bold = true;
@@ -10469,7 +10546,7 @@
             paragraph.ParagraphFormat.BeforeSpacing = 0;
             paragraph.ParagraphFormat.AfterSpacing = 0;
 
-            textRange = paragraph.AppendText("OD, ") as WTextRange;
+            textRange = paragraph.AppendText("OD: ") as WTextRange;
             textRange.CharacterFormat.FontSize = 12f;
             textRange.CharacterFormat.FontName = "Times New Roman";
             textRange.CharacterFormat.Bold = true;
@@ -10487,7 +10564,7 @@
             paragraph.ParagraphFormat.BeforeSpacing = 0;
             paragraph.ParagraphFormat.AfterSpacing = 0;
 
-            textRange = paragraph.AppendText("OS, ") as WTextRange;
+            textRange = paragraph.AppendText("OS: ") as WTextRange;
             textRange.CharacterFormat.FontSize = 12f;
             textRange.CharacterFormat.FontName = "Times New Roman";
             textRange.CharacterFormat.Bold = true;
@@ -10503,7 +10580,7 @@
             //Appends paragraph Tono oculare (valori normali fino a 20)
             Console.WriteLine($"✅ Tono oculare (valori normali fino a 20)");
             paragraph = section.AddParagraph();
-            paragraph.ParagraphFormat.BeforeSpacing = 8;
+            paragraph.ParagraphFormat.BeforeSpacing = 12f;
             paragraph.ParagraphFormat.AfterSpacing = 0;
 
             textRange = paragraph.AppendText("Tono oculare (valori normali fino a 20)") as WTextRange;
@@ -10517,7 +10594,7 @@
             paragraph.ParagraphFormat.BeforeSpacing = 0;
             paragraph.ParagraphFormat.AfterSpacing = 0;
 
-            textRange = paragraph.AppendText("OD, ") as WTextRange;
+            textRange = paragraph.AppendText("OD: ") as WTextRange;
             textRange.CharacterFormat.FontSize = 12f;
             textRange.CharacterFormat.FontName = "Times New Roman";
             textRange.CharacterFormat.Bold = true;
@@ -10535,7 +10612,7 @@
             paragraph.ParagraphFormat.BeforeSpacing = 0;
             paragraph.ParagraphFormat.AfterSpacing = 0;
 
-            textRange = paragraph.AppendText("OS, ") as WTextRange;
+            textRange = paragraph.AppendText("OS: ") as WTextRange;
             textRange.CharacterFormat.FontSize = 12f;
             textRange.CharacterFormat.FontName = "Times New Roman";
             textRange.CharacterFormat.Bold = true;
@@ -10551,7 +10628,7 @@
             //Appends paragraph Fundus in midriasi con indentazione
             Console.WriteLine($"✅ Fundus in midriasi con indentazione");
             paragraph = section.AddParagraph();
-            paragraph.ParagraphFormat.BeforeSpacing = 8;
+            paragraph.ParagraphFormat.BeforeSpacing = 12f;
             paragraph.ParagraphFormat.AfterSpacing = 0;
 
             textRange = paragraph.AppendText("Fundus in midriasi con indentazione") as WTextRange;
@@ -10565,7 +10642,7 @@
             paragraph.ParagraphFormat.BeforeSpacing = 0;
             paragraph.ParagraphFormat.AfterSpacing = 0;
 
-            textRange = paragraph.AppendText("OD, ") as WTextRange;
+            textRange = paragraph.AppendText("OD: ") as WTextRange;
             textRange.CharacterFormat.FontSize = 12f;
             textRange.CharacterFormat.FontName = "Times New Roman";
             textRange.CharacterFormat.Bold = true;
@@ -10583,7 +10660,7 @@
             paragraph.ParagraphFormat.BeforeSpacing = 0;
             paragraph.ParagraphFormat.AfterSpacing = 0;
 
-            textRange = paragraph.AppendText("OS, ") as WTextRange;
+            textRange = paragraph.AppendText("OS: ") as WTextRange;
             textRange.CharacterFormat.FontSize = 12f;
             textRange.CharacterFormat.FontName = "Times New Roman";
             textRange.CharacterFormat.Bold = true;
@@ -10595,6 +10672,17 @@
             textRange.CharacterFormat.FontName = "Times New Roman";
             textRange.CharacterFormat.Bold = false;
             textRange.CharacterFormat.Italic = false;
+            #endregion
+
+            #region Chiusura Relazione
+            //Appends paragraph empty
+            paragraph = section.AddParagraph();
+            paragraph.ParagraphFormat.BeforeSpacing = 12;
+            paragraph.ParagraphFormat.AfterSpacing = 0;
+
+            textRange = paragraph.AppendText(" ") as WTextRange;
+            textRange.CharacterFormat.FontSize = 12f;
+            textRange.CharacterFormat.FontName = "Times New Roman";
 
             //Appends paragraph Si rilascia su richiesta dell'interessato / a per gli usi consentiti dalla legge
             Console.WriteLine($"✅ Si rilascia su richiesta dell'interessato / a per gli usi consentiti dalla legge");
@@ -10623,22 +10711,26 @@
 
             //Appends paragraph empty
             paragraph = section.AddParagraph();
-            paragraph.ParagraphFormat.BeforeSpacing = 12;
+            paragraph.ParagraphFormat.BeforeSpacing = 12f;
             paragraph.ParagraphFormat.AfterSpacing = 0;
 
             textRange = paragraph.AppendText(" ") as WTextRange;
             textRange.CharacterFormat.FontSize = 12f;
             textRange.CharacterFormat.FontName = "Times New Roman";
+            #endregion
 
-
+            #region Timbro
             //Appends paragraph Timbro
             Console.WriteLine($"✅ Timbro");
             paragraph = section.AddParagraph();
-            paragraph.ParagraphFormat.BeforeSpacing = 16;
+            // //Adds tab stop at position 11
+            // Tab firstTab = paragraph.ParagraphFormat.Tabs.AddTab(60, TabJustification.Centered, TabLeader.Dotted);
+
+            paragraph.ParagraphFormat.BeforeSpacing = 16f;
             paragraph.ParagraphFormat.AfterSpacing = 0;
             paragraph.ParagraphFormat.HorizontalAlignment = HorizontalAlignment.Center;
 
-            textRange = paragraph.AppendText("Dott. MARCO LA BRUNA") as WTextRange;
+            textRange = paragraph.AppendText("\t\t\t\t\t" + doctor) as WTextRange;
             textRange.CharacterFormat.FontSize = 8f;
             textRange.CharacterFormat.FontName = "Times New Roman";
             textRange.CharacterFormat.Bold = true;
@@ -10648,7 +10740,7 @@
             paragraph.ParagraphFormat.AfterSpacing = 0;
             paragraph.ParagraphFormat.HorizontalAlignment = HorizontalAlignment.Center;
 
-            textRange = paragraph.AppendText("Specialista in Oftalmologia") as WTextRange;
+            textRange = paragraph.AppendText("\t\t\t\t\t" + specialization) as WTextRange;
             textRange.CharacterFormat.FontSize = 8f;
             textRange.CharacterFormat.FontName = "Times New Roman";
             textRange.CharacterFormat.Bold = true;
@@ -10658,7 +10750,7 @@
             paragraph.ParagraphFormat.AfterSpacing = 0;
             paragraph.ParagraphFormat.HorizontalAlignment = HorizontalAlignment.Center;
 
-            textRange = paragraph.AppendText("V.le R. Sanzio, 60 Tel 095 371701") as WTextRange;
+            textRange = paragraph.AppendText("\t\t\t\t\t" + address) as WTextRange;
             textRange.CharacterFormat.FontSize = 8f;
             textRange.CharacterFormat.FontName = "Times New Roman";
             textRange.CharacterFormat.Bold = true;
@@ -10668,7 +10760,7 @@
             paragraph.ParagraphFormat.AfterSpacing = 0;
             paragraph.ParagraphFormat.HorizontalAlignment = HorizontalAlignment.Center;
 
-            textRange = paragraph.AppendText("CATANIA") as WTextRange;
+            textRange = paragraph.AppendText("\t\t\t\t\t" + city) as WTextRange;
             textRange.CharacterFormat.FontSize = 8f;
             textRange.CharacterFormat.FontName = "Times New Roman";
             textRange.CharacterFormat.Bold = true;
@@ -10678,7 +10770,7 @@
             paragraph.ParagraphFormat.AfterSpacing = 0;
             paragraph.ParagraphFormat.HorizontalAlignment = HorizontalAlignment.Center;
 
-            textRange = paragraph.AppendText("Cod. Fisc. LBR MRC 84M31 C351P") as WTextRange;
+            textRange = paragraph.AppendText("\t\t\t\t\t" + codfisc) as WTextRange;
             textRange.CharacterFormat.FontSize = 8f;
             textRange.CharacterFormat.FontName = "Times New Roman";
             textRange.CharacterFormat.Bold = true;
@@ -10688,7 +10780,7 @@
             paragraph.ParagraphFormat.AfterSpacing = 0;
             paragraph.ParagraphFormat.HorizontalAlignment = HorizontalAlignment.Center;
 
-            textRange = paragraph.AppendText("Partita IVA 05289740879") as WTextRange;
+            textRange = paragraph.AppendText("\t\t\t\t\t" + piva) as WTextRange;
             textRange.CharacterFormat.FontSize = 8f;
             textRange.CharacterFormat.FontName = "Times New Roman";
             textRange.CharacterFormat.Bold = true;
@@ -10698,11 +10790,11 @@
             paragraph.ParagraphFormat.AfterSpacing = 0;
             paragraph.ParagraphFormat.HorizontalAlignment = HorizontalAlignment.Center;
 
-            textRange = paragraph.AppendText("Ordine dei Medici CT n° 14037") as WTextRange;
+            textRange = paragraph.AppendText("\t\t\t\t\t" + ordine) as WTextRange;
             textRange.CharacterFormat.FontSize = 8f;
             textRange.CharacterFormat.FontName = "Times New Roman";
             textRange.CharacterFormat.Bold = true;
-
+            #endregion
 
             //Saves the Word document to MemoryStream
             MemoryStream stream = new MemoryStream();
