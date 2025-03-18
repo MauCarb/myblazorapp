@@ -24,4 +24,9 @@ public class VisitService
     {
         await _httpClient.PutAsJsonAsync($"https://ophthalapi02-dcafg8d7hhekfkb0.italynorth-01.azurewebsites.net/api/visit/{visita.IdVisit}", visita);
     }
+
+    public async Task DeleteVisit(decimal id)
+    {
+        await _httpClient.DeleteAsync($"https://ophthalapi02-dcafg8d7hhekfkb0.italynorth-01.azurewebsites.net/api/visit/{id}");
+    }
 }

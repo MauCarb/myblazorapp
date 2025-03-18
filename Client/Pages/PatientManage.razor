@@ -183,6 +183,9 @@
                                     <div class="col-sm-2">
                                         <SfButton IconCss="e-icons e-circle-add icon-navy" CssClass="e-flat btn-light" Content=" Nuova Visita" OnClick="() => NewVisit()" Disabled="@AddVisitDisabled"></SfButton>
                                     </div>
+                                    <div class="col-sm-2">
+                                        <SfButton IconCss="e-icons e-circle-remove icon-red" CssClass="e-flat btn-light" Content=" Rimuovi Visita" OnClick="() => DeleteVisit()" Disabled="@DelVisitDisabled"></SfButton>
+                                    </div>
                                     <div class="col-sm-10">
                                         <span style="float: right;">
                                             <SfButton IconCss="e-icons icon-navy e-save" CssClass="e-flat btn-light" Content=" Salva Visita" OnClick="() => SaveVisit()"></SfButton>
@@ -1195,6 +1198,28 @@
     </DialogButtons>
 </SfDialog>
 
+<!-- Dialog for confirm action -->
+<SfDialog @bind-Visible="@ConfirmDialogVisible" Width="@ConfirmDialogWidth" IsModal="true" ShowCloseIcon="true">
+    <DialogTemplates>
+        <Header>
+            @ConfirmHeader
+        </Header>
+        <Content>
+            <div class='msg-wrapper col-lg-11'>
+                <span class='@ConfirmIcon' style="width: 24px; height: 24px; margin-left:8px; vertical-align:-0.5em;"></span>
+                <span class='error-msg col-lg-10' style="top:0px;">@ConfirmText</span>
+            </div>
+            <div class='error-detail col-lg-11' style="left:46px; margin: 10px 0 21px;">
+                <span>@ConfirmDetail</span>
+            </div>
+        </Content>
+    </DialogTemplates>
+    <DialogButtons>
+        <DialogButton Content="@ConfirmYesButtonText" IsPrimary="true" OnClick="@ManageConfirmDialog" />
+        <DialogButton Content="@ConfirmNoButtonText" OnClick="@HideConfirmDialog" />
+    </DialogButtons>
+</SfDialog>
+
 <style>
     .vstepper {
         display: inline-block;
@@ -1422,6 +1447,21 @@
     }
     #endregion
 
+    #region confirm dialog
+    private string action { get; set; } = "";
+
+    private string ConfirmHeader { get; set; } = "";
+    private string ConfirmIcon { get; set; } = "";
+    private string ConfirmText { get; set; } = "";
+    private string ConfirmDetail { get; set; } = "";
+
+    private string ConfirmYesButtonText { get; set; } = "";
+    private string ConfirmNoButtonText { get; set; } = "";
+
+    private bool ConfirmDialogVisible { get; set; } = false;
+    private string ConfirmDialogWidth { get; set; } = "400px";
+    #endregion
+
     #region logging
     string? LoggedUser;
     string[]? arUser;
@@ -1481,6 +1521,7 @@
     public Boolean LastVisitDisabled = false;
 
     public Boolean AddVisitDisabled = false;
+    public Boolean DelVisitDisabled = false;
     public Boolean SaveVisitDisabled = true;
     public Boolean PrintVisitDisabled = true;
 
@@ -1902,6 +1943,8 @@
                     PrescrizioniDisabled = false;
                     RelazioniDisabled = false;
 
+                    DelVisitDisabled = false;
+
                     VisitaCorrente = 0;
 
                     IndexVisita = (VisitaCorrente + 1).ToString() + " di " + ListaVisite.Count.ToString();
@@ -1971,6 +2014,7 @@
                     LastVisitDisabled = true;
 
                     SaveVisitDisabled = true;
+                    DelVisitDisabled = true;
 
                     POcchialiDisabled = true;
                     ControlliDisabled = true;
@@ -1985,6 +2029,117 @@
             }
         }
     }
+
+    #region confirm action
+    private async void ManageConfirmDialog(Object e)
+    {
+        double who = Convert.ToDouble(gIdUser);
+
+        switch (action)
+        {
+            case "DeleteVisita":
+                this.ConfirmDialogVisible = false;
+
+                Console.WriteLine($" ");
+
+                Console.WriteLine($"Cancellazione Visita");
+                Console.WriteLine($"Visita.IdVisit: {Visita.IdVisit}");
+                Console.WriteLine($" ");
+
+                await VisitService.DeleteVisit(Visita.IdVisit);
+
+                // load date e id storico visite e dati ultima visita
+                ListaVisite.Clear();
+
+                ListaVisite = await ListVisitsService.ListPatientsVisits(id);
+
+                if (ListaVisite.Count > 0)
+                {
+                    PrintVisitDisabled = false;
+
+                    if (ListaVisite.Count == 1)
+                    {
+                        FirstVisitDisabled = true;
+                        PrevVisitDisabled = true;
+                        NextVisitDisabled = true;
+                        LastVisitDisabled = true;
+                    }
+                    else
+                    {
+                        FirstVisitDisabled = true;
+                        PrevVisitDisabled = true;
+                        NextVisitDisabled = false;
+                        LastVisitDisabled = false;
+                    }
+
+                    POcchialiDisabled = false;
+                    ControlliDisabled = false;
+                    OrtotticaDisabled = false;
+                    PrescrizioniDisabled = false;
+                    RelazioniDisabled = false;
+
+                    DelVisitDisabled = false;
+
+                    VisitaCorrente = 0;
+
+                    IndexVisita = (VisitaCorrente + 1).ToString() + " di " + ListaVisite.Count.ToString();
+
+                    DataVisita = ListaVisite[0].Val.ToString("dd/MM/yyyy");
+
+                    LoadVisit(ListaVisite[VisitaCorrente].ID);
+
+                    LoadVisus(ListaVisite[VisitaCorrente].ID);
+
+                    LoadOrtoctis(ListaVisite[VisitaCorrente].ID);
+
+                    LoadPrescrizioni(ListaVisite[VisitaCorrente].ID);
+
+                    LoadRelazione(ListaVisite[VisitaCorrente].ID);
+                }
+                else
+                {
+                    FirstVisitDisabled = true;
+                    PrevVisitDisabled = true;
+                    NextVisitDisabled = true;
+                    LastVisitDisabled = true;
+
+                    SaveVisitDisabled = true;
+                    DelVisitDisabled = true;
+
+                    POcchialiDisabled = true;
+                    ControlliDisabled = true;
+                    OrtotticaDisabled = true;
+                    PrescrizioniDisabled = true;
+                    RelazioniDisabled = true;
+
+                    IndexVisita = " - ";
+                }
+
+                AddVisitDisabled = false;
+
+                await Task.Run(() =>
+                {
+                    DialogHeader = " Informazioni ";
+                    DialogIcon = "e-icons e-circle-info col-lg-2";
+                    DialogText = "Dati Visita rimossi";
+                    DialogDetail = "";
+
+                    DialogVisible = true;
+                });
+
+                // await this.InvokeAsync(() => this.StateHasChanged());
+
+                StateHasChanged();
+
+                break;
+        }
+    }
+
+    private void HideConfirmDialog(Object e)
+    {
+        this.ConfirmDialogVisible = false;
+    }
+    #endregion
 
     #region Pazienti
     public async void LoadPatient()
@@ -2175,6 +2330,7 @@
 
     public async void SavePatient()
     {
+        decimal tmpIdPaziente;
         string TmpDate;
         Boolean ContinueIns = true;
 
@@ -2240,17 +2396,20 @@
                 if (id == 0)
                 {
                     Paziente.ptIdUser = Decimal.Parse(gIdUser);
-
                     Paziente.InsertDate = DateTime.Now;
 
-                    await PatientMngService.AddPatient(Paziente);
+                    // recupero l'id genenerato
+                    var createdPatient = await PatientMngService.AddPatient(Paziente);
+                    tmpIdPaziente = createdPatient.IdPatient;
                 }
                 else
                 {
                     await PatientMngService.UpdPatient(id, Paziente);
+
+                    tmpIdPaziente = 0;
                 }
 
-                Navigation.NavigateTo("/patientlist/" + id.ToString());
+                Navigation.NavigateTo("/patientlist/" + tmpIdPaziente.ToString());
             }
         }
 
@@ -2732,6 +2891,8 @@
             PrescrizioniDisabled = false;
             RelazioniDisabled = false;
 
+            DelVisitDisabled = false;
+
             VisitaCorrente = 0;
 
             IndexVisita = (VisitaCorrente + 1).ToString() + " di " + ListaVisite.Count.ToString();
@@ -2783,6 +2944,22 @@
         });
 
         StateHasChanged();
+    }
+
+    public async void DeleteVisit()
+    {
+        action = "DeleteVisita";
+
+        ConfirmHeader = "Attenzione";
+        ConfirmIcon = "e-icons d-exclamation-triangle col-lg-2";
+        ConfirmText = "Rimozione visita";
+        ConfirmDetail = "Procedere con la rimozione della Visita del " + Visita.DataVisita.ToShortDateString() + "?";
+
+        ConfirmYesButtonText = "Rimuovi";
+        ConfirmNoButtonText = "Esci";
+
+        this.ConfirmDialogWidth = "440px";
+        this.ConfirmDialogVisible = true;
     }
     #endregion
 
@@ -5816,160 +5993,160 @@
         Console.WriteLine($" ");
         #endregion
 
-        #region Timbro
-        PdfStandardFont TimbroFont = new PdfStandardFont(PdfFontFamily.TimesRoman, 8, PdfFontStyle.Bold);
+        // #region Timbro
+        // PdfStandardFont TimbroFont = new PdfStandardFont(PdfFontFamily.TimesRoman, 8, PdfFontStyle.Bold);
 
-        PdfGrid TimbroPdfGrid = new PdfGrid();
+        // PdfGrid TimbroPdfGrid = new PdfGrid();
 
-        TimbroPdfGrid.AllowRowBreakAcrossPages = false;
+        // TimbroPdfGrid.AllowRowBreakAcrossPages = false;
 
-        PdfGridCellStyle tCellStyle0 = new PdfGridCellStyle();
-        PdfGridCellStyle tCellStyle1 = new PdfGridCellStyle();
-        PdfGridCellStyle tCellStyle2 = new PdfGridCellStyle();
-        PdfGridCellStyle tCellStyle3 = new PdfGridCellStyle();
-        PdfGridCellStyle tCellStyle4 = new PdfGridCellStyle();
-        PdfGridCellStyle tCellStyle5 = new PdfGridCellStyle();
-        PdfGridCellStyle tCellStyle6 = new PdfGridCellStyle();
+        // PdfGridCellStyle tCellStyle0 = new PdfGridCellStyle();
+        // PdfGridCellStyle tCellStyle1 = new PdfGridCellStyle();
+        // PdfGridCellStyle tCellStyle2 = new PdfGridCellStyle();
+        // PdfGridCellStyle tCellStyle3 = new PdfGridCellStyle();
+        // PdfGridCellStyle tCellStyle4 = new PdfGridCellStyle();
+        // PdfGridCellStyle tCellStyle5 = new PdfGridCellStyle();
+        // PdfGridCellStyle tCellStyle6 = new PdfGridCellStyle();
 
-        tCellStyle2.Borders.Left.Width = 0F;
-        tCellStyle2.Borders.Right.Width = 0F;
-        tCellStyle2.Borders.Top.Width = 0F;
-        tCellStyle2.Borders.Bottom.Width = 0F;
-        tCellStyle2.CellPadding = new PdfPaddings(16F, 0, 1F, 0);
+        // tCellStyle2.Borders.Left.Width = 0F;
+        // tCellStyle2.Borders.Right.Width = 0F;
+        // tCellStyle2.Borders.Top.Width = 0F;
+        // tCellStyle2.Borders.Bottom.Width = 0F;
+        // tCellStyle2.CellPadding = new PdfPaddings(16F, 0, 1F, 0);
 
-        tCellStyle3.Borders.Left.Width = 0F;
-        tCellStyle3.Borders.Right.Width = 0F;
-        tCellStyle3.Borders.Top.Width = 0F;
-        tCellStyle3.Borders.Bottom.Width = 0F;
-        tCellStyle3.CellPadding = new PdfPaddings(53.2F, 0, 1F, 0);
+        // tCellStyle3.Borders.Left.Width = 0F;
+        // tCellStyle3.Borders.Right.Width = 0F;
+        // tCellStyle3.Borders.Top.Width = 0F;
+        // tCellStyle3.Borders.Bottom.Width = 0F;
+        // tCellStyle3.CellPadding = new PdfPaddings(53.2F, 0, 1F, 0);
 
-        if (who == "1")     // Marco
-        {
-            tCellStyle0.Borders.Left.Width = 0F;
-            tCellStyle0.Borders.Right.Width = 0F;
-            tCellStyle0.Borders.Top.Width = 0F;
-            tCellStyle0.Borders.Bottom.Width = 0F;
-            tCellStyle0.CellPadding = new PdfPaddings(25.3F, 0, 0, 0);
+        // if (who == "1")     // Marco
+        // {
+        //     tCellStyle0.Borders.Left.Width = 0F;
+        //     tCellStyle0.Borders.Right.Width = 0F;
+        //     tCellStyle0.Borders.Top.Width = 0F;
+        //     tCellStyle0.Borders.Bottom.Width = 0F;
+        //     tCellStyle0.CellPadding = new PdfPaddings(25.3F, 0, 0, 0);
 
-            tCellStyle1.Borders.Left.Width = 0F;
-            tCellStyle1.Borders.Right.Width = 0F;
-            tCellStyle1.Borders.Top.Width = 0F;
-            tCellStyle1.Borders.Bottom.Width = 0F;
-            tCellStyle1.CellPadding = new PdfPaddings(26F, 0, 1F, 0);
+        //     tCellStyle1.Borders.Left.Width = 0F;
+        //     tCellStyle1.Borders.Right.Width = 0F;
+        //     tCellStyle1.Borders.Top.Width = 0F;
+        //     tCellStyle1.Borders.Bottom.Width = 0F;
+        //     tCellStyle1.CellPadding = new PdfPaddings(26F, 0, 1F, 0);
 
-            tCellStyle4.Borders.Left.Width = 0F;
-            tCellStyle4.Borders.Right.Width = 0F;
-            tCellStyle4.Borders.Top.Width = 0F;
-            tCellStyle4.Borders.Bottom.Width = 0F;
-            tCellStyle4.CellPadding = new PdfPaddings(10.3F, 0, 1F, 0);
+        //     tCellStyle4.Borders.Left.Width = 0F;
+        //     tCellStyle4.Borders.Right.Width = 0F;
+        //     tCellStyle4.Borders.Top.Width = 0F;
+        //     tCellStyle4.Borders.Bottom.Width = 0F;
+        //     tCellStyle4.CellPadding = new PdfPaddings(10.3F, 0, 1F, 0);
 
-            tCellStyle5.Borders.Left.Width = 0F;
-            tCellStyle5.Borders.Right.Width = 0F;
-            tCellStyle5.Borders.Top.Width = 0F;
-            tCellStyle5.Borders.Bottom.Width = 0F;
-            tCellStyle5.CellPadding = new PdfPaddings(28.9F, 0, 1F, 0);
+        //     tCellStyle5.Borders.Left.Width = 0F;
+        //     tCellStyle5.Borders.Right.Width = 0F;
+        //     tCellStyle5.Borders.Top.Width = 0F;
+        //     tCellStyle5.Borders.Bottom.Width = 0F;
+        //     tCellStyle5.CellPadding = new PdfPaddings(28.9F, 0, 1F, 0);
 
-            tCellStyle6.Borders.Left.Width = 0F;
-            tCellStyle6.Borders.Right.Width = 0F;
-            tCellStyle6.Borders.Top.Width = 0F;
-            tCellStyle6.Borders.Bottom.Width = 0F;
-            tCellStyle6.CellPadding = new PdfPaddings(18.9F, 0, 1F, 0);
-        }
-        else                // Pietro
-        {
-            tCellStyle0.Borders.Left.Width = 0F;
-            tCellStyle0.Borders.Right.Width = 0F;
-            tCellStyle0.Borders.Top.Width = 0F;
-            tCellStyle0.Borders.Bottom.Width = 0F;
-            tCellStyle0.CellPadding = new PdfPaddings(25.3F, 0, 0, 0);
+        //     tCellStyle6.Borders.Left.Width = 0F;
+        //     tCellStyle6.Borders.Right.Width = 0F;
+        //     tCellStyle6.Borders.Top.Width = 0F;
+        //     tCellStyle6.Borders.Bottom.Width = 0F;
+        //     tCellStyle6.CellPadding = new PdfPaddings(18.9F, 0, 1F, 0);
+        // }
+        // else                // Pietro
+        // {
+        //     tCellStyle0.Borders.Left.Width = 0F;
+        //     tCellStyle0.Borders.Right.Width = 0F;
+        //     tCellStyle0.Borders.Top.Width = 0F;
+        //     tCellStyle0.Borders.Bottom.Width = 0F;
+        //     tCellStyle0.CellPadding = new PdfPaddings(25.3F, 0, 0, 0);
 
-            tCellStyle1.Borders.Left.Width = 0F;
-            tCellStyle1.Borders.Right.Width = 0F;
-            tCellStyle1.Borders.Top.Width = 0F;
-            tCellStyle1.Borders.Bottom.Width = 0F;
-            tCellStyle1.CellPadding = new PdfPaddings(31.8F, 0, 1F, 0);
+        //     tCellStyle1.Borders.Left.Width = 0F;
+        //     tCellStyle1.Borders.Right.Width = 0F;
+        //     tCellStyle1.Borders.Top.Width = 0F;
+        //     tCellStyle1.Borders.Bottom.Width = 0F;
+        //     tCellStyle1.CellPadding = new PdfPaddings(31.8F, 0, 1F, 0);
 
-            tCellStyle4.Borders.Left.Width = 0F;
-            tCellStyle4.Borders.Right.Width = 0F;
-            tCellStyle4.Borders.Top.Width = 0F;
-            tCellStyle4.Borders.Bottom.Width = 0F;
-            tCellStyle4.CellPadding = new PdfPaddings(12.5F, 0, 1F, 0);
+        //     tCellStyle4.Borders.Left.Width = 0F;
+        //     tCellStyle4.Borders.Right.Width = 0F;
+        //     tCellStyle4.Borders.Top.Width = 0F;
+        //     tCellStyle4.Borders.Bottom.Width = 0F;
+        //     tCellStyle4.CellPadding = new PdfPaddings(12.5F, 0, 1F, 0);
 
-            tCellStyle5.Borders.Left.Width = 0F;
-            tCellStyle5.Borders.Right.Width = 0F;
-            tCellStyle5.Borders.Top.Width = 0F;
-            tCellStyle5.Borders.Bottom.Width = 0F;
-            tCellStyle5.CellPadding = new PdfPaddings(28.9F, 0, 1F, 0);
+        //     tCellStyle5.Borders.Left.Width = 0F;
+        //     tCellStyle5.Borders.Right.Width = 0F;
+        //     tCellStyle5.Borders.Top.Width = 0F;
+        //     tCellStyle5.Borders.Bottom.Width = 0F;
+        //     tCellStyle5.CellPadding = new PdfPaddings(28.9F, 0, 1F, 0);
 
-            tCellStyle6.Borders.Left.Width = 0F;
-            tCellStyle6.Borders.Right.Width = 0F;
-            tCellStyle6.Borders.Top.Width = 0F;
-            tCellStyle6.Borders.Bottom.Width = 0F;
-            tCellStyle6.CellPadding = new PdfPaddings(20.3F, 0, 1F, 0);
-        }
+        //     tCellStyle6.Borders.Left.Width = 0F;
+        //     tCellStyle6.Borders.Right.Width = 0F;
+        //     tCellStyle6.Borders.Top.Width = 0F;
+        //     tCellStyle6.Borders.Bottom.Width = 0F;
+        //     tCellStyle6.CellPadding = new PdfPaddings(20.3F, 0, 1F, 0);
+        // }
 
-        // Add rows to the DataTable.
-        PdfGridRow trow0 = TimbroPdfGrid.Rows.Add();
-        PdfGridRow trow1 = TimbroPdfGrid.Rows.Add();
-        PdfGridRow trow2 = TimbroPdfGrid.Rows.Add();
-        PdfGridRow trow3 = TimbroPdfGrid.Rows.Add();
-        PdfGridRow trow4 = TimbroPdfGrid.Rows.Add();
-        PdfGridRow trow5 = TimbroPdfGrid.Rows.Add();
-        PdfGridRow trow6 = TimbroPdfGrid.Rows.Add();
+        // // Add rows to the DataTable.
+        // PdfGridRow trow0 = TimbroPdfGrid.Rows.Add();
+        // PdfGridRow trow1 = TimbroPdfGrid.Rows.Add();
+        // PdfGridRow trow2 = TimbroPdfGrid.Rows.Add();
+        // PdfGridRow trow3 = TimbroPdfGrid.Rows.Add();
+        // PdfGridRow trow4 = TimbroPdfGrid.Rows.Add();
+        // PdfGridRow trow5 = TimbroPdfGrid.Rows.Add();
+        // PdfGridRow trow6 = TimbroPdfGrid.Rows.Add();
 
-        // Add the columns to head grid
-        TimbroPdfGrid.Columns.Add(1);
+        // // Add the columns to head grid
+        // TimbroPdfGrid.Columns.Add(1);
 
-        // Adding grid cell style
-        PdfGridCellStyle cellStyle = new PdfGridCellStyle();
-        cellStyle.Borders.Left.Width = 0.1F;
-        cellStyle.Borders.Right.Width = 0.1F;
-        cellStyle.Borders.Top.Width = 0.1F;
-        cellStyle.Borders.Bottom.Width = 0.1F;
+        // // Adding grid cell style
+        // PdfGridCellStyle cellStyle = new PdfGridCellStyle();
+        // cellStyle.Borders.Left.Width = 0.1F;
+        // cellStyle.Borders.Right.Width = 0.1F;
+        // cellStyle.Borders.Top.Width = 0.1F;
+        // cellStyle.Borders.Bottom.Width = 0.1F;
 
-        //Set cell paddings.
-        cellStyle.CellPadding = new PdfPaddings(10, 0, 0, 0);
+        // //Set cell paddings.
+        // cellStyle.CellPadding = new PdfPaddings(10, 0, 0, 0);
 
-        // Set columns's width
-        TimbroPdfGrid.Columns[0].Width = 150;
+        // // Set columns's width
+        // TimbroPdfGrid.Columns[0].Width = 150;
 
-        //Applying style to grid
-        TimbroPdfGrid.Rows[0].Cells[0].Style = tCellStyle0;
-        TimbroPdfGrid.Rows[1].Cells[0].Style = tCellStyle1;
-        TimbroPdfGrid.Rows[2].Cells[0].Style = tCellStyle2;
-        TimbroPdfGrid.Rows[3].Cells[0].Style = tCellStyle3;
-        TimbroPdfGrid.Rows[4].Cells[0].Style = tCellStyle4;
-        TimbroPdfGrid.Rows[5].Cells[0].Style = tCellStyle5;
-        TimbroPdfGrid.Rows[6].Cells[0].Style = tCellStyle6;
+        // //Applying style to grid
+        // TimbroPdfGrid.Rows[0].Cells[0].Style = tCellStyle0;
+        // TimbroPdfGrid.Rows[1].Cells[0].Style = tCellStyle1;
+        // TimbroPdfGrid.Rows[2].Cells[0].Style = tCellStyle2;
+        // TimbroPdfGrid.Rows[3].Cells[0].Style = tCellStyle3;
+        // TimbroPdfGrid.Rows[4].Cells[0].Style = tCellStyle4;
+        // TimbroPdfGrid.Rows[5].Cells[0].Style = tCellStyle5;
+        // TimbroPdfGrid.Rows[6].Cells[0].Style = tCellStyle6;
 
-        // Set rows values
-        val = new PdfTextElement("Dott. " + doctor, TimbroFont, PdfBrushes.Black);       // 0 - 0
-        TimbroPdfGrid.Rows[0].Cells[0].Value = val;
+        // // Set rows values
+        // val = new PdfTextElement("Dott. " + doctor, TimbroFont, PdfBrushes.Black);       // 0 - 0
+        // TimbroPdfGrid.Rows[0].Cells[0].Value = val;
 
-        val = new PdfTextElement(specialization, TimbroFont, PdfBrushes.Black);          // 1 - 0
-        TimbroPdfGrid.Rows[1].Cells[0].Value = val;
+        // val = new PdfTextElement(specialization, TimbroFont, PdfBrushes.Black);          // 1 - 0
+        // TimbroPdfGrid.Rows[1].Cells[0].Value = val;
 
-        val = new PdfTextElement(address, TimbroFont, PdfBrushes.Black);                 // 2 - 0
-        TimbroPdfGrid.Rows[2].Cells[0].Value = val;
+        // val = new PdfTextElement(address, TimbroFont, PdfBrushes.Black);                 // 2 - 0
+        // TimbroPdfGrid.Rows[2].Cells[0].Value = val;
 
-        val = new PdfTextElement(city, TimbroFont, PdfBrushes.Black);                    // 3 - 0
-        TimbroPdfGrid.Rows[3].Cells[0].Value = val;
+        // val = new PdfTextElement(city, TimbroFont, PdfBrushes.Black);                    // 3 - 0
+        // TimbroPdfGrid.Rows[3].Cells[0].Value = val;
 
-        val = new PdfTextElement(codfisc, TimbroFont, PdfBrushes.Black);                 // 4 - 0
-        TimbroPdfGrid.Rows[4].Cells[0].Value = val;
+        // val = new PdfTextElement(codfisc, TimbroFont, PdfBrushes.Black);                 // 4 - 0
+        // TimbroPdfGrid.Rows[4].Cells[0].Value = val;
 
-        val = new PdfTextElement(piva, TimbroFont, PdfBrushes.Black);                    // 5 - 0
-        TimbroPdfGrid.Rows[5].Cells[0].Value = val;
+        // val = new PdfTextElement(piva, TimbroFont, PdfBrushes.Black);                    // 5 - 0
+        // TimbroPdfGrid.Rows[5].Cells[0].Value = val;
 
-        val = new PdfTextElement(ordine, TimbroFont, PdfBrushes.Black);                  // 6 - 0
-        TimbroPdfGrid.Rows[6].Cells[0].Value = val;
+        // val = new PdfTextElement(ordine, TimbroFont, PdfBrushes.Black);                  // 6 - 0
+        // TimbroPdfGrid.Rows[6].Cells[0].Value = val;
 
-        // Draw PDF grid into the PDF page.
-        TimbroPdfGrid.Draw(page, new Syncfusion.Drawing.PointF(350, result2.Bounds.Bottom + 20));
-        Console.WriteLine($"📌 Ortottica - Timbro ");
-        Console.WriteLine($"🔷\t X: {350}\t Y: {result2.Bounds.Bottom + 20}");
-        Console.WriteLine($" ");
-        #endregion
+        // // Draw PDF grid into the PDF page.
+        // TimbroPdfGrid.Draw(page, new Syncfusion.Drawing.PointF(350, result2.Bounds.Bottom + 20));
+        // Console.WriteLine($"📌 Ortottica - Timbro ");
+        // Console.WriteLine($"🔷\t X: {350}\t Y: {result2.Bounds.Bottom + 20}");
+        // Console.WriteLine($" ");
+        // #endregion
 
         //Create memory stream.
         MemoryStream memoryStream = new MemoryStream();

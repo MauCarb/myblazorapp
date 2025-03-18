@@ -1,5 +1,6 @@
 ﻿@page "/patientlist/{d:decimal}"
 @using Blazored.SessionStorage
+@using Syncfusion.Blazor.Notifications
 
 @using BlazorApp.Shared
 
@@ -144,6 +145,27 @@
     private void CloseDialog()
     {
         AlertVisible = false;
+    }
+    #endregion
+
+    #region Notification
+    SfToast ToastObj;
+
+    private ToastModel Toast = new ToastModel { Title = "Success!", Content = "Your message has been sent successfully.", CssClass = "e-toast-success", Icon = "e-success toast-icons" };
+
+    private async Task ShowOnClick()
+    {
+        await this.ToastObj.Show(Toast);
+    }
+
+    private async Task HideOnClick()
+    {
+        await this.ToastObj.Hide("All");
+    }
+
+    private async Task onCreate()
+    {
+        await this.ToastObj.Show(Toast);
     }
     #endregion
 
@@ -360,6 +382,7 @@
                 try
                 {
                     string pp = FName + "|" + LName + "|" + vDate + "|" + Phone + "|" + Diagnosi;
+                    Console.WriteLine($"pp: {pp}");
 
                     // Console.WriteLine($"pp: {pp}");
 

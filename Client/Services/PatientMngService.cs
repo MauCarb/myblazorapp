@@ -15,9 +15,16 @@ public class PatientMngService
         return await _httpClient.GetFromJsonAsync<Patient>($"https://ophthalapi02-dcafg8d7hhekfkb0.italynorth-01.azurewebsites.net/api/patient/{id}");
     }
 
-    public async Task AddPatient(Patient paziente)
+    public async Task<Patient> AddPatient(Patient paziente)
     {
-        await _httpClient.PostAsJsonAsync("https://ophthalapi02-dcafg8d7hhekfkb0.italynorth-01.azurewebsites.net/api/patient", paziente);
+        //await _httpClient.PostAsJsonAsync("https://ophthalapi02-dcafg8d7hhekfkb0.italynorth-01.azurewebsites.net/api/patient", paziente);
+        var response = await _httpClient.PostAsJsonAsync("https://ophthalapi02-dcafg8d7hhekfkb0.italynorth-01.azurewebsites.net/api/patient", paziente);
+
+        // Assicurati che la risposta sia valida
+        response.EnsureSuccessStatusCode();
+
+        // Leggi e restituisci l'oggetto Patient creato
+        return await response.Content.ReadFromJsonAsync<Patient>();
     }
 
     //public async Task<decimal> AddPatient(Patient paziente)
