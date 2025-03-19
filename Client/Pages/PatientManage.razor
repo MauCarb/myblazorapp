@@ -68,7 +68,7 @@
             <SfTextBox ID="cod" @bind-Value="@Cod" Placeholder="Cod" FloatLabelType="@FloatLabelType.Always" CssClass="sftext"></SfTextBox>
         </div>
 
-        <div class="col-sm-4">
+        <div class="col-sm-3">
             <SfTextBox ID="lname" @bind-Value="@LName" Placeholder="Cognome" FloatLabelType="@FloatLabelType.Always" CssClass="sftext"></SfTextBox>
         </div>
 
@@ -76,7 +76,7 @@
             <SfTextBox ID="fname" @bind-Value="@FName" Placeholder="Nome" FloatLabelType="@FloatLabelType.Always" CssClass="sftext"></SfTextBox>
         </div>
 
-        <div class="col-sm-1">
+        <div class="col-sm-2">
             <SfMaskedTextBox ID="datanascita" @bind-Value="@BirthDate" Mask="00/00/0000" Placeholder="Data di nascita" FloatLabelType="@FloatLabelType.Always" CssClass="sftext"></SfMaskedTextBox>
         </div>
 
@@ -87,7 +87,7 @@
 
     @if (ShowMore)
     {
-        <div class="row" style="margin-top: 10px;">
+        <div class="row" style="margin-top: 5px;">
             <div class="col-sm-4">
                 <SfTextBox ID="address" @bind-Value="@Address" Placeholder="Indirizzo" FloatLabelType="@FloatLabelType.Always"></SfTextBox>
             </div>
@@ -105,7 +105,7 @@
             </div>
         </div>
 
-        <div class="row" style="margin-top: 10px;">
+        <div class="row" style="margin-top: 5px;">
             <div class="col-sm-2">
                 <SfTextBox ID="phone" @bind-Value="@Phone" Placeholder="Telefono" FloatLabelType="@FloatLabelType.Always"></SfTextBox>
             </div>
@@ -119,7 +119,7 @@
             </div>
         </div>
 
-        <div class="row" style="margin-top: 10px;">
+        <div class="row" style="margin-top: 5px;">
             <div class="col-sm-8">
                 <SfTextBox ID="note" @bind-Value="@Note" Placeholder="Note" FloatLabelType="@FloatLabelType.Always" Multiline="true"></SfTextBox>
             </div>
@@ -132,7 +132,7 @@
             </div>
         </div>
 
-        <div class="row" style="margin-top: 10px; display: none;">
+        <div class="row" style="margin-top: 5px; display: none;">
             <div class="col-sm-2">
                 <SfTextBox ID="studio" @bind-Value="@Studio" Placeholder="Studio" FloatLabelType="@FloatLabelType.Always" Multiline="false"></SfTextBox>
             </div>
@@ -150,7 +150,7 @@
                 <span style="font-weight:600;">Data:&nbsp;</span><span style="font-size: 14px; color:midnightblue;">@DataVisita</span>
             </div>
 *@            
-                    <div class="col-sm-1" style="width: 118px;">
+                <div class="col-sm-1" style="width: 118px;">
                 <SfMaskedTextBox ID="datavisita" @bind-Value="@DataVisita" Mask="00/00/0000" Placeholder="Data" FloatLabelType="@FloatLabelType.Always" CssClass="sftext" style="color: #000;"></SfMaskedTextBox>
             </div>
 
@@ -179,14 +179,14 @@
                                 <TabHeader Text="Visite"></TabHeader>
                             </ChildContent>
                             <ContentTemplate>
-                                <div class="row" style="margin-top: 10px;">
+                                <div class="row" style="margin-top: 5px;">
                                     <div class="col-sm-2">
                                         <SfButton IconCss="e-icons e-circle-add icon-navy" CssClass="e-flat btn-light" Content=" Nuova Visita" OnClick="() => NewVisit()" Disabled="@AddVisitDisabled"></SfButton>
                                     </div>
                                     <div class="col-sm-2">
                                         <SfButton IconCss="e-icons e-circle-remove icon-red" CssClass="e-flat btn-light" Content=" Rimuovi Visita" OnClick="() => DeleteVisit()" Disabled="@DelVisitDisabled"></SfButton>
                                     </div>
-                                    <div class="col-sm-10">
+                                    <div class="col-sm-8">
                                         <span style="float: right;">
                                             <SfButton IconCss="e-icons icon-navy e-save" CssClass="e-flat btn-light" Content=" Salva Visita" OnClick="() => SaveVisit()"></SfButton>
                                             @* Disabled="@SaveVisitDisabled"*@
@@ -202,7 +202,7 @@
 
                                 <!-- Dati di verifica -->
                                 @* 
-                                <div class="row" style="margin-top: 10px;">
+                                <div class="row" style="margin-top: 5px;">
                                     <div class="col-sm-12">
                                         <table class="table table-bordered" style="border:1px solid #f90;">
                                             <thead>
@@ -241,89 +241,89 @@
                                 *@
 
                                 <!-- Operatore -->
-                                <div class="row" style="margin-top: 10px;">
+                                <div class="row" style="margin-top: 5px;">
                                     <div class="col-sm-2">
                                         <SfTextBox ID="operatore" @bind-Value="@Visita.Operatore" Placeholder="Operatore" FloatLabelType="@FloatLabelType.Always" CssClass="sftext" style="font-weight: 500;"></SfTextBox>
                                     </div>
                                 </div>
 
                                 <!-- Dati visita -->
-                                <div class="row" style="margin-top: 10px;">
+                                <div class="row" style="margin-top: 5px;">
                                     <div class="col-sm-5">
                                         <!-- Diagnosi OD -->
-                                        <div class="row" style="margin-top: 10px;">
+                                        <div class="row" style="margin-top: 5px;">
                                             <div class="col">
-                                                <SfTextBox ID="diagnosiod" @bind-Value="@Visita.DiagnosiOD" Placeholder="Diagnosi OD" FloatLabelType="@FloatLabelType.Always" title="@Visita.DiagnosiOD" Multiline="true" CssClass="sftext" style="height: 30px;"></SfTextBox>
+                                                <SfTextBox ID="diagnosiod" @bind-Value="@Visita.DiagnosiOD" Placeholder="Diagnosi" FloatLabelType="@FloatLabelType.Always" title="@Visita.DiagnosiOD" Multiline="true" CssClass="sftext" style="height: 30px;"></SfTextBox>
                                             </div>
                                         </div>
                                         <!-- Diagnosi OS -->
-                                        <div class="row" style="margin-top: 10px;">
+                                        <div class="row" style="margin-top: 5px; display:none;">
                                             <div class="col">
                                                 <SfTextBox ID="diagnosios" @bind-Value="@Visita.DiagnosiOS" Placeholder="Diagnosi OS" FloatLabelType="@FloatLabelType.Always" title="@Visita.DiagnosiOS" Multiline="true" CssClass="sftext" style="height: 30px;"></SfTextBox>
                                             </div>
                                         </div>
                                         <!-- Anamnesi -->
-                                        <div class="row" style="margin-top: 10px;">
+                                        <div class="row" style="margin-top: 5px;">
                                             <div class="col">
                                                 <SfTextBox ID="anamnesi" @bind-Value="@Visita.Anamnesi" Placeholder="Anamnesi" FloatLabelType="@FloatLabelType.Always" Multiline="true" CssClass="sftext" style="height: 30px;"></SfTextBox>
                                             </div>
                                         </div>
                                         <!-- Annessi OD -->
-                                        <div class="row" style="margin-top: 10px;">
+                                        <div class="row" style="margin-top: 5px;">
                                             <div class="col">
                                                 <SfTextBox ID="annessiod" @bind-Value="@Visita.Annessi_Od" Placeholder="Annessi OD" FloatLabelType="@FloatLabelType.Always" Multiline="true" CssClass="sftext" style="height: 30px;"></SfTextBox>
                                             </div>
                                         </div>
                                         <!-- Annessi OS -->
-                                        <div class="row" style="margin-top: 10px;">
+                                        <div class="row" style="margin-top: 5px;">
                                             <div class="col">
                                                 <SfTextBox ID="annessios" @bind-Value="@Visita.Annessi_Os" Placeholder="Annessi OS" FloatLabelType="@FloatLabelType.Always" Multiline="true" CssClass="sftext" style="height: 30px;"></SfTextBox>
                                             </div>
                                         </div>
                                         <!-- Seg.Ant. OD -->
-                                        <div class="row" style="margin-top: 10px;">
+                                        <div class="row" style="margin-top: 5px;">
                                             <div class="col">
                                                 <SfTextBox ID="segantod" @bind-Value="@Visita.Seg_Ant_Od" Placeholder="Seg.Ant. OD" FloatLabelType="@FloatLabelType.Always" Multiline="true" CssClass="sftext" style="height: 30px;"></SfTextBox>
                                             </div>
                                         </div>
                                         <!-- Seg.Ant. OS -->
-                                        <div class="row" style="margin-top: 10px;">
+                                        <div class="row" style="margin-top: 5px;">
                                             <div class="col">
                                                 <SfTextBox ID="segantos" @bind-Value="@Visita.Seg_Ant_Os" Placeholder="Seg.Ant. OS" FloatLabelType="@FloatLabelType.Always" Multiline="true" CssClass="sftext" style="height: 30px;"></SfTextBox>
                                             </div>
                                         </div>
                                         <!-- Fundus OD -->
-                                        <div class="row" style="margin-top: 10px;">
+                                        <div class="row" style="margin-top: 5px;">
                                             <div class="col">
                                                 <SfTextBox ID="fundusod" @bind-Value="@Visita.Fundus_Od" Placeholder="Fundus OD" FloatLabelType="@FloatLabelType.Always" Multiline="true" CssClass="sftext" style="height: 30px;"></SfTextBox>
                                             </div>
                                         </div>
                                         <!-- Fundus OS -->
-                                        <div class="row" style="margin-top: 10px;">
+                                        <div class="row" style="margin-top: 5px;">
                                             <div class="col">
                                                 <SfTextBox ID="fundusos" @bind-Value="@Visita.Fundus_Os" Placeholder="Fundus OS" FloatLabelType="@FloatLabelType.Always" Multiline="true" CssClass="sftext" style="height: 30px"></SfTextBox>
                                             </div>
                                         </div>
                                         <!-- Visus OD -->
-                                        <div class="row" style="margin-top: 10px;">
+                                        <div class="row" style="margin-top: 5px;">
                                             <div class="col">
                                                 <SfTextBox ID="visusod" @bind-Value="@Visita.Visus_Od" Placeholder="Visus OD" FloatLabelType="@FloatLabelType.Always" Multiline="true" CssClass="sftext" style="height: 30px;"></SfTextBox>
                                             </div>
                                         </div>
                                         <!-- Visus OS -->
-                                        <div class="row" style="margin-top: 10px;">
+                                        <div class="row" style="margin-top: 5px;">
                                             <div class="col">
                                                 <SfTextBox ID="visusos" @bind-Value="@Visita.Visus_Os" Placeholder="Visus OS" FloatLabelType="@FloatLabelType.Always" Multiline="true" CssClass="sftext" style="height: 30px;"></SfTextBox>
                                             </div>
                                         </div>
                                         <!-- Terapia -->
-                                        <div class="row" style="margin-top: 10px;">
+                                        <div class="row" style="margin-top: 5px;">
                                             <div class="col">
                                                 <SfTextBox ID="terapia" @bind-Value="@Visita.Terapia" Placeholder="Terapia" FloatLabelType="@FloatLabelType.Always" Multiline="true" CssClass="sftext" style="height: 30px;"></SfTextBox>
                                             </div>
                                         </div>
                                         <!-- OD: SUE LENTI -->
-                                        <div class="row" style="margin-top: 10px;">
+                                        <div class="row" style="margin-top: 5px;">
                                             <!-- OD: SUE LENTI PL -->
                                             <div class="col-sm-4">
                                                 <SfTextBox ID="odpl" @bind-Value="@Visita.ODPL" Placeholder="OD: SUE LENTI PL" FloatLabelType="@FloatLabelType.Always" Multiline="true" CssClass="sftext" style="height: 30px;"></SfTextBox>
@@ -338,7 +338,7 @@
                                             </div>
                                         </div>
                                         <!-- OS: SUE LENTI -->
-                                        <div class="row" style="margin-top: 10px;">
+                                        <div class="row" style="margin-top: 5px;">
                                             <!-- OS: SUE LENTI PL -->
                                             <div class="col-sm-4">
                                                 <SfTextBox ID="ospl" @bind-Value="@Visita.OSPL" Placeholder="OS: SUE LENTI PL" FloatLabelType="@FloatLabelType.Always" Multiline="true" CssClass="sftext" style="height: 30px;"></SfTextBox>
@@ -353,7 +353,7 @@
                                             </div>
                                         </div>
                                         <!-- Motivo Visita -->
-                                        <div class="row" style="margin-top: 10px;">
+                                        <div class="row" style="margin-top: 5px;">
                                             <div class="col">
                                                 <SfTextBox ID="motivovisita" @bind-Value="@Visita.MotivoVisita" Placeholder="Motivo Visita" FloatLabelType="@FloatLabelType.Always" Multiline="true" style="height: 30px;"></SfTextBox>
                                             </div>
@@ -362,49 +362,49 @@
 
                                     <div class="col-sm-7">
                                         <!-- Interventi -->
-                                        <div class="row" style="margin-top: 10px;">
+                                        <div class="row" style="margin-top: 5px;">
                                             <div class="col">
-                                                <SfTextBox ID="interventi" @bind-Value="@Visita.Interventi" Placeholder="Interventi" FloatLabelType="@FloatLabelType.Always" Multiline="true" CssClass="sftext" style="height: 30px;"></SfTextBox>
+                                                <SfTextBox ID="interventi" @bind-Value="@Visita.Interventi" Placeholder="Interventi" FloatLabelType="@FloatLabelType.Always" Multiline="true" CssClass="sftext" style="height: 97px;"></SfTextBox>
                                             </div>
                                         </div>
                                         <!-- Curva Tonometrica OD e Argon -->
-                                        <div class="row" style="margin-top: 10px;">
-                                            <div class="col-sm-7">
-                                                <SfTextBox ID="curvatonood" @bind-Value="@Visita.CurvaTono_Od" Placeholder="Curva Tonometrica OD" FloatLabelType="@FloatLabelType.Always" Multiline="true" CssClass="sftext" style="height: 30px;"></SfTextBox>
+                                        <div class="row" style="margin-top: 5px;">
+                                            <div class="col-sm-6">
+                                                <SfTextBox ID="curvatonood" @bind-Value="@Visita.CurvaTono_Od" Placeholder="Curva Tonometrica" FloatLabelType="@FloatLabelType.Always" Multiline="true" CssClass="sftext" style="height: 30px;"></SfTextBox>
                                             </div>
-                                            <div class="col-sm-5">
+                                            <div class="col-sm-6">
                                                 <SfTextBox ID="argon" @bind-Value="@Visita.CurvaArgon" Placeholder="Argon" FloatLabelType="@FloatLabelType.Always" Multiline="true" CssClass="sftext" style="height: 30px;"></SfTextBox>
                                             </div>
                                         </div>
-                                        <!-- Curva Tonometrica OS -->
-                                        <div class="row" style="margin-top: 10px;">
+                                        <!-- Curva Tonometrica OS  display: none;-->
+                                        <div class="row" style="margin-top: 5px; display: none;">
                                             <div class="col-sm-7">
                                                 <SfTextBox ID="curvatonoos" @bind-Value="@Visita.CurvaTono_Os" Placeholder="Curva Tonometrica OS" FloatLabelType="@FloatLabelType.Always" Multiline="true" CssClass="sftext" style="height: 30px;"></SfTextBox>
                                             </div>
                                         </div>
-                                        <!-- Visus corretto OD -->
-                                        <div class="row" style="margin-top: 10px; display: none;">
+                                        <!-- Visus corretto OD  display: none;-->
+                                        <div class="row" style="margin-top: 5px; display: none;">
                                             <div class="col">
                                                 <SfTextBox ID="vortotticaod" @bind-Value="@Visita.VOrtotticaOD" Placeholder="Visus corretto OD" FloatLabelType="@FloatLabelType.Always" Multiline="true" CssClass="sftext" style="height: 30px;"></SfTextBox>
                                             </div>
                                         </div>
-                                        <!-- Visus corretto OS -->
-                                        <div class="row" style="margin-top: 10px; display: none;">
+                                        <!-- Visus corretto OS  display: none;-->
+                                        <div class="row" style="margin-top: 5px; display: none;">
                                             <div class="col">
                                                 <SfTextBox ID="vortotticaos" @bind-Value="@Visita.VOrtotticaOS" Placeholder="Visus corretto OS" FloatLabelType="@FloatLabelType.Always" Multiline="true" CssClass="sftext" style="height: 30px;"></SfTextBox>
                                             </div>
                                         </div>
                                         <!-- SHIRMER OD e Tono oculare OD -->
-                                        <div class="row" style="margin-top: 10px;">
-                                            <div class="col-sm-7">
-                                                <SfTextBox ID="shirmerod" @bind-Value="@Visita.SHIRMER_Od" Placeholder="SHIRMER OD" FloatLabelType="@FloatLabelType.Always" Multiline="true" style="height: 30px;"></SfTextBox>
+                                        <div class="row" style="margin-top: 5px;">
+                                            <div class="col-sm-6">
+                                                <SfTextBox ID="shirmerod" @bind-Value="@Visita.SHIRMER_Od" Placeholder="SHIRMER" FloatLabelType="@FloatLabelType.Always" Multiline="true" style="height: 30px;"></SfTextBox>
                                             </div>
-                                            <div class="col-sm-5">
-                                                <SfTextBox ID="tonood" @bind-Value="@Visita.TONO_Od" Placeholder="Tono oculare OD" FloatLabelType="@FloatLabelType.Always" Multiline="true" CssClass="sftext" style="height: 30px;"></SfTextBox>
+                                            <div class="col-sm-6">
+                                                <SfTextBox ID="tonood" @bind-Value="@Visita.TONO_Od" Placeholder="Tono oculare" FloatLabelType="@FloatLabelType.Always" Multiline="true" CssClass="sftext" style="height: 30px;"></SfTextBox>
                                             </div>
                                         </div>
-                                        <!-- SHIRMER OS e Tono oculare OS -->
-                                        <div class="row" style="margin-top: 10px;">
+                                        <!-- SHIRMER OS e Tono oculare OS  display: none; -->
+                                        <div class="row" style="margin-top: 5px; display: none;">
                                             <div class="col-sm-7">
                                                 <SfTextBox ID="shirmeros" @bind-Value="@Visita.SHIRMER_Os" Placeholder="SHIRMER OS" FloatLabelType="@FloatLabelType.Always" Multiline="true" style="height: 30px;"></SfTextBox>
                                             </div>
@@ -413,16 +413,16 @@
                                             </div>
                                         </div>
                                         <!-- Vie lacrimali OD e Topografia OD -->
-                                        <div class="row" style="margin-top: 10px;">
-                                            <div class="col-sm-7">
-                                                <SfTextBox ID="lavaggiood" @bind-Value="@Visita.Lavaggio_Od" Placeholder="Vie lacrimali OD" FloatLabelType="@FloatLabelType.Always" Multiline="true" style="height: 30px;"></SfTextBox>
+                                        <div class="row" style="margin-top: 5px;">
+                                            <div class="col-sm-6">
+                                                <SfTextBox ID="lavaggiood" @bind-Value="@Visita.Lavaggio_Od" Placeholder="Vie lacrimali" FloatLabelType="@FloatLabelType.Always" Multiline="true" style="height: 30px;"></SfTextBox>
                                             </div>
-                                            <div class="col-sm-5">
-                                                <SfTextBox ID="topografiaod" @bind-Value="@Visita.Topografia_Od" Placeholder="Topografia OD" FloatLabelType="@FloatLabelType.Always" Multiline="true" CssClass="sftext" style="height: 30px;"></SfTextBox>
+                                            <div class="col-sm-6">
+                                                <SfTextBox ID="topografiaod" @bind-Value="@Visita.Topografia_Od" Placeholder="Topografia" FloatLabelType="@FloatLabelType.Always" Multiline="true" CssClass="sftext" style="height: 30px;"></SfTextBox>
                                             </div>
                                         </div>
-                                        <!-- Vie lacrimali OS e Topografia OS -->
-                                        <div class="row" style="margin-top: 10px;">
+                                        <!-- Vie lacrimali OS e Topografia OS  display: none;-->
+                                        <div class="row" style="margin-top: 5px; display: none;">
                                             <div class="col-sm-7">
                                                 <SfTextBox ID="lavaggioos" @bind-Value="@Visita.Lavaggio_Os" Placeholder="Vie lacrimali OS" FloatLabelType="@FloatLabelType.Always" Multiline="true" CssClass="sftext" style="height: 30px;"></SfTextBox>
                                             </div>
@@ -431,7 +431,7 @@
                                             </div>
                                         </div>
                                         <!-- Fag OD e Fag OS -->
-                                        <div class="row" style="margin-top: 10px;">
+                                        <div class="row" style="margin-top: 5px;">
                                             <div class="col-sm-6">
                                                 <SfTextBox ID="fagod" @bind-Value="@Visita.FAG_Od" Placeholder="Fag OD" FloatLabelType="@FloatLabelType.Always" Multiline="true" CssClass="sftext" style="height: 30px;"></SfTextBox>
                                             </div>
@@ -439,17 +439,17 @@
                                                 <SfTextBox ID="fagos" @bind-Value="@Visita.FAG_Os" Placeholder="Fag OS" FloatLabelType="@FloatLabelType.Always" Multiline="true" CssClass="sftext" style="height: 30px;"></SfTextBox>
                                             </div>
                                         </div>
-                                        <!-- Biometria e IV -->
-                                        <div class="row" style="margin-top: 10px;">
-                                            <div class="col-sm-7">
+                                        <!-- Biometria  display: none; e IV -->
+                                        <div class="row" style="margin-top: 5px;">
+                                            <div class="col-sm-7" style=" display: none;">
                                                 <SfTextBox ID="biometria" @bind-Value="@Visita.Biometria" Placeholder="Biometria" FloatLabelType="@FloatLabelType.Always" Multiline="true" CssClass="sftext" style="height: 30px;"></SfTextBox>
                                             </div>
-                                            <div class="col-sm-5">
+                                            <div class="col-sm-6">
                                                 <SfTextBox ID="iv" @bind-Value="@Visita.IV" Placeholder="IV" FloatLabelType="@FloatLabelType.Always" Multiline="true" CssClass="sftext" style="height: 30px;"></SfTextBox>
                                             </div>
                                         </div>
                                         <!-- Oct OD e Oct OS -->
-                                        <div class="row" style="margin-top: 10px;">
+                                        <div class="row" style="margin-top: 5px;">
                                             <div class="col-sm-6">
                                                 <SfTextBox ID="octod" @bind-Value="@Visita.OCT_Od" Placeholder="Oct OD" FloatLabelType="@FloatLabelType.Always" Multiline="true" CssClass="sftext" style="height: 30px;"></SfTextBox>
                                             </div>
@@ -457,17 +457,17 @@
                                                 <SfTextBox ID="octos" @bind-Value="@Visita.OCT_Os" Placeholder="Oct OS" FloatLabelType="@FloatLabelType.Always" Multiline="true" CssClass="sftext" style="height: 30px;"></SfTextBox>
                                             </div>
                                         </div>
-                                        <!-- RNFL OD e RNFL OS -->
-                                        <div class="row" style="margin-top: 10px;">
+                                        <!-- RNFL OD e RNFL OS display: none; -->
+                                        <div class="row" style="margin-top: 5px;">
                                             <div class="col-sm-6">
-                                                <SfTextBox ID="rnflod" @bind-Value="@Visita.RNFL_Od" Placeholder="RNFL OD" FloatLabelType="@FloatLabelType.Always" Multiline="true" CssClass="sftext" style="height: 30px;"></SfTextBox>
+                                                <SfTextBox ID="rnflod" @bind-Value="@Visita.RNFL_Od" Placeholder="RNFL" FloatLabelType="@FloatLabelType.Always" Multiline="true" CssClass="sftext" style="height: 30px;"></SfTextBox>
                                             </div>
-                                            <div class="col-sm-6">
+                                            <div class="col-sm-6" style="display: none;">
                                                 <SfTextBox ID="rnflos" @bind-Value="@Visita.RNFL_Os" Placeholder="RNFL OS" FloatLabelType="@FloatLabelType.Always" Multiline="true" CssClass="sftext" style="height: 30px;"></SfTextBox>
                                             </div>
                                         </div>
                                         <!-- CV OD e CV OS -->
-                                        <div class="row" style="margin-top: 10px;">
+                                        <div class="row" style="margin-top: 5px;">
                                             <div class="col-sm-6">
                                                 <SfTextBox ID="cvod" @bind-Value="@Visita.CV_Od" Placeholder="CV OD" FloatLabelType="@FloatLabelType.Always" Multiline="true" CssClass="sftext" style="height: 30px;"></SfTextBox>
                                             </div>
@@ -475,40 +475,40 @@
                                                 <SfTextBox ID="cvos" @bind-Value="@Visita.CV_Os" Placeholder="CV OS" FloatLabelType="@FloatLabelType.Always" Multiline="true" CssClass="sftext" style="height: 30px;"></SfTextBox>
                                             </div>
                                         </div>
-                                        <!-- Pachimetria OD, Pachimetria OS, C/D OD e C/D OS -->
-                                        <div class="row" style="margin-top: 10px;">
+                                        <!-- Pachimetria OD display: none;, Pachimetria OS, C/D OD e C/D OS display: none; -->
+                                        <div class="row" style="margin-top: 5px;">
                                             <div class="col-sm-3">
-                                                <SfTextBox ID="pachimetriaod" @bind-Value="@Visita.PACH_Od" Placeholder="Pachimetria OD" FloatLabelType="@FloatLabelType.Always" Multiline="true" CssClass="sftext" style="height: 30px;"></SfTextBox>
+                                                <SfTextBox ID="pachimetriaod" @bind-Value="@Visita.PACH_Od" Placeholder="Pachimetria" FloatLabelType="@FloatLabelType.Always" Multiline="true" CssClass="sftext" style="height: 30px;"></SfTextBox>
                                             </div>
-                                            <div class="col-sm-3">
+                                            <div class="col-sm-3" style="display: none;">
                                                 <SfTextBox ID="pachimetriaos" @bind-Value="@Visita.PACH_Os" Placeholder="Pachimetria OS" FloatLabelType="@FloatLabelType.Always" Multiline="true" CssClass="sftext" style="height: 30px;"></SfTextBox>
                                             </div>
                                             <div class="col-sm-3">
-                                                <SfTextBox ID="cdod" @bind-Value="@Visita.CD_Od" Placeholder="C/D OD" FloatLabelType="@FloatLabelType.Always" Multiline="true" CssClass="sftext" style="height: 30px;"></SfTextBox>
+                                                <SfTextBox ID="cdod" @bind-Value="@Visita.CD_Od" Placeholder="C/D" FloatLabelType="@FloatLabelType.Always" Multiline="true" CssClass="sftext" style="height: 30px;"></SfTextBox>
                                             </div>
-                                            <div class="col-sm-3">
+                                            <div class="col-sm-3" style="display: none;">
                                                 <SfTextBox ID="cdos" @bind-Value="@Visita.CD_Os" Placeholder="C/D OS" FloatLabelType="@FloatLabelType.Always" Multiline="true" CssClass="sftext" style="height: 30px;"></SfTextBox>
                                             </div>
                                         </div>
                                         <!-- AUTOREFRATTOMETRIA -->
-                                        <div class="row" style="margin-top: 10px;">
+                                        <div class="row" style="margin-top: 5px;">
                                             <div class="col">
                                                 <SfTextBox ID="auto" @bind-Value="@Visita.Auto" Placeholder="AUTOREFRATTOMETRIA" FloatLabelType="@FloatLabelType.Always" Multiline="true" CssClass="sftext" style="height: 30px;"></SfTextBox>
                                             </div>
                                         </div>
                                         <!-- Conclusioni -->
-                                        <div class="row" style="margin-top: 10px;">
+                                        <div class="row" style="margin-top: 5px;">
                                             <div class="col">
-                                                <SfTextBox ID="conclusioni" @bind-Value="@Visita.Conclusioni" Placeholder="Conclusioni" FloatLabelType="@FloatLabelType.Always" Multiline="true" CssClass="sftext" style="height: 30px;"></SfTextBox>
+                                                <SfTextBox ID="conclusioni" @bind-Value="@Visita.Conclusioni" Placeholder="Conclusioni" FloatLabelType="@FloatLabelType.Always" Multiline="true" CssClass="sftext" style="height: 97px;"></SfTextBox>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
 
                                 <!-- Note visita -->
-                                <div class="row" style="margin-top: 10px;">
+                                <div class="row" style="margin-top: 5px;">
                                     <div class="col">
-                                        <SfTextBox ID="notevisita" @bind-Value="@Visita.Note" Placeholder="NOTE" FloatLabelType="@FloatLabelType.Always" Multiline="true" CssClass="sftext" style="height: 30px;"></SfTextBox>
+                                        <SfTextBox ID="notevisita" @bind-Value="@Visita.Note" Placeholder="NOTE" FloatLabelType="@FloatLabelType.Always" Multiline="true" CssClass="sftext" style="height: 90px;"></SfTextBox>
                                     </div>
                                 </div>
                             </ContentTemplate>
@@ -520,7 +520,7 @@
                                 <TabHeader Text="Prescrizione Occhiali"></TabHeader>
                             </ChildContent>
                             <ContentTemplate>
-                                <div class="row" style="margin-top: 10px;">
+                                <div class="row" style="margin-top: 5px;">
                                     <div class="col-sm-12">
                                         <span style="float: left; display: inline-block; margin-left: 10px;  margin-right: 10px; padding-top: 6px; font-weight:bold;">
                                             Data di Stampa
@@ -547,10 +547,10 @@
                                 </div>
 
                                 <!-- Occhi Destro - Sinistro -->
-                                <div class="row" style="margin-top: 10px;">
+                                <div class="row" style="margin-top: 5px;">
                                     <!-- Occhio Destro -->
                                     <div class="col-sm-6">
-                                        <div class="row" style="margin-top: 10px;">
+                                        <div class="row" style="margin-top: 5px;">
                                             <div class="col-sm-3">&nbsp;</div>
                                             <!-- style="border:1px solid #f90;"-->
                                             <div class="col" style="text-align: center; font-size: larger;">
@@ -558,7 +558,7 @@
                                                 Occhio Destro
                                             </div>
                                         </div>
-                                        <div class="row" style="margin-top: 10px;">
+                                        <div class="row" style="margin-top: 5px;">
                                             <div class="col-sm-3">&nbsp;</div>
                                             <div class="col-sm-3" style="text-align: center; font-weight:bolder;">
                                                 Sfera
@@ -570,7 +570,7 @@
                                                 Asse
                                             </div>
                                         </div>
-                                        <div class="row" style="margin-top: 10px;">
+                                        <div class="row" style="margin-top: 5px;">
                                             <div class="col-sm-3" style="text-align: right; padding-top: 5px;">
                                                 <span>PER DISTANZA</span>
                                             </div>
@@ -584,7 +584,7 @@
                                                 <SfTextBox ID="ODD_Asse" @bind-Value="@Visus.ODD_Asse" CssClass="sftext"></SfTextBox>
                                             </div>
                                         </div>
-                                        <div class="row" style="margin-top: 10px;">
+                                        <div class="row" style="margin-top: 5px;">
                                             <div class="col-sm-3" style="text-align: right; padding-top: 5px;">
                                                 <span>A PERMANENZA</span>
                                             </div>
@@ -598,7 +598,7 @@
                                                 <SfTextBox ID="ODP_Asse" @bind-Value="@Visus.ODP_Asse" CssClass="sftext"></SfTextBox>
                                             </div>
                                         </div>
-                                        <div class="row" style="margin-top: 10px;">
+                                        <div class="row" style="margin-top: 5px;">
                                             <div class="col-sm-3" style="text-align: right; padding-top: 5px;">
                                                 <span>PER LETTURA</span>
                                             </div>
@@ -616,7 +616,7 @@
 
                                     <!-- Occhio Sinistro -->
                                     <div class="col-sm-6">
-                                        <div class="row" style="margin-top: 10px;">
+                                        <div class="row" style="margin-top: 5px;">
                                             <div class="col" style="text-align: center; font-size: larger;">
                                                 <!--  border:1px solid #09f; -->
                                                 Occhio Sinistro
@@ -624,7 +624,7 @@
                                             <div class="col-sm-3">&nbsp;</div>
                                             <!-- style="border:1px solid #f90;"-->
                                         </div>
-                                        <div class="row" style="margin-top: 10px;">
+                                        <div class="row" style="margin-top: 5px;">
                                             <div class="col-sm-3" style="text-align: center; font-weight:bolder;">
                                                 Sfera
                                             </div>
@@ -636,7 +636,7 @@
                                             </div>
                                             <div class="col-sm-3">&nbsp;</div>
                                         </div>
-                                        <div class="row" style="margin-top: 10px;">
+                                        <div class="row" style="margin-top: 5px;">
                                             <div class="col-sm-3">
                                                 <SfTextBox ID="OSD_Sf" @bind-Value="@Visus.OSD_Sf" CssClass="sftext"></SfTextBox>
                                             </div>
@@ -648,7 +648,7 @@
                                             </div>
                                             <div class="col-sm-3">&nbsp;</div>
                                         </div>
-                                        <div class="row" style="margin-top: 10px;">
+                                        <div class="row" style="margin-top: 5px;">
                                             <div class="col-sm-3">
                                                 <SfTextBox ID="OSP_Sf" @bind-Value="@Visus.OSP_Sf" CssClass="sftext"></SfTextBox>
                                             </div>
@@ -660,7 +660,7 @@
                                             </div>
                                             <div class="col-sm-3">&nbsp;</div>
                                         </div>
-                                        <div class="row" style="margin-top: 10px;">
+                                        <div class="row" style="margin-top: 5px;">
                                             <div class="col-sm-3">
                                                 <SfTextBox ID="OSL_Sf" @bind-Value="@Visus.OSL_Sf" CssClass="sftext"></SfTextBox>
                                             </div>
@@ -678,7 +678,7 @@
                                 </div>
 
                                 <!-- TABO - Internazionale -->
-                                <div class="row" style="margin-top: 10px;">
+                                <div class="row" style="margin-top: 5px;">
                                     <div class="col-sm-4">
                                         <label style="font-size: 12pt; padding: 0 8px 8px 0; vertical-align: super;">@switchTabo</label>
                                         <SfSwitch @bind-Checked="@fTabo" ValueChange="ManageTabo" TChecked="bool"></SfSwitch>
@@ -693,7 +693,7 @@
                                 </div>
 
                                 <!-- Distanza interpupillare -->
-                                <div class="row" style="margin-top: 10px;">
+                                <div class="row" style="margin-top: 5px;">
                                     <div class="col-sm-2">
                                         <SfTextBox ID="Distanza" @bind-Value="@Visus.DI" Placeholder="Distanza interpupillare (mm)" FloatLabelType="@FloatLabelType.Always" CssClass="sftext"></SfTextBox>
                                     </div>
@@ -714,7 +714,7 @@
                                 <TabHeader Text="Controlli"></TabHeader>
                             </ChildContent>
                             <ContentTemplate>
-                                <div class="row" style="margin-top: 10px;">
+                                <div class="row" style="margin-top: 5px;">
                                     @* <div class="col-sm-1"><b>&nbsp;Controllo</b> <i>@(CntrCorrente + 1)</i> <b>di</b> <i>@ListaCntrs.Count</i></div> *@
 
                                     <div class="col-sm-2">
@@ -756,7 +756,7 @@
 
                                 <!-- Dati di verifica -->
                                 @*
-                                <div class="row" style="margin-top: 10px;">
+                                <div class="row" style="margin-top: 5px;">
                                     <div class="col-sm-12">
                                         <table class="table table-bordered" style="border:1px solid #f90;">
                                             <thead>
@@ -791,7 +791,7 @@
  *@
 
                                 <!-- Dati controllo -->
-                                <div class="row" style="margin-top: 10px;">
+                                <div class="row" style="margin-top: 5px;">
                                     <div class="col-sm-1">
                                         <SfMaskedTextBox ID="datacontrollo" @bind-Value="@DataControllo" Mask="00/00/0000" Placeholder="Data controllo" FloatLabelType="@FloatLabelType.Always" CssClass="sftext"></SfMaskedTextBox>
                                     </div>
@@ -809,7 +809,7 @@
                                 <TabHeader Text="Ortottica"></TabHeader>
                             </ChildContent>
                             <ContentTemplate>
-                                <div class="row" style="margin-top: 10px;">
+                                <div class="row" style="margin-top: 5px;">
                                     <div class="col-sm-12">
                                         <span style="float: left; display: inline-block; margin-left: 10px;  margin-right: 10px; padding-top: 6px; font-weight:bold;">
                                             Data di Stampa
@@ -986,7 +986,7 @@
                                                         decimal questo = @Prescriptions[ip].IdPrescrizione;
                                                         int myId = ip;
 
-                                                        <div class="row" style="margin-top: 10px;">
+                                                        <div class="row" style="margin-top: 5px;">
                                                             <div class="col-sm-1" style="text-align:right; padding-right:6px;">@(ip + 1)</div>
                                                             <div class="col-sm-2">
                                                                 <SfTextBox @bind-Value="@Prescriptions[ip].Farmaco" Readonly="true" CssClass="sftext" style="border:0px;"></SfTextBox>
@@ -1082,7 +1082,7 @@
                                 <TabHeader Text="Relazioni"></TabHeader>
                             </ChildContent>
                             <ContentTemplate>
-                                <div class="row" style="margin-top: 10px;">
+                                <div class="row" style="margin-top: 5px;">
                                     <div class="col-sm-12">
                                         <span style="float: left; display: inline-block; margin-left: 10px;  margin-right: 10px; padding-top: 6px; font-weight:bold;">
                                             Data di Stampa
@@ -2398,9 +2398,26 @@
                     Paziente.ptIdUser = Decimal.Parse(gIdUser);
                     Paziente.InsertDate = DateTime.Now;
 
+                    Console.WriteLine($" ");
+                    Console.WriteLine($"📌 Inserimento nuovo paziente ");
+                    Console.WriteLine($"🔷\t Paziente.IdPatient: {Paziente.IdPatient}\t Paziente.ptIdUser: {Paziente.ptIdUser}");
+                    Console.WriteLine($"🔷\t Paziente.InsertDate: {Paziente.InsertDate}\t Paziente.Cod: {Paziente.Cod}");
+                    Console.WriteLine($"🔷\t Paziente.FName: {Paziente.FName}\t Paziente.LName: {Paziente.LName}");
+                    Console.WriteLine($"🔷\t Paziente.CodFisc: {Paziente.CodFisc}\t Paziente.BirthDate: {Paziente.BirthDate}");
+                    Console.WriteLine($"🔷\t Paziente.BirthCity: {Paziente.BirthCity}\t Paziente.Gender: {Paziente.Gender}");
+                    Console.WriteLine($"🔷\t Paziente.Address: {Paziente.Address}\t Paziente.City: {Paziente.City}");
+                    Console.WriteLine($"🔷\t Paziente.ZipCode: {Paziente.ZipCode}\t Paziente.State: {Paziente.State}");
+                    Console.WriteLine($"🔷\t Paziente.Phone: {Paziente.Phone}\t Paziente.Mobile: {Paziente.Mobile}");
+                    Console.WriteLine($"🔷\t Paziente.Email: {Paziente.Email}\t Paziente.Note: {Paziente.Note}");
+                    Console.WriteLine($"🔷\t Paziente.fPrivacy: {Paziente.fPrivacy}\t Paziente.Studio: {Paziente.Studio}");
+                    Console.WriteLine($" ");
+
                     // recupero l'id genenerato
                     var createdPatient = await PatientMngService.AddPatient(Paziente);
                     tmpIdPaziente = createdPatient.IdPatient;
+
+                    Console.WriteLine($"🔷\t createdPatient.IdPatient: {createdPatient.IdPatient}");
+                    Console.WriteLine($" ");
                 }
                 else
                 {
@@ -5154,7 +5171,7 @@
         value = new PdfTextElement("", fieldNameFont, PdfBrushes.Black);                            // 17-9
         VisitPdfGrid.Rows[17].Cells[9].Value = value;
         value = new PdfTextElement(FillEmpty(Visita.IV), fieldFont, PdfBrushes.Black);              // 17-10
-        VisitPdfGrid.Rows[17].Cells[0].Value = value;
+        VisitPdfGrid.Rows[17].Cells[10].Value = value;
 
 
         VisitPdfGrid.Rows[18].Cells[0].Style = posCellStyleH;                                       // Visus OD
@@ -5343,6 +5360,13 @@
         VisitPdfGrid.Rows[25].Cells[11].Value = value;
         value = new PdfTextElement(FillEmpty(Visita.CD_Os), fieldFont, PdfBrushes.Black);           // 25-12
         VisitPdfGrid.Rows[25].Cells[12].Value = value;
+        Console.WriteLine($" ");
+        Console.WriteLine($"📌 PrintVisit ");
+        Console.WriteLine($"🔷\t Visita.Fundus_Od: {Visita.Fundus_Od}\t Visita.Fundus_Os: {Visita.Fundus_Os}");
+        Console.WriteLine($"🔷\t Visita.IV: {Visita.IV}");
+        Console.WriteLine($"🔷\t Visita.CV_Od: {Visita.CV_Od}\t Visita.CV_Os: {Visita.CV_Os}");
+        Console.WriteLine($"🔷\t Visita.CD_Od: {Visita.CD_Od}\t Visita.CD_Os: {Visita.CD_Os}");
+        Console.WriteLine($" ");
 
 
         VisitPdfGrid.Rows[26].Cells[0].Style = posCellStyleH;                                       // OS SUE LENTI PL
