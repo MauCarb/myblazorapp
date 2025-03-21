@@ -34,6 +34,9 @@
 
 @inject RelazioniService RelazioniService
 
+@inject FarmaciManageService FarmaciManageService
+@inject FarmaciUsoManageService FarmaciUsoManageService
+
 @using Syncfusion.Pdf
 @using Syncfusion.Pdf.Grid;
 @using Syncfusion.Drawing;
@@ -1022,22 +1025,50 @@
                                                 <TabHeader Text="Lista Farmaci"></TabHeader>
                                             </ChildContent>
                                             <ContentTemplate>
-                                                <div class="container-fluid form-farmfilter" style="padding: 4px 10px 14px 10px;">
+                                                <div class="container-fluid form-farmfilter" style="padding: 4px 10px 0px 10px; margin-bottom:0px;">
+                                                    <div class="col">
+                                                        <SfTextBox ID="notevisita" @bind-Value="@Visita.Note" Placeholder="NOTE" FloatLabelType="@FloatLabelType.Always" Multiline="true" CssClass="sftext" style="height: 48px; background-color: white;" Readonly=true></SfTextBox>
+                                                    </div>
+                                                </div>
+
+                                                <div class="container-fluid form-farmfilter" style="padding: 0px 10px 14px 10px; margin-top:0px;">
                                                     <div class="row">
-                                                        <div class="col-sm-1">
+                                                        <div class="col-sm-2">
                                                             <SfButton IconCss="e-icons e-chevron-left icon-green" CssClass="e-flat btn-light" style="margin-top:24px;" Content="Prescrizione" OnClick="() => BackPresc()"></SfButton>
                                                         </div>
 
-                                                        <div class="col-sm-7">
-                                                            <span style="display:inline-block; width:300px;">
-                                                                <SfTextBox ID="fFar" @bind-Value="@fFar" Placeholder="Farmaco" FloatLabelType="@FloatLabelType.Auto" CssClass="sftext"></SfTextBox>
+                                                        <div class="col-sm-4">
+                                                            <span style="display:inline-block; width:260px; margin-left: 6px;">
+                                                                <SfTextBox ID="fFar" @bind-Value="@fFar" Placeholder="Farmaco" FloatLabelType="@FloatLabelType.Auto" CssClass="sftext sf300"></SfTextBox>
                                                             </span>
-                                                            <span style="display:inline-block; width:50px;">&nbsp;</span>
+                                                            @*                                                             @if (NuovaSommVisible)
+                                                            {
+                                                                <span style="display:inline-block; width:8px;">&nbsp;</span>
+                                                            }
+ *@                                                        </div>
+                                                        <div class="col-sm-3">
                                                             <SfButton IconCss="e-icons e-search icon-slategrey" CssClass="e-flat btn-light" style="margin-top:24px;" Content="Cerca" OnClick="() => SearchFar()"></SfButton>
                                                             <span style="display:inline-block; width:25px;">&nbsp;</span>
                                                             <SfButton IconCss="e-icons e-repeat icon-green" CssClass="e-flat btn-light" style="margin-top:24px;" Content="Ripristina" OnClick="() => ResetFar()"></SfButton>
                                                         </div>
                                                     </div>
+
+                                                    @if (NuovaSommVisible)
+                                                    {
+                                                        <div class="container-fluid form-farmfilter" style="padding: 4px 10px 0px 10px; margin-bottom:0px;">
+                                                            <div class="row">
+                                                                <div class="col-sm-2">&nbsp;</div>
+
+                                                                <div class="col-sm-4">
+                                                                    <SfTextBox Value="@NuovaSomm" ValueChanged="@(value => UpdateNuovoUso(value))" Placeholder="Somministrazione" FloatLabelType="@FloatLabelType.Always" Multiline=true CssClass="sftext" style="height: 72px;"></SfTextBox>
+                                                                </div>
+
+                                                                <div class="col-sm-3">
+                                                                    <SfButton IconCss="e-icons e-plus icon-green" CssClass="e-flat btn-light" style="margin-top:24px;" Content="Aggiungi Farmaco" OnClick="() => InsertFar()" title="Inserisce il Farmaco con la Somministrazione ai Farmaci e lo assegna alla Prescrizione"></SfButton>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    }
 
                                                     <br />
 
@@ -1274,27 +1305,17 @@
         border-bottom: 0px;
     }
 
-    @*/*
-        .e-tab .e-toolbar .e-toolbar-items .e-toolbar-item .e-text-wrap {
-        height: 50px;
-    }
-
-    .e-tab-wrap:hover, .e-tab-wrap:active {
-        border-bottom: 4px solid #0d6efd !important;
-    }*/
-    *@
-
     .e-btn.e-flat.e-primary, .e-btn.e-flat.e-primary:focus {
         background-color: #317ab9;
         border-color: #265f91;
         color: #fff;
     }
 
-    .e-btn.e-flat.e-primary:hover, .e-btn.e-flat.e-primary:active {
-        background-color: #21527d;
-        border-color: #163854;
-        color: #fff;
-    }
+        .e-btn.e-flat.e-primary:hover, .e-btn.e-flat.e-primary:active {
+            background-color: #21527d;
+            border-color: #163854;
+            color: #fff;
+        }
 
     .e-circle-close {
         width: 24px;
@@ -1311,7 +1332,7 @@
     }
 
     .error-msg {
-        color: #66afe9;
+        color: #021b2e;
         display: inline-block;
         position: relative;
         top: -20px;
@@ -1323,17 +1344,6 @@
         left: 36px;
         margin: 0 0 21px;
     }
-
-    @*/*
-    .e-icons.close-icon.col-lg-2:before {
-        content: '\e7e9';
-        font-size: 26px;
-        color: #d9534f;
-        position: relative;
-        left: 1px;
-        bottom: 18px; e-circle-info
-    }*/
-    *@
 
     .e-icons.e-circle-close.col-lg-2:before {
         font-size: 20px;
@@ -1373,6 +1383,7 @@
 
     .e-dialog.e-control .e-dlg-content {
         padding: 15px 0 0;
+        padding-right: 6px;
     }
 
     .msg-wrapper.col-lg-12 {
@@ -1609,6 +1620,8 @@
     public Boolean ShowDrugs = false;
 
     public string fFar = "";
+    public string NuovaSomm = "";
+    public Boolean NuovaSommVisible = false;
 
     private List<DrugSearch>? drugs;
 
@@ -2128,6 +2141,14 @@
                 });
 
                 // await this.InvokeAsync(() => this.StateHasChanged());
+
+                StateHasChanged();
+
+                break;
+            case "PreparaFarmaco":
+                this.ConfirmDialogVisible = false;
+
+                NuovaSommVisible = true;
 
                 StateHasChanged();
 
@@ -3572,11 +3593,27 @@
             {
                 drugs = await ListDrugsService.ListDrugsAndUse(fFar);
 
+                if (drugs.Count == 0)
+                {
+                    action = "PreparaFarmaco";
+
+                    ConfirmHeader = "Attenzione";
+                    ConfirmIcon = "e-icons d-exclamation-triangle col-lg-2";
+                    ConfirmText = "Farmaco non trovato";
+                    ConfirmDetail = "Vuoi aggiungere " + fFar + " alla lista dei Farmaci ed Assegnarlo alla Prescrizione?";
+
+                    ConfirmYesButtonText = "Aggiungi e Assegna";
+                    ConfirmNoButtonText = "Esci";
+
+                    this.ConfirmDialogWidth = "440px";
+                    this.ConfirmDialogVisible = true;
+                }
+
                 StateHasChanged();
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.Message);
+                Console.WriteLine($"❌ ex.Message: {ex.Message}");
             }
         }
     }
@@ -3584,12 +3621,93 @@
     public async void ResetFar()
     {
         fFar = "";
+        NuovaSomm = "";
+
+        NuovaSommVisible = false;
 
         // drugs.Clear();
 
         // drugs = await PatientService.PatList(p);
 
         StateHasChanged();
+    }
+
+    public async void InsertFar()
+    {
+        // controlla campo somministrazione se vuoto alert
+        if (NuovaSomm == "")
+        {
+            await Task.Run(() =>
+            {
+                DialogHeader = " Attenzione ";
+                DialogIcon = "e-icons e-circle-close col-lg-2";
+                DialogText = "La Somministrazione è obbligatoria";
+                DialogDetail = "Inserire la Somministrazione.";
+                DialogVisible = true;
+            });
+        }
+        else
+        {
+            // inserisci farmaco e recupera id
+            Farmaci LFarmaco = new Farmaci();
+
+            LFarmaco.ptIdUser = Decimal.Parse(gIdUser);
+            LFarmaco.InsertDate = DateTime.Now;
+            LFarmaco.Farmaco = fFar;
+            LFarmaco.Stato = 0;
+
+            Console.WriteLine($"");
+            Console.WriteLine($"📌 Crea farmaco");
+            Console.WriteLine($"✨ LFarmaco.ptIdUser: {LFarmaco.ptIdUser}");
+            Console.WriteLine($"✨ LFarmaco.InsertDate: {LFarmaco.InsertDate}");
+            Console.WriteLine($"✨ LFarmaco.Farmaco: {LFarmaco.Farmaco}");
+            Console.WriteLine($"✨ LFarmaco.Stato: {LFarmaco.Stato}");
+
+            Console.WriteLine($"⏳Scrittura farmaco");
+
+            var FarmacoCreato = await FarmaciManageService.PostFarmaco(LFarmaco);
+            var idCreato = FarmacoCreato.IdFarmaco;
+
+            Console.WriteLine($"✅ FarmacoCreato.IdFarmaco: {FarmacoCreato.IdFarmaco}");
+
+            // inserisci somministrazione e recupera id
+            FarmaciUso Somministrazione = new FarmaciUso();
+
+            Somministrazione.ptIdUser = Decimal.Parse(gIdUser);
+            Somministrazione.InsertDate = DateTime.Now;
+            Somministrazione.ptIdFarmaco = idCreato;
+            Somministrazione.Uso = NuovaSomm;
+
+            Console.WriteLine($"");
+            Console.WriteLine($"📌 Crea somministrazione");
+            Console.WriteLine($"✨ Somministrazione.ptIdUser: {Somministrazione.ptIdUser}");
+            Console.WriteLine($"✨ Somministrazione.InsertDate: {Somministrazione.InsertDate}");
+            Console.WriteLine($"✨ Somministrazione.ptIdFarmaco: {Somministrazione.ptIdFarmaco}");
+            Console.WriteLine($"✨ Somministrazione.Uso: {Somministrazione.Uso}");
+
+            Console.WriteLine($"⏳Scrittura somministrazione");
+
+            var UsoFarmaco = await FarmaciUsoManageService.PostFarmacoUso(Somministrazione);
+            var idUso = UsoFarmaco.IdFarmacoUso;
+
+            Console.WriteLine($"✅ UsoFarmaco.IdFarmacoUso: {UsoFarmaco.IdFarmacoUso}");
+
+            Console.WriteLine($"");
+            Console.WriteLine($"📌 Assegna farmaco a prescrizione");
+
+            // assegna farmaco a prescrizione
+            AssignDrug(idCreato, idUso, fFar, NuovaSomm);
+
+            Console.WriteLine($"✅ Prescrizione assegnata");
+        }
+
+        StateHasChanged();
+    }
+
+    private void UpdateNuovoUso(string value)
+    {
+        Console.WriteLine($"New Value: {value}");
+        NuovaSomm = value;
     }
 
     public async void AssignDrug(decimal idF, decimal idU, string far, string use)
