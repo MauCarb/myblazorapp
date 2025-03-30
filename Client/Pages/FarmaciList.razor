@@ -113,6 +113,10 @@
     private string sessionLoggedUser { get; set; }
     #endregion
 
+    #region Session Filter Patients
+    string SessionFilterDrugs = "";
+    #endregion
+
     #region alert dialog
     private bool AlertVisible { get; set; } = false;
 
@@ -212,6 +216,8 @@
 
     protected override async Task OnInitializedAsync()
     {
+        await sessionStorage.SetItemAsync("FilterPatient", "");        // Reset session filter pazienti
+
         sessionLoggedUser = await sessionStorage.GetItemAsStringAsync("sessionLoggedUser");
 
         if (string.IsNullOrEmpty(sessionLoggedUser))
@@ -232,6 +238,37 @@
             SessionID = arUser[4];
 
             // gRoleUser = arUser[n].Split(",");
+
+            SessionFilterDrugs = await sessionStorage.GetItemAsStringAsync("FilterDrug");
+
+            SessionFilterDrugs = SessionFilterDrugs.Replace("\"", "");
+
+            Console.WriteLine($"\n✅ SessionFilterDrugs: {SessionFilterDrugs}");
+            Console.WriteLine($"🔍 SessionFilterDrugs Length: {SessionFilterDrugs.Length}");
+
+            if (!string.IsNullOrEmpty(SessionFilterDrugs))
+            {
+                if (!string.IsNullOrWhiteSpace(SessionFilterDrugs))
+                {
+                    var tmpar = SessionFilterDrugs.Replace("\\u0027", "'");
+                    Console.WriteLine($"\n✅ tmpar: {tmpar}");
+
+                    if (!string.IsNullOrWhiteSpace(tmpar))
+                    {
+                        nFarmaco = tmpar;
+                        Console.WriteLine($"\n🔍 nFarmaco: {nFarmaco}");
+                    }
+
+                    StateHasChanged();
+
+                    Console.WriteLine($"\n⏳ Calling Search()");
+
+                    await Task.Run(() =>
+                    {
+                        Search();
+                    });
+                }
+            }
         }
     }
 
@@ -245,20 +282,26 @@
         bool AllowSearch = false;
         double s_idUser;
 
-        Boolean ContinueIns = true;
-        string vDate = "";
+        // Boolean ContinueIns = true;
+        // string vDate = "";
 
         s_idUser = Convert.ToDouble(gIdUser);
 
+        Console.WriteLine($"\n🔍 nFarmaco: {nFarmaco}");
+
         AllowSearch = (!string.IsNullOrEmpty(nFarmaco)) ? true : false;
+
+        Console.WriteLine($"\n🔍 AllowSearch: {AllowSearch}");
 
         if (AllowSearch)
         {
             try
             {
-                // Console.WriteLine($"nFarmaco: {nFarmaco}");
-
+                Console.WriteLine($"\n⏳ Call FarmaciListService.ListFarmaci(nFarmaco):\t{nFarmaco}");
                 drugs = await FarmaciListService.ListFarmaci(nFarmaco);
+                Console.WriteLine($"\n⏳ drugs.Count:\t{drugs.Count}");
+
+                await sessionStorage.SetItemAsync("FilterDrug", nFarmaco);
 
                 StateHasChanged();
             }
@@ -273,9 +316,10 @@
     {
         nFarmaco = "";
 
-        // Console.WriteLine($"p: {p}");
-
         drugs = await FarmaciListService.ListFarmaci("ZZZZZZZZZZZZZZZ");
+
+        Console.WriteLine($"\n✅ sessionStorage(FilterDrug) set empty ");
+        await sessionStorage.SetItemAsync("FilterDrug", "");
 
         StateHasChanged();
     }

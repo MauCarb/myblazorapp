@@ -29,7 +29,7 @@
             <SfTextBox ID="fname" @bind-Value="@FName" Placeholder="Nome" FloatLabelType="@FloatLabelType.Auto" CssClass="sftext"></SfTextBox>
         </div>
 
-        <div class="col-sm-1">
+        <div class="col-sm-1" style="min-width: 118px;">
             <SfMaskedTextBox ID="bithdate" @bind-Value="@datanascita" Mask="00/00/0000" Placeholder="Data di nascita" FloatLabelType="@FloatLabelType.Auto" CssClass="sftext"></SfMaskedTextBox>
         </div>
 
@@ -137,6 +137,11 @@
     private string sessionLoggedUser { get; set; }
     #endregion
 
+    #region Session Filter Patients
+    string SessionFilterPatients = "";
+    string[]? arFilter;
+    #endregion
+
     #region alert dialog
     private bool AlertVisible { get; set; } = false;
 
@@ -185,14 +190,12 @@
     public string FName = "";
     public string LName = "";
     public string Phone = "";
-
     public string datanascita = "";
-
-    public string City = "";        // ignorata al momento da aggiungere dopo
-
-    public string Address = "";     // ignorata al momento
-
     public string Diagnosi = "";
+
+    public string City = "";        // ignorata al momento eventualmente aggiungere dopo
+    public string Address = "";     // ignorata al momento eventualmente aggiungere dopo
+
     #endregion
 
     #region funzioni di supporto
@@ -275,6 +278,8 @@
 
     protected override async Task OnInitializedAsync()
     {
+        await sessionStorage.SetItemAsync("FilterDrug", "");        // Reset session filter farmaci
+
         sessionLoggedUser = await sessionStorage.GetItemAsStringAsync("sessionLoggedUser");
 
         if (string.IsNullOrEmpty(sessionLoggedUser))
@@ -284,7 +289,6 @@
         else
         {
             LoggedUser = sessionLoggedUser.Substring(1, sessionLoggedUser.Length - 2);
-
             arUser = LoggedUser.Split(",");
 
             gIdUser = arUser[0];
@@ -294,7 +298,74 @@
 
             SessionID = arUser[4];
 
-            // gRoleUser = arUser[n].Split(",");
+            SessionFilterPatients = await sessionStorage.GetItemAsStringAsync("FilterPatient");
+
+            SessionFilterPatients = SessionFilterPatients.Replace("\"", "");
+
+            Console.WriteLine($"\n✅ SessionFilterPatients: {SessionFilterPatients}");
+            Console.WriteLine($"🔍 SessionFilterPatients Length: {SessionFilterPatients.Length}");
+
+            if (!string.IsNullOrEmpty(SessionFilterPatients))
+            {
+                if (!string.IsNullOrWhiteSpace(SessionFilterPatients))
+                {
+                    var tmpar = SessionFilterPatients.Replace("\\u0027", "'");
+                    Console.WriteLine($"\n✅ tmpar: {tmpar}");
+
+                    arFilter = tmpar.Split(",");
+
+                    Console.WriteLine($"\n✅ arFilter[0]\t(Nome): {arFilter[0]}");
+                    Console.WriteLine($"✅ arFilter[1]\t(Cognome): {arFilter[1]}");
+                    Console.WriteLine($"✅ arFilter[2]\t(Data): {arFilter[2]}");
+                    Console.WriteLine($"✅ arFilter[3]\t(Telefono): {arFilter[3]}");
+                    Console.WriteLine($"✅ arFilter[4]\t(Diagnosi): {arFilter[4]}");
+
+                    if (!string.IsNullOrWhiteSpace((arFilter[0])))
+                    {
+                        FName = arFilter[0];
+                        Console.WriteLine($"\n🔍 FName: {FName}");
+                    }
+
+                    if (!string.IsNullOrWhiteSpace((arFilter[1])))
+                    {
+                        LName = arFilter[1];
+                        Console.WriteLine($"🔍 LName: {LName}");
+                    }
+
+                    if (!string.IsNullOrWhiteSpace((arFilter[2])))
+                    {
+                        datanascita = arFilter[2].Substring(8, 2) + "/" + arFilter[2].Substring(5, 2) + "/" + arFilter[2].Substring(0, 4);
+                        Console.WriteLine($"🔍 datanascita: {datanascita}");
+                    }
+
+                    if (!string.IsNullOrWhiteSpace((arFilter[3])))
+                    {
+                        Phone = arFilter[3];
+                        Console.WriteLine($"🔍 Phone: {Phone}");
+                    }
+
+                    if (!string.IsNullOrWhiteSpace((arFilter[4])))
+                    {
+                        Diagnosi = arFilter[4];
+                        Console.WriteLine($"🔍 Diagnosi: {Diagnosi}");
+                    }
+
+                    Console.WriteLine($"\n✅ LName\t(Cognome): {LName}");
+                    Console.WriteLine($"✅ FName\t(Nome): {FName}");
+                    Console.WriteLine($"✅ datanascita\t(Data): {datanascita}");
+                    Console.WriteLine($"✅ Phone\t(Telefono): {Phone}");
+                    Console.WriteLine($"✅ Diagnosi\t(Diagnosi): {Diagnosi}");
+
+                    StateHasChanged();
+
+                    Console.WriteLine($"\n⏳ Calling Search()");
+
+                    await Task.Run(() =>
+                    {
+                        Search();
+                    });
+                }
+            }
         }
     }
 
@@ -311,57 +382,17 @@
         Boolean ContinueIns = true;
         string vDate = "";
 
-        // if (MyFilter == null)
-        // {
-        //     MyFilter = new FilterSupport { };
-
-        //     MyFilter.ptIDUser = Convert.ToDouble(gIdUser);
-        //     MyFilter.GUID = SessionID;
-
-        //     MyFilter.sVal2 = CodFornitore;
-        //     MyFilter.sVal3 = SubAppalt;
-
-        //     MyFilter.dVal1 = RdADateDal;
-
-        //     MyFilter.fLastDate = fLastDate;
-
-        //     MyFilter.ExpireDate = DateTime.Now.AddMinutes(20);
-
-        //     try
-        //     {
-        //         await RdAService.AddFilterSupport(MyFilter);
-        //     }
-        //     catch (Exception ex)
-        //     {
-        //         Console.WriteLine(ex.Message);
-        //     }
-        // }
-        // else
-        // {
-        //     MyFilter.sVal2 = CodFornitore;
-        //     MyFilter.sVal3 = SubAppalt;
-
-        //     MyFilter.dVal1 = RdADateDal;
-
-        //     MyFilter.fLastDate = fLastDate;
-
-        //     MyFilter.ExpireDate = DateTime.Now.AddMinutes(20);
-
-        //     try
-        //     {
-        //         await RdAService.UpdateFilterSupport(MyFilter);
-        //     }
-        //     catch (Exception ex)
-        //     {
-        //         Console.WriteLine(ex.Message);
-        //     }
-        // }
-
-        // DateTime FromDate = SetToFH(RdADateDal);
-
         s_idUser = Convert.ToDouble(gIdUser);
 
-        AllowSearch = (!string.IsNullOrEmpty(LName) || !string.IsNullOrEmpty(FName) || !string.IsNullOrEmpty(datanascita) || !string.IsNullOrEmpty(Phone) || !string.IsNullOrEmpty(Diagnosi)) ? true : false;
+        Console.WriteLine($"\n🔍 LName: {LName}");
+        Console.WriteLine($"🔍 FName: {FName}");
+        Console.WriteLine($"🔍 datanascita: {datanascita}");
+        Console.WriteLine($"🔍 Phone: {Phone}");
+        Console.WriteLine($"🔍 Diagnosi: {Diagnosi}");
+
+        AllowSearch = (!string.IsNullOrWhiteSpace(LName) || !string.IsNullOrWhiteSpace(FName) || !string.IsNullOrWhiteSpace(datanascita) || !string.IsNullOrWhiteSpace(Phone) || !string.IsNullOrWhiteSpace(Diagnosi)) ? true : false;
+
+        Console.WriteLine($"\n🔍 AllowSearch: {AllowSearch}");
 
         if (AllowSearch)
         {
@@ -377,22 +408,32 @@
                 }
             }
 
+            Console.WriteLine($"\n🔍 ContinueIns: {ContinueIns}");
+
             if (ContinueIns)
             {
                 try
                 {
                     string pp = FName + "|" + LName + "|" + vDate + "|" + Phone + "|" + Diagnosi;
-                    Console.WriteLine($"pp: {pp}");
+                    string pv = FName + "," + LName + "," + vDate + "," + Phone + "," + Diagnosi;
 
-                    // Console.WriteLine($"pp: {pp}");
+                    Console.WriteLine($"\n✅ pp: {pp}");
+                    Console.WriteLine($"✅ pv: {pv}");
 
+                    Console.WriteLine($"\n⏳ Call PatientService.PatList(pp):\t{pp}");
                     patients = await PatientService.PatList(pp);
+                    Console.WriteLine($"\n⏳ patients.Count:\t{patients.Count}");
+
+                    await sessionStorage.SetItemAsync("FilterPatient", pv);
+
+                    // SessionFilterPatients = pv;
 
                     StateHasChanged();
                 }
                 catch (Exception ex)
                 {
                     Console.WriteLine(ex.Message);
+                    Console.WriteLine($"\n❌ ex.Message: {ex.Message}");
                 }
             }
         }
@@ -411,7 +452,12 @@
 
         string p = "||2268-07-20||";
 
-        // Console.WriteLine($"p: {p}");
+        Console.WriteLine($"\n✅ p: {p}");
+
+        Console.WriteLine($"\n✅ sessionStorage(FilterPatient) set empty ");
+        await sessionStorage.SetItemAsync("FilterPatient", "");
+
+        SessionFilterPatients = "";
 
         patients = await PatientService.PatList(p);
 

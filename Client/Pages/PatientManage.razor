@@ -79,22 +79,36 @@
             <SfTextBox ID="fname" @bind-Value="@FName" Placeholder="Nome" FloatLabelType="@FloatLabelType.Always" CssClass="sftext"></SfTextBox>
         </div>
 
-        <div class="col-sm-2">
+        <div class="col-sm-1" style="min-width: 118px;">
             <SfMaskedTextBox ID="datanascita" @bind-Value="@BirthDate" Mask="00/00/0000" Placeholder="Data di nascita" FloatLabelType="@FloatLabelType.Always" CssClass="sftext"></SfMaskedTextBox>
         </div>
 
+        <div class="col-sm-1">
+            <SfTextBox ID="eta" @bind-Value="@Anni" Placeholder="Anni" FloatLabelType="@FloatLabelType.Always" Readonly=true CssClass="sftext"></SfTextBox>
+        </div>
+
         <div class="col-sm-2">
-            <SfTextBox ID="codfisc" @bind-Value="@CodFisc" Placeholder="Cod Fiscale" FloatLabelType="@FloatLabelType.Always"> CssClass="sftext"</SfTextBox>
+            <SfTextBox ID="phone" @bind-Value="@Phone" Placeholder="Telefono" FloatLabelType="@FloatLabelType.Always"></SfTextBox>
+        </div>
+    </div>
+
+    <div class="row" style="margin-top: 5px;">
+        <div class="col-sm-3">
+            <SfTextBox ID="address" @bind-Value="@Address" Placeholder="Indirizzo" FloatLabelType="@FloatLabelType.Always"></SfTextBox>
+        </div>
+
+        <div class="col-sm-7">
+            <SfTextBox ID="note" @bind-Value="@Note" Placeholder="Note" FloatLabelType="@FloatLabelType.Always" Multiline="true" style="height: 24px;"></SfTextBox>
+        </div>
+
+        <div class="col-sm-2">
+            <SfTextBox ID="mobile" @bind-Value="@Mobile" Placeholder="Mobile" FloatLabelType="@FloatLabelType.Always"></SfTextBox>
         </div>
     </div>
 
     @if (ShowMore)
     {
         <div class="row" style="margin-top: 5px;">
-            <div class="col-sm-4">
-                <SfTextBox ID="address" @bind-Value="@Address" Placeholder="Indirizzo" FloatLabelType="@FloatLabelType.Always"></SfTextBox>
-            </div>
-
             <div class="col-sm-3">
                 <SfTextBox ID="city" @bind-Value="@City" Placeholder="Città" FloatLabelType="@FloatLabelType.Always"></SfTextBox>
             </div>
@@ -106,26 +120,17 @@
             <div class="col-sm-3">
                 <SfTextBox ID="state" @bind-Value="@State" Placeholder="Stato" FloatLabelType="@FloatLabelType.Always"></SfTextBox>
             </div>
+
+            <div class="col-sm-2">
+                <SfTextBox ID="codfisc" @bind-Value="@CodFisc" Placeholder="Cod Fiscale" FloatLabelType="@FloatLabelType.Always" CssClass="sftext"></SfTextBox>
+            </div>
         </div>
 
         <div class="row" style="margin-top: 5px;">
-            <div class="col-sm-2">
-                <SfTextBox ID="phone" @bind-Value="@Phone" Placeholder="Telefono" FloatLabelType="@FloatLabelType.Always"></SfTextBox>
-            </div>
-
-            <div class="col-sm-2">
-                <SfTextBox ID="mobile" @bind-Value="@Mobile" Placeholder="Mobile" FloatLabelType="@FloatLabelType.Always"></SfTextBox>
-            </div>
-
             <div class="col-sm-7">
                 <SfTextBox ID="email" @bind-Value="@Email" Placeholder="Email" FloatLabelType="@FloatLabelType.Always"></SfTextBox>
             </div>
-        </div>
 
-        <div class="row" style="margin-top: 5px;">
-            <div class="col-sm-8">
-                <SfTextBox ID="note" @bind-Value="@Note" Placeholder="Note" FloatLabelType="@FloatLabelType.Always" Multiline="true"></SfTextBox>
-            </div>
             <div class="col-sm-4">
                 <span style="color: rgba(0, 0, 0, 0.54); font-size: 13px;line-height: 1.4; display:block; margin-bottom:2px;">Privacy</span>
                 <div class="col-sm-4">
@@ -153,7 +158,7 @@
                 <span style="font-weight:600;">Data:&nbsp;</span><span style="font-size: 14px; color:midnightblue;">@DataVisita</span>
             </div>
 *@            
-                <div class="col-sm-1" style="width: 118px;">
+                <div class="col-sm-1" style="min-width: 118px;">
                 <SfMaskedTextBox ID="datavisita" @bind-Value="@DataVisita" Mask="00/00/0000" Placeholder="Data" FloatLabelType="@FloatLabelType.Always" CssClass="sftext" style="color: #000;"></SfMaskedTextBox>
             </div>
 
@@ -256,7 +261,7 @@
                                         <!-- Diagnosi OD -->
                                         <div class="row" style="margin-top: 5px;">
                                             <div class="col">
-                                                <SfTextBox ID="diagnosiod" @bind-Value="@Visita.DiagnosiOD" Placeholder="Diagnosi" FloatLabelType="@FloatLabelType.Always" title="@Visita.DiagnosiOD" Multiline="true" CssClass="sftext" style="height: 30px;"></SfTextBox>
+                                                <SfTextBox ID="diagnosiod" @bind-Value="@Visita.DiagnosiOD" Placeholder="Diagnosi" FloatLabelType="@FloatLabelType.Always" title="@Visita.DiagnosiOD" Multiline="true" CssClass="sftext" style="height: 52px;"></SfTextBox>
                                             </div>
                                         </div>
                                         <!-- Diagnosi OS -->
@@ -355,13 +360,13 @@
                                                 <SfTextBox ID="osmd" @bind-Value="@Visita.OSMD" Placeholder="OS: SUE LENTI MEDIA DIST." FloatLabelType="@FloatLabelType.Always" Multiline="true" CssClass="sftext" style="height: 30px;"></SfTextBox>
                                             </div>
                                         </div>
-                                        <!-- Motivo Visita -->
+                                        @*                                         <!-- Motivo Visita -->
                                         <div class="row" style="margin-top: 5px;">
                                             <div class="col">
                                                 <SfTextBox ID="motivovisita" @bind-Value="@Visita.MotivoVisita" Placeholder="Motivo Visita" FloatLabelType="@FloatLabelType.Always" Multiline="true" style="height: 30px;"></SfTextBox>
                                             </div>
                                         </div>
-                                    </div>
+ *@                                    </div>
 
                                     <div class="col-sm-7">
                                         <!-- Interventi -->
@@ -502,9 +507,16 @@
                                         <!-- Conclusioni -->
                                         <div class="row" style="margin-top: 5px;">
                                             <div class="col">
-                                                <SfTextBox ID="conclusioni" @bind-Value="@Visita.Conclusioni" Placeholder="Conclusioni" FloatLabelType="@FloatLabelType.Always" Multiline="true" CssClass="sftext" style="height: 97px;"></SfTextBox>
+                                                <SfTextBox ID="conclusioni" @bind-Value="@Visita.Conclusioni" Placeholder="Conclusioni" FloatLabelType="@FloatLabelType.Always" Multiline="true" CssClass="sftext" style="height: 52px;"></SfTextBox>
                                             </div>
                                         </div>
+                                    </div>
+                                </div>
+
+                                <!-- Motivo Visita -->
+                                <div class="row" style="margin-top: 5px;">
+                                    <div class="col">
+                                        <SfTextBox ID="motivovisita" @bind-Value="@Visita.MotivoVisita" Placeholder="Motivo Visita" FloatLabelType="@FloatLabelType.Always" Multiline="true" style="height: 52px;"></SfTextBox>
                                     </div>
                                 </div>
 
@@ -795,7 +807,7 @@
 
                                 <!-- Dati controllo -->
                                 <div class="row" style="margin-top: 5px;">
-                                    <div class="col-sm-1">
+                                    <div class="col-sm-1" style="min-width: 118px;">
                                         <SfMaskedTextBox ID="datacontrollo" @bind-Value="@DataControllo" Mask="00/00/0000" Placeholder="Data controllo" FloatLabelType="@FloatLabelType.Always" CssClass="sftext"></SfMaskedTextBox>
                                     </div>
                                     <div class="col-sm-4">
@@ -948,6 +960,12 @@
                                                 <TabHeader Text="Prescrizione"></TabHeader>
                                             </ChildContent>
                                             <ContentTemplate>
+                                                <div class="container-fluid form-farmfilter" style="padding: 4px 10px 0px 10px; margin-bottom:0px;">
+                                                    <div class="col">
+                                                        <SfTextBox ID="notevisita" @bind-Value="@Visita.Note" Placeholder="NOTE" FloatLabelType="@FloatLabelType.Always" Multiline="true" CssClass="sftext" style="height: 48px; background-color: white;" Readonly=true></SfTextBox>
+                                                    </div>
+                                                </div>
+
                                                 <div class="row" style="margin: 10px 2px 25px 2px; padding-bottom:10px; border-bottom: 1px solid #ddd;">
                                                     <div class="col-sm-1">&nbsp;</div>
                                                     <div class="col-sm-2" style="font-size: 16px; font-weight: 500; margin: 3px 0;">Farmaco</div>
@@ -1002,7 +1020,13 @@
                                                             @if (ip < @Prescriptions.Count - 1)
                                                             {
                                                                 <div class="col-sm-1">
-                                                                    <SfButton IconCss="e-icons e-erase icon-red" CssClass="e-flat btn-light" Content="Rimuovi" OnClick="() => DeleteFar(questo)"></SfButton>
+                                                                    <div>
+                                                                        <SfButton IconCss="e-icons e-erase icon-red" CssClass="e-flat btn-light prescWidth" Content="Rimuovi" OnClick="() => DeleteFar(questo)"></SfButton>
+                                                                    </div>
+
+                                                                    <div style="margin-top: 6px;">
+                                                                        <SfButton IconCss="e-icons e-plus icon-green" CssClass="e-flat btn-light prescWidth" Content="Aggiungi" OnClick="() => AddtUsoFar(questo)"></SfButton>
+                                                                    </div>
                                                                 </div>
                                                             }
                                                         </div>
@@ -1041,11 +1065,7 @@
                                                             <span style="display:inline-block; width:260px; margin-left: 6px;">
                                                                 <SfTextBox ID="fFar" @bind-Value="@fFar" Placeholder="Farmaco" FloatLabelType="@FloatLabelType.Auto" CssClass="sftext sf300"></SfTextBox>
                                                             </span>
-                                                            @*                                                             @if (NuovaSommVisible)
-                                                            {
-                                                                <span style="display:inline-block; width:8px;">&nbsp;</span>
-                                                            }
- *@                                                        </div>
+                                                        </div>
                                                         <div class="col-sm-3">
                                                             <SfButton IconCss="e-icons e-search icon-slategrey" CssClass="e-flat btn-light" style="margin-top:24px;" Content="Cerca" OnClick="() => SearchFar()"></SfButton>
                                                             <span style="display:inline-block; width:25px;">&nbsp;</span>
@@ -1123,7 +1143,7 @@
                                             <SfMaskedTextBox ID="data_relazione" @bind-Value="@pDataRelazione" Mask="00/00/0000" CssClass="sftext"></SfMaskedTextBox>
                                         </span>
 
-                                        <span style="float: right;">
+                                        <span style="float: right; display: none;">
                                             <SfButton IconCss="e-icons icon-navy e-print" CssClass="e-flat btn-light" Content=" Stampa Relazione" OnClick="() => StampaRelazione(DropDownTemplate)" Disabled="@PrintVisitDisabled"></SfButton>
                                         </span>
 
@@ -1143,9 +1163,9 @@
                                 <!-- Diagnosi -->
                                 <div class="row" style="margin-top: 12px;">
                                     <div class="col-sm-6">
-                                        <SfTextBox ID="rdiagnosiod" @bind-Value="@Relazione.DiagnosiOD" Placeholder="Diagnosi OD" FloatLabelType="@FloatLabelType.Always" title="@Relazione.DiagnosiOD" Multiline="true" CssClass="sftext" style="height: 48px;"></SfTextBox>
+                                        <SfTextBox ID="rdiagnosiod" @bind-Value="@Relazione.DiagnosiOD" Placeholder="Diagnosi" FloatLabelType="@FloatLabelType.Always" title="@Relazione.DiagnosiOD" Multiline="true" CssClass="sftext" style="height: 48px;"></SfTextBox>
                                     </div>
-                                    <div class="col-sm-6">
+                                    <div class="col-sm-6" style="display: none;">
                                         <SfTextBox ID="rdiagnosios" @bind-Value="@Relazione.DiagnosiOS" Placeholder="Diagnosi OS" FloatLabelType="@FloatLabelType.Always" title="@Relazione.DiagnosiOS" Multiline="true" CssClass="sftext" style="height: 48px;"></SfTextBox>
                                     </div>
                                 </div>
@@ -1153,9 +1173,9 @@
                                 <!-- SHIRMER -->
                                 <div class="row" style="margin-top: 12px;">
                                     <div class="col-sm-6">
-                                        <SfTextBox ID="shirmerod" @bind-Value="@Relazione.SHIRMER_Od" Placeholder="SHIRMER OD" FloatLabelType="@FloatLabelType.Always" title="@Relazione.SHIRMER_Od" Multiline="true" CssClass="sftext" style="height: 48px;"></SfTextBox>
+                                        <SfTextBox ID="shirmerod" @bind-Value="@Relazione.SHIRMER_Od" Placeholder="SHIRMER" FloatLabelType="@FloatLabelType.Always" title="@Relazione.SHIRMER_Od" Multiline="true" CssClass="sftext" style="height: 48px;"></SfTextBox>
                                     </div>
-                                    <div class="col-sm-6">
+                                    <div class="col-sm-6" style="display: none;">
                                         <SfTextBox ID="shirmeros" @bind-Value="@Relazione.SHIRMER_Os" Placeholder="SHIRMER OS" FloatLabelType="@FloatLabelType.Always" title="@Relazione.SHIRMER_Os" Multiline="true" CssClass="sftext" style="height: 48px;"></SfTextBox>
                                     </div>
                                 </div>
@@ -1181,7 +1201,7 @@
                                 </div>
 
                                 <!-- Tono Oculare -->
-                                <div class="row" style="margin-top: 12px;">
+                                <div class="row" style="margin-top: 12px; display: none;">
                                     <div class="col-sm-6">
                                         <SfTextBox ID="tonood" @bind-Value="@Relazione.TONO_Od" Placeholder="Tono Oculare OD" FloatLabelType="@FloatLabelType.Always" title="@Relazione.TONO_Od" Multiline="true" style="height: 48px;"></SfTextBox>
                                     </div>
@@ -1518,6 +1538,8 @@
     public string Privacy = "";
 
     public string Studio = "";
+
+    public string Anni = "";
 
     private string switchPrivacy = "Da firmare";
     private bool fPrivacy = false;
@@ -2021,11 +2043,16 @@
                 }
                 else
                 {
+                    IsNewVisit = true;
+
+                    DataVisita = DateTime.Now.ToShortDateString(); // ToString("dd/MM/yyyy")
+
                     FirstVisitDisabled = true;
                     PrevVisitDisabled = true;
                     NextVisitDisabled = true;
                     LastVisitDisabled = true;
 
+                    AddVisitDisabled = true;
                     SaveVisitDisabled = true;
                     DelVisitDisabled = true;
 
@@ -2036,6 +2063,25 @@
                     RelazioniDisabled = true;
 
                     IndexVisita = " - ";
+
+                    // Console.WriteLine($"\n📌 Start - Nessuna visita trovata");
+                    // Console.WriteLine($"✅ DataVisita: {DataVisita}");
+
+                    // Console.WriteLine($"\n✅ IsNewVisit: {IsNewVisit}");
+                    // Console.WriteLine($"✅ FirstVisitDisabled: {FirstVisitDisabled}");
+                    // Console.WriteLine($"✅ PrevVisitDisabled: {PrevVisitDisabled}");
+                    // Console.WriteLine($"✅ NextVisitDisabled: {NextVisitDisabled}");
+                    // Console.WriteLine($"✅ LastVisitDisabled: {LastVisitDisabled}");
+
+                    // Console.WriteLine($"\n✅ AddVisitDisabled: {AddVisitDisabled}");
+                    // Console.WriteLine($"✅ SaveVisitDisabled: {SaveVisitDisabled}");
+                    // Console.WriteLine($"✅ DelVisitDisabled: {DelVisitDisabled}");
+
+                    // Console.WriteLine($"\n✅ POcchialiDisabled: {POcchialiDisabled}");
+                    // Console.WriteLine($"✅ ControlliDisabled: {ControlliDisabled}");
+                    // Console.WriteLine($"✅ OrtotticaDisabled: {OrtotticaDisabled}");
+                    // Console.WriteLine($"✅ PrescrizioniDisabled: {PrescrizioniDisabled}");
+                    // Console.WriteLine($"✅ RelazioniDisabled: {RelazioniDisabled}");
                 }
 
                 StateHasChanged();
@@ -2192,6 +2238,20 @@
 
         Studio = SetObjNullToStr(Paziente.Studio);
 
+        Console.WriteLine($"\n📌 Calcolo anni");
+        Console.WriteLine($"🔷 BirthDate: {BirthDate}");
+        Console.WriteLine($"🔷 DateTime.Now.ToShortDateString(): {DateTime.Now.ToShortDateString()}");
+
+        if (BirthDate != "")
+        {
+            Anni = Eta(BirthDate, DateTime.Now.ToShortDateString());
+        }
+        else
+        {
+            Anni = "";
+        }
+        Console.WriteLine($"🔷 Anni: {Anni}");
+
         if (fPrivacy)
         {
             switchPrivacy = "Firmata";
@@ -2248,65 +2308,65 @@
                 }
             }
         }
-        else
-        {
-            if (Pazienti.Count > 0)     //  sono presenti casi di omonimia
-            {
-                if (id == 0)
-                {
-                    if (String.IsNullOrEmpty(CodFisc))
-                    {
-                        result &= false;
-                        PazienteValido &= false;
+        // else
+        // {
+        //     if (Pazienti.Count > 0)     //  sono presenti casi di omonimia
+        //     {
+        //         if (id == 0)
+        //         {
+        //             if (String.IsNullOrEmpty(CodFisc))
+        //             {
+        //                 result &= false;
+        //                 PazienteValido &= false;
 
-                        DialogHeader = " Attenzione ";
-                        DialogIcon = "e-icons e-circle-close col-lg-2";
-                        DialogText += "Sono presenti in archivio altri pazienti con lo stesso Nome e Cognome.";
-                        DialogDetail = "Inserire il Codice Fiscale";
-                    }
-                    else
-                    {
-                        for (var pp = 0; pp < Pazienti.Count; pp++)
-                        {
-                            if ((Pazienti[pp].CodFisc == CodFisc) && (Pazienti[pp].IdPatient != id))
-                            {
-                                result &= false;
-                            }
-                        }
+        //                 DialogHeader = " Attenzione ";
+        //                 DialogIcon = "e-icons e-circle-close col-lg-2";
+        //                 DialogText += "Sono presenti in archivio altri pazienti con lo stesso Nome e Cognome.";
+        //                 DialogDetail = "Inserire il Codice Fiscale";
+        //             }
+        //             else
+        //             {
+        //                 for (var pp = 0; pp < Pazienti.Count; pp++)
+        //                 {
+        //                     if ((Pazienti[pp].CodFisc == CodFisc) && (Pazienti[pp].IdPatient != id))
+        //                     {
+        //                         result &= false;
+        //                     }
+        //                 }
 
-                        if (!result)
-                        {
-                            PazienteValido &= false;
+        //                 if (!result)
+        //                 {
+        //                     PazienteValido &= false;
 
-                            DialogHeader = " Attenzione ";
-                            DialogIcon = "e-icons e-circle-close col-lg-2";
-                            DialogText += "Sono presenti in archivio altri pazienti con lo stesso Nome, Cognome e Codice Fiscale.";
-                            DialogDetail = "Modificare il Nome o il Cognome o il Codice Fiscale";
-                        }
-                    }
-                }
-                else
-                {
-                    for (var pp = 0; pp < Pazienti.Count; pp++)
-                    {
-                        if ((Pazienti[pp].CodFisc == CodFisc) && (Pazienti[pp].IdPatient != id))
-                        {
-                            result &= false;
-                        }
-                    }
+        //                     DialogHeader = " Attenzione ";
+        //                     DialogIcon = "e-icons e-circle-close col-lg-2";
+        //                     DialogText += "Sono presenti in archivio altri pazienti con lo stesso Nome, Cognome e Codice Fiscale.";
+        //                     DialogDetail = "Modificare il Nome o il Cognome o il Codice Fiscale";
+        //                 }
+        //             }
+        //         }
+        //         else
+        //         {
+        //             for (var pp = 0; pp < Pazienti.Count; pp++)
+        //             {
+        //                 if ((Pazienti[pp].CodFisc == CodFisc) && (Pazienti[pp].IdPatient != id))
+        //                 {
+        //                     result &= false;
+        //                 }
+        //             }
 
-                    if (!result)
-                    {
-                        PazienteValido &= false;
+        //             if (!result)
+        //             {
+        //                 PazienteValido &= false;
 
-                        DialogHeader = " Attenzione ";
-                        DialogIcon = "e-icons e-circle-close col-lg-2";
-                        DialogText += "Sono presenti in archivio altri pazienti con lo stesso Nome, Cognome e Codice Fiscale.";
-                        DialogDetail = "Modificare il Nome o il Cognome o il Codice Fiscale";
-                    }
-                }
-            }
-        }
+        //                 DialogHeader = " Attenzione ";
+        //                 DialogIcon = "e-icons e-circle-close col-lg-2";
+        //                 DialogText += "Sono presenti in archivio altri pazienti con lo stesso Nome, Cognome e Codice Fiscale.";
+        //                 DialogDetail = "Modificare il Nome o il Cognome o il Codice Fiscale";
+        //             }
+        //         }
+        //     }
+        // }
 
         if (result)
         {
@@ -2357,12 +2417,11 @@
 
         if (!String.IsNullOrEmpty(FName) && !String.IsNullOrEmpty(LName))
         {
+            Console.WriteLine($"\n⏳ Call PatientService.PatList:\t{FName}, {LName}");
+
             Pazienti = await PatientService.PatList(FName + "|" + LName + "|||");
 
-            Console.WriteLine($"------------------------------------------------");
-            Console.WriteLine($"Pazienti.Count: {Pazienti.Count}");
-            Console.WriteLine($"------------------------------------------------");
-            Console.WriteLine($" ");
+            Console.WriteLine($"\nPazienti.Count: {Pazienti.Count}");
         }
 
         CheckPatient();
@@ -2419,8 +2478,7 @@
                     Paziente.ptIdUser = Decimal.Parse(gIdUser);
                     Paziente.InsertDate = DateTime.Now;
 
-                    Console.WriteLine($" ");
-                    Console.WriteLine($"📌 Inserimento nuovo paziente ");
+                    Console.WriteLine($"\n📌 Inserimento nuovo paziente ");
                     Console.WriteLine($"🔷\t Paziente.IdPatient: {Paziente.IdPatient}\t Paziente.ptIdUser: {Paziente.ptIdUser}");
                     Console.WriteLine($"🔷\t Paziente.InsertDate: {Paziente.InsertDate}\t Paziente.Cod: {Paziente.Cod}");
                     Console.WriteLine($"🔷\t Paziente.FName: {Paziente.FName}\t Paziente.LName: {Paziente.LName}");
@@ -2431,14 +2489,12 @@
                     Console.WriteLine($"🔷\t Paziente.Phone: {Paziente.Phone}\t Paziente.Mobile: {Paziente.Mobile}");
                     Console.WriteLine($"🔷\t Paziente.Email: {Paziente.Email}\t Paziente.Note: {Paziente.Note}");
                     Console.WriteLine($"🔷\t Paziente.fPrivacy: {Paziente.fPrivacy}\t Paziente.Studio: {Paziente.Studio}");
-                    Console.WriteLine($" ");
 
                     // recupero l'id genenerato
                     var createdPatient = await PatientMngService.AddPatient(Paziente);
                     tmpIdPaziente = createdPatient.IdPatient;
 
-                    Console.WriteLine($"🔷\t createdPatient.IdPatient: {createdPatient.IdPatient}");
-                    Console.WriteLine($" ");
+                    Console.WriteLine($"\n🔷\t createdPatient.IdPatient: {createdPatient.IdPatient}");
                 }
                 else
                 {
@@ -2829,6 +2885,9 @@
         bool ContinueOp = true;
         String FailReason = "";
 
+        Console.WriteLine($"\n📌 SaveVisit()");
+        Console.WriteLine($"\n✅ IsNewVisit: {IsNewVisit}");
+
         if (IsNewVisit)
         {
             if (CheckDate(DataVisita))
@@ -2840,8 +2899,7 @@
                 if ((Visita.Operatore == "") || (Visita.Operatore == null))
                 {
                     FailReason = "operatore";
-                    Console.WriteLine($"Inserimento Visita");
-                    Console.WriteLine($"Errore controllo operatore mancante");
+                    Console.WriteLine($"\n❌ Inserimento Visita - Errore: Operatore mancante");
 
                     ContinueOp = false;
                 }
@@ -2849,17 +2907,20 @@
             else
             {
                 FailReason = "data visita";
-                Console.WriteLine($"Inserimento Visita");
-                Console.WriteLine($"Errore controllo data visita");
+                Console.WriteLine($"\n❌ Inserimento Visita - Errore: Data visita");
 
                 ContinueOp = false;
             }
 
             if (ContinueOp)
             {
-                await VisitService.AddVisit(Visita);
+                Visita.ptIdPatient = id;
+                Visita.ptIdUser = Decimal.Parse(gIdUser);
+                Visita.InsertDate = DateTime.Now;
 
-                Console.WriteLine($"Inserimento Visita");
+                Console.WriteLine($"\n👉 Inserimento Visita");
+                await VisitService.AddVisit(Visita);
+                Console.WriteLine($"\n💾 Visita Inserita");
 
                 // visit entry completed
                 IsNewVisit = false;
@@ -2876,8 +2937,7 @@
                 if ((Visita.Operatore == "") || (Visita.Operatore == null))
                 {
                     FailReason = "operatore";
-                    Console.WriteLine($"Inserimento Visita");
-                    Console.WriteLine($"Errore controllo operatore mancante");
+                    Console.WriteLine($"\n❌ Aggiornamento Visita - Errore: Operatore mancante");
 
                     ContinueOp = false;
                 }
@@ -2885,101 +2945,107 @@
             else
             {
                 FailReason = "data visita";
-                Console.WriteLine($"Aggiornamento Visita");
-                Console.WriteLine($"Errore controllo data visita");
+                Console.WriteLine($"\n❌ Aggiornamento Visita - Errore: Data visita");
 
                 ContinueOp = false;
             }
 
             if (ContinueOp)
             {
-                Console.WriteLine($"Aggiornamento Visita");
-
+                Console.WriteLine($"\n👉 Aggiornamento Visita");
                 await VisitService.UpdVisit(Visita.IdVisit, Visita);
+                Console.WriteLine($"\n💾 Visita Aggiornata");
             }
         }
 
-        // load date e id storico visite e dati ultima visita
-        ListaVisite.Clear();
-
-        ListaVisite = await ListVisitsService.ListPatientsVisits(id);
-
-        if (ListaVisite.Count > 0)
+        if (ContinueOp)
         {
-            PrintVisitDisabled = false;
+            // load date e id storico visite e dati ultima visita
+            ListaVisite.Clear();
 
-            if (ListaVisite.Count == 1)
+            ListaVisite = await ListVisitsService.ListPatientsVisits(id);
+
+            Console.WriteLine($"\n✅ ListaVisite.Count: {ListaVisite.Count}");
+
+            if (ListaVisite.Count > 0)
             {
-                FirstVisitDisabled = true;
-                PrevVisitDisabled = true;
-                NextVisitDisabled = true;
-                LastVisitDisabled = true;
-            }
-            else
-            {
-                FirstVisitDisabled = true;
-                PrevVisitDisabled = true;
-                NextVisitDisabled = false;
-                LastVisitDisabled = false;
-            }
+                PrintVisitDisabled = false;
 
-            POcchialiDisabled = false;
-            ControlliDisabled = false;
-            OrtotticaDisabled = false;
-            PrescrizioniDisabled = false;
-            RelazioniDisabled = false;
-
-            DelVisitDisabled = false;
-
-            VisitaCorrente = 0;
-
-            IndexVisita = (VisitaCorrente + 1).ToString() + " di " + ListaVisite.Count.ToString();
-
-            DataVisita = ListaVisite[0].Val.ToString("dd/MM/yyyy");
-
-            LoadVisit(ListaVisite[VisitaCorrente].ID);
-
-            LoadVisus(ListaVisite[VisitaCorrente].ID);
-
-            LoadOrtoctis(ListaVisite[VisitaCorrente].ID);
-
-            LoadPrescrizioni(ListaVisite[VisitaCorrente].ID);
-
-            LoadRelazione(ListaVisite[VisitaCorrente].ID);
-        }
-
-        AddVisitDisabled = false;
-        // SaveVisitDisabled = true;
-
-        await Task.Run(() =>
-        {
-            if (ContinueOp)
-            {
-                DialogHeader = " Informazioni ";
-                DialogIcon = "e-icons e-circle-info col-lg-2";
-                DialogText = "Dati Visita salvati";
-                DialogDetail = "";
-            }
-            else
-            {
-                if (FailReason == "operatore")
+                if (ListaVisite.Count == 1)
                 {
-                    DialogHeader = " Attenzione ";
-                    DialogIcon = "e-icons e-circle-close icon-red col-lg-2";
-                    DialogText = "Dati Visita NON salvati";
-                    DialogDetail = "Operatore mancante";
+                    FirstVisitDisabled = true;
+                    PrevVisitDisabled = true;
+                    NextVisitDisabled = true;
+                    LastVisitDisabled = true;
                 }
                 else
                 {
-                    DialogHeader = " Attenzione ";
-                    DialogIcon = "e-icons e-circle-close icon-red col-lg-2";
-                    DialogText = "Dati Visita NON salvati";
-                    DialogDetail = "Data errata";
+                    FirstVisitDisabled = true;
+                    PrevVisitDisabled = true;
+                    NextVisitDisabled = false;
+                    LastVisitDisabled = false;
                 }
+
+                POcchialiDisabled = false;
+                ControlliDisabled = false;
+                OrtotticaDisabled = false;
+                PrescrizioniDisabled = false;
+                RelazioniDisabled = false;
+
+                DelVisitDisabled = false;
+
+                VisitaCorrente = 0;
+
+                IndexVisita = (VisitaCorrente + 1).ToString() + " di " + ListaVisite.Count.ToString();
+
+                DataVisita = ListaVisite[0].Val.ToString("dd/MM/yyyy");
+
+                LoadVisit(ListaVisite[VisitaCorrente].ID);
+
+                LoadVisus(ListaVisite[VisitaCorrente].ID);
+
+                LoadOrtoctis(ListaVisite[VisitaCorrente].ID);
+
+                LoadPrescrizioni(ListaVisite[VisitaCorrente].ID);
+
+                LoadRelazione(ListaVisite[VisitaCorrente].ID);
             }
 
-            DialogVisible = true;
-        });
+            AddVisitDisabled = false;
+            // SaveVisitDisabled = true;
+        }
+        else
+        {
+            await Task.Run(() =>
+            {
+                if (ContinueOp)
+                {
+                    DialogHeader = " Informazioni ";
+                    DialogIcon = "e-icons e-circle-info col-lg-2";
+                    DialogText = "Dati Visita salvati";
+                    DialogDetail = "";
+                }
+                else
+                {
+                    if (FailReason == "operatore")
+                    {
+                        DialogHeader = " Attenzione ";
+                        DialogIcon = "e-icons e-circle-close icon-red col-lg-2";
+                        DialogText = "Dati Visita NON salvati";
+                        DialogDetail = "Operatore mancante";
+                    }
+                    else
+                    {
+                        DialogHeader = " Attenzione ";
+                        DialogIcon = "e-icons e-circle-close icon-red col-lg-2";
+                        DialogText = "Dati Visita NON salvati";
+                        DialogDetail = "Data errata";
+                    }
+                }
+
+                DialogVisible = true;
+            });
+        }
 
         StateHasChanged();
     }
@@ -3004,9 +3070,9 @@
     #region Prescrizione Occhiali
     public async void LoadVisus(decimal idv)
     {
-        Console.WriteLine($"VisitaCorrente: {VisitaCorrente}");
-        Console.WriteLine($"ListaVisite[VisitaCorrente].ID: {ListaVisite[VisitaCorrente].ID}");
-        Console.WriteLine($"idv: {idv}");
+        // Console.WriteLine($"VisitaCorrente: {VisitaCorrente}");
+        // Console.WriteLine($"ListaVisite[VisitaCorrente].ID: {ListaVisite[VisitaCorrente].ID}");
+        // Console.WriteLine($"idv: {idv}");
 
         pDataOcchiali = DateTime.Now.ToString("dd/MM/yyyy");
 
@@ -3079,12 +3145,12 @@
 
             PrintVisusDisabled = false;
 
-            Console.WriteLine($"Load Visus");
-            Console.WriteLine($"ListaVisite[VisitaCorrente].ID: {ListaVisite[VisitaCorrente].ID}");
-            Console.WriteLine($"Visus.IdMisura: {Visus.IdMisura}");
-            Console.WriteLine($"Visus.ptIdVisit: {Visus.ptIdVisit}");
-            Console.WriteLine($"Visus.DataMisura: {Visus.DataMisura}");
-            Console.WriteLine($"Visus.PrintDate: {Visus.PrintDate}");
+            // Console.WriteLine($"Load Visus");
+            // Console.WriteLine($"ListaVisite[VisitaCorrente].ID: {ListaVisite[VisitaCorrente].ID}");
+            // Console.WriteLine($"Visus.IdMisura: {Visus.IdMisura}");
+            // Console.WriteLine($"Visus.ptIdVisit: {Visus.ptIdVisit}");
+            // Console.WriteLine($"Visus.DataMisura: {Visus.DataMisura}");
+            // Console.WriteLine($"Visus.PrintDate: {Visus.PrintDate}");
         }
         else
         {
@@ -3096,12 +3162,12 @@
 
             PrintVisusDisabled = true;
 
-            Console.WriteLine($"Carica Visus");
-            Console.WriteLine($"ListaVisite[VisitaCorrente].ID: {ListaVisite[VisitaCorrente].ID}");
-            Console.WriteLine($"Visus.IdMisura: {Visus.IdMisura}");
-            Console.WriteLine($"Visus.ptIdVisit: {Visus.ptIdVisit}");
-            Console.WriteLine($"Visus.DataMisura: {Visus.DataMisura}");
-            Console.WriteLine($"Visus.PrintDate: {Visus.PrintDate}");
+            // Console.WriteLine($"Carica Visus");
+            // Console.WriteLine($"ListaVisite[VisitaCorrente].ID: {ListaVisite[VisitaCorrente].ID}");
+            // Console.WriteLine($"Visus.IdMisura: {Visus.IdMisura}");
+            // Console.WriteLine($"Visus.ptIdVisit: {Visus.ptIdVisit}");
+            // Console.WriteLine($"Visus.DataMisura: {Visus.DataMisura}");
+            // Console.WriteLine($"Visus.PrintDate: {Visus.PrintDate}");
         }
 
         StateHasChanged();
@@ -3387,9 +3453,9 @@
     #region Visita Ortottica
     public async void LoadOrtoctis(decimal idv)
     {
-        Console.WriteLine($"VisitaCorrente: {VisitaCorrente}");
-        Console.WriteLine($"ListaVisite[VisitaCorrente].ID: {ListaVisite[VisitaCorrente].ID}");
-        Console.WriteLine($"idv: {idv}");
+        // Console.WriteLine($"VisitaCorrente: {VisitaCorrente}");
+        // Console.WriteLine($"ListaVisite[VisitaCorrente].ID: {ListaVisite[VisitaCorrente].ID}");
+        // Console.WriteLine($"idv: {idv}");
 
         pDataOrtottica = DateTime.Now.ToString("dd/MM/yyyy");
 
@@ -3433,12 +3499,12 @@
 
             PrintOrtotDisabled = false;
 
-            Console.WriteLine($"Load Ortottica");
-            Console.WriteLine($"ListaVisite[VisitaCorrente].ID: {ListaVisite[VisitaCorrente].ID}");
-            Console.WriteLine($"Ortoctis.IdOrtottica: {Ortoctis.IdOrtottica}");
-            Console.WriteLine($"Ortoctis.ptIdVisit: {Ortoctis.ptIdVisit}");
-            Console.WriteLine($"Ortoctis.DataMisura: {Ortoctis.DataOrtottica}");
-            Console.WriteLine($"Ortoctis.PrintDate: {Ortoctis.PrintDate}");
+            // Console.WriteLine($"\nLoad Ortottica");
+            // Console.WriteLine($"ListaVisite[VisitaCorrente].ID: {ListaVisite[VisitaCorrente].ID}");
+            // Console.WriteLine($"Ortoctis.IdOrtottica: {Ortoctis.IdOrtottica}");
+            // Console.WriteLine($"Ortoctis.ptIdVisit: {Ortoctis.ptIdVisit}");
+            // Console.WriteLine($"Ortoctis.DataMisura: {Ortoctis.DataOrtottica}");
+            // Console.WriteLine($"Ortoctis.PrintDate: {Ortoctis.PrintDate}");
         }
         else
         {
@@ -3452,12 +3518,12 @@
 
             Ortoctis.DataOrtottica = ListaVisite[VisitaCorrente].Val;
 
-            Console.WriteLine($"Carica Ortottica");
-            Console.WriteLine($"ListaVisite[VisitaCorrente].ID: {ListaVisite[VisitaCorrente].ID}");
-            Console.WriteLine($"Ortoctis.IdOrtottica: {Ortoctis.IdOrtottica}");
-            Console.WriteLine($"Ortoctis.ptIdVisit: {Ortoctis.ptIdVisit}");
-            Console.WriteLine($"Ortoctis.DataMisura: {Ortoctis.DataOrtottica}");
-            Console.WriteLine($"Ortoctis.PrintDate: {Ortoctis.PrintDate}");
+            // Console.WriteLine($"\nCarica Ortottica");
+            // Console.WriteLine($"ListaVisite[VisitaCorrente].ID: {ListaVisite[VisitaCorrente].ID}");
+            // Console.WriteLine($"Ortoctis.IdOrtottica: {Ortoctis.IdOrtottica}");
+            // Console.WriteLine($"Ortoctis.ptIdVisit: {Ortoctis.ptIdVisit}");
+            // Console.WriteLine($"Ortoctis.DataMisura: {Ortoctis.DataOrtottica}");
+            // Console.WriteLine($"Ortoctis.PrintDate: {Ortoctis.PrintDate}");
         }
 
         StateHasChanged();
@@ -3704,6 +3770,118 @@
         StateHasChanged();
     }
 
+    public async void AddtUsoFar(decimal id)
+    {
+        decimal IdFarmacoCorrente = 0;
+        string? NuovoUsoAggiornato = "";
+
+        string TmpDate;
+        DateTime printDate = DateTime.Now;
+
+        bool ContinueOp = true;
+
+        Prescrizione CorrentePrescr = new Prescrizione();
+
+        if (CheckDate(pDataPrescrizione))
+        {
+            TmpDate = pDataPrescrizione.Substring(4, 4) + "-" + pDataPrescrizione.Substring(2, 2) + "-" + pDataPrescrizione.Substring(0, 2) + " 00:00:00,000";
+
+            printDate = DateTime.ParseExact(TmpDate, "yyyy-MM-dd HH:mm:ss,fff", System.Globalization.CultureInfo.InvariantCulture);
+        }
+        else
+        {
+            Console.WriteLine($"❌ Formato data di stampa non corretto");
+
+            ContinueOp = false;
+        }
+
+        if (ContinueOp)
+        {
+            Console.WriteLine($"\n📌 Aggiunge somministrazione a farmaco");
+            Console.WriteLine($"✨ id prescrizione: {id}");
+
+            for (var np = 0; np < Prescriptions.Count; np++)
+            {
+                if (Prescriptions[np].IdPrescrizione == id)
+                {
+                    Console.WriteLine($"\n✨ IdPrescrizione: {Prescriptions[np].IdPrescrizione}");
+                    Console.WriteLine($"✨ ptIdUser: {Prescriptions[np].ptIdUser}");
+                    Console.WriteLine($"✨ InsertDate: {Prescriptions[np].InsertDate}");
+                    Console.WriteLine($"✨ ptIdVisit: {Prescriptions[np].ptIdVisit}");
+                    Console.WriteLine($"✨ DataPrescrizione: {Prescriptions[np].DataPrescrizione}");
+                    Console.WriteLine($"✨ PrintDate: {Prescriptions[np].PrintDate}");
+                    Console.WriteLine($"✨ ptIdFarmaco: {Prescriptions[np].ptIdFarmaco}");               // Id Farmaco
+                    Console.WriteLine($"✨ ptIdFarmacoUso: {Prescriptions[np].ptIdFarmacoUso}");
+                    Console.WriteLine($"✨ NotePrescr: {Prescriptions[np].NotePrescr}");
+                    Console.WriteLine($"✨ Uso: {Prescriptions[np].Uso}");
+
+                    IdFarmacoCorrente = Prescriptions[np].ptIdFarmaco;
+                    NuovoUsoAggiornato = Prescriptions[np].Uso;
+
+                    // CorrentePrescr = Prescriptions[np];
+
+                    CorrentePrescr.IdPrescrizione = Prescriptions[np].IdPrescrizione;
+                    CorrentePrescr.ptIdUser = Prescriptions[np].ptIdUser;
+                    CorrentePrescr.InsertDate = Prescriptions[np].InsertDate;
+                    CorrentePrescr.ptIdVisit = Prescriptions[np].ptIdVisit;
+                    CorrentePrescr.DataPrescrizione = DateTime.Now;
+                    CorrentePrescr.PrintDate = printDate;
+                    CorrentePrescr.ptIdFarmaco = Prescriptions[np].ptIdFarmaco;
+                    CorrentePrescr.ptIdFarmacoUso = Prescriptions[np].ptIdFarmacoUso;
+                    CorrentePrescr.NotePrescr = Prescriptions[np].NotePrescr;
+
+                    Console.WriteLine($"\n📌 Prescrizione corrente");
+                    Console.WriteLine($"✨ IdPrescrizione: {CorrentePrescr.IdPrescrizione}");
+                    Console.WriteLine($"✨ ptIdUser: {CorrentePrescr.ptIdUser}");
+                    Console.WriteLine($"✨ InsertDate: {CorrentePrescr.InsertDate}");
+                    Console.WriteLine($"✨ ptIdVisit: {CorrentePrescr.ptIdVisit}");
+                    Console.WriteLine($"✨ DataPrescrizione: {CorrentePrescr.DataPrescrizione}");
+                    Console.WriteLine($"✨ PrintDate: {CorrentePrescr.PrintDate}");
+                    Console.WriteLine($"✨ ptIdFarmaco: {CorrentePrescr.ptIdFarmaco}");
+                    Console.WriteLine($"✨ ptIdFarmacoUso: {CorrentePrescr.ptIdFarmacoUso}");
+                    Console.WriteLine($"✨ NotePrescr: {CorrentePrescr.NotePrescr}");
+
+                    // inserisci somministrazione e recupera id
+                    FarmaciUso Somministrazione = new FarmaciUso();
+
+                    Somministrazione.ptIdUser = Decimal.Parse(gIdUser);
+                    Somministrazione.InsertDate = DateTime.Now;
+                    Somministrazione.ptIdFarmaco = IdFarmacoCorrente;
+                    Somministrazione.Uso = NuovoUsoAggiornato;
+
+                    Console.WriteLine($"\n📌 Crea somministrazione");
+                    Console.WriteLine($"✨ Somministrazione.ptIdUser: {Somministrazione.ptIdUser}");
+                    Console.WriteLine($"✨ Somministrazione.InsertDate: {Somministrazione.InsertDate}");
+                    Console.WriteLine($"✨ Somministrazione.ptIdFarmaco: {Somministrazione.ptIdFarmaco}");
+                    Console.WriteLine($"✨ Somministrazione.Uso: {Somministrazione.Uso}");
+
+                    Console.WriteLine($"⏳Scrittura somministrazione");
+
+                    var UsoFarmaco = await FarmaciUsoManageService.PostFarmacoUso(Somministrazione);
+                    var idUso = UsoFarmaco.IdFarmacoUso;
+
+                    Console.WriteLine($"✅ UsoFarmaco.IdFarmacoUso: {UsoFarmaco.IdFarmacoUso}");
+
+                    // Aggiorna prescrizione con nuovo uso per farmaco
+                    Console.WriteLine($"\n📌 Aggiorna prescrizione con nuovo uso per farmaco");
+
+                    CorrentePrescr.ptIdFarmacoUso = idUso;
+                    Console.WriteLine($"✨ ptIdFarmacoUso: {CorrentePrescr.ptIdFarmacoUso}");
+
+                    Console.WriteLine($"\n✨ id: {id}\t CorrentePrescr.IdPrescrizione: {CorrentePrescr.IdPrescrizione}");
+
+                    await PrescrizioniService.PutPrescrizione(id, CorrentePrescr);
+
+                    Console.WriteLine($"✅ Prescrizione assegnata");
+
+                    StateHasChanged();
+
+                    np = Prescriptions.Count;
+                }
+            }
+        }
+    }
+
     private void UpdateNuovoUso(string value)
     {
         Console.WriteLine($"New Value: {value}");
@@ -3717,6 +3895,8 @@
 
         bool ContinueOp = true;
 
+        Console.WriteLine($"\n📌 Inserimento Prescrizione");
+
         if (CheckDate(pDataPrescrizione))
         {
             TmpDate = pDataPrescrizione.Substring(4, 4) + "-" + pDataPrescrizione.Substring(2, 2) + "-" + pDataPrescrizione.Substring(0, 2) + " 00:00:00,000";
@@ -3725,8 +3905,7 @@
         }
         else
         {
-            Console.WriteLine($"Inserimento Prescrizione");
-            Console.WriteLine($"Errore controllo data di stampa per prescrizione");
+            Console.WriteLine($"❌ Formato data di stampa non corretto");
 
             ContinueOp = false;
         }
@@ -3744,13 +3923,13 @@
                     ptIdFarmacoUso = idU
                 };
 
-            Console.WriteLine($"Inserimento Prescrizione");
-            Console.WriteLine($"ptIdVisit: {Visita.IdVisit}");
-            Console.WriteLine($"DataPrescrizione: {DateTime.Now}");
-            Console.WriteLine($"PrintDate: {printDate}");
-            Console.WriteLine($"ptIdFarmaco: {idF}");
-            Console.WriteLine($"ptIdFarmacoUso: {idU}");
-            Console.WriteLine($" ");
+            Console.WriteLine($"🔷 ptIdUser: {NewPrescSec.ptIdUser}");
+            Console.WriteLine($"🔷 InsertDate: {NewPrescSec.InsertDate}");
+            Console.WriteLine($"🔷 ptIdVisit: {NewPrescSec.ptIdVisit}");
+            Console.WriteLine($"🔷 DataPrescrizione: {NewPrescSec.DataPrescrizione}");
+            Console.WriteLine($"🔷 PrintDate: {NewPrescSec.PrintDate}");
+            Console.WriteLine($"🔷 ptIdFarmaco: {NewPrescSec.ptIdFarmaco}");
+            Console.WriteLine($"🔷 ptIdFarmacoUso: {NewPrescSec.ptIdFarmacoUso}");
 
             // Ottieni la prescrizione restituita con l'ID generato
             var createdPresc = await PrescrizioniService.PostPrescrizione(NewPrescSec);
@@ -3758,8 +3937,7 @@
             // Usa l'ID generato se necessario
             var idPrescrizione = createdPresc.IdPrescrizione;
 
-            Console.WriteLine($"idPrescrizione: {idPrescrizione}");
-            Console.WriteLine($"-----------------------");
+            Console.WriteLine($"\n📌 Id nuova prescrizione: {idPrescrizione}");
 
             ider = idPrescrizione;
 
@@ -3917,9 +4095,9 @@
     #region Relazioni
     public async void LoadRelazione(decimal idv)
     {
-        Console.WriteLine($"VisitaCorrente: {VisitaCorrente}");
-        Console.WriteLine($"ListaVisite[VisitaCorrente].ID: {ListaVisite[VisitaCorrente].ID}");
-        Console.WriteLine($"idv: {idv}");
+        // Console.WriteLine($"VisitaCorrente: {VisitaCorrente}");
+        // Console.WriteLine($"ListaVisite[VisitaCorrente].ID: {ListaVisite[VisitaCorrente].ID}");
+        // Console.WriteLine($"idv: {idv}");
 
         Relazione = new Relazioni();
 
@@ -3947,12 +4125,12 @@
 
             pDataRelazione = Relazione.PrintDate.ToShortDateString();
 
-            Console.WriteLine($"Load Relazione");
-            Console.WriteLine($"Relazione.IdRelazione: {Relazione.IdRelazione}");
-            Console.WriteLine($"Relazione.ptIdUser: {Relazione.ptIdUser}");
-            Console.WriteLine($"Relazione.ptIdVisit: {Relazione.ptIdVisit}");
-            Console.WriteLine($"Relazione.DataRelazione: {Relazione.DataRelazione}");
-            Console.WriteLine($"Relazione.PrintDate: {Relazione.PrintDate}");
+            // Console.WriteLine($"Load Relazione");
+            // Console.WriteLine($"Relazione.IdRelazione: {Relazione.IdRelazione}");
+            // Console.WriteLine($"Relazione.ptIdUser: {Relazione.ptIdUser}");
+            // Console.WriteLine($"Relazione.ptIdVisit: {Relazione.ptIdVisit}");
+            // Console.WriteLine($"Relazione.DataRelazione: {Relazione.DataRelazione}");
+            // Console.WriteLine($"Relazione.PrintDate: {Relazione.PrintDate}");
         }
         else
         {
@@ -3979,12 +4157,12 @@
 
             pDataRelazione = DateTime.Now.ToShortDateString();
 
-            Console.WriteLine($"Setting Relazione ...");
-            Console.WriteLine($"Relazione.IdRelazione: {Relazione.IdRelazione}");
-            Console.WriteLine($"Relazione.ptIdUser: {Relazione.ptIdUser}");
-            Console.WriteLine($"Relazione.ptIdVisit: {Relazione.ptIdVisit}");
-            Console.WriteLine($"Relazione.DataRelazione: {Relazione.DataRelazione}");
-            Console.WriteLine($"Relazione.PrintDate: {Relazione.PrintDate}");
+            // Console.WriteLine($"Setting Relazione ...");
+            // Console.WriteLine($"Relazione.IdRelazione: {Relazione.IdRelazione}");
+            // Console.WriteLine($"Relazione.ptIdUser: {Relazione.ptIdUser}");
+            // Console.WriteLine($"Relazione.ptIdVisit: {Relazione.ptIdVisit}");
+            // Console.WriteLine($"Relazione.DataRelazione: {Relazione.DataRelazione}");
+            // Console.WriteLine($"Relazione.PrintDate: {Relazione.PrintDate}");
         }
 
         StateHasChanged();
@@ -4394,8 +4572,16 @@
     public static string Eta(string data1, string data2)
     {
         string result = "";
+        string relData;
 
-        string relData = data2.Substring(0, 2) + "/" + data2.Substring(2, 2) + "/" + data2.Substring(4, 4);
+        if (data2.Length < 10)
+        {
+            relData = data2.Substring(0, 2) + "/" + data2.Substring(2, 2) + "/" + data2.Substring(4, 4);
+        }
+        else
+        {
+            relData = data2;
+        }
 
         Console.WriteLine("✨ Calcolo Età");
         Console.WriteLine($"📝 data1 {data1}");
@@ -10596,6 +10782,8 @@
         string piva = "";
         string ordine = "";
 
+        string relBirth;
+
         if (who == "1")
         {
             fileword = "marco.docx";
@@ -10645,23 +10833,20 @@
 
             // ... (Modifica il documento come necessario)
 
-            Console.WriteLine($"✅ Loaded {Env.BaseAddress}WordLayout/" + fileword);
-            Console.WriteLine(" ");
-            Console.WriteLine("✨ Info Documento");
-            Console.WriteLine($"📝 document.Count {document.Count}");
-            Console.WriteLine($"📝 document.Sections.Count {document.Sections.Count}");
+            // Console.WriteLine($"✅ Loaded {Env.BaseAddress}WordLayout/" + fileword);
+            // Console.WriteLine("\n✨ Info Documento");
+            // Console.WriteLine($"📝 document.Count {document.Count}");
+            // Console.WriteLine($"📝 document.Sections.Count {document.Sections.Count}");
 
             WTextBody textBody = document.Sections[0].Body;
 
-            Console.WriteLine($"📝 textBody.Count {textBody.Count}");
-            Console.WriteLine($"➡ textBody.Paragraphs.Count {textBody.Paragraphs.Count}");
-            Console.WriteLine(" ");
-            Console.WriteLine("✨ document.Sections[0].PageSetup.Margins");
-            Console.WriteLine($"📝 document.Sections[0].PageSetup.Margins.Left {document.Sections[0].PageSetup.Margins.Left}");
-            Console.WriteLine($"📝 document.Sections[0].PageSetup.Margins.Right {document.Sections[0].PageSetup.Margins.Right}");
-            Console.WriteLine($"📝 document.Sections[0].PageSetup.Margins.Top {document.Sections[0].PageSetup.Margins.Top}");
-            Console.WriteLine($"📝 document.Sections[0].PageSetup.Margins.Bottom {document.Sections[0].PageSetup.Margins.Bottom}");
-            Console.WriteLine(" ");
+            // Console.WriteLine($"\n📝 textBody.Count {textBody.Count}");
+            // Console.WriteLine($"➡ textBody.Paragraphs.Count {textBody.Paragraphs.Count}");
+            // Console.WriteLine("\n✨ document.Sections[0].PageSetup.Margins");
+            // Console.WriteLine($"📝 document.Sections[0].PageSetup.Margins.Left {document.Sections[0].PageSetup.Margins.Left}");
+            // Console.WriteLine($"📝 document.Sections[0].PageSetup.Margins.Right {document.Sections[0].PageSetup.Margins.Right}");
+            // Console.WriteLine($"📝 document.Sections[0].PageSetup.Margins.Top {document.Sections[0].PageSetup.Margins.Top}");
+            // Console.WriteLine($"📝 document.Sections[0].PageSetup.Margins.Bottom {document.Sections[0].PageSetup.Margins.Bottom}");
 
             MarginLeft = document.Sections[0].PageSetup.Margins.Left + 15f;
             MarginRight = document.Sections[0].PageSetup.Margins.Right + 25f;
@@ -10671,8 +10856,7 @@
             //Adding a new section to the document
             // WSection section = document.AddSection() as WSection;
             WSection section = (WSection)document.Sections[0];
-            Console.WriteLine($"➡ section.Paragraphs.Count {section.Paragraphs.Count}");
-            Console.WriteLine(" ");
+            // Console.WriteLine($"\n➡ section.Paragraphs.Count {section.Paragraphs.Count}");
 
             section.PageSetup.Margins.Left = MarginLeft;
             section.PageSetup.Margins.Right = MarginRight;
@@ -10685,32 +10869,50 @@
             paragraph.ParagraphFormat.AfterSpacing = 0;
             // paragraph.ParagraphFormat.LineSpacing = 17.6f;
 
-            WTextRange textRange = paragraph.AppendText(LName + " " + FName) as WTextRange;
+            Console.WriteLine($"\n✅ BirthDate: {BirthDate}");
+            Console.WriteLine($"\n✅ BirthDate.Length: {BirthDate.Length}");
+            if (BirthDate.Length > 0)
+            {
+                if (BirthDate.Length < 10)
+                {
+                    relBirth = BirthDate.Substring(0, 2) + "/" + BirthDate.Substring(2, 2) + "/" + BirthDate.Substring(4, 4);
+                }
+                else
+                {
+                    relBirth = BirthDate;
+                }
+            }
+            else
+            {
+                relBirth = "--/--/----";
+            }
+
+            WTextRange textRange = paragraph.AppendText("Si certifica che " + FName + " " + LName + " nata il " + relBirth + " presenta il seguente quadro oculare:") as WTextRange;
             textRange.CharacterFormat.FontSize = 14f;
             textRange.CharacterFormat.FontName = "Times New Roman";
             textRange.CharacterFormat.Bold = true;
             textRange.CharacterFormat.Italic = true;
 
-            //Appends paragraph
-            paragraph = section.AddParagraph();
-            paragraph.ParagraphFormat.BeforeSpacing = 0;
-            paragraph.ParagraphFormat.AfterSpacing = 24;
+            // //Appends paragraph
+            // paragraph = section.AddParagraph();
+            // paragraph.ParagraphFormat.BeforeSpacing = 0;
+            // paragraph.ParagraphFormat.AfterSpacing = 24;
 
-            textRange = paragraph.AppendText("presenta il seguente quadro oculare:") as WTextRange;
-            textRange.CharacterFormat.FontSize = 12f;
-            textRange.CharacterFormat.FontName = "Times New Roman";
-            textRange.CharacterFormat.Bold = true;
-            textRange.CharacterFormat.Italic = true;
+            // textRange = paragraph.AppendText("presenta il seguente quadro oculare:") as WTextRange;
+            // textRange.CharacterFormat.FontSize = 12f;
+            // textRange.CharacterFormat.FontName = "Times New Roman";
+            // textRange.CharacterFormat.Bold = true;
+            // textRange.CharacterFormat.Italic = true;
             #endregion
 
             #region Scrittura dati Relazione
             //Appends paragraph Diagnosi
-            Console.WriteLine($"✅ Diagnosi");
+            // Console.WriteLine($"\n✅ Diagnosi");
             paragraph = section.AddParagraph();
             paragraph.ParagraphFormat.BeforeSpacing = 12f;
             paragraph.ParagraphFormat.AfterSpacing = 0;
 
-            textRange = paragraph.AppendText("Diagnosi") as WTextRange;
+            textRange = paragraph.AppendText("Diagnosi:") as WTextRange;
             textRange.CharacterFormat.FontSize = 12f;
             textRange.CharacterFormat.FontName = "Times New Roman";
             textRange.CharacterFormat.Bold = true;
@@ -10721,87 +10923,87 @@
             paragraph.ParagraphFormat.BeforeSpacing = 0;
             paragraph.ParagraphFormat.AfterSpacing = 0;
 
-            textRange = paragraph.AppendText("OD: ") as WTextRange;
+            textRange = paragraph.AppendText("        ") as WTextRange;
             textRange.CharacterFormat.FontSize = 12f;
             textRange.CharacterFormat.FontName = "Times New Roman";
             textRange.CharacterFormat.Bold = true;
             textRange.CharacterFormat.Italic = false;
 
-            Console.WriteLine($"✅ Relazione.DiagnosiOD: {Relazione.DiagnosiOD}");
+            // Console.WriteLine($"✅ Relazione.DiagnosiOD: {Relazione.DiagnosiOD}");
             textRange = paragraph.AppendText(Relazione.DiagnosiOD) as WTextRange;
             textRange.CharacterFormat.FontSize = 12f;
             textRange.CharacterFormat.FontName = "Times New Roman";
             textRange.CharacterFormat.Bold = false;
             textRange.CharacterFormat.Italic = false;
 
-            //Appends paragraph
-            paragraph = section.AddParagraph();
-            paragraph.ParagraphFormat.BeforeSpacing = 0;
-            paragraph.ParagraphFormat.AfterSpacing = 0;
+            // //Appends paragraph
+            // paragraph = section.AddParagraph();
+            // paragraph.ParagraphFormat.BeforeSpacing = 0;
+            // paragraph.ParagraphFormat.AfterSpacing = 0;
 
-            textRange = paragraph.AppendText("OS: ") as WTextRange;
-            textRange.CharacterFormat.FontSize = 12f;
-            textRange.CharacterFormat.FontName = "Times New Roman";
-            textRange.CharacterFormat.Bold = true;
-            textRange.CharacterFormat.Italic = false;
+            // textRange = paragraph.AppendText("OS: ") as WTextRange;
+            // textRange.CharacterFormat.FontSize = 12f;
+            // textRange.CharacterFormat.FontName = "Times New Roman";
+            // textRange.CharacterFormat.Bold = true;
+            // textRange.CharacterFormat.Italic = false;
 
-            Console.WriteLine($"✅ Relazione.DiagnosiOS: {Relazione.DiagnosiOS}");
-            textRange = paragraph.AppendText(Relazione.DiagnosiOS) as WTextRange;
-            textRange.CharacterFormat.FontSize = 12f;
-            textRange.CharacterFormat.FontName = "Times New Roman";
-            textRange.CharacterFormat.Bold = false;
-            textRange.CharacterFormat.Italic = false;
+            // // Console.WriteLine($"✅ Relazione.DiagnosiOS: {Relazione.DiagnosiOS}");
+            // textRange = paragraph.AppendText(Relazione.DiagnosiOS) as WTextRange;
+            // textRange.CharacterFormat.FontSize = 12f;
+            // textRange.CharacterFormat.FontName = "Times New Roman";
+            // textRange.CharacterFormat.Bold = false;
+            // textRange.CharacterFormat.Italic = false;
 
             //Appends paragraph Schirmer  test tipo 2 (basale)
-            Console.WriteLine($"✅ Schirmer  test tipo 2 (basale)");
-            paragraph = section.AddParagraph();
-            paragraph.ParagraphFormat.BeforeSpacing = 12f;
-            paragraph.ParagraphFormat.AfterSpacing = 0;
+            // Console.WriteLine($"\n✅ Schirmer  test tipo 2 (basale)");
+            // paragraph = section.AddParagraph();
+            // paragraph.ParagraphFormat.BeforeSpacing = 12f;
+            // paragraph.ParagraphFormat.AfterSpacing = 0;
 
-            textRange = paragraph.AppendText("Schirmer  test tipo 2 (basale)") as WTextRange;
-            textRange.CharacterFormat.FontSize = 12f;
-            textRange.CharacterFormat.FontName = "Times New Roman";
-            textRange.CharacterFormat.Bold = true;
-            textRange.CharacterFormat.Italic = true;
+            // textRange = paragraph.AppendText("Schirmer  test tipo 2 (basale):") as WTextRange;
+            // textRange.CharacterFormat.FontSize = 12f;
+            // textRange.CharacterFormat.FontName = "Times New Roman";
+            // textRange.CharacterFormat.Bold = true;
+            // textRange.CharacterFormat.Italic = true;
 
-            //Appends paragraph
-            paragraph = section.AddParagraph();
-            paragraph.ParagraphFormat.BeforeSpacing = 0;
-            paragraph.ParagraphFormat.AfterSpacing = 0;
+            // //Appends paragraph
+            // paragraph = section.AddParagraph();
+            // paragraph.ParagraphFormat.BeforeSpacing = 0;
+            // paragraph.ParagraphFormat.AfterSpacing = 0;
 
-            textRange = paragraph.AppendText("OD: ") as WTextRange;
-            textRange.CharacterFormat.FontSize = 12f;
-            textRange.CharacterFormat.FontName = "Times New Roman";
-            textRange.CharacterFormat.Bold = true;
-            textRange.CharacterFormat.Italic = false;
+            // textRange = paragraph.AppendText("        ") as WTextRange;
+            // textRange.CharacterFormat.FontSize = 12f;
+            // textRange.CharacterFormat.FontName = "Times New Roman";
+            // textRange.CharacterFormat.Bold = true;
+            // textRange.CharacterFormat.Italic = false;
 
-            Console.WriteLine($"✅ Relazione.SHIRMER_Od: {Relazione.SHIRMER_Od}");
-            textRange = paragraph.AppendText(Relazione.SHIRMER_Od) as WTextRange;
-            textRange.CharacterFormat.FontSize = 12f;
-            textRange.CharacterFormat.FontName = "Times New Roman";
-            textRange.CharacterFormat.Bold = false;
-            textRange.CharacterFormat.Italic = false;
+            // // Console.WriteLine($"✅ Relazione.SHIRMER_Od: {Relazione.SHIRMER_Od}");
+            // textRange = paragraph.AppendText(Relazione.SHIRMER_Od) as WTextRange;
+            // textRange.CharacterFormat.FontSize = 12f;
+            // textRange.CharacterFormat.FontName = "Times New Roman";
+            // textRange.CharacterFormat.Bold = false;
+            // textRange.CharacterFormat.Italic = false;
 
-            //Appends paragraph
-            paragraph = section.AddParagraph();
-            paragraph.ParagraphFormat.BeforeSpacing = 0;
-            paragraph.ParagraphFormat.AfterSpacing = 0;
+            // //Appends paragraph
+            // paragraph = section.AddParagraph();
+            // paragraph.ParagraphFormat.BeforeSpacing = 0;
+            // paragraph.ParagraphFormat.AfterSpacing = 0;
 
-            textRange = paragraph.AppendText("OS: ") as WTextRange;
-            textRange.CharacterFormat.FontSize = 12f;
-            textRange.CharacterFormat.FontName = "Times New Roman";
-            textRange.CharacterFormat.Bold = true;
-            textRange.CharacterFormat.Italic = false;
+            // textRange = paragraph.AppendText("OS: ") as WTextRange;
+            // textRange.CharacterFormat.FontSize = 12f;
+            // textRange.CharacterFormat.FontName = "Times New Roman";
+            // textRange.CharacterFormat.Bold = true;
+            // textRange.CharacterFormat.Italic = false;
 
-            Console.WriteLine($"✅ Relazione.SHIRMER_Os: {Relazione.SHIRMER_Os}");
-            textRange = paragraph.AppendText(Relazione.SHIRMER_Os) as WTextRange;
-            textRange.CharacterFormat.FontSize = 12f;
-            textRange.CharacterFormat.FontName = "Times New Roman";
-            textRange.CharacterFormat.Bold = false;
-            textRange.CharacterFormat.Italic = false;
+            // // Console.WriteLine($"✅ Relazione.SHIRMER_Os: {Relazione.SHIRMER_Os}");
+            // textRange = paragraph.AppendText(Relazione.SHIRMER_Os) as WTextRange;
+            // textRange.CharacterFormat.FontSize = 12f;
+            // textRange.CharacterFormat.FontName = "Times New Roman";
+            // textRange.CharacterFormat.Bold = false;
+            // textRange.CharacterFormat.Italic = false;
 
             //Appends paragraph Segmento anteriore
-            Console.WriteLine($"✅ Segmento anteriore");
+            Console.WriteLine($"\n✅ Segmento anteriore");
             paragraph = section.AddParagraph();
             paragraph.ParagraphFormat.BeforeSpacing = 12f;
             paragraph.ParagraphFormat.AfterSpacing = 0;
@@ -10823,7 +11025,7 @@
             textRange.CharacterFormat.Bold = true;
             textRange.CharacterFormat.Italic = false;
 
-            Console.WriteLine($"✅ Relazione.Seg_Ant_Od: {Relazione.Seg_Ant_Od}");
+            // Console.WriteLine($"✅ Relazione.Seg_Ant_Od: {Relazione.Seg_Ant_Od}");
             textRange = paragraph.AppendText(Relazione.Seg_Ant_Od) as WTextRange;
             textRange.CharacterFormat.FontSize = 12f;
             textRange.CharacterFormat.FontName = "Times New Roman";
@@ -10841,7 +11043,7 @@
             textRange.CharacterFormat.Bold = true;
             textRange.CharacterFormat.Italic = false;
 
-            Console.WriteLine($"✅ Relazione.Seg_Ant_Os: {Relazione.Seg_Ant_Os}");
+            // Console.WriteLine($"✅ Relazione.Seg_Ant_Os: {Relazione.Seg_Ant_Os}");
             textRange = paragraph.AppendText(Relazione.Seg_Ant_Os) as WTextRange;
             textRange.CharacterFormat.FontSize = 12f;
             textRange.CharacterFormat.FontName = "Times New Roman";
@@ -10849,7 +11051,7 @@
             textRange.CharacterFormat.Italic = false;
 
             //Appends paragraph Visus
-            Console.WriteLine($"✅ Visus");
+            // Console.WriteLine($"\n✅ Visus");
             paragraph = section.AddParagraph();
             paragraph.ParagraphFormat.BeforeSpacing = 12f;
             paragraph.ParagraphFormat.AfterSpacing = 0;
@@ -10871,7 +11073,7 @@
             textRange.CharacterFormat.Bold = true;
             textRange.CharacterFormat.Italic = false;
 
-            Console.WriteLine($"✅ Relazione.Visus_Od: {Relazione.Visus_Od}");
+            // Console.WriteLine($"✅ Relazione.Visus_Od: {Relazione.Visus_Od}");
             textRange = paragraph.AppendText(Relazione.Visus_Od) as WTextRange;
             textRange.CharacterFormat.FontSize = 12f;
             textRange.CharacterFormat.FontName = "Times New Roman";
@@ -10889,63 +11091,63 @@
             textRange.CharacterFormat.Bold = true;
             textRange.CharacterFormat.Italic = false;
 
-            Console.WriteLine($"✅ Relazione.Visus_Os: {Relazione.Visus_Os}");
+            // Console.WriteLine($"✅ Relazione.Visus_Os: {Relazione.Visus_Os}");
             textRange = paragraph.AppendText(Relazione.Visus_Os) as WTextRange;
             textRange.CharacterFormat.FontSize = 12f;
             textRange.CharacterFormat.FontName = "Times New Roman";
             textRange.CharacterFormat.Bold = false;
             textRange.CharacterFormat.Italic = false;
 
-            //Appends paragraph Tono oculare (valori normali fino a 20)
-            Console.WriteLine($"✅ Tono oculare (valori normali fino a 20)");
-            paragraph = section.AddParagraph();
-            paragraph.ParagraphFormat.BeforeSpacing = 12f;
-            paragraph.ParagraphFormat.AfterSpacing = 0;
+            // //Appends paragraph Tono oculare (valori normali fino a 20)
+            // // Console.WriteLine($"\n✅ Tono oculare (valori normali fino a 20)");
+            // paragraph = section.AddParagraph();
+            // paragraph.ParagraphFormat.BeforeSpacing = 12f;
+            // paragraph.ParagraphFormat.AfterSpacing = 0;
 
-            textRange = paragraph.AppendText("Tono oculare (valori normali fino a 20)") as WTextRange;
-            textRange.CharacterFormat.FontSize = 12f;
-            textRange.CharacterFormat.FontName = "Times New Roman";
-            textRange.CharacterFormat.Bold = true;
-            textRange.CharacterFormat.Italic = true;
+            // textRange = paragraph.AppendText("Tono oculare (valori normali fino a 20)") as WTextRange;
+            // textRange.CharacterFormat.FontSize = 12f;
+            // textRange.CharacterFormat.FontName = "Times New Roman";
+            // textRange.CharacterFormat.Bold = true;
+            // textRange.CharacterFormat.Italic = true;
 
-            //Appends paragraph
-            paragraph = section.AddParagraph();
-            paragraph.ParagraphFormat.BeforeSpacing = 0;
-            paragraph.ParagraphFormat.AfterSpacing = 0;
+            // //Appends paragraph
+            // paragraph = section.AddParagraph();
+            // paragraph.ParagraphFormat.BeforeSpacing = 0;
+            // paragraph.ParagraphFormat.AfterSpacing = 0;
 
-            textRange = paragraph.AppendText("OD: ") as WTextRange;
-            textRange.CharacterFormat.FontSize = 12f;
-            textRange.CharacterFormat.FontName = "Times New Roman";
-            textRange.CharacterFormat.Bold = true;
-            textRange.CharacterFormat.Italic = false;
+            // textRange = paragraph.AppendText("OD: ") as WTextRange;
+            // textRange.CharacterFormat.FontSize = 12f;
+            // textRange.CharacterFormat.FontName = "Times New Roman";
+            // textRange.CharacterFormat.Bold = true;
+            // textRange.CharacterFormat.Italic = false;
 
-            Console.WriteLine($"✅ Relazione.TONO_Od: {Relazione.TONO_Od}");
-            textRange = paragraph.AppendText(Relazione.TONO_Od) as WTextRange;
-            textRange.CharacterFormat.FontSize = 12f;
-            textRange.CharacterFormat.FontName = "Times New Roman";
-            textRange.CharacterFormat.Bold = false;
-            textRange.CharacterFormat.Italic = false;
+            // // Console.WriteLine($"✅ Relazione.TONO_Od: {Relazione.TONO_Od}");
+            // textRange = paragraph.AppendText(Relazione.TONO_Od) as WTextRange;
+            // textRange.CharacterFormat.FontSize = 12f;
+            // textRange.CharacterFormat.FontName = "Times New Roman";
+            // textRange.CharacterFormat.Bold = false;
+            // textRange.CharacterFormat.Italic = false;
 
-            //Appends paragraph
-            paragraph = section.AddParagraph();
-            paragraph.ParagraphFormat.BeforeSpacing = 0;
-            paragraph.ParagraphFormat.AfterSpacing = 0;
+            // //Appends paragraph
+            // paragraph = section.AddParagraph();
+            // paragraph.ParagraphFormat.BeforeSpacing = 0;
+            // paragraph.ParagraphFormat.AfterSpacing = 0;
 
-            textRange = paragraph.AppendText("OS: ") as WTextRange;
-            textRange.CharacterFormat.FontSize = 12f;
-            textRange.CharacterFormat.FontName = "Times New Roman";
-            textRange.CharacterFormat.Bold = true;
-            textRange.CharacterFormat.Italic = false;
+            // textRange = paragraph.AppendText("OS: ") as WTextRange;
+            // textRange.CharacterFormat.FontSize = 12f;
+            // textRange.CharacterFormat.FontName = "Times New Roman";
+            // textRange.CharacterFormat.Bold = true;
+            // textRange.CharacterFormat.Italic = false;
 
-            Console.WriteLine($"✅ Relazione.TONO_Os: {Relazione.TONO_Os}");
-            textRange = paragraph.AppendText(Relazione.TONO_Os) as WTextRange;
-            textRange.CharacterFormat.FontSize = 12f;
-            textRange.CharacterFormat.FontName = "Times New Roman";
-            textRange.CharacterFormat.Bold = false;
-            textRange.CharacterFormat.Italic = false;
+            // // Console.WriteLine($"✅ Relazione.TONO_Os: {Relazione.TONO_Os}");
+            // textRange = paragraph.AppendText(Relazione.TONO_Os) as WTextRange;
+            // textRange.CharacterFormat.FontSize = 12f;
+            // textRange.CharacterFormat.FontName = "Times New Roman";
+            // textRange.CharacterFormat.Bold = false;
+            // textRange.CharacterFormat.Italic = false;
 
             //Appends paragraph Fundus in midriasi con indentazione
-            Console.WriteLine($"✅ Fundus in midriasi con indentazione");
+            // Console.WriteLine($"\n✅ Fundus in midriasi con indentazione");
             paragraph = section.AddParagraph();
             paragraph.ParagraphFormat.BeforeSpacing = 12f;
             paragraph.ParagraphFormat.AfterSpacing = 0;
@@ -10967,7 +11169,7 @@
             textRange.CharacterFormat.Bold = true;
             textRange.CharacterFormat.Italic = false;
 
-            Console.WriteLine($"✅ Relazione.Fundus_Od: {Relazione.Fundus_Od}");
+            // Console.WriteLine($"✅ Relazione.Fundus_Od: {Relazione.Fundus_Od}");
             textRange = paragraph.AppendText(Relazione.Fundus_Od) as WTextRange;
             textRange.CharacterFormat.FontSize = 12f;
             textRange.CharacterFormat.FontName = "Times New Roman";
@@ -10985,7 +11187,7 @@
             textRange.CharacterFormat.Bold = true;
             textRange.CharacterFormat.Italic = false;
 
-            Console.WriteLine($"✅ Relazione.Fundus_Os: {Relazione.Fundus_Os}");
+            // Console.WriteLine($"✅ Relazione.Fundus_Os: {Relazione.Fundus_Os}");
             textRange = paragraph.AppendText(Relazione.Fundus_Os) as WTextRange;
             textRange.CharacterFormat.FontSize = 12f;
             textRange.CharacterFormat.FontName = "Times New Roman";
@@ -11004,7 +11206,7 @@
             textRange.CharacterFormat.FontName = "Times New Roman";
 
             //Appends paragraph Si rilascia su richiesta dell'interessato / a per gli usi consentiti dalla legge
-            Console.WriteLine($"✅ Si rilascia su richiesta dell'interessato / a per gli usi consentiti dalla legge");
+            // Console.WriteLine($"\n✅ Si rilascia su richiesta dell'interessato / a per gli usi consentiti dalla legge");
             paragraph = section.AddParagraph();
             paragraph.ParagraphFormat.BeforeSpacing = 12;
             paragraph.ParagraphFormat.AfterSpacing = 0;
@@ -11040,7 +11242,7 @@
 
             #region Timbro
             //Appends paragraph Timbro
-            Console.WriteLine($"✅ Timbro");
+            // Console.WriteLine($"\n✅ Timbro");
             paragraph = section.AddParagraph();
             // //Adds tab stop at position 11
             // Tab firstTab = paragraph.ParagraphFormat.Tabs.AddTab(60, TabJustification.Centered, TabLeader.Dotted);
@@ -11126,7 +11328,7 @@
             //Download the Word document in the browser
             Console.WriteLine($"⏳ saving docx");
             await JS.SaveAs("Relazione " + LName + " " + FName + "_" + relData + ".docx", stream.ToArray());
-            Console.WriteLine($"📝 saved docx");
+            Console.WriteLine($"📝 docx saved");
         }
     }
     #endregion

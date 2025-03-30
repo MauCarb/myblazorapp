@@ -2,8 +2,8 @@
    ------------------------------------
     Project:    Ophthal
     Author:     Daniele Dell'Aquila
-    Update:     2025/03/20
-    Version:    1.0.4
+    Update:     2025/03/27
+    Version:    1.0.5
    ------------------------------------
 */
 .d_error {
@@ -31,6 +31,10 @@
         color: #f00 !important;
         background-color: #f8f9fa !important;
         border-color: #f8f9fa !important;
+    }
+
+    .prescWidth{
+        min-width:110%;
     }
 
 .btn-white {
@@ -269,7 +273,7 @@
 }
 
 .e-chevron-down:before {
-    content: '\e916';
+   content: '\e916';
 }
 
 .e-chevron-up:before {
@@ -393,7 +397,7 @@
 .GMVReqs .e-toast-container .e-toast .e-toast-close-icon {
     color: #000;
 }
-*/ /* ------------------------------------ */
+*//* ------------------------------------ */
 
 
 /* Common styles                        */
@@ -432,7 +436,7 @@
     background-color: #fff;
     font-size: 90%;
     margin-top: 2px;
-    /*    
+/*    
     border-top: 1px solid #f4f4ff;
     border-bottom: 1px solid #f4f4ff;
 */

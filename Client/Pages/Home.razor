@@ -49,6 +49,9 @@
 	bool ItemExist { get; set; }
     #endregion
 
+    string FilterPatient = "";
+    string FilterDrug = "";
+
 	protected override async Task OnInitializedAsync()
 	{
         sessionLoggedUser = await sessionStorage.GetItemAsStringAsync("sessionLoggedUser");
@@ -57,6 +60,9 @@
         {
             Navigation.NavigateTo("/auth/login");
         }
+
+        await sessionStorage.SetItemAsync("FilterPatient", FilterPatient);
+        await sessionStorage.SetItemAsync("FilterDrug", FilterDrug);
 
         // await sessionStorage.SetItemAsync("name", "John Smith");
 
