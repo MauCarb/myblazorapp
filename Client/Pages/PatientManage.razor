@@ -3013,19 +3013,17 @@
 
             AddVisitDisabled = false;
             // SaveVisitDisabled = true;
+
+            DialogHeader = " Informazioni ";
+            DialogIcon = "e-icons e-circle-info col-lg-2";
+            DialogText = "Dati Visita salvati";
+            DialogDetail = "";
         }
         else
         {
             await Task.Run(() =>
             {
-                if (ContinueOp)
-                {
-                    DialogHeader = " Informazioni ";
-                    DialogIcon = "e-icons e-circle-info col-lg-2";
-                    DialogText = "Dati Visita salvati";
-                    DialogDetail = "";
-                }
-                else
+                if (!ContinueOp)
                 {
                     if (FailReason == "operatore")
                     {
@@ -3042,10 +3040,10 @@
                         DialogDetail = "Data errata";
                     }
                 }
-
-                DialogVisible = true;
             });
         }
+
+        DialogVisible = true;
 
         StateHasChanged();
     }
