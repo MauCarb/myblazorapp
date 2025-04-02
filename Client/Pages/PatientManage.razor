@@ -1171,7 +1171,7 @@
                                 </div>
 
                                 <!-- SHIRMER -->
-                                <div class="row" style="margin-top: 12px;">
+                                <div class="row" style="margin-top: 12px; display: none;">
                                     <div class="col-sm-6">
                                         <SfTextBox ID="shirmerod" @bind-Value="@Relazione.SHIRMER_Od" Placeholder="SHIRMER" FloatLabelType="@FloatLabelType.Always" title="@Relazione.SHIRMER_Od" Multiline="true" CssClass="sftext" style="height: 48px;"></SfTextBox>
                                     </div>
@@ -1201,11 +1201,11 @@
                                 </div>
 
                                 <!-- Tono Oculare -->
-                                <div class="row" style="margin-top: 12px; display: none;">
+                                <div class="row" style="margin-top: 12px;">
                                     <div class="col-sm-6">
-                                        <SfTextBox ID="tonood" @bind-Value="@Relazione.TONO_Od" Placeholder="Tono Oculare OD" FloatLabelType="@FloatLabelType.Always" title="@Relazione.TONO_Od" Multiline="true" style="height: 48px;"></SfTextBox>
+                                        <SfTextBox ID="tonood" @bind-Value="@Relazione.TONO_Od" Placeholder="Tono Oculare" FloatLabelType="@FloatLabelType.Always" title="@Relazione.TONO_Od" Multiline="true" style="height: 48px;"></SfTextBox>
                                     </div>
-                                    <div class="col-sm-6">
+                                    <div class="col-sm-6" style="display: none;">
                                         <SfTextBox ID="tonoos" @bind-Value="@Relazione.TONO_Os" Placeholder="Tono Oculare OS" FloatLabelType="@FloatLabelType.Always" title="@Relazione.TONO_Os" Multiline="true" style="height: 48px;"></SfTextBox>
                                     </div>
                                 </div>
@@ -10921,11 +10921,11 @@
             paragraph.ParagraphFormat.BeforeSpacing = 0;
             paragraph.ParagraphFormat.AfterSpacing = 0;
 
-            textRange = paragraph.AppendText("        ") as WTextRange;
-            textRange.CharacterFormat.FontSize = 12f;
-            textRange.CharacterFormat.FontName = "Times New Roman";
-            textRange.CharacterFormat.Bold = true;
-            textRange.CharacterFormat.Italic = false;
+            // textRange = paragraph.AppendText("        ") as WTextRange;
+            // textRange.CharacterFormat.FontSize = 12f;
+            // textRange.CharacterFormat.FontName = "Times New Roman";
+            // textRange.CharacterFormat.Bold = true;
+            // textRange.CharacterFormat.Italic = false;
 
             // Console.WriteLine($"✅ Relazione.DiagnosiOD: {Relazione.DiagnosiOD}");
             textRange = paragraph.AppendText(Relazione.DiagnosiOD) as WTextRange;
@@ -11096,22 +11096,22 @@
             textRange.CharacterFormat.Bold = false;
             textRange.CharacterFormat.Italic = false;
 
-            // //Appends paragraph Tono oculare (valori normali fino a 20)
-            // // Console.WriteLine($"\n✅ Tono oculare (valori normali fino a 20)");
-            // paragraph = section.AddParagraph();
-            // paragraph.ParagraphFormat.BeforeSpacing = 12f;
-            // paragraph.ParagraphFormat.AfterSpacing = 0;
+            //Appends paragraph Tono oculare (valori normali fino a 20)
+            // Console.WriteLine($"\n✅ Tono oculare (valori normali fino a 20)");
+            paragraph = section.AddParagraph();
+            paragraph.ParagraphFormat.BeforeSpacing = 12f;
+            paragraph.ParagraphFormat.AfterSpacing = 0;
 
-            // textRange = paragraph.AppendText("Tono oculare (valori normali fino a 20)") as WTextRange;
-            // textRange.CharacterFormat.FontSize = 12f;
-            // textRange.CharacterFormat.FontName = "Times New Roman";
-            // textRange.CharacterFormat.Bold = true;
-            // textRange.CharacterFormat.Italic = true;
+            textRange = paragraph.AppendText("Tono oculare (valori normali fino a 20)") as WTextRange;
+            textRange.CharacterFormat.FontSize = 12f;
+            textRange.CharacterFormat.FontName = "Times New Roman";
+            textRange.CharacterFormat.Bold = true;
+            textRange.CharacterFormat.Italic = true;
 
-            // //Appends paragraph
-            // paragraph = section.AddParagraph();
-            // paragraph.ParagraphFormat.BeforeSpacing = 0;
-            // paragraph.ParagraphFormat.AfterSpacing = 0;
+            //Appends paragraph
+            paragraph = section.AddParagraph();
+            paragraph.ParagraphFormat.BeforeSpacing = 0;
+            paragraph.ParagraphFormat.AfterSpacing = 0;
 
             // textRange = paragraph.AppendText("OD: ") as WTextRange;
             // textRange.CharacterFormat.FontSize = 12f;
@@ -11119,12 +11119,12 @@
             // textRange.CharacterFormat.Bold = true;
             // textRange.CharacterFormat.Italic = false;
 
-            // // Console.WriteLine($"✅ Relazione.TONO_Od: {Relazione.TONO_Od}");
-            // textRange = paragraph.AppendText(Relazione.TONO_Od) as WTextRange;
-            // textRange.CharacterFormat.FontSize = 12f;
-            // textRange.CharacterFormat.FontName = "Times New Roman";
-            // textRange.CharacterFormat.Bold = false;
-            // textRange.CharacterFormat.Italic = false;
+            // Console.WriteLine($"✅ Relazione.TONO_Od: {Relazione.TONO_Od}");
+            textRange = paragraph.AppendText(Relazione.TONO_Od) as WTextRange;
+            textRange.CharacterFormat.FontSize = 12f;
+            textRange.CharacterFormat.FontName = "Times New Roman";
+            textRange.CharacterFormat.Bold = false;
+            textRange.CharacterFormat.Italic = false;
 
             // //Appends paragraph
             // paragraph = section.AddParagraph();
