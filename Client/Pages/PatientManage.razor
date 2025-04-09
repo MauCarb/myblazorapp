@@ -4949,6 +4949,801 @@
         posCellStyleH.Borders.Left.Width = 0;
         posCellStyleH.Borders.Right.Width = 0;
         posCellStyleH.Borders.Top.Width = 0;
+        posCellStyleH.Borders.Bottom.Width = 0F;
+        posCellStyleH.CellPadding = new PdfPaddings(8, 3, 3, 0);
+
+        // Specify the style for value's cell
+        PdfGridCellStyle posCellStyleV = new PdfGridCellStyle();
+        posCellStyleV.Borders.Left.Width = 0.2F;
+        posCellStyleV.Borders.Right.Width = 0.2F;
+        posCellStyleV.Borders.Top.Width = 0.2F;
+        posCellStyleV.Borders.Bottom.Width = 0.2F;
+        posCellStyleV.CellPadding = new PdfPaddings(3, 3, 3, 3);
+        #endregion
+
+        #region Imposta griglia Dati Visita
+        // Create Grid
+        PdfGrid VisitPdfGrid = new PdfGrid();
+
+        // Add Rows
+        PdfGridRow rowV01 = VisitPdfGrid.Rows.Add();        // diagnosi, interventi
+        PdfGridRow rowV02 = VisitPdfGrid.Rows.Add();        // anamnesi, curva tonometrica, argon
+        PdfGridRow rowV03 = VisitPdfGrid.Rows.Add();        // annessi od, shirmer, tono oculare
+        PdfGridRow rowV04 = VisitPdfGrid.Rows.Add();        // annessi os, vie lacrimali, topografia
+        PdfGridRow rowV05 = VisitPdfGrid.Rows.Add();        // seg ant od,  fag od, fag os
+        PdfGridRow rowV06 = VisitPdfGrid.Rows.Add();        // seg ant os, iv
+        PdfGridRow rowV07 = VisitPdfGrid.Rows.Add();        // fundus od, oct od, oct os
+        PdfGridRow rowV08 = VisitPdfGrid.Rows.Add();        // fundus os, rnfl od, rnfl os
+        PdfGridRow rowV09 = VisitPdfGrid.Rows.Add();        // visus od, cv od, cv os
+        PdfGridRow rowV10 = VisitPdfGrid.Rows.Add();        // visus os, pachimetria, c/d
+        PdfGridRow rowV11 = VisitPdfGrid.Rows.Add();        // terapia, autorefrattometria
+        PdfGridRow rowV12 = VisitPdfGrid.Rows.Add();        // odpl, odpv, odmd
+        PdfGridRow rowV13 = VisitPdfGrid.Rows.Add();        // ospl, ospv, osmd
+        PdfGridRow rowV14 = VisitPdfGrid.Rows.Add();        // motivo visita, conclusioni
+        PdfGridRow rowV15 = VisitPdfGrid.Rows.Add();        // note
+        PdfGridRow rowV16 = VisitPdfGrid.Rows.Add();
+        PdfGridRow rowV17 = VisitPdfGrid.Rows.Add();
+        PdfGridRow rowV18 = VisitPdfGrid.Rows.Add();
+        PdfGridRow rowV19 = VisitPdfGrid.Rows.Add();
+        PdfGridRow rowV20 = VisitPdfGrid.Rows.Add();
+        PdfGridRow rowV21 = VisitPdfGrid.Rows.Add();
+        PdfGridRow rowV22 = VisitPdfGrid.Rows.Add();
+        PdfGridRow rowV23 = VisitPdfGrid.Rows.Add();
+        PdfGridRow rowV24 = VisitPdfGrid.Rows.Add();
+        PdfGridRow rowV25 = VisitPdfGrid.Rows.Add();
+        PdfGridRow rowV26 = VisitPdfGrid.Rows.Add();
+        PdfGridRow rowV27 = VisitPdfGrid.Rows.Add();
+        PdfGridRow rowV28 = VisitPdfGrid.Rows.Add();
+        PdfGridRow rowV29 = VisitPdfGrid.Rows.Add();
+
+        // Set Rows's height
+        // rowV01.Height = 24;
+        rowV02.Height = 5;
+        // rowV03.Height = 24;
+        rowV04.Height = 5;
+        // rowV05.Height = 15;
+        rowV06.Height = 5;
+        // rowV07.Height = 15;
+        rowV08.Height = 5;
+        // rowV09.Height = 15;
+        rowV10.Height = 5;
+        // rowV11.Height = 15;
+        rowV12.Height = 5;
+        // rowV13.Height = 15;
+        rowV14.Height = 5;
+        // rowV15.Height = 15;
+        rowV16.Height = 5;
+        // rowV17.Height = 15;
+        rowV18.Height = 5;
+        // rowV19.Height = 15;
+        rowV20.Height = 5;
+        // rowV21.Height = 15;
+        rowV22.Height = 5;
+        // rowV23.Height = 15;
+        rowV24.Height = 5;
+        // rowV25.Height = 15;
+        rowV26.Height = 5;
+        // rowV27.Height = 24;
+        rowV28.Height = 5;
+        // rowV29.Height = 24;
+
+        // Add Columns
+        VisitPdfGrid.Columns.Add(10);
+
+        // Set Columns's width
+        VisitPdfGrid.Columns[0].Width = 81;
+        VisitPdfGrid.Columns[1].Width = 81;
+        VisitPdfGrid.Columns[2].Width = 81;
+        VisitPdfGrid.Columns[3].Width = 81;
+        VisitPdfGrid.Columns[4].Width = 81;
+        VisitPdfGrid.Columns[5].Width = 81;
+        VisitPdfGrid.Columns[6].Width = 81;
+        VisitPdfGrid.Columns[7].Width = 81;
+        VisitPdfGrid.Columns[8].Width = 81;
+        VisitPdfGrid.Columns[9].Width = 81;
+
+        // Set Columns merged
+        VisitPdfGrid.Rows[0].Cells[1].ColumnSpan = 5;                                           //  0
+        VisitPdfGrid.Rows[0].Cells[7].ColumnSpan = 3;
+
+        VisitPdfGrid.Rows[1].Cells[0].ColumnSpan = 10;
+
+        VisitPdfGrid.Rows[2].Cells[1].ColumnSpan = 5;                                           //  1
+
+        VisitPdfGrid.Rows[3].Cells[0].ColumnSpan = 10;
+
+        VisitPdfGrid.Rows[4].Cells[1].ColumnSpan = 5;                                           //  2
+
+        VisitPdfGrid.Rows[5].Cells[0].ColumnSpan = 10;
+
+        VisitPdfGrid.Rows[6].Cells[1].ColumnSpan = 5;                                           //  3
+
+        VisitPdfGrid.Rows[7].Cells[0].ColumnSpan = 10;
+
+        VisitPdfGrid.Rows[8].Cells[1].ColumnSpan = 5;                                           //  4
+
+        VisitPdfGrid.Rows[9].Cells[0].ColumnSpan = 10;
+
+        VisitPdfGrid.Rows[10].Cells[1].ColumnSpan = 5;                                           //  5
+
+        VisitPdfGrid.Rows[11].Cells[0].ColumnSpan = 10;
+
+        VisitPdfGrid.Rows[12].Cells[1].ColumnSpan = 5;                                           //  6
+
+        VisitPdfGrid.Rows[13].Cells[0].ColumnSpan = 10;
+
+        VisitPdfGrid.Rows[14].Cells[1].ColumnSpan = 5;                                           //  7
+
+        VisitPdfGrid.Rows[15].Cells[0].ColumnSpan = 10;
+
+        VisitPdfGrid.Rows[16].Cells[1].ColumnSpan = 5;                                           //  8
+
+        VisitPdfGrid.Rows[17].Cells[0].ColumnSpan = 10;
+
+        VisitPdfGrid.Rows[18].Cells[1].ColumnSpan = 5;                                           //  9
+
+        VisitPdfGrid.Rows[19].Cells[0].ColumnSpan = 10;
+
+        VisitPdfGrid.Rows[20].Cells[1].ColumnSpan = 5;                                          // 10
+        VisitPdfGrid.Rows[20].Cells[7].ColumnSpan = 3;
+
+        VisitPdfGrid.Rows[21].Cells[0].ColumnSpan = 10;
+
+        VisitPdfGrid.Rows[22].Cells[7].ColumnSpan = 3;                                          // 11
+
+        VisitPdfGrid.Rows[23].Cells[0].ColumnSpan = 10;
+
+        VisitPdfGrid.Rows[25].Cells[0].ColumnSpan = 10;
+
+        VisitPdfGrid.Rows[26].Cells[1].ColumnSpan = 5;                                          // 13
+        VisitPdfGrid.Rows[26].Cells[7].ColumnSpan = 3;
+
+        VisitPdfGrid.Rows[27].Cells[0].ColumnSpan = 10;
+
+        VisitPdfGrid.Rows[28].Cells[1].ColumnSpan = 9;                                          // 14
+        #endregion
+
+        #region Inserimento Dati Visita
+        // Set the HeadPdfGrid's value
+        PdfTextElement value;
+
+        VisitPdfGrid.Rows[0].Cells[0].Style = posCellStyleH;                                        // Diagnosi OD
+        VisitPdfGrid.Rows[0].Cells[1].Style = posCellStyleV;
+        VisitPdfGrid.Rows[0].Cells[6].Style = posCellStyleH;                                        // INTERVENTI
+        VisitPdfGrid.Rows[0].Cells[7].Style = posCellStyleV;
+
+        value = new PdfTextElement("DIAGNOSI", fieldNameFont, PdfBrushes.Black);                    // label DIAGNOSI
+        VisitPdfGrid.Rows[0].Cells[0].Value = value;
+        value = new PdfTextElement(FillEmpty(Visita.DiagnosiOD), fieldFont, PdfBrushes.Black);      // value DIAGNOSI
+        VisitPdfGrid.Rows[0].Cells[1].Value = value;
+
+        value = new PdfTextElement("INTERVENTI", fieldNameFont, PdfBrushes.Black);                  // label INTERVENTI
+        VisitPdfGrid.Rows[0].Cells[6].Value = value;
+        value = new PdfTextElement(FillEmpty(Visita.Interventi), fieldFont, PdfBrushes.Black);      // value INTERVENTI
+        VisitPdfGrid.Rows[0].Cells[7].Value = value;
+
+        VisitPdfGrid.Rows[1].Cells[0].Style = posCellStyleH;                                        // riga vuota
+
+        VisitPdfGrid.Rows[2].Cells[0].Style = posCellStyleH;                                        // ANAMNESI
+        VisitPdfGrid.Rows[2].Cells[1].Style = posCellStyleV;
+        VisitPdfGrid.Rows[2].Cells[6].Style = posCellStyleH;                                        // Curva Tonometrica OD
+        VisitPdfGrid.Rows[2].Cells[7].Style = posCellStyleV;
+        VisitPdfGrid.Rows[2].Cells[8].Style = posCellStyleH;                                        // Argon
+        VisitPdfGrid.Rows[2].Cells[9].Style = posCellStyleV;
+
+        value = new PdfTextElement("ANAMNESI", fieldNameFont, PdfBrushes.Black);                    // ANAMNESI label
+        VisitPdfGrid.Rows[2].Cells[0].Value = value;
+        value = new PdfTextElement(FillEmpty(Visita.Anamnesi), fieldFont, PdfBrushes.Black);        // ANAMNESI value
+        VisitPdfGrid.Rows[2].Cells[1].Value = value;
+        value = new PdfTextElement("CURVA TONO.", fieldNameFont, PdfBrushes.Black);                 // CURVA TONOMETRICA od label
+        VisitPdfGrid.Rows[2].Cells[6].Value = value;
+        value = new PdfTextElement(FillEmpty(Visita.CurvaTono_Od), fieldFont, PdfBrushes.Black);    // CURVA TONOMETRICA od value
+        VisitPdfGrid.Rows[2].Cells[7].Value = value;
+        value = new PdfTextElement("ARGON", fieldNameFont, PdfBrushes.Black);                       // ARGON label
+        VisitPdfGrid.Rows[2].Cells[8].Value = value;
+        value = new PdfTextElement(FillEmpty(Visita.CurvaArgon), fieldFont, PdfBrushes.Black);      // ARGON value
+        VisitPdfGrid.Rows[2].Cells[9].Value = value;
+
+        VisitPdfGrid.Rows[3].Cells[0].Style = posCellStyleH;                                        // riga vuota
+
+        VisitPdfGrid.Rows[4].Cells[0].Style = posCellStyleH;                                        // Annessi OD
+        VisitPdfGrid.Rows[4].Cells[1].Style = posCellStyleV;
+        VisitPdfGrid.Rows[4].Cells[6].Style = posCellStyleH;                                        // SHIRMER OD
+        VisitPdfGrid.Rows[4].Cells[7].Style = posCellStyleV;
+        VisitPdfGrid.Rows[4].Cells[8].Style = posCellStyleH;                                        // Tono Oculare OD
+        VisitPdfGrid.Rows[4].Cells[9].Style = posCellStyleV;
+
+        value = new PdfTextElement("ANNESSI OD", fieldNameFont, PdfBrushes.Black);                  // label ANNESSI OD
+        VisitPdfGrid.Rows[4].Cells[0].Value = value;
+        value = new PdfTextElement(FillEmpty(Visita.Annessi_Od), fieldFont, PdfBrushes.Black);      // value ANNESSI OD
+        VisitPdfGrid.Rows[4].Cells[1].Value = value;
+        value = new PdfTextElement("SHIRMER", fieldNameFont, PdfBrushes.Black);                     // label SHIRMER OD
+        VisitPdfGrid.Rows[4].Cells[6].Value = value;
+        value = new PdfTextElement(FillEmpty(Visita.SHIRMER_Od), fieldFont, PdfBrushes.Black);      // value SHIRMER OD
+        VisitPdfGrid.Rows[4].Cells[7].Value = value;
+        value = new PdfTextElement("TONO OCULARE", fieldNameFont, PdfBrushes.Black);                // label TONO OCULARE OD
+        VisitPdfGrid.Rows[4].Cells[8].Value = value;
+        value = new PdfTextElement(FillEmpty(Visita.TONO_Od), fieldFont, PdfBrushes.Black);         // value TONO OCULARE OD
+        VisitPdfGrid.Rows[4].Cells[9].Value = value;
+
+        VisitPdfGrid.Rows[5].Cells[0].Style = posCellStyleH;                                        // riga vuota
+
+        VisitPdfGrid.Rows[6].Cells[0].Style = posCellStyleH;                                        // Annessi OS
+        VisitPdfGrid.Rows[6].Cells[1].Style = posCellStyleV;
+        VisitPdfGrid.Rows[6].Cells[6].Style = posCellStyleH;                                        // Vie lacrimali OD
+        VisitPdfGrid.Rows[6].Cells[7].Style = posCellStyleV;
+        VisitPdfGrid.Rows[6].Cells[8].Style = posCellStyleH;                                        // Topografia OD
+        VisitPdfGrid.Rows[6].Cells[9].Style = posCellStyleV;
+
+        value = new PdfTextElement("ANNESSI OS", fieldNameFont, PdfBrushes.Black);                  // label ANNESSI OS
+        VisitPdfGrid.Rows[6].Cells[0].Value = value;
+        value = new PdfTextElement(FillEmpty(Visita.Annessi_Os), fieldFont, PdfBrushes.Black);      // value ANNESSI OS
+        VisitPdfGrid.Rows[6].Cells[1].Value = value;
+        value = new PdfTextElement("VIE LACRIMALI", fieldNameFont, PdfBrushes.Black);               // label VIE LACRIMALI
+        VisitPdfGrid.Rows[6].Cells[6].Value = value;
+        value = new PdfTextElement(FillEmpty(Visita.Lavaggio_Od), fieldFont, PdfBrushes.Black);     // value VIE LACRIMALI
+        VisitPdfGrid.Rows[6].Cells[7].Value = value;
+        value = new PdfTextElement("TOPOGRAFIA", fieldNameFont, PdfBrushes.Black);                  // label TOPOGRAFIA
+        VisitPdfGrid.Rows[6].Cells[8].Value = value;
+        value = new PdfTextElement(FillEmpty(Visita.Topografia_Od), fieldFont, PdfBrushes.Black);   // value TOPOGRAFIA
+        VisitPdfGrid.Rows[6].Cells[9].Value = value;
+
+        VisitPdfGrid.Rows[7].Cells[0].Style = posCellStyleH;                                        // riga vuota
+
+        VisitPdfGrid.Rows[8].Cells[0].Style = posCellStyleH;                                        // Seg. Ant OD
+        VisitPdfGrid.Rows[8].Cells[1].Style = posCellStyleV;
+        VisitPdfGrid.Rows[8].Cells[6].Style = posCellStyleH;                                        // Fag OD
+        VisitPdfGrid.Rows[8].Cells[7].Style = posCellStyleV;
+        VisitPdfGrid.Rows[8].Cells[8].Style = posCellStyleH;                                        // Fag OS
+        VisitPdfGrid.Rows[8].Cells[9].Style = posCellStyleV;
+
+        value = new PdfTextElement("SEG ANT OD", fieldNameFont, PdfBrushes.Black);                  // SEG ANT OD
+        VisitPdfGrid.Rows[8].Cells[0].Value = value;
+        value = new PdfTextElement(FillEmpty(Visita.Seg_Ant_Od), fieldFont, PdfBrushes.Black);      // SEG ANT OD
+        VisitPdfGrid.Rows[8].Cells[1].Value = value;
+        value = new PdfTextElement("FAG OD", fieldNameFont, PdfBrushes.Black);                      // FAG OD
+        VisitPdfGrid.Rows[8].Cells[6].Value = value;
+        value = new PdfTextElement(FillEmpty(Visita.FAG_Od), fieldFont, PdfBrushes.Black);          // FAG OD
+        VisitPdfGrid.Rows[8].Cells[7].Value = value;
+        value = new PdfTextElement("FAG OS", fieldNameFont, PdfBrushes.Black);                      // FAG OS
+        VisitPdfGrid.Rows[8].Cells[8].Value = value;
+        value = new PdfTextElement(FillEmpty(Visita.FAG_Os), fieldFont, PdfBrushes.Black);          // FAG OS
+        VisitPdfGrid.Rows[8].Cells[9].Value = value;
+
+        VisitPdfGrid.Rows[9].Cells[0].Style = posCellStyleH;                                        // riga vuota
+
+        VisitPdfGrid.Rows[10].Cells[0].Style = posCellStyleH;                                        // Seg. Ant OS
+        VisitPdfGrid.Rows[10].Cells[1].Style = posCellStyleV;
+        VisitPdfGrid.Rows[10].Cells[6].Style = posCellStyleH;                                        // IV
+        VisitPdfGrid.Rows[10].Cells[7].Style = posCellStyleV;
+        VisitPdfGrid.Rows[10].Cells[8].Style = posCellStyleH;
+        VisitPdfGrid.Rows[10].Cells[9].Style = posCellStyleH;
+
+        value = new PdfTextElement("SEG ANT OS", fieldNameFont, PdfBrushes.Black);                  // Seg. Ant OS
+        VisitPdfGrid.Rows[10].Cells[0].Value = value;
+        value = new PdfTextElement(FillEmpty(Visita.Seg_Ant_Os), fieldFont, PdfBrushes.Black);      // Seg. Ant OS
+        VisitPdfGrid.Rows[10].Cells[1].Value = value;
+        value = new PdfTextElement("IV", fieldNameFont, PdfBrushes.Black);                          // IV
+        VisitPdfGrid.Rows[10].Cells[6].Value = value;
+        value = new PdfTextElement(FillEmpty(Visita.IV), fieldFont, PdfBrushes.Black);              // IV
+        VisitPdfGrid.Rows[10].Cells[7].Value = value;
+
+        VisitPdfGrid.Rows[11].Cells[0].Style = posCellStyleH;                                        // riga vuota
+
+        VisitPdfGrid.Rows[12].Cells[0].Style = posCellStyleH;                                        // Fundus OD
+        VisitPdfGrid.Rows[12].Cells[1].Style = posCellStyleV;
+        VisitPdfGrid.Rows[12].Cells[6].Style = posCellStyleH;                                        // Oct OD
+        VisitPdfGrid.Rows[12].Cells[7].Style = posCellStyleV;
+        VisitPdfGrid.Rows[12].Cells[8].Style = posCellStyleH;                                        // Oct OS
+        VisitPdfGrid.Rows[12].Cells[9].Style = posCellStyleV;
+
+        value = new PdfTextElement("FUNDUS OD", fieldNameFont, PdfBrushes.Black);                   // FUNDUS OD
+        VisitPdfGrid.Rows[12].Cells[0].Value = value;
+        value = new PdfTextElement(FillEmpty(Visita.Fundus_Od), fieldFont, PdfBrushes.Black);       // FUNDUS OD
+        VisitPdfGrid.Rows[12].Cells[1].Value = value;
+        value = new PdfTextElement("OCT OD", fieldNameFont, PdfBrushes.Black);                      // OCT OD
+        VisitPdfGrid.Rows[12].Cells[6].Value = value;
+        value = new PdfTextElement(FillEmpty(Visita.OCT_Od), fieldFont, PdfBrushes.Black);          // OCT OD
+        VisitPdfGrid.Rows[12].Cells[7].Value = value;
+        value = new PdfTextElement("OCT OS", fieldNameFont, PdfBrushes.Black);                      // OCT OS
+        VisitPdfGrid.Rows[12].Cells[8].Value = value;
+        value = new PdfTextElement(FillEmpty(Visita.OCT_Os), fieldFont, PdfBrushes.Black);          // OCT OS
+        VisitPdfGrid.Rows[12].Cells[9].Value = value;
+
+        VisitPdfGrid.Rows[13].Cells[0].Style = posCellStyleH;                                        // riga vuota
+
+        VisitPdfGrid.Rows[14].Cells[0].Style = posCellStyleH;                                        // FUNDUS OS
+        VisitPdfGrid.Rows[14].Cells[1].Style = posCellStyleV;
+        VisitPdfGrid.Rows[14].Cells[6].Style = posCellStyleH;                                        // RNFL OD
+        VisitPdfGrid.Rows[14].Cells[7].Style = posCellStyleV;
+        VisitPdfGrid.Rows[14].Cells[8].Style = posCellStyleH;                                        // RNFL OS
+        VisitPdfGrid.Rows[14].Cells[9].Style = posCellStyleV;
+
+        value = new PdfTextElement("FUNDUS OD", fieldNameFont, PdfBrushes.Black);                   // FUNDUS OS
+        VisitPdfGrid.Rows[14].Cells[0].Value = value;
+        value = new PdfTextElement(FillEmpty(Visita.Fundus_Os), fieldFont, PdfBrushes.Black);       // FUNDUS OS
+        VisitPdfGrid.Rows[14].Cells[1].Value = value;
+        value = new PdfTextElement("RNFL OD", fieldNameFont, PdfBrushes.Black);                     // RNFL OD
+        VisitPdfGrid.Rows[14].Cells[6].Value = value;
+        value = new PdfTextElement(FillEmpty(Visita.RNFL_Od), fieldFont, PdfBrushes.Black);         // RNFL OD
+        VisitPdfGrid.Rows[14].Cells[7].Value = value;
+        value = new PdfTextElement("RNFL OS", fieldNameFont, PdfBrushes.Black);                     // RNFL OS
+        VisitPdfGrid.Rows[14].Cells[8].Value = value;
+        value = new PdfTextElement(FillEmpty(Visita.RNFL_Os), fieldFont, PdfBrushes.Black);         // RNFL OS
+        VisitPdfGrid.Rows[14].Cells[9].Value = value;
+
+        VisitPdfGrid.Rows[15].Cells[0].Style = posCellStyleH;                                        // riga vuota
+
+        VisitPdfGrid.Rows[16].Cells[0].Style = posCellStyleH;                                        // VISUS OD
+        VisitPdfGrid.Rows[16].Cells[1].Style = posCellStyleV;
+        VisitPdfGrid.Rows[16].Cells[6].Style = posCellStyleH;                                        // CV OD
+        VisitPdfGrid.Rows[16].Cells[7].Style = posCellStyleV;
+        VisitPdfGrid.Rows[16].Cells[8].Style = posCellStyleH;                                        // CV OS
+        VisitPdfGrid.Rows[16].Cells[9].Style = posCellStyleV;
+
+        value = new PdfTextElement("VISUS OD", fieldNameFont, PdfBrushes.Black);                    // VISUS OD
+        VisitPdfGrid.Rows[16].Cells[0].Value = value;
+        value = new PdfTextElement(FillEmpty(Visita.Visus_Od), fieldFont, PdfBrushes.Black);        // VISUS OD
+        VisitPdfGrid.Rows[16].Cells[1].Value = value;
+        value = new PdfTextElement("CV OD", fieldNameFont, PdfBrushes.Black);                       // CV OD
+        VisitPdfGrid.Rows[16].Cells[6].Value = value;
+        value = new PdfTextElement(FillEmpty(Visita.CV_Od), fieldFont, PdfBrushes.Black);           // CV OD
+        VisitPdfGrid.Rows[16].Cells[7].Value = value;
+        value = new PdfTextElement("CV OS", fieldNameFont, PdfBrushes.Black);                       // CV OS
+        VisitPdfGrid.Rows[16].Cells[8].Value = value;
+        value = new PdfTextElement(FillEmpty(Visita.CV_Os), fieldFont, PdfBrushes.Black);           // CV OS
+        VisitPdfGrid.Rows[16].Cells[9].Value = value;
+
+        VisitPdfGrid.Rows[17].Cells[0].Style = posCellStyleH;                                        // riga vuota
+
+        VisitPdfGrid.Rows[18].Cells[0].Style = posCellStyleH;                                        // Visus OS
+        VisitPdfGrid.Rows[18].Cells[1].Style = posCellStyleV;
+        VisitPdfGrid.Rows[18].Cells[6].Style = posCellStyleH;                                        // PACHIMETRIA OD
+        VisitPdfGrid.Rows[18].Cells[7].Style = posCellStyleV;
+        VisitPdfGrid.Rows[18].Cells[8].Style = posCellStyleH;                                        // C/D OD
+        VisitPdfGrid.Rows[18].Cells[9].Style = posCellStyleV;
+
+        value = new PdfTextElement("VISUS OS", fieldNameFont, PdfBrushes.Black);                    // VISUS OS
+        VisitPdfGrid.Rows[18].Cells[0].Value = value;
+        value = new PdfTextElement(FillEmpty(Visita.Visus_Os), fieldFont, PdfBrushes.Black);        // VISUS OS
+        VisitPdfGrid.Rows[18].Cells[1].Value = value;
+        value = new PdfTextElement("PACHIMETRIA", fieldNameFont, PdfBrushes.Black);              // PACHIMETRIA OD
+        VisitPdfGrid.Rows[18].Cells[6].Value = value;
+        value = new PdfTextElement(FillEmpty(Visita.PACH_Od), fieldFont, PdfBrushes.Black);         // PACHIMETRIA OD
+        VisitPdfGrid.Rows[18].Cells[7].Value = value;
+        value = new PdfTextElement("C/D", fieldNameFont, PdfBrushes.Black);                      // C/D OD
+        VisitPdfGrid.Rows[18].Cells[8].Value = value;
+        value = new PdfTextElement(FillEmpty(Visita.CD_Od), fieldFont, PdfBrushes.Black);           // C/D OD
+        VisitPdfGrid.Rows[18].Cells[9].Value = value;
+
+        VisitPdfGrid.Rows[19].Cells[0].Style = posCellStyleH;                                        // riga vuota
+
+        VisitPdfGrid.Rows[20].Cells[0].Style = posCellStyleH;                                       // Terapia
+        VisitPdfGrid.Rows[20].Cells[1].Style = posCellStyleV;
+        VisitPdfGrid.Rows[20].Cells[6].Style = posCellStyleH;                                       // AUTOREFRATTOMETRIA
+        VisitPdfGrid.Rows[20].Cells[7].Style = posCellStyleV;
+
+        value = new PdfTextElement("TERAPIA", fieldNameFont, PdfBrushes.Black);                     // TERAPIA
+        VisitPdfGrid.Rows[20].Cells[0].Value = value;
+        value = new PdfTextElement(FillEmpty(Visita.Terapia), fieldFont, PdfBrushes.Black);         // TERAPIA
+        VisitPdfGrid.Rows[20].Cells[1].Value = value;
+        value = new PdfTextElement("AUTOREFRAT.", fieldNameFont, PdfBrushes.Black);                 // AUTOREFRATTOMETRIA
+        VisitPdfGrid.Rows[20].Cells[6].Value = value;
+        value = new PdfTextElement(FillEmpty(Visita.Auto), fieldFont, PdfBrushes.Black);            // AUTOREFRATTOMETRIA
+        VisitPdfGrid.Rows[20].Cells[7].Value = value;
+
+        VisitPdfGrid.Rows[21].Cells[0].Style = posCellStyleH;                                        // riga vuota
+
+        VisitPdfGrid.Rows[22].Cells[0].Style = posCellStyleH;                                       // OD SUE LENTI PL
+        VisitPdfGrid.Rows[22].Cells[1].Style = posCellStyleV;
+        VisitPdfGrid.Rows[22].Cells[2].Style = posCellStyleH;                                       // OD SUE LENTI PV
+        VisitPdfGrid.Rows[22].Cells[3].Style = posCellStyleV;
+        VisitPdfGrid.Rows[22].Cells[4].Style = posCellStyleH;                                       // OD SUE LENTI MD
+        VisitPdfGrid.Rows[22].Cells[5].Style = posCellStyleV;
+        VisitPdfGrid.Rows[22].Cells[6].Style = posCellStyleH;
+        VisitPdfGrid.Rows[22].Cells[7].Style = posCellStyleH;
+        VisitPdfGrid.Rows[22].Cells[8].Style = posCellStyleH;
+        VisitPdfGrid.Rows[22].Cells[9].Style = posCellStyleH;
+
+        value = new PdfTextElement("OD SUE LENTI PL", fieldNameFont, PdfBrushes.Black);                        // OD SUE LENTI PL
+        VisitPdfGrid.Rows[22].Cells[0].Value = value;
+        value = new PdfTextElement(FillEmpty(Visita.ODPL), fieldFont, PdfBrushes.Black);            // OD SUE LENTI PL
+        VisitPdfGrid.Rows[22].Cells[1].Value = value;
+        value = new PdfTextElement("OD SUE LENTI PV", fieldNameFont, PdfBrushes.Black);                        // OD SUE LENTI PV
+        VisitPdfGrid.Rows[22].Cells[2].Value = value;
+        value = new PdfTextElement(FillEmpty(Visita.ODPV), fieldFont, PdfBrushes.Black);            // OD SUE LENTI PV
+        VisitPdfGrid.Rows[22].Cells[3].Value = value;
+        value = new PdfTextElement("OD SUE LENTI MD", fieldNameFont, PdfBrushes.Black);                        // OD SUE LENTI MD
+        VisitPdfGrid.Rows[22].Cells[4].Value = value;
+        value = new PdfTextElement(FillEmpty(Visita.ODMD), fieldFont, PdfBrushes.Black);            // OD SUE LENTI MD
+        VisitPdfGrid.Rows[22].Cells[5].Value = value;
+
+        VisitPdfGrid.Rows[23].Cells[0].Style = posCellStyleH;                                        // riga vuota
+
+        VisitPdfGrid.Rows[24].Cells[0].Style = posCellStyleH;                                       // OS SUE LENTI PL
+        VisitPdfGrid.Rows[24].Cells[1].Style = posCellStyleV;
+        VisitPdfGrid.Rows[24].Cells[2].Style = posCellStyleH;                                       // OS SUE LENTI PV
+        VisitPdfGrid.Rows[24].Cells[3].Style = posCellStyleV;
+        VisitPdfGrid.Rows[24].Cells[4].Style = posCellStyleH;                                       // OS SUE LENTI MD
+        VisitPdfGrid.Rows[24].Cells[5].Style = posCellStyleV;
+        VisitPdfGrid.Rows[24].Cells[6].Style = posCellStyleH;
+        VisitPdfGrid.Rows[24].Cells[7].Style = posCellStyleH;
+        VisitPdfGrid.Rows[24].Cells[8].Style = posCellStyleH;
+        VisitPdfGrid.Rows[24].Cells[9].Style = posCellStyleH;
+
+        value = new PdfTextElement("OS SUE LENTI PL", fieldNameFont, PdfBrushes.Black);             // OS SUE LENTI PL
+        VisitPdfGrid.Rows[24].Cells[0].Value = value;
+        value = new PdfTextElement(FillEmpty(Visita.OSPL), fieldFont, PdfBrushes.Black);            // OS SUE LENTI PL
+        VisitPdfGrid.Rows[24].Cells[1].Value = value;
+        value = new PdfTextElement("OS SUE LENTI PV", fieldNameFont, PdfBrushes.Black);             // OS SUE LENTI PV
+        VisitPdfGrid.Rows[24].Cells[2].Value = value;
+        value = new PdfTextElement(FillEmpty(Visita.OSPV), fieldFont, PdfBrushes.Black);            // OS SUE LENTI PV
+        VisitPdfGrid.Rows[24].Cells[3].Value = value;
+        value = new PdfTextElement("OS SUE LENTI MD", fieldNameFont, PdfBrushes.Black);             // OS SUE LENTI MD
+        VisitPdfGrid.Rows[24].Cells[4].Value = value;
+        value = new PdfTextElement(FillEmpty(Visita.OSMD), fieldFont, PdfBrushes.Black);            // OS SUE LENTI MD
+        VisitPdfGrid.Rows[24].Cells[5].Value = value;
+
+        VisitPdfGrid.Rows[25].Cells[0].Style = posCellStyleH;                                        // riga vuota
+
+        VisitPdfGrid.Rows[26].Cells[0].Style = posCellStyleH;                                       // MOTIVO VISITA
+        VisitPdfGrid.Rows[26].Cells[1].Style = posCellStyleV;
+        VisitPdfGrid.Rows[26].Cells[6].Style = posCellStyleH;                                       // CONCLUSIONI
+        VisitPdfGrid.Rows[26].Cells[7].Style = posCellStyleV;
+
+        value = new PdfTextElement("MOTIVO VISITA", fieldNameFont, PdfBrushes.Black);               // MOTIVO VISITA
+        VisitPdfGrid.Rows[26].Cells[0].Value = value;
+        value = new PdfTextElement(FillEmpty(Visita.MotivoVisita), fieldFont, PdfBrushes.Black);    // MOTIVO VISITA
+        VisitPdfGrid.Rows[26].Cells[1].Value = value;
+        value = new PdfTextElement("CONCLUSIONI", fieldNameFont, PdfBrushes.Black);                 // CONCLUSIONI
+        VisitPdfGrid.Rows[26].Cells[6].Value = value;
+        value = new PdfTextElement(FillEmpty(Visita.Conclusioni), fieldFont, PdfBrushes.Black);     // CONCLUSIONI
+        VisitPdfGrid.Rows[26].Cells[7].Value = value;
+
+        VisitPdfGrid.Rows[27].Cells[0].Style = posCellStyleH;                                        // riga vuota
+
+        VisitPdfGrid.Rows[28].Cells[0].Style = posCellStyleH;                                       // NOTE
+        VisitPdfGrid.Rows[28].Cells[1].Style = posCellStyleV;
+
+        value = new PdfTextElement("NOTE", fieldNameFont, PdfBrushes.Black);                        // NOTE
+        VisitPdfGrid.Rows[28].Cells[0].Value = value;
+        value = new PdfTextElement(FillEmpty(Visita.Note), fieldFont, PdfBrushes.Black);            // NOTE
+        VisitPdfGrid.Rows[28].Cells[1].Value = value;
+
+        Console.WriteLine($" ");
+        Console.WriteLine($"📌 PrintVisit ");
+        Console.WriteLine($"🔷\t Visita.Fundus_Od: {Visita.Fundus_Od}\t Visita.Fundus_Os: {Visita.Fundus_Os}");
+        Console.WriteLine($"🔷\t Visita.IV: {Visita.IV}");
+        Console.WriteLine($"🔷\t Visita.CV_Od: {Visita.CV_Od}\t Visita.CV_Os: {Visita.CV_Os}");
+        Console.WriteLine($"🔷\t Visita.CD_Od: {Visita.CD_Od}\t Visita.CD_Os: {Visita.CD_Os}");
+        Console.WriteLine($" ");
+        #endregion
+
+        // Draw PDF grid into the PDF page.
+        VisitPdfGrid.Draw(page, new Syncfusion.Drawing.PointF(0, result.Bounds.Bottom + paragraphAfterSpacing));
+        #endregion
+
+        //Create memory stream.
+        MemoryStream memoryStream = new MemoryStream();
+        //Save the PDF document.
+        pdfDocument.Save(memoryStream);
+        //Download the PDF document
+        await JS.SaveAs("Scheda " + LName + " " + FName + "_" + ListaVisite[VisitaCorrente].Val.ToString("dd.MM.yyyy") + ".pdf", memoryStream.ToArray());
+    }
+
+    async void PrintVisitOld()
+    {
+        int paragraphAfterSpacing = 8;
+        int cellMargin = 8;
+
+        //Create a new PDF document.
+        PdfDocument pdfDocument = new PdfDocument();
+
+        #region Definizione documento pdf
+        // Set document information
+        // ------------------------------------------------------------------------------------------------------------------------
+        pdfDocument.DocumentInformation.Author = "Powered by Phoenix";
+        pdfDocument.DocumentInformation.CreationDate = DateTime.Now;
+        pdfDocument.DocumentInformation.Creator = "Ophthal";
+        pdfDocument.DocumentInformation.Keywords = "Dott. La Bruna";
+        pdfDocument.DocumentInformation.Subject = "Scheda Visita";
+        pdfDocument.DocumentInformation.Title = "Cognome Nome - Visita del: Data Visita  ";
+
+        // Set page size
+        // ------------------------------------------------------------------------------------------------------------------------
+        pdfDocument.PageSettings.Size = Syncfusion.Pdf.PdfPageSize.A4;
+
+        // Set margin for all the pages
+        pdfDocument.PageSettings.Margins.Left = 10;
+        pdfDocument.PageSettings.Margins.Right = 10;
+        pdfDocument.PageSettings.Margins.Top = 10;
+        pdfDocument.PageSettings.Margins.Bottom = 10;
+
+        // Set page orientation
+        // ------------------------------------------------------------------------------------------------------------------------
+        pdfDocument.PageSettings.Orientation = PdfPageOrientation.Landscape;
+
+        // Set paginate layout
+        // ------------------------------------------------------------------------------------------------------------------------
+        PdfLayoutFormat format = new PdfLayoutFormat();
+        format.Layout = PdfLayoutType.Paginate;
+
+        // Add page to the PDF document
+        PdfPage page = pdfDocument.Pages.Add();
+        #endregion
+
+        #region Header & Footer
+        // Create Header and Footer font
+        // ------------------------------------------------------------------------------------------------------------------------
+        PdfFont fontHeader = new PdfStandardFont(PdfFontFamily.Helvetica, 14, PdfFontStyle.Regular);
+        PdfFont fontFooter = new PdfStandardFont(PdfFontFamily.Helvetica, 7, PdfFontStyle.Regular);
+
+        #region Header
+        // Get document's bounds
+        // ------------------------------------------------------------------------------------------------------------------------
+        RectangleF bounds = new RectangleF(0, 0, pdfDocument.Pages[0].GetClientSize().Width, 50);
+
+        // Create a Page template that can be used as header.
+        // ------------------------------------------------------------------------------------------------------------------------
+        PdfPageTemplateElement header = new PdfPageTemplateElement(bounds);
+
+        // Load image for header
+        // Scarica l'immagine dal server
+        var httpClient = new HttpClient();
+        string imageUrl = $"{Env.BaseAddress}/img/LB_Logo_25.png";                      // URL dell'immagine
+        var imageBytes = await httpClient.GetByteArrayAsync(imageUrl);
+
+        PdfGridCellStyle HeadLogoStyle = new PdfGridCellStyle();
+        HeadLogoStyle.Borders.Left.Width = 0;
+        HeadLogoStyle.Borders.Right.Width = 0;
+        HeadLogoStyle.Borders.Top.Width = 0;
+        HeadLogoStyle.Borders.Bottom.Width = 0;
+        HeadLogoStyle.CellPadding = new PdfPaddings(0, 0, 0, 0);
+
+        // Setup font for Dati Testata
+        PdfStandardFont hNameFont = new PdfStandardFont(PdfFontFamily.Helvetica, 7, PdfFontStyle.Bold);
+        PdfStandardFont hValueFont = new PdfStandardFont(PdfFontFamily.Helvetica, 7, PdfFontStyle.Regular);
+
+        // Specify the style for bottom
+        PdfGridCellStyle HeadStyle = new PdfGridCellStyle();
+        HeadStyle.Borders.Left.Width = 0.1F;
+        HeadStyle.Borders.Right.Width = 0.1F;
+        HeadStyle.Borders.Top.Width = 0.1F;
+        HeadStyle.Borders.Bottom.Width = 0.1F;
+        HeadStyle.CellPadding = new PdfPaddings(2, 2, 2, 2);
+        HeadStyle.StringFormat = new PdfStringFormat(PdfTextAlignment.Center);
+
+        // Usa un MemoryStream per creare il PdfBitmap
+        using (MemoryStream imageStream = new MemoryStream(imageBytes))
+        {
+            PdfImage image = new PdfBitmap(imageStream);
+
+            HeadLogoStyle.BackgroundImage = new PdfBitmap(imageStream);
+
+            // Draw the image in the header.
+            header.Graphics.DrawImage(image, new PointF(0, 0), new SizeF(46, 25));      // (46, 25) = width, height immagine
+        }
+
+        // Add the header at the top.
+        //pdfDocument.Template.Top = header;
+        #endregion
+
+        #region Footer
+        // Create a Page template that can be used as footer.
+        // ------------------------------------------------------------------------------------------------------------------------
+        PdfPageTemplateElement footer = new PdfPageTemplateElement(bounds);
+
+        PdfBrush brush = new PdfSolidBrush(Color.Black);
+
+        // Create page date of printing field.
+        PdfTextElement pageDatePrint = new PdfTextElement("Printed on " + DateTime.Now.ToShortDateString(), fontFooter, brush);
+
+
+        // Create page number field.
+        PdfPageNumberField pageNumber = new PdfPageNumberField(fontFooter, brush);
+
+        // Create page count field.
+        PdfPageCountField count = new PdfPageCountField(fontFooter, brush);
+
+        // Add the fields in composite fields.
+        PdfCompositeField compositeField = new PdfCompositeField(fontFooter, brush, "Page {0} of {1}", pageNumber, count);
+
+        compositeField.Bounds = footer.Bounds;
+
+        // Draw the text element and store its layout information
+        pageDatePrint.Draw(footer.Graphics, new PointF(0, 40));
+
+        // Draw the composite field in footer.
+        compositeField.Draw(footer.Graphics, new PointF(380, 40));
+
+        // Add the footer template at the bottom.
+        pdfDocument.Template.Bottom = footer;
+        #endregion
+        #endregion
+
+        #region Prima parte: Dati Testata
+        #region Definizione stile celle Dati Testata
+        // // Setup font for Dati Testata
+        // PdfStandardFont hNameFont = new PdfStandardFont(PdfFontFamily.Helvetica, 7, PdfFontStyle.Bold);
+        // PdfStandardFont hValueFont = new PdfStandardFont(PdfFontFamily.Helvetica, 7, PdfFontStyle.Regular);
+
+        // // Specify the style for bottom
+        // PdfGridCellStyle HeadStyle = new PdfGridCellStyle();
+        // HeadStyle.Borders.Left.Width = 0.1F;
+        // HeadStyle.Borders.Right.Width = 0.1F;
+        // HeadStyle.Borders.Top.Width = 0.1F;
+        // HeadStyle.Borders.Bottom.Width = 0.1F;
+        // HeadStyle.CellPadding = new PdfPaddings(2, 2, 2, 2);
+        // HeadStyle.StringFormat = new PdfStringFormat(PdfTextAlignment.Center);
+
+        // PdfGridCellStyle HeadLogoStyle = new PdfGridCellStyle();
+        // HeadLogoStyle.Borders.Left.Width = 0;
+        // HeadLogoStyle.Borders.Right.Width = 0;
+        // HeadLogoStyle.Borders.Top.Width = 0;
+        // HeadLogoStyle.Borders.Bottom.Width = 0;
+        // HeadLogoStyle.CellPadding = new PdfPaddings(0, 0, 0, 0);
+        #endregion
+
+        #region Imposta griglia Dati Testata
+        // Create the head grid
+        PdfGrid HeadPdfGrid = new PdfGrid();
+
+        // Add the rows to head grid
+        PdfGridRow row1 = HeadPdfGrid.Rows.Add();
+        PdfGridRow row2 = HeadPdfGrid.Rows.Add();
+
+
+        //Adding grid style
+        PdfGridStyle gridStyle = new PdfGridStyle();
+        //Allow grid to overflow horizontally
+        gridStyle.AllowHorizontalOverflow = true;
+        //Adding cell spacing between cells
+        gridStyle.CellSpacing = 3F;
+
+        HeadPdfGrid.Style = gridStyle;
+
+        // Set rows's height
+        // row1.Height = 18;
+        // row2.Height = 18;
+
+        // Add the columns to head grid
+        HeadPdfGrid.Columns.Add(13);
+
+        // Set columns's width
+        HeadPdfGrid.Columns[0].Width = 57;
+        HeadPdfGrid.Columns[1].Width = 48;
+        HeadPdfGrid.Columns[2].Width = 58;
+        HeadPdfGrid.Columns[3].Width = 45;
+        HeadPdfGrid.Columns[4].Width = 45;
+        HeadPdfGrid.Columns[5].Width = 34;
+        HeadPdfGrid.Columns[6].Width = 116;
+        HeadPdfGrid.Columns[7].Width = 48;
+        HeadPdfGrid.Columns[8].Width = 48;
+        HeadPdfGrid.Columns[9].Width = 63;
+        HeadPdfGrid.Columns[10].Width = 58;
+        HeadPdfGrid.Columns[11].Width = 53;
+        HeadPdfGrid.Columns[12].Width = 137;
+
+        // Set columns merged
+        HeadPdfGrid.Rows[0].Cells[0].RowSpan = 2;
+
+        HeadPdfGrid.Rows[0].Cells[2].ColumnSpan = 3;
+        HeadPdfGrid.Rows[1].Cells[7].ColumnSpan = 2;
+        HeadPdfGrid.Rows[1].Cells[9].ColumnSpan = 4;
+        #endregion
+
+        #region Inserimento Dati Testata
+        // Set the HeadPdfGrid's value
+        PdfTextElement val;
+
+        HeadPdfGrid.Rows[0].Cells[0].Style = HeadLogoStyle;
+        HeadPdfGrid.Rows[0].Cells[0].ImagePosition = PdfGridImagePosition.Tile;                                         // 0-0
+
+        HeadPdfGrid.Rows[0].Cells[1].Style = HeadStyle;
+        HeadPdfGrid.Rows[0].Cells[2].Style = HeadStyle;
+        // HeadPdfGrid.Rows[0].Cells[3].Style = HeadStyle;
+        // HeadPdfGrid.Rows[0].Cells[4].Style = HeadStyle;
+        HeadPdfGrid.Rows[0].Cells[5].Style = HeadStyle;
+        HeadPdfGrid.Rows[0].Cells[6].Style = HeadStyle;
+        HeadPdfGrid.Rows[0].Cells[7].Style = HeadStyle;
+        HeadPdfGrid.Rows[0].Cells[8].Style = HeadStyle;
+        HeadPdfGrid.Rows[0].Cells[9].Style = HeadStyle;
+        HeadPdfGrid.Rows[0].Cells[10].Style = HeadStyle;
+        HeadPdfGrid.Rows[0].Cells[11].Style = HeadStyle;
+        HeadPdfGrid.Rows[0].Cells[12].Style = HeadStyle;
+
+        val = new PdfTextElement("Cognome", hNameFont, PdfBrushes.Black);                                               // 0-1
+        HeadPdfGrid.Rows[0].Cells[1].Value = val;
+        val = new PdfTextElement(LName, hValueFont, PdfBrushes.Black);                                                  // 0-2
+        HeadPdfGrid.Rows[0].Cells[2].Value = val;
+
+        val = new PdfTextElement("Nome", hNameFont, PdfBrushes.Black);                                                  // 0-5
+        HeadPdfGrid.Rows[0].Cells[5].Value = val;
+        val = new PdfTextElement(FName, hValueFont, PdfBrushes.Black);                                                  // 0-6
+        HeadPdfGrid.Rows[0].Cells[6].Value = val;
+
+        val = new PdfTextElement("COD", hNameFont, PdfBrushes.Black);                                                   // 0-7
+        HeadPdfGrid.Rows[0].Cells[7].Value = val;
+        val = new PdfTextElement(Cod, hValueFont, PdfBrushes.Black);                                                    // 0-8
+        HeadPdfGrid.Rows[0].Cells[8].Value = val;
+
+        val = new PdfTextElement("Data nascita", hNameFont, PdfBrushes.Black);                                          // 0-9
+        HeadPdfGrid.Rows[0].Cells[9].Value = val;
+        val = new PdfTextElement(CustomDate(BirthDate), hValueFont, PdfBrushes.Black);                                  // 0-10
+        HeadPdfGrid.Rows[0].Cells[10].Value = val;
+
+        val = new PdfTextElement("Telefono", hNameFont, PdfBrushes.Black);                                              // 0-11
+        HeadPdfGrid.Rows[0].Cells[11].Value = val;
+        val = new PdfTextElement(Phone, hValueFont, PdfBrushes.Black);                                                  // 0-12
+        HeadPdfGrid.Rows[0].Cells[12].Value = val;
+
+
+        HeadPdfGrid.Rows[1].Cells[1].Style = HeadStyle;
+        HeadPdfGrid.Rows[1].Cells[2].Style = HeadStyle;
+        HeadPdfGrid.Rows[1].Cells[3].Style = HeadStyle;
+        HeadPdfGrid.Rows[1].Cells[4].Style = HeadStyle;
+        HeadPdfGrid.Rows[1].Cells[5].Style = HeadStyle;
+        HeadPdfGrid.Rows[1].Cells[6].Style = HeadStyle;
+        HeadPdfGrid.Rows[1].Cells[7].Style = HeadStyle;
+        // HeadPdfGrid.Rows[1].Cells[8].Style = HeadStyle;
+        HeadPdfGrid.Rows[1].Cells[9].Style = HeadStyle;
+        // HeadPdfGrid.Rows[1].Cells[10].Style = HeadStyle;
+        // HeadPdfGrid.Rows[1].Cells[11].Style = HeadStyle;
+        // HeadPdfGrid.Rows[1].Cells[12].Style = HeadStyle;
+
+        val = new PdfTextElement("Data", hNameFont, PdfBrushes.Black);                                                  // 1-1
+        HeadPdfGrid.Rows[1].Cells[1].Value = val;
+        val = new PdfTextElement(ListaVisite[VisitaCorrente].Val.ToString("dd/MM/yyyy"), hValueFont, PdfBrushes.Black); // 1-2
+        HeadPdfGrid.Rows[1].Cells[2].Value = val;
+
+        val = new PdfTextElement("Anni", hNameFont, PdfBrushes.Black);                                                  // 1-3
+        HeadPdfGrid.Rows[1].Cells[3].Value = val;
+
+        if ((BirthDate != "") && (DataVisita != ""))
+        {
+            val = new PdfTextElement(Eta(CustomDate(BirthDate), DataVisita), hValueFont, PdfBrushes.Black);             // 1-4
+            HeadPdfGrid.Rows[1].Cells[4].Value = val;
+        }
+        else
+        {
+            val = new PdfTextElement("", hValueFont, PdfBrushes.Black);                                                 // 1-4
+            HeadPdfGrid.Rows[1].Cells[4].Value = val;
+        }
+
+        val = new PdfTextElement("CF", hNameFont, PdfBrushes.Black);                                                    // 1-5
+        HeadPdfGrid.Rows[1].Cells[5].Value = val;
+        val = new PdfTextElement(CodFisc, hValueFont, PdfBrushes.Black);                                                // 1-6
+        HeadPdfGrid.Rows[1].Cells[6].Value = val;
+
+        val = new PdfTextElement("DATI PERSONALI", hNameFont, PdfBrushes.Black);                                        // 1-7
+        HeadPdfGrid.Rows[1].Cells[7].Value = val;
+        val = new PdfTextElement(Note, hValueFont, PdfBrushes.Black);                                                   // 1-9
+        HeadPdfGrid.Rows[1].Cells[9].Value = val;
+
+        // //Create a text element to draw a text in PDF page.
+        // PdfTextElement title = new PdfTextElement("", hNameFont, PdfBrushes.Black);
+        // PdfLayoutResult result = title.Draw(page, new PointF(0, 0));
+
+        PdfLayoutResult result = HeadPdfGrid.Draw(page, new Syncfusion.Drawing.PointF(0, 0));
+
+        //Draw PDF grid into the PDF page.
+        //HeadPdfGrid.Draw(page, new Syncfusion.Drawing.PointF(0, result.Bounds.Bottom + paragraphAfterSpacing));
+        // HeadPdfGrid.Draw(page, new Syncfusion.Drawing.PointF(0, 0));
+        #endregion
+        #endregion
+
+        #region Seconda parte: Dati Visita
+        // Create field's name and field's font
+        // ------------------------------------------------------------------------------------------------------------------------
+        PdfFont fieldNameFont = new PdfStandardFont(PdfFontFamily.Helvetica, 6, PdfFontStyle.Bold);
+        PdfFont fieldFont = new PdfStandardFont(PdfFontFamily.Helvetica, 7, PdfFontStyle.Regular);
+
+        #region Definizione stile celle Visita
+        // Specify the style for head's cell
+        PdfGridCellStyle posCellStyleH = new PdfGridCellStyle();
+        posCellStyleH.Borders.Left.Width = 0;
+        posCellStyleH.Borders.Right.Width = 0;
+        posCellStyleH.Borders.Top.Width = 0;
         posCellStyleH.Borders.Bottom.Width = 0.2F;
         posCellStyleH.CellPadding = new PdfPaddings(0, 3, 6, 0);
 
