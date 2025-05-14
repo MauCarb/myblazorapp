@@ -150,6 +150,12 @@
 <!-- Sezione visite, prescrizione occhiali, controlli, ortottica,   -->
 @if (ShowVisits)
 {
+    @* 
+    *@
+    <div style="position: fixed;top: 0;left: 40;z-index: 2000;padding-top: 10px;">
+        <SfButton IconCss="e-icons icon-navy e-save" CssClass="e-flat btn-light" Content="@OneSave" OnClick="() => SaveOne()" Disabled="@OneSaveDisabled"></SfButton>
+    </div>
+
     <div class="container-fluid" style="padding: 10px 10px; margin-top: 30px;">
         <div class="row">
             <div class="col-sm-1" style="min-width: 118px;">
@@ -169,12 +175,18 @@
                     </div>
                 </div>
             </div>
+
+            @*             <div class="col-sm-1" style="min-width: 118px;">
+                <SfNumericTextBox TValue="int" @bind-Value="@SelectedTab" Min="0" Max="5" Width="200px"></SfNumericTextBox>
+            </div>
+ *@
         </div>
 
         <div class="row">
             <div class="col-md-12">
-                <SfTab>
-                    <TabItems>
+                <SfTab @bind-SelectedItem="SelectedTab">
+                    <TabEvents Selected="Selected"></TabEvents>
+                    <TabItems>                                                  
                         <!-- Sezione Visite -->
                         <TabItem>
                             <ChildContent>
@@ -189,7 +201,7 @@
                                         <SfButton IconCss="e-icons e-circle-remove icon-red" CssClass="e-flat btn-light" Content=" Rimuovi Visita" OnClick="() => DeleteVisit()" Disabled="@DelVisitDisabled"></SfButton>
                                     </div>
                                     <div class="col-sm-8">
-                                        <span style="float: right;">
+                                        <span style="float: right; display: none;">
                                             <SfButton IconCss="e-icons icon-navy e-save" CssClass="e-flat btn-light" Content=" Salva Visita" OnClick="() => SaveVisit()"></SfButton>
                                             @* Disabled="@SaveVisitDisabled"*@
                                         </span>
@@ -498,7 +510,7 @@
                                             <SfMaskedTextBox ID="data_occhiali" @bind-Value="@pDataOcchiali" Mask="00/00/0000" CssClass="sftext"></SfMaskedTextBox>
                                         </span>
 
-                                        <span style="float: right;">
+                                        <span style="float: right; display: none;">
                                             <SfButton IconCss="e-icons icon-navy e-save" CssClass="e-flat btn-light" Content=" Salva Prescrizione" OnClick="() => SaveVisus()" Disabled="@SaveVisusDisabled"></SfButton>
                                         </span>
 
@@ -520,7 +532,7 @@
                                     <!-- Occhio Destro -->
                                     <div class="col-sm-6">
                                         <div class="row" style="margin-top: 5px;">
-                                            <div class="col-sm-3">&nbsp;</div>
+                                            <div class="col-sm-3">&nbsp;</div> 
                                             <!-- style="border:1px solid #f90;"-->
                                             <div class="col" style="text-align: center; font-size: larger;">
                                                 <!-- border:1px solid #09f;-->
@@ -586,11 +598,11 @@
                                     <!-- Occhio Sinistro -->
                                     <div class="col-sm-6">
                                         <div class="row" style="margin-top: 5px;">
-                                            <div class="col" style="text-align: center; font-size: larger;">
+                                            <div class="col" style="text-align: center; font-size: larger;"> 
                                                 <!--  border:1px solid #09f; -->
                                                 Occhio Sinistro
                                             </div>
-                                            <div class="col-sm-3">&nbsp;</div>
+                                            <div class="col-sm-3">&nbsp;</div> 
                                             <!-- style="border:1px solid #f90;"-->
                                         </div>
                                         <div class="row" style="margin-top: 5px;">
@@ -706,7 +718,7 @@
                                         <SfButton IconCss="e-icons e-circle-add icon-navy" CssClass="e-flat btn-light" Content=" Nuovo Controllo" OnClick="() => NewControl()" Disabled="@AddCntrDisabled"></SfButton>
                                     </div>
                                     <div class="col-sm-7">
-                                        <span style="float: right;">
+                                        <span style="float: right; display: none;">
                                             <SfButton IconCss="e-icons icon-navy e-save" CssClass="e-flat btn-light" Content=" Salva Controllo" OnClick="() => SaveControl()" Disabled="@SaveCntrDisabled"></SfButton>
                                         </span>
 
@@ -772,7 +784,7 @@
                             </ContentTemplate>
                         </TabItem>
 
-                        <!-- Sezione Ortottica -->
+                        <!-- Sezione Ortottica -->                                      
                         <TabItem Disabled=@OrtotticaDisabled>
                             <ChildContent>
                                 <TabHeader Text="Ortottica"></TabHeader>
@@ -788,7 +800,7 @@
                                             <SfMaskedTextBox ID="data_ortottica" @bind-Value="@pDataOrtottica" Mask="00/00/0000" CssClass="sftext"></SfMaskedTextBox>
                                         </span>
 
-                                        <span style="float: right;">
+                                        <span style="float: right; display: none;">
                                             <SfButton IconCss="e-icons icon-navy e-save" CssClass="e-flat btn-light" Content=" Salva Ortottica" OnClick="() => SaveOrtoctis()" Disabled="@SaveOrtoctisDisabled"></SfButton>
                                         </span>
 
@@ -956,7 +968,7 @@
 
                                                 @if (@Prescriptions.Count > 0)
                                                 {
-                                                    @for (var ip = 0; ip < @Prescriptions.Count; ip++)
+                                                    @for(var ip = 0; ip < @Prescriptions.Count; ip++)
                                                     {
                                                         decimal questo = @Prescriptions[ip].IdPrescrizione;
                                                         int myId = ip;
@@ -1027,7 +1039,7 @@
                                                         </div>
                                                     </div>
 
-                                                    @if (NuovaSommVisible)
+                                                    @if(NuovaSommVisible)
                                                     {
                                                         <div class="container-fluid form-farmfilter" style="padding: 4px 10px 0px 10px; margin-bottom:0px;">
                                                             <div class="row">
@@ -1188,7 +1200,7 @@
 <SfDialog Width="400px" Target="#target" ShowCloseIcon="true" @bind-Visible="DialogVisible">
     <DialogTemplates>
         <Header> @DialogHeader </Header>
-        <Content>
+        <Content> 
             <div class='msg-wrapper col-lg-12'>
                 <span class='@DialogIcon'></span>
                 <span class='error-msg col-lg-10'>@DialogText</span>
@@ -1226,163 +1238,163 @@
 </SfDialog>
 
 <style>
-    .vstepper {
-        display: inline-block;
-        margin: 0 10px 0 8px;
-        border: 1px solid #ccc;
-        width: 80px;
-        text-align: center;
-        font-size: 13px;
-        padding-top: 3px;
+    .vstepper{
+    display: inline-block;
+    margin: 0 10px 0 8px;
+    border: 1px solid #ccc;
+    width: 80px;
+    text-align: center;
+    font-size: 13px;
+    padding-top: 3px;
     }
 
     .default-tab {
-        border: 1px solid #d7d7d7;
+    border: 1px solid #d7d7d7;
     }
 
-        .default-tab .e-content .e-item {
-            padding: 10px;
-            text-align: justify;
-        }
+    .default-tab .e-content .e-item {
+    padding: 10px;
+    text-align: justify;
+    }
 
     .default-tab-control-section {
-        margin: 20px 20% 20px 20%;
+    margin: 20px 20% 20px 20%;
     }
 
     @@media screen and (max-width: 480px) {
-        .default-tab-control-section {
-            margin: 20px 0 20px 0;
-        }
+    .default-tab-control-section {
+    margin: 20px 0 20px 0;
+    }
     }
 
     .bootstrap5 .default-tab,
     .bootstrap .default-tab,
     .bootstrap4 .default-tab {
-        border: none;
+    border: none;
     }
 
-        .bootstrap5 .default-tab .e-content > .e-item.e-active,
-        .bootstrap4 .default-tab .e-content > .e-item.e-active,
-        .bootstrap .default-tab .e-content > .e-item.e-active {
-            background: #FAF9F8;
-        }
+    .bootstrap5 .default-tab .e-content > .e-item.e-active,
+    .bootstrap4 .default-tab .e-content > .e-item.e-active,
+    .bootstrap .default-tab .e-content > .e-item.e-active {
+    background: #FAF9F8;
+    }
 
     .e-tab .e-tab-header .e-toolbar-items .e-active .e-tab-wrap {
-        border-bottom: 4px solid #0d6efd;
+    border-bottom: 4px solid #0d6efd;
     }
 
-        .e-tab .e-tab-header .e-toolbar-items .e-active .e-tab-wrap:hover {
-            border-bottom: 4px solid #0d6efd;
-        }
+    .e-tab .e-tab-header .e-toolbar-items .e-active .e-tab-wrap:hover {
+    border-bottom: 4px solid #0d6efd;
+    }
 
     .e-tab .e-tab-header .e-toolbar-item:not(.e-active) {
-        border-bottom: 0px;
+    border-bottom: 0px;
     }
 
     .e-btn.e-flat.e-primary, .e-btn.e-flat.e-primary:focus {
-        background-color: #317ab9;
-        border-color: #265f91;
-        color: #fff;
+    background-color: #317ab9;
+    border-color: #265f91;
+    color: #fff;
     }
 
-        .e-btn.e-flat.e-primary:hover, .e-btn.e-flat.e-primary:active {
-            background-color: #21527d;
-            border-color: #163854;
-            color: #fff;
-        }
+    .e-btn.e-flat.e-primary:hover, .e-btn.e-flat.e-primary:active {
+    background-color: #21527d;
+    border-color: #163854;
+    color: #fff;
+    }
 
     .e-circle-close {
-        width: 24px;
-        height: 24px;
-        position: relative;
-        display: inline-block;
+    width: 24px;
+    height: 24px;
+    position: relative;
+    display: inline-block;
     }
 
     .e-circle-info {
-        width: 24px;
-        height: 24px;
-        position: relative;
-        display: inline-block;
+    width: 24px;
+    height: 24px;
+    position: relative;
+    display: inline-block;
     }
 
     .error-msg {
-        color: #021b2e;
-        display: inline-block;
-        position: relative;
-        top: -20px;
-        left: 10px;
+    color: #021b2e;
+    display: inline-block;
+    position: relative;
+    top: -20px;
+    left: 10px;
     }
 
     .error-detail {
-        position: relative;
-        left: 36px;
-        margin: 0 0 21px;
+    position: relative;
+    left: 36px;
+    margin: 0 0 21px;
     }
 
     .e-icons.e-circle-close.col-lg-2:before {
-        font-size: 20px;
-        color: #d9534f;
-        position: relative;
-        left: 4px;
-        bottom: 18px;
+    font-size: 20px;
+    color: #d9534f;
+    position: relative;
+    left: 4px;
+    bottom: 18px;
     }
 
     .e-icons.e-circle-info.col-lg-2:before {
-        font-size: 20px;
-        color: #228e1f;
-        position: relative;
-        left: 4px;
-        bottom: 18px;
+    font-size: 20px;
+    color: #228e1f;
+    position: relative;
+    left: 4px;
+    bottom: 18px;
     }
 
     .e-dialog .e-footer-content {
-        background-color: #f8f8f8;
+    background-color: #f8f8f8;
     }
 
     .e-dialog.e-control.e-popup, .e-dialog.e-control.e-popup .e-dlg-header-content {
-        background-color: #d9edf7;
+    background-color: #d9edf7;
     }
 
     .e-dialog.e-control.e-popup {
-        padding: 3px;
+    padding: 3px;
     }
 
     .e-dialog.e-control .e-dlg-header-content {
-        padding: 10px;
+    padding: 10px;
     }
 
     .e-dialog.e-control .e-footer-content {
-        padding: 8px 12px;
+    padding: 8px 12px;
     }
 
     .e-dialog.e-control .e-dlg-content {
-        padding: 15px 0 0;
-        padding-right: 6px;
+    padding: 15px 0 0;
+    padding-right: 6px;
     }
 
     .msg-wrapper.col-lg-12 {
-        margin-top: 20px;
+    margin-top: 20px;
     }
 
     .customtooltip.e-tooltip-wrap.e-popup {
-        background-color: #ededed;
-        border: 1px solid #d9d9d9;
+    background-color: #ededed;
+    border: 1px solid #d9d9d9;
     }
 
     .e-tooltip-wrap .e-tip-content {
-        color: #3d3d3d;
+    color: #3d3d3d;
     }
 
     .customtooltip.e-tooltip-wrap .e-arrow-tip-outer {
-        border-bottom: 12px solid transparent;
-        border-left: 12px solid transparent;
-        border-top: 12px solid transparent;
-        border-right: 12px solid transparent;
+    border-bottom: 12px solid transparent;
+    border-left: 12px solid transparent;
+    border-top: 12px solid transparent;
+    border-right: 12px solid transparent;
     }
 
     .customtooltip.e-tooltip-wrap .e-arrow-tip-inner {
-        color: #ededed;
-        font-size: 25.9px;
+    color: #ededed;
+    font-size: 25.9px;
     }
 </style>
 
@@ -1497,6 +1509,12 @@
 
     private string switchPrivacy = "Da firmare";
     private bool fPrivacy = false;
+    #endregion
+
+    #region binding OneSave
+    string OneSave = " Salva Visita";
+    private int SelectedTab = 0;
+    public Boolean OneSaveDisabled = false;
     #endregion
 
     #region binding visita
@@ -2465,6 +2483,60 @@
     }
     #endregion
 
+    #region OneSave
+    public void Selected(Syncfusion.Blazor.Navigations.SelectEventArgs args)
+    {
+        switch (SelectedTab){
+            case 0:
+                OneSave = " Salva Visita";
+                OneSaveDisabled = false;
+                break;
+            case 1:
+                OneSave = " Salva Prescrizione";
+                OneSaveDisabled = SaveVisusDisabled;
+                break;
+            case 2:
+                OneSave = " Salva Controllo";
+                OneSaveDisabled = SaveCntrDisabled;
+                break;
+            case 3:
+                OneSave = " Salva Ortottica";
+                OneSaveDisabled = SaveOrtoctisDisabled;
+                break;
+            default:
+                OneSave = " Salva ";
+                OneSaveDisabled = true;
+                break;
+        }
+    }
+
+    public async void SaveOne()
+    {
+        await Task.Run(() =>
+        {
+            Console.WriteLine($"\n📌 SelectedTab: {SelectedTab}");
+
+            switch (SelectedTab)
+            {
+                case 0:
+                    SaveVisit();
+                    break;
+                case 1:
+                    SaveVisus();
+                    break;
+                case 2:
+                    SaveControl();
+                    break;
+                case 3:
+                    SaveOrtoctis();
+                    break;
+                default:
+                    break;
+            }
+        });
+    }
+    #endregion
+
     #region Visite
     public async void LoadVisit(decimal idv)
     {
@@ -3032,7 +3104,7 @@
 
         Visus = await VisusService.GetVisus(idv);
 
-        if (Visus.IdMisura != 0)
+        if(Visus.IdMisura != 0)
         {
             Visus.ODD_Sf = SetObjNullToStr(Visus.ODD_Sf);       // Occhio Destro Distanza
 
@@ -3111,6 +3183,11 @@
             DataMisura = DataVisita;
 
             SaveVisusDisabled = false;
+
+            // if (SelectedTab == 1)
+            // {
+            //     OneSaveDisabled = false;
+            // }
 
             PrintVisusDisabled = true;
 
@@ -3611,8 +3688,7 @@
             {
                 drugs = await ListDrugsService.ListDrugsAndUse(fFar);
 
-                if (drugs.Count == 0)
-                {
+                if (drugs.Count == 0){
                     action = "PreparaFarmaco";
 
                     ConfirmHeader = "Attenzione";
@@ -3865,15 +3941,15 @@
         if (ContinueOp)
         {
             Prescrizione NewPrescSec = new Prescrizione
-                {
-                    ptIdUser = Decimal.Parse(gIdUser),
-                    InsertDate = DateTime.Now,
-                    ptIdVisit = Visita.IdVisit,
-                    DataPrescrizione = DateTime.Now,
-                    PrintDate = printDate,
-                    ptIdFarmaco = idF,
-                    ptIdFarmacoUso = idU
-                };
+            {
+                ptIdUser = Decimal.Parse(gIdUser),
+                InsertDate = DateTime.Now,
+                ptIdVisit = Visita.IdVisit,
+                DataPrescrizione = DateTime.Now, 
+                PrintDate = printDate,
+                ptIdFarmaco = idF,
+                ptIdFarmacoUso = idU
+            };
 
             Console.WriteLine($"🔷 ptIdUser: {NewPrescSec.ptIdUser}");
             Console.WriteLine($"🔷 InsertDate: {NewPrescSec.InsertDate}");
@@ -3983,7 +4059,7 @@
 
         Prescriptions = await PrescrizioniService.GetPrescrByVisit(idv);
 
-        if (Prescriptions.Count > 0)
+        if(Prescriptions.Count > 0)
         {
             PrintPrescrDisabled = false;
 
@@ -4526,8 +4602,7 @@
         string result = "";
         string relData;
 
-        if (data2.Length < 10)
-        {
+        if (data2.Length < 10){
             relData = data2.Substring(0, 2) + "/" + data2.Substring(2, 2) + "/" + data2.Substring(4, 4);
         }
         else
@@ -4796,7 +4871,7 @@
         PdfTextElement val;
 
         HeadPdfGrid.Rows[0].Cells[0].Style = HeadLogoStyle;
-        HeadPdfGrid.Rows[0].Cells[0].ImagePosition = PdfGridImagePosition.Tile;                                         // 0-0
+        HeadPdfGrid.Rows[0].Cells[0].ImagePosition = PdfGridImagePosition.Tile;                                         // 0-0   
 
         HeadPdfGrid.Rows[0].Cells[1].Style = HeadStyle;
         HeadPdfGrid.Rows[0].Cells[2].Style = HeadStyle;
@@ -4858,7 +4933,7 @@
         val = new PdfTextElement("Anni", hNameFont, PdfBrushes.Black);                                                  // 1-3
         HeadPdfGrid.Rows[1].Cells[3].Value = val;
 
-        if ((BirthDate != "") && (DataVisita != ""))
+        if((BirthDate != "") && (DataVisita != ""))
         {
             val = new PdfTextElement(Eta(CustomDate(BirthDate), DataVisita), hValueFont, PdfBrushes.Black);             // 1-4
             HeadPdfGrid.Rows[1].Cells[4].Value = val;
@@ -4988,64 +5063,64 @@
         VisitPdfGrid.Columns[9].Width = 152;
 
         // Set Columns merged
-        VisitPdfGrid.Rows[0].Cells[1].ColumnSpan = 5;           //  0
+        VisitPdfGrid.Rows[0].Cells[1].ColumnSpan = 5;                                           //  0
         VisitPdfGrid.Rows[0].Cells[7].ColumnSpan = 3;
 
         VisitPdfGrid.Rows[1].Cells[0].ColumnSpan = 10;
 
-        VisitPdfGrid.Rows[2].Cells[1].ColumnSpan = 5;           //  1
+        VisitPdfGrid.Rows[2].Cells[1].ColumnSpan = 5;                                           //  1
 
         VisitPdfGrid.Rows[3].Cells[0].ColumnSpan = 10;
 
-        VisitPdfGrid.Rows[4].Cells[1].ColumnSpan = 5;           //  2
+        VisitPdfGrid.Rows[4].Cells[1].ColumnSpan = 5;                                           //  2
 
         VisitPdfGrid.Rows[5].Cells[0].ColumnSpan = 10;
 
-        VisitPdfGrid.Rows[6].Cells[1].ColumnSpan = 5;           //  3
+        VisitPdfGrid.Rows[6].Cells[1].ColumnSpan = 5;                                           //  3
 
         VisitPdfGrid.Rows[7].Cells[0].ColumnSpan = 10;
 
-        VisitPdfGrid.Rows[8].Cells[1].ColumnSpan = 5;           //  4
+        VisitPdfGrid.Rows[8].Cells[1].ColumnSpan = 5;                                           //  4
 
         VisitPdfGrid.Rows[9].Cells[0].ColumnSpan = 10;
 
-        VisitPdfGrid.Rows[10].Cells[1].ColumnSpan = 5;          //  5
+        VisitPdfGrid.Rows[10].Cells[1].ColumnSpan = 5;                                           //  5
 
         VisitPdfGrid.Rows[11].Cells[0].ColumnSpan = 10;
 
-        VisitPdfGrid.Rows[12].Cells[1].ColumnSpan = 5;          //  6
+        VisitPdfGrid.Rows[12].Cells[1].ColumnSpan = 5;                                           //  6
 
         VisitPdfGrid.Rows[13].Cells[0].ColumnSpan = 10;
 
-        VisitPdfGrid.Rows[14].Cells[1].ColumnSpan = 5;          //  7
+        VisitPdfGrid.Rows[14].Cells[1].ColumnSpan = 5;                                           //  7
 
         VisitPdfGrid.Rows[15].Cells[0].ColumnSpan = 10;
 
-        VisitPdfGrid.Rows[16].Cells[1].ColumnSpan = 5;          //  8
+        VisitPdfGrid.Rows[16].Cells[1].ColumnSpan = 5;                                           //  8
 
         VisitPdfGrid.Rows[17].Cells[0].ColumnSpan = 10;
 
-        VisitPdfGrid.Rows[18].Cells[1].ColumnSpan = 5;          //  9
+        VisitPdfGrid.Rows[18].Cells[1].ColumnSpan = 5;                                           //  9
 
         VisitPdfGrid.Rows[19].Cells[0].ColumnSpan = 10;
 
-        VisitPdfGrid.Rows[20].Cells[1].ColumnSpan = 5;          // 10
+        VisitPdfGrid.Rows[20].Cells[1].ColumnSpan = 5;                                          // 10
         VisitPdfGrid.Rows[20].Cells[7].ColumnSpan = 3;
 
         VisitPdfGrid.Rows[21].Cells[0].ColumnSpan = 10;
 
-        VisitPdfGrid.Rows[22].Cells[7].ColumnSpan = 3;          // 11
+        VisitPdfGrid.Rows[22].Cells[7].ColumnSpan = 3;                                          // 11
 
         VisitPdfGrid.Rows[23].Cells[0].ColumnSpan = 10;
 
         VisitPdfGrid.Rows[25].Cells[0].ColumnSpan = 10;
 
-        VisitPdfGrid.Rows[26].Cells[1].ColumnSpan = 5;          // 13
+        VisitPdfGrid.Rows[26].Cells[1].ColumnSpan = 5;                                          // 13
         VisitPdfGrid.Rows[26].Cells[7].ColumnSpan = 3;
 
         VisitPdfGrid.Rows[27].Cells[0].ColumnSpan = 10;
 
-        VisitPdfGrid.Rows[28].Cells[1].ColumnSpan = 9;          // 14
+        VisitPdfGrid.Rows[28].Cells[1].ColumnSpan = 9;                                          // 14
         #endregion
 
         #region Inserimento Dati Visita
@@ -5053,18 +5128,18 @@
         PdfTextElement value;
 
         VisitPdfGrid.Rows[0].Cells[0].Style = posCellStyleH;                                        // Diagnosi OD
-        VisitPdfGrid.Rows[0].Cells[1].Style = posCellStyleV;
+        VisitPdfGrid.Rows[0].Cells[1].Style = posCellStyleV;                                        
         VisitPdfGrid.Rows[0].Cells[6].Style = posCellStyleH2;                                       // INTERVENTI
-        VisitPdfGrid.Rows[0].Cells[7].Style = posCellStyleV;
+        VisitPdfGrid.Rows[0].Cells[7].Style = posCellStyleV;                                    
 
-        value = new PdfTextElement("DIAGNOSI", fieldNameFont, PdfBrushes.Black);                    // label DIAGNOSI
+        value = new PdfTextElement("DIAGNOSI", fieldNameFont, PdfBrushes.Black);                    // label DIAGNOSI 
         VisitPdfGrid.Rows[0].Cells[0].Value = value;
-        value = new PdfTextElement(FillEmpty(Visita.DiagnosiOD), fieldFont, PdfBrushes.Black);      // value DIAGNOSI
+        value = new PdfTextElement(FillEmpty(Visita.DiagnosiOD), fieldFont, PdfBrushes.Black);      // value DIAGNOSI 
         VisitPdfGrid.Rows[0].Cells[1].Value = value;
 
-        value = new PdfTextElement("INTERVENTI", fieldNameFont, PdfBrushes.Black);                  // label INTERVENTI
+        value = new PdfTextElement("INTERVENTI", fieldNameFont, PdfBrushes.Black);                  // label INTERVENTI 
         VisitPdfGrid.Rows[0].Cells[6].Value = value;
-        value = new PdfTextElement(FillEmpty(Visita.Interventi), fieldFont, PdfBrushes.Black);      // value INTERVENTI
+        value = new PdfTextElement(FillEmpty(Visita.Interventi), fieldFont, PdfBrushes.Black);      // value INTERVENTI 
         VisitPdfGrid.Rows[0].Cells[7].Value = value;
 
         VisitPdfGrid.Rows[1].Cells[0].Style = posCellStyleH;                                        // riga vuota
@@ -5355,20 +5430,20 @@
         value = new PdfTextElement(FillEmpty(Visita.Note), fieldFont, PdfBrushes.Black);            // NOTE
         VisitPdfGrid.Rows[28].Cells[1].Value = value;
 
-        // Console.WriteLine($" ");
-        // Console.WriteLine($"📌 PrintVisit ");
-        // Console.WriteLine($"🔷\t Visita.Fundus_Od: {Visita.Fundus_Od}\t Visita.Fundus_Os: {Visita.Fundus_Os}");
-        // Console.WriteLine($"🔷\t Visita.IV: {Visita.IV}");
-        // Console.WriteLine($"🔷\t Visita.CV_Od: {Visita.CV_Od}\t Visita.CV_Os: {Visita.CV_Os}");
-        // Console.WriteLine($"🔷\t Visita.CD_Od: {Visita.CD_Od}\t Visita.CD_Os: {Visita.CD_Os}");
-        // Console.WriteLine($" ");
+        Console.WriteLine($" ");
+        Console.WriteLine($"📌 PrintVisit ");
+        Console.WriteLine($"🔷\t Visita.Fundus_Od: {Visita.Fundus_Od}\t Visita.Fundus_Os: {Visita.Fundus_Os}");
+        Console.WriteLine($"🔷\t Visita.IV: {Visita.IV}");
+        Console.WriteLine($"🔷\t Visita.CV_Od: {Visita.CV_Od}\t Visita.CV_Os: {Visita.CV_Os}");
+        Console.WriteLine($"🔷\t Visita.CD_Od: {Visita.CD_Od}\t Visita.CD_Os: {Visita.CD_Os}");
+        Console.WriteLine($" ");
         #endregion
 
         // Draw PDF grid into the PDF page.
         VisitPdfGrid.Draw(page, new Syncfusion.Drawing.PointF(0, result.Bounds.Bottom + paragraphAfterSpacing));
         #endregion
 
-        //Create memory stream.
+        //Create memory stream. 
         MemoryStream memoryStream = new MemoryStream();
         //Save the PDF document.
         pdfDocument.Save(memoryStream);
@@ -6800,7 +6875,7 @@
         #endregion
 
         #region Inserimento Dati Testata
-        // Set the HeadPdfGrid's value
+        // Set the HeadPdfGrid's value      
         PdfTextElement val;
 
         HeadPdfGrid.Rows[0].Cells[0].Style = HeadFieldStyle;
@@ -7507,7 +7582,7 @@
         #endregion
 
         #region Inserimento Dati Testata
-        // Set the HeadPdfGrid's value
+        // Set the HeadPdfGrid's value  
         PdfTextElement val;
 
         HeadPdfGrid.Rows[0].Cells[0].Style = posCellStyleP0;
@@ -8391,8 +8466,7 @@
         pen.LineCap = PdfLineCap.Square;
 
         // occhio destro
-        if (SetObjNullToStr(Visus.ODD_Asse) != "")
-        {
+        if (SetObjNullToStr(Visus.ODD_Asse) != ""){
             pen.Color = Color.DarkBlue;
 
             double aa = Convert.ToDouble(SetObjNullToStr(Visus.ODD_Asse));
@@ -8430,8 +8504,7 @@
             // g.DrawLine(pen, pb, pc);
         }
 
-        if (SetObjNullToStr(Visus.ODP_Asse) != "")
-        {
+        if (SetObjNullToStr(Visus.ODP_Asse) != ""){
             pen.Color = Color.DarkRed;
 
             double aa = Convert.ToDouble(SetObjNullToStr(Visus.ODP_Asse));
@@ -8615,7 +8688,7 @@
         HeadTitleStyle.CellPadding = new PdfPaddings(150, 0, 15, 0);
 
         PdfGridCellStyle HeadEmptyStyle = new PdfGridCellStyle();
-        HeadEmptyStyle.Borders.Left.Width = 0F;
+        HeadEmptyStyle.Borders.Left.Width = 0F;             
         HeadEmptyStyle.Borders.Right.Width = 0F;
         HeadEmptyStyle.Borders.Top.Width = 0F;
         HeadEmptyStyle.Borders.Bottom.Width = 0F;
@@ -9069,8 +9142,7 @@
         NotePdfGrid.Rows[0].Cells[0].Value = value;
         value = new PdfTextElement("TABO", FieldBldFont, PdfBrushes.Black);                         //  0 - 1
         NotePdfGrid.Rows[0].Cells[1].Value = value;
-        if (fTabo)
-        {
+        if(fTabo){
             value = new PdfTextElement("Si", FieldRegFont, PdfBrushes.Black);                       //  0 - 2
         }
         else
@@ -9651,7 +9723,7 @@
         PdfTextElement value;
 
         Console.WriteLine($"📌 Prescrizione - Inizio Farmaci ");
-        for (var np = 0; np < Prescriptions.Count - 1; np++)
+        for (var np = 0; np < Prescriptions.Count-1; np++)
         {
             // riga farmaco
             PdfGridRow fRow = PrescrPdfGrid.Rows.Add();
@@ -9692,8 +9764,7 @@
             val = new PdfTextElement(" ", fieldFont, PdfBrushes.Black);
             eRow.Cells[0].Value = val;
 
-            if (np < Prescriptions.Count - 2)
-            {
+            if (np < Prescriptions.Count - 2){
                 Console.WriteLine($" ");
             }
         }
@@ -9701,8 +9772,7 @@
         Console.WriteLine($" ");
 
         // riga delle note
-        if (NotaPrescrizione != "")
-        {
+        if (NotaPrescrizione != ""){
             PdfGridRow nRow = PrescrPdfGrid.Rows.Add();
             nRow.Cells[0].ColumnSpan = 2;
             nRow.Cells[0].Style = posCellStyleN;
@@ -10186,7 +10256,7 @@
         #endregion
 
         #region Inserimento Dati Testata
-        // Set the HeadPdfGrid's value
+        // Set the HeadPdfGrid's value          
         PdfTextElement val;
 
         HeadPdfGrid.Rows[0].Cells[0].Style = posCellStyleP0;
@@ -11620,8 +11690,7 @@
                     relBirth = BirthDate;
                 }
             }
-            else
-            {
+            else{
                 relBirth = "--/--/----";
             }
 
