@@ -1762,11 +1762,43 @@
         return daysInMonth[month - 1];
     }
 
-    private Boolean CheckDate(string myDate)
+    private Boolean CheckDate(string myDate, string what)
     {
         Boolean result = false;
         string myYear, myMonth, myDay;
         int GiorniMese;
+        string soggetto = "";
+
+        switch (what)
+        {
+            case "paziente":
+                soggetto = "Data di Nascita";
+                break;
+
+            case "visita":
+                soggetto = "Data Visita";
+                break;
+
+            case "occhiali":
+                soggetto = "Data di stampa Prescrizione Occhiali";
+                break;
+
+            case "controlli":
+                soggetto = "Data controllo";
+                break;
+
+            case "ortottica":
+                soggetto = "Data di stampa Ortottica";
+                break;
+
+            case "prescrizioni":
+                soggetto = "Data di stampa Prescrizione";
+                break;
+
+            case "relazioni":
+                soggetto = "Data di stampa Relazione";
+                break;
+        }
 
         if (myDate.Length == 8)
         {
@@ -1789,7 +1821,7 @@
                         // giorno non compreso tra 1 e numero giorni previsto per il mese esci con false
                         DialogHeader = " Attenzione ";
                         DialogIcon = "e-icons e-circle-close col-lg-2";
-                        DialogText = "Giorno data di nascita non valido";
+                        DialogText = soggetto + ": giorno non valido";
                         DialogDetail = "";
                         DialogVisible = true;
                     }
@@ -1799,27 +1831,27 @@
                     // mese non compreso tra 1 e 12 esci con false
                     DialogHeader = " Attenzione ";
                     DialogIcon = "e-icons e-circle-close col-lg-2";
-                    DialogText = "Mese data di nascita non valido";
+                    DialogText = soggetto + ": mese non valido";
                     DialogDetail = "";
                     DialogVisible = true;
                 }
             }
             else
             {
-                // anno inferiore al 190 esci con false
+                // anno inferiore al 1900 esci con false
                 DialogHeader = " Attenzione ";
                 DialogIcon = "e-icons e-circle-close col-lg-2";
-                DialogText = "Anno data di nascita non valido";
+                DialogText = soggetto + ": anno non valido";
                 DialogDetail = "";
                 DialogVisible = true;
             }
         }
         else
         {
-            // anno inferiore al 190 esci con false
+            // data non completa
             DialogHeader = " Attenzione ";
             DialogIcon = "e-icons e-circle-close col-lg-2";
-            DialogText = "Data di nascita non valida";
+            DialogText = soggetto + " non valida";
             DialogDetail = "";
             DialogVisible = true;
         }
@@ -2413,7 +2445,7 @@
 
             if (BirthDate != "")
             {
-                if (CheckDate(BirthDate))
+                if (CheckDate(BirthDate, "paziente"))
                 {
                     TmpDate = BirthDate.Substring(4, 4) + "-" + BirthDate.Substring(2, 2) + "-" + BirthDate.Substring(0, 2) + " 00:00:00,000";
 
@@ -2916,7 +2948,7 @@
 
         if (IsNewVisit)
         {
-            if (CheckDate(DataVisita))
+            if (CheckDate(DataVisita, "visita"))
             {
                 TmpDate = DataVisita.Substring(4, 4) + "-" + DataVisita.Substring(2, 2) + "-" + DataVisita.Substring(0, 2) + " 00:00:00,000";
 
@@ -2954,7 +2986,7 @@
         }
         else
         {
-            if (CheckDate(DataVisita))
+            if (CheckDate(DataVisita, "visita"))
             {
                 TmpDate = DataVisita.Substring(4, 4) + "-" + DataVisita.Substring(2, 2) + "-" + DataVisita.Substring(0, 2) + " 00:00:00,000";
 
@@ -3241,7 +3273,7 @@
             Visus.InsertDate = DateTime.Now;
             Visus.DataMisura = Visita.DataVisita;
 
-            if (CheckDate(pDataOcchiali))
+            if (CheckDate(pDataOcchiali, "occhiali"))
             {
                 TmpDate = pDataOcchiali.Substring(4, 4) + "-" + pDataOcchiali.Substring(2, 2) + "-" + pDataOcchiali.Substring(0, 2) + " 00:00:00,000";
 
@@ -3270,7 +3302,7 @@
         }
         else
         {
-            if (CheckDate(pDataOcchiali))
+            if (CheckDate(pDataOcchiali, "occhiali"))
             {
                 TmpDate = pDataOcchiali.Substring(4, 4) + "-" + pDataOcchiali.Substring(2, 2) + "-" + pDataOcchiali.Substring(0, 2) + " 00:00:00,000";
 
@@ -3594,7 +3626,7 @@
             Ortoctis.InsertDate = DateTime.Now;
             Ortoctis.DataOrtottica = Visita.DataVisita;
 
-            if (CheckDate(pDataOrtottica))
+            if (CheckDate(pDataOrtottica, "ortottica"))
             {
                 TmpDate = pDataOrtottica.Substring(4, 4) + "-" + pDataOrtottica.Substring(2, 2) + "-" + pDataOrtottica.Substring(0, 2) + " 00:00:00,000";
 
@@ -3623,7 +3655,7 @@
         }
         else
         {
-            if (CheckDate(pDataOrtottica))
+            if (CheckDate(pDataOrtottica, "ortottica"))
             {
                 TmpDate = pDataOrtottica.Substring(4, 4) + "-" + pDataOrtottica.Substring(2, 2) + "-" + pDataOrtottica.Substring(0, 2) + " 00:00:00,000";
 
@@ -3810,7 +3842,7 @@
 
         Prescrizione CorrentePrescr = new Prescrizione();
 
-        if (CheckDate(pDataPrescrizione))
+        if (CheckDate(pDataPrescrizione, "prescrizioni"))
         {
             TmpDate = pDataPrescrizione.Substring(4, 4) + "-" + pDataPrescrizione.Substring(2, 2) + "-" + pDataPrescrizione.Substring(0, 2) + " 00:00:00,000";
 
@@ -3925,7 +3957,7 @@
 
         Console.WriteLine($"\n📌 Inserimento Prescrizione");
 
-        if (CheckDate(pDataPrescrizione))
+        if (CheckDate(pDataPrescrizione, "prescrizioni"))
         {
             TmpDate = pDataPrescrizione.Substring(4, 4) + "-" + pDataPrescrizione.Substring(2, 2) + "-" + pDataPrescrizione.Substring(0, 2) + " 00:00:00,000";
 
@@ -3990,7 +4022,7 @@
 
         bool ContinueOp = true;
 
-        if (CheckDate(pDataPrescrizione))
+        if (CheckDate(pDataPrescrizione, "prescrizioni"))
         {
             TmpDate = pDataPrescrizione.Substring(4, 4) + "-" + pDataPrescrizione.Substring(2, 2) + "-" + pDataPrescrizione.Substring(0, 2) + " 00:00:00,000";
 
@@ -4086,7 +4118,7 @@
 
         bool ContinueOp = true;
 
-        if (CheckDate(pDataPrescrizione))
+        if (CheckDate(pDataPrescrizione, "prescrizioni"))
         {
             TmpDate = pDataPrescrizione.Substring(4, 4) + "-" + pDataPrescrizione.Substring(2, 2) + "-" + pDataPrescrizione.Substring(0, 2) + " 00:00:00,000";
 
@@ -4203,7 +4235,7 @@
 
         bool ContinueOp = true;
 
-        if (CheckDate(pDataRelazione))
+        if (CheckDate(pDataRelazione, "relazioni"))
         {
             TmpDate = pDataRelazione.Substring(4, 4) + "-" + pDataRelazione.Substring(2, 2) + "-" + pDataRelazione.Substring(0, 2) + " 00:00:00,000";
 
