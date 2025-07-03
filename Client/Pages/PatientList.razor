@@ -429,6 +429,8 @@
                     // SessionFilterPatients = pv;
 
                     StateHasChanged();
+
+                    await this.InvokeAsync(() => this.StateHasChanged());
                 }
                 catch (Exception ex)
                 {

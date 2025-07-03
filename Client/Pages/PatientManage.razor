@@ -57,6 +57,8 @@
     </span>
 
     <span style="float: right;">
+        <SfButton IconCss="e-icons e-circle-remove icon-red" CssClass="e-flat btn-light" Content="Rimuovi Paziente" OnClick="() => DeletePatient()"></SfButton>
+        &nbsp;&nbsp;&nbsp;
         <SfButton IconCss="e-icons e-save icon-navy" CssClass="e-flat btn-light" Content="@SaveText" OnClick="() => SavePatient()"></SfButton>
         &nbsp;&nbsp;&nbsp;
         <SfButton IconCss="e-icons e-chevron-left icon-green" CssClass="e-flat btn-light" Content="Elenco Pazienti" OnClick="() => GoToPatientList(0)"></SfButton>
@@ -2195,6 +2197,24 @@
                 StateHasChanged();
 
                 break;
+
+            case "DeletePatient":
+                this.ConfirmDialogVisible = false;
+
+                Console.WriteLine($" ");
+
+                Console.WriteLine($"Rimozione Paziente");
+                Console.WriteLine($"Paziente.IdPatient: {Paziente.IdPatient}");
+                Console.WriteLine($" ");
+
+                await PatientMngService.DeletePatient(Paziente.IdPatient);
+
+                Navigation.NavigateTo("/patientlist/" + id.ToString());
+
+                StateHasChanged();
+
+                break;
+
             case "PreparaFarmaco":
                 this.ConfirmDialogVisible = false;
 
@@ -2512,6 +2532,22 @@
         }
 
         StateHasChanged();
+    }
+
+    public async void DeletePatient()
+    {
+        action = "DeletePatient";
+
+        ConfirmHeader = "Attenzione";
+        ConfirmIcon = "e-icons d-exclamation-triangle col-lg-2";
+        ConfirmText = "Rimozione paziente";
+        ConfirmDetail = "Procedere con la rimozione del Paziente: " + LName + " " + FName + "?";
+
+        ConfirmYesButtonText = "Rimuovi";
+        ConfirmNoButtonText = "Esci";
+
+        this.ConfirmDialogWidth = "440px";
+        this.ConfirmDialogVisible = true;
     }
     #endregion
 

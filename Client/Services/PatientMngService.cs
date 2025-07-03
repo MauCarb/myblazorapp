@@ -39,4 +39,9 @@ public class PatientMngService
     {
         await _httpClient.PutAsJsonAsync($"https://ophthalapi02-dcafg8d7hhekfkb0.italynorth-01.azurewebsites.net/api/patient/{paziente.IdPatient}", paziente);
     }
+
+    public async Task DeletePatient(decimal id)
+    {
+        await _httpClient.DeleteAsync($"https://ophthalapi02-dcafg8d7hhekfkb0.italynorth-01.azurewebsites.net/api/patient/{id}");
+    }
 }
