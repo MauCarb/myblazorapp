@@ -1,0 +1,1376 @@
+﻿@page "/privacy/{id:decimal}"
+@using Blazored.SessionStorage
+@using Microsoft.AspNetCore.Components.WebAssembly.Hosting
+@using Newtonsoft.Json
+
+@using Syncfusion.Blazor.Navigations
+
+@using BlazorApp.Shared
+@using BlazorApp.Client.Models
+
+@inject NavigationManager Navigation
+@inject ISessionStorageService sessionStorage
+
+@inject HttpClient Http
+
+@inject PatientService PatientService
+@inject PatientMngService PatientMngService
+@inject PrivacySignService PrivacySignService
+
+@using Syncfusion.Blazor.Spinner
+
+@using Syncfusion.Pdf
+@using Syncfusion.Pdf.Grid;
+@using Syncfusion.Drawing;
+@using Syncfusion.Pdf.Graphics;
+@inject Microsoft.JSInterop.IJSRuntime JS
+@using System.IO;
+
+@using PdfSharpCore.Pdf;
+@using PdfSharpCore.Pdf.IO;
+@using PdfSharpCore.Drawing;
+@using SixLabors.ImageSharp;
+@using SixLabors.ImageSharp.PixelFormats;
+@using SixLabors.ImageSharp.Formats.Png;
+@using System.Net.Http;
+
+@inject IWebAssemblyHostEnvironment Env
+
+<h5>
+    @TitlePage
+
+    <span style="float: right;">
+        <SfButton IconCss="e-icons e-chevron-left icon-green" CssClass="e-flat btn-light" Content="Ritorna alla scheda del Paziente" OnClick="() => ReturnToPatient(id)"></SfButton>
+        &nbsp;&nbsp;&nbsp;
+        <SfButton IconCss="e-icons e-chevron-left icon-green" CssClass="e-flat btn-light" Content="Elenco Pazienti" OnClick="() => GoToPatientList(0)"></SfButton>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <SfButton IconCss="e-icons e-signature icon-red" CssClass="e-flat btn-light" Content="Crea Documento Privacy" OnClick="() => CreaPrivacy()"></SfButton>
+    </span>
+</h5>
+
+<SfSpinner @ref="spinnerRef" Size="60" Label="Creazione documento in corso..." />
+
+<div class="container-fluid" style="padding: 0 10px 10px 10px; margin-top: 14px;">
+
+    <div class="row" style="margin: 20px 0;">
+        <div class="col-sm-2">
+            <b>Documento Privacy</b>
+        </div>
+        <div class="col-sm-3">
+            <SfDropDownList TItem="PrivacyDocs" TValue="string" PopupHeight="230px" Placeholder="Scelta ambulatorio" @bind-Value="@DropDownPrivacyDocsValue" DataSource="@QualePrivacy">
+                <DropDownListEvents TItem="PrivacyDocs" TValue="string" ValueChange="OnChangePrivacyDocs" />
+                <DropDownListFieldSettings Text="Text" Value="Id" />
+            </SfDropDownList>
+        </div>
+    </div>
+
+    <div class="row">
+        <!-- Colonna di centro: 3 righe -->
+        <div class="col-sm-5 d-flex flex-column">
+            <div class="p-2">Trattamento dei Dati Personali del paziente per finalità di visita specialistica</div>
+            <div class="p-2">Comunicazione dei Dati Personali del paziente al suo medico curante</div>
+            <div class="p-2">Comunicazione di attività promozionale e commerciale</div>
+        </div>
+
+        <div class="col-sm-3 d-flex flex-column">
+            <div class="p-2">
+                <label style="font-size: 11pt; padding: 0 8px 8px 0; vertical-align: super;">@switchSpe</label>
+                <SfSwitch @bind-Checked="@fSpe" ValueChange="mngSpe" TChecked="bool"></SfSwitch>
+                @* Disabled="IsTutorChecked" *@
+            </div>
+            <div class="p-2">
+                <label style="font-size: 11pt; padding: 0 8px 8px 0; vertical-align: super;">@switchMedico</label>
+                <SfSwitch @bind-Checked="@fMedico" ValueChange="mngMedico" TChecked="bool" Disabled="IsTutorChecked"></SfSwitch>
+            </div>
+            <div class="p-2">
+                <label style="font-size: 11pt; padding: 0 8px 8px 0; vertical-align: super;">@switchPromo</label>
+                <SfSwitch @bind-Checked="@fPromo" ValueChange="mngPromo" TChecked="bool" Disabled="IsTutorChecked"></SfSwitch>
+            </div>
+        </div>
+
+        <!-- Colonna destra: una sola cella con rowspan simulato -->
+        <div class="col-sm-3">
+            @if (srcFile != "")
+            {
+                <div class="h-100 border p-2 d-flex align-items-center justify-content-center" style="height: 100%;">
+                    <img src="@srcFile" alt="Italian Trulli">
+                </div>
+
+            }
+        </div>
+    </div>
+
+    <div class="row" style="margin: 20px 0 0 0;">
+        <div class="col-sm-11" style="text-align: center;">
+            <b>Indicare la preferenza di contatto</b>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-2">
+            <SfCheckBox @bind-Checked="@IsPostaChecked" Disabled="IsTutorChecked">posta cartacea</SfCheckBox>
+        </div>
+
+        <div class="col-sm-2">
+            <SfCheckBox @bind-Checked="@IsPhoneChecked" Disabled="IsTutorChecked">contatti telefonici tramite</SfCheckBox>
+        </div>
+
+        <div class="col-sm-2">
+            <SfCheckBox @bind-Checked="@IsEmailChecked" Disabled="IsTutorChecked">e-mail</SfCheckBox>
+        </div>
+
+        <div class="col-sm-2">
+            <SfCheckBox @bind-Checked="@IsSmsChecked" Disabled="IsTutorChecked">invio di sms</SfCheckBox>
+        </div>
+
+        <div class="col-sm-2">
+            <SfCheckBox @bind-Checked="@IsSocialChecked" Disabled="IsTutorChecked">utilizzo di social</SfCheckBox>
+        </div>
+    </div>
+
+    <div class="row" style="margin: 10px 0;">
+        <div class="col-sm-2">
+            <SfTextBox ID="luogo" @bind-Value="@luogo" Placeholder="Luogo" FloatLabelType="@FloatLabelType.Always" CssClass="sftext"></SfTextBox>
+            @* Enabled="!IsTutorChecked" *@
+        </div>
+
+        <div class="col-sm-1" style="min-width: 118px;">
+            <SfMaskedTextBox ID="datafirma" @bind-Value="@datafirma" Mask="00/00/0000" Placeholder="Data" FloatLabelType="@FloatLabelType.Always" CssClass="sftext"></SfMaskedTextBox>
+            @* Enabled="!IsTutorChecked" *@
+        </div>
+    </div>
+
+    <!-- Sezione solo per minori o inabili -->
+    <div class="row" style="margin: 20px 0 0 0;">
+        <div class="col-sm-11" style="text-align: center;">
+            <b>In caso di pazienti minorenni / inabili:</b><SfCheckBox @bind-Checked="@IsTutorChecked" Disabled="EnableTutor"></SfCheckBox>
+        </div>
+    </div>
+
+    <div class="row" style="margin: 0;">
+        <div class="col-sm-11">
+            <em>Dati dell'esercente la responsabilità genitoriale/tutore</em>
+        </div>
+    </div>
+
+    <div class="row" style="margin: 1px 0;">
+        <div class="col-sm-4">
+            <SfTextBox ID="nomecompletoT" @bind-Value="@nomecompletoT" Placeholder="Nome e Cognome" FloatLabelType="@FloatLabelType.Always" CssClass="sftext" Enabled="@IsTutorChecked"></SfTextBox>
+        </div>
+
+        <div class="col-sm-4">
+            <SfTextBox ID="luogonascitaT" @bind-Value="@luogonascitaT" Placeholder="Luogo di nascita" FloatLabelType="@FloatLabelType.Always" CssClass="sftext" Enabled="@IsTutorChecked"></SfTextBox>
+        </div>
+
+        <div class="col-sm-1" style="min-width: 118px;">
+            <SfMaskedTextBox ID="datanascitaT" @bind-Value="@datanascitaT" Mask="00/00/0000" Placeholder="Data di nascita" FloatLabelType="@FloatLabelType.Always" CssClass="sftext" Enabled="@IsTutorChecked"></SfMaskedTextBox>
+        </div>
+    </div>
+
+    <div class="row" style="margin: 10px 0;">
+        <div class="col-sm-4">
+            <SfTextBox ID="cittaresidenzaT" @bind-Value="@cittaresidenzaT" Placeholder="Città di residenza" FloatLabelType="@FloatLabelType.Always" CssClass="sftext" Enabled="IsTutorChecked"></SfTextBox>
+        </div>
+
+        <div class="col-sm-3">
+            <SfTextBox ID="indirizzoT" @bind-Value="@indirizzoT" Placeholder="Indirizzo" FloatLabelType="@FloatLabelType.Always" CssClass="sftext" Enabled="IsTutorChecked"></SfTextBox>
+        </div>
+
+        <div class="col-sm-1" style="min-width: 118px;">
+            <SfTextBox ID="civicoT" @bind-Value="@civicoT" Placeholder="N° civico" FloatLabelType="@FloatLabelType.Always" CssClass="sftext" Enabled="IsTutorChecked"></SfTextBox>
+        </div>
+
+        <div class="col-sm-1" style="min-width: 118px;">
+            <SfTextBox ID="capT" @bind-Value="@capT" Placeholder="C.A.P." FloatLabelType="@FloatLabelType.Always" CssClass="sftext" Enabled="IsTutorChecked"></SfTextBox>
+        </div>
+    </div>
+
+    <div class="row" style="margin: 20px 0 0 0;">
+        <div class="col-sm-11">
+            <em>Dati paziente</em>
+        </div>
+    </div>
+
+    <div class="row" style="margin: 1px 0;">
+        <div class="col-sm-4">
+            <SfTextBox ID="nomecompleto" @bind-Value="@nomecompleto" Placeholder="Nome e Cognome" FloatLabelType="@FloatLabelType.Always" CssClass="sftext" Readonly=true></SfTextBox>
+        </div>
+
+        <div class="col-sm-4">
+            <SfTextBox ID="luogonascita" @bind-Value="@luogonascita" Placeholder="Luogo di nascita" FloatLabelType="@FloatLabelType.Always" CssClass="sftext" Enabled="IsTutorChecked"></SfTextBox>
+        </div>
+
+        <div class="col-sm-1" style="min-width: 118px;">
+            <SfMaskedTextBox ID="datanascita" @bind-Value="@datanascita" Mask="00/00/0000" Placeholder="Data di nascita" FloatLabelType="@FloatLabelType.Always" CssClass="sftext" Enabled="IsTutorChecked"></SfMaskedTextBox>
+        </div>
+    </div>
+
+    <div class="row" style="margin: 10px 0;">
+        <div class="col-sm-4">
+            <SfTextBox ID="cittaresidenza" @bind-Value="@cittaresidenza" Placeholder="Città di residenza" FloatLabelType="@FloatLabelType.Always" CssClass="sftext" Enabled="IsTutorChecked"></SfTextBox>
+        </div>
+
+        <div class="col-sm-3">
+            <SfTextBox ID="indirizzo" @bind-Value="@indirizzo" Placeholder="Indirizzo" FloatLabelType="@FloatLabelType.Always" CssClass="sftext" Enabled="IsTutorChecked"></SfTextBox>
+        </div>
+
+        <div class="col-sm-1" style="min-width: 118px;">
+            <SfTextBox ID="civico" @bind-Value="@civico" Placeholder="N° civico" FloatLabelType="@FloatLabelType.Always" CssClass="sftext" Enabled="IsTutorChecked"></SfTextBox>
+        </div>
+
+        <div class="col-sm-1" style="min-width: 118px;">
+            <SfTextBox ID="cap" @bind-Value="@cap" Placeholder="C.A.P." FloatLabelType="@FloatLabelType.Always" CssClass="sftext" Enabled="IsTutorChecked"></SfTextBox>
+        </div>
+    </div>
+
+    <div class="row" style="margin: 20px 0 0 0;">
+        <div class="col-sm-5">
+            Comunicazione dei Dati Personali del paziente al suo medico curante
+        </div>
+        <div class="col-sm-6">
+            <label style="font-size: 11pt; padding: 0 8px 8px 0; vertical-align: super;">@switchMedicoT</label>
+            <SfSwitch @bind-Checked="@fMedicoT" ValueChange="mngMedicoT" TChecked="bool" Disabled="!IsTutorChecked"></SfSwitch>
+        </div>
+    </div>
+
+    <div class="row" style="margin: 10px 0;">
+        <div class="col-sm-2">
+            <SfTextBox ID="luogoT" @bind-Value="@luogoT" Placeholder="Luogo" FloatLabelType="@FloatLabelType.Always" CssClass="sftext" Enabled="IsTutorChecked"></SfTextBox>
+        </div>
+
+        <div class="col-sm-1" style="min-width: 118px;">
+            <SfMaskedTextBox ID="datafirmaT" @bind-Value="@datafirmaT" Mask="00/00/0000" Placeholder="Data" FloatLabelType="@FloatLabelType.Always" CssClass="sftext" Enabled="IsTutorChecked"></SfMaskedTextBox>
+        </div>
+    </div>
+</div>
+
+<SfDialog Width="400px" Target="#target" ShowCloseIcon="true" @bind-Visible="DialogVisible">
+    <DialogTemplates>
+        <Header> @DialogHeader </Header>
+        <Content>
+            <div class='msg-wrapper col-lg-12'>
+                <span class='@DialogIcon'></span>
+                <span class='error-msg col-lg-10'>@DialogText</span>
+            </div>
+            <div class='error-detail col-lg-12' style="margin-top:3px;">
+                <span style="display:inline-block; margin-left:20px;">@DialogDetail</span>
+            </div>
+        </Content>
+    </DialogTemplates>
+    <DialogButtons>
+        <DialogButton Content="OK" IsPrimary="true" OnClick="@CloseDialog" />
+    </DialogButtons>
+</SfDialog>
+
+<style>
+    /*spinner */
+    .e-spinner-inner {
+        background-color: #fff;
+    }
+    /*fine spinner */
+</style>
+
+@code {
+    [Parameter]
+    public decimal id { get; set; }
+
+    private string pdfFirmatoUrl = string.Empty;
+    private string errore = string.Empty;
+
+    string TitlePage = "";
+
+    private SfSpinner spinnerRef;
+
+    string SignGUID = Guid.NewGuid().ToString();
+    decimal tmpIdPrivacySign;
+    private PrivacySign tmpPrivacySign = new PrivacySign();
+
+    public class PrivacyDocs
+    {
+        public string Id { get; set; }
+        public string Text { get; set; }
+    }
+
+    private List<PrivacyDocs> QualePrivacy = new List<PrivacyDocs>()
+    {
+        new PrivacyDocs(){ Id= "1", Text= "CENTRO MEDICO MEDITERRANEO S.R.L." },
+        new PrivacyDocs(){ Id= "2", Text= "STUDIO OCULISTICO DOTT. LA BRUNA S.R.L.S." }
+     };
+
+    #region FTP
+    public class FtpFileInfo
+    {
+        public string Name { get; set; }
+        public DateTime ModifiedDate { get; set; }
+    }
+
+    List<FtpFileInfo>? files;
+
+    public string srcFile = "";
+
+    private string AttachHyperPath(string filename)
+    {
+        string fullpath = "";
+
+        if (id != 0)
+        {
+            fullpath = "https://demo.gmvcloud.com/pdft/" + id.ToString() + "/" + filename;
+        }
+
+        return fullpath;
+    }
+    #endregion
+
+    public string DropDownPrivacyDocsValue = "1";
+    public string ChangePrivacyDocsValue { get; set; } = "CENTRO MEDICO MEDITERRANEO S.R.L.";
+    public void OnChangePrivacyDocs(Syncfusion.Blazor.DropDowns.ChangeEventArgs<string, PrivacyDocs> args)
+    {
+        this.ChangePrivacyDocsValue = args.ItemData.Text;
+    }
+
+    #region logging
+    string? LoggedUser;
+    string[]? arUser;
+
+    private string? gIdUser;
+    private string? gFName;
+    private string? gLName;
+    private string? gSuperUser;
+
+    private string? SessionID;
+
+    //private string[] gRoleUser;
+
+    private string sessionLoggedUser { get; set; }
+    #endregion
+
+    #region dialog
+    private bool DialogVisible { get; set; } = false;
+
+    private string DialogHeader { get; set; } = "";
+    private string DialogIcon { get; set; } = "";
+    private string DialogText { get; set; } = "";
+    private string DialogDetail { get; set; } = "";
+
+    private void CloseDialog()
+    {
+        DialogVisible = false;
+    }
+    #endregion
+
+    #region binding paziente
+    private Patient Paziente = new Patient();
+
+    public string LName = "";
+    public string FName = "";
+
+    public string Cod = "";
+    public string CodFisc = "";
+
+    public string BirthDate = "";
+    public string BirthCity = "";
+    public string Gender = "";
+
+    public string Address = "";
+    public string City = "";
+    public string ZipCode = "";
+    public string State = "";
+
+    public string Phone = "";
+    public string Mobile = "";
+    public string Email = "";
+    public string Note = "";
+
+    public string pPrivacy = "";
+
+    public string Studio = "";
+
+    public string Anni = "";
+    #endregion
+
+    #region variabili doc privacy
+    public Boolean DatiValidi = false;
+
+    private bool fSpe { get; set; } = false;
+    private string switchSpe = "Non acconsento";
+
+    private bool fMedico { get; set; } = false;
+    private string switchMedico = "Non acconsento";
+
+    private bool fPromo { get; set; } = false;
+    private string switchPromo = "Non acconsento";
+
+    private bool IsPostaChecked { get; set; } = false;
+    private bool IsPhoneChecked { get; set; } = false;
+
+    private bool IsEmailChecked { get; set; } = false;
+    private bool IsSmsChecked { get; set; } = false;
+    private bool IsSocialChecked { get; set; } = false;
+
+    private bool IsTutorChecked { get; set; } = false;
+    private bool EnableTutor { get; set; } = false;
+
+    public string luogo = "";
+    public string datafirma = "";
+
+    private bool fMedicoT { get; set; } = false;
+    private string switchMedicoT = "Non acconsento";
+    #endregion
+
+    #region tutorato
+    public string nomecompletoT = "";
+    public string luogonascitaT = "";
+    public string datanascitaT = "";
+
+    public string cittaresidenzaT = "";
+    public string indirizzoT = "";
+    public string civicoT = "";
+    public string capT = "";
+
+    public string nomecompleto = "";
+    public string luogonascita = "";
+    public string datanascita = "";
+
+    public string cittaresidenza = "";
+    public string indirizzo = "";
+    public string civico = "";
+    public string cap = "";
+
+    public string luogoT = "";
+    public string datafirmaT = "";
+    #endregion
+
+    #region Funzioni di supporto
+    private void mngSpe(Syncfusion.Blazor.Buttons.ChangeEventArgs<bool> obj)
+    {
+        if (fSpe)
+        {
+            switchSpe = "Acconsento";
+        }
+        else
+        {
+            switchSpe = "Non acconsento";
+        }
+    }
+
+    private void mngMedico(Syncfusion.Blazor.Buttons.ChangeEventArgs<bool> obj)
+    {
+        if (fMedico)
+        {
+            switchMedico = "Acconsento";
+        }
+        else
+        {
+            switchMedico = "Non acconsento";
+        }
+    }
+
+    private void mngPromo(Syncfusion.Blazor.Buttons.ChangeEventArgs<bool> obj)
+    {
+        if (fPromo)
+        {
+            switchPromo = "Acconsento";
+        }
+        else
+        {
+            switchPromo = "Non acconsento";
+        }
+    }
+
+    private void mngMedicoT(Syncfusion.Blazor.Buttons.ChangeEventArgs<bool> obj)
+    {
+        if (fMedicoT)
+        {
+            switchMedicoT = "Acconsento";
+        }
+        else
+        {
+            switchMedicoT = "Non acconsento";
+        }
+    }
+
+    private string SetObjNullToStr(object obj)
+    {
+        string result = "";
+
+        if ((obj == null) || (obj.Equals(System.DBNull.Value)))
+        {
+            result = "";
+        }
+        else
+        {
+            result = obj.ToString();
+        }
+
+        return result;
+    }
+
+    public static int GetDaysInMonth(int year, int month)
+    {
+        // Verifica che il mese sia compreso tra 1 e 12
+        if (month < 1 || month > 12)
+        {
+            throw new ArgumentOutOfRangeException(nameof(month), "Il mese deve essere compreso tra 1 e 12.");
+        }
+
+        // Anni bisestili: divisibili per 4, ma non per 100, a meno che siano divisibili per 400
+        bool isLeapYear = year % 4 == 0 && (year % 100 != 0 || year % 400 == 0);
+
+        // Numero di giorni per ogni mese
+        int[] daysInMonth = { 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
+
+        // Aggiungi un giorno a febbraio se è un anno bisestile
+        if (isLeapYear && month == 2)
+        {
+            return daysInMonth[month - 1] + 1;
+        }
+
+        return daysInMonth[month - 1];
+    }
+
+    private Boolean CheckDate(string myDate, string what)
+    {
+        Boolean result = false;
+        string myYear, myMonth, myDay;
+        int GiorniMese;
+        string soggetto = "";
+
+        switch (what)
+        {
+            case "paziente":
+                soggetto = "Data di Nascita";
+                break;
+
+            case "visita":
+                soggetto = "Data Visita";
+                break;
+
+            case "occhiali":
+                soggetto = "Data di stampa Prescrizione Occhiali";
+                break;
+        }
+
+        // if (myDate.Length == 8)
+        // {
+        //     myYear = myDate.Substring(4, 4);
+        //     myMonth = myDate.Substring(2, 2);
+        //     myDay = myDate.Substring(0, 2);
+
+        //     if (int.Parse(myYear) > 1900)
+        //     {
+        //         if ((int.Parse(myMonth) >= 1) && (int.Parse(myMonth) <= 12))
+        //         {
+        //             GiorniMese = (GetDaysInMonth(int.Parse(myYear), int.Parse(myMonth)));
+
+        //             if ((int.Parse(myDay) >= 1) && (int.Parse(myDay) <= GiorniMese))
+        //             {
+        //                 result = true;
+        //             }
+        //             else
+        //             {
+        //                 // giorno non compreso tra 1 e numero giorni previsto per il mese esci con false
+        //                 DialogHeader = " Attenzione ";
+        //                 DialogIcon = "e-icons e-circle-close col-lg-2";
+        //                 DialogText = soggetto + ": giorno non valido";
+        //                 DialogDetail = "";
+        //                 DialogVisible = true;
+        //             }
+        //         }
+        //         else
+        //         {
+        //             // mese non compreso tra 1 e 12 esci con false
+        //             DialogHeader = " Attenzione ";
+        //             DialogIcon = "e-icons e-circle-close col-lg-2";
+        //             DialogText = soggetto + ": mese non valido";
+        //             DialogDetail = "";
+        //             DialogVisible = true;
+        //         }
+        //     }
+        //     else
+        //     {
+        //         // anno inferiore al 1900 esci con false
+        //         DialogHeader = " Attenzione ";
+        //         DialogIcon = "e-icons e-circle-close col-lg-2";
+        //         DialogText = soggetto + ": anno non valido";
+        //         DialogDetail = "";
+        //         DialogVisible = true;
+        //     }
+        // }
+        // else
+        // {
+        //     // data non completa
+        //     DialogHeader = " Attenzione ";
+        //     DialogIcon = "e-icons e-circle-close col-lg-2";
+        //     DialogText = soggetto + " non valida";
+        //     DialogDetail = "";
+        //     DialogVisible = true;
+        // }
+
+        return result;
+    }
+
+    public async void GoToPatientList(decimal id)
+    {
+        await Task.Delay(10);
+        await PrivacySignService.DeletePrivacySign(tmpIdPrivacySign);
+        await Task.Delay(10);
+        Navigation.NavigateTo("/patientlist/" + id.ToString());
+    }
+
+    public async void ReturnToPatient(decimal id)
+    {
+        await Task.Delay(10);
+        await PrivacySignService.DeletePrivacySign(tmpIdPrivacySign);
+        await Task.Delay(10);
+        Navigation.NavigateTo("/patientmanage/" + id.ToString());
+    }
+
+    public static string Eta(string data1, string data2)
+    {
+        string result = "";
+        string relData;
+
+        if (data2.Length < 10)
+        {
+            relData = data2.Substring(0, 2) + "/" + data2.Substring(2, 2) + "/" + data2.Substring(4, 4);
+        }
+        else
+        {
+            relData = data2;
+        }
+
+        Console.WriteLine("✨ Calcolo Età");
+        Console.WriteLine($"📝 data1 {data1}");
+        Console.WriteLine($"📝 data2 {data2}");
+        Console.WriteLine($"📝 relData {relData}");
+
+        // Verifica che le date siano valide
+        if (!DateTime.TryParse(data1, out DateTime primaData))
+        {
+            //throw new ArgumentException("La prima data non è valida.");
+            result = "";
+        }
+
+        if (!DateTime.TryParse(relData, out DateTime secondaData))
+        {
+            //throw new ArgumentException("La seconda data non è valida.");
+            result = "";
+        }
+        Console.WriteLine(" ");
+        Console.WriteLine($"👍 primaData {primaData}");
+        Console.WriteLine($"👍 secondaData {secondaData}");
+
+        // Calcolo della differenza in anni
+        int anniDifferenza = secondaData.Year - primaData.Year;
+
+        // Aggiusta se il compleanno non è ancora passato nell'anno corrente
+        if (secondaData < primaData.AddYears(anniDifferenza))
+        {
+            anniDifferenza--;
+        }
+
+        Console.WriteLine($"👍 anniDifferenza {anniDifferenza}");
+
+        result = Math.Abs(anniDifferenza).ToString();   // Restituisce sempre un valore positivo
+
+        return result;
+    }
+
+    private string CustomDate(string val)
+    {
+        string result = "";
+
+        if ((val == null) || (val == "") || (val.Equals(System.DBNull.Value)))
+        {
+            result = "";
+        }
+        else
+        {
+            result = val.Substring(0, 2) + "/" + val.Substring(2, 2) + "/" + val.Substring(4, 4);
+        }
+
+        return result;
+    }
+
+    private string NormDate(string val)
+    {
+        string result = "";
+
+        if ((val == null) || (val == "") || (val.Equals(System.DBNull.Value)))
+        {
+            result = "";
+        }
+        else
+        {
+            if (val.Length == 8)
+            {
+                result = val.Substring(0, 2) + "/" + val.Substring(2, 2) + "/" + val.Substring(4, 4);
+
+            }
+            else
+            {
+                result = val;
+            }
+        }
+
+        return result;
+    }
+    #endregion
+
+    protected override async Task OnInitializedAsync()
+    {
+        sessionLoggedUser = await sessionStorage.GetItemAsStringAsync("sessionLoggedUser");
+
+        if (string.IsNullOrEmpty(sessionLoggedUser))
+        {
+            Navigation.NavigateTo("/auth/login");
+        }
+        else
+        {
+            LoggedUser = sessionLoggedUser.Substring(1, sessionLoggedUser.Length - 2);
+
+            arUser = LoggedUser.Split(",");
+
+            gIdUser = arUser[0];
+            gFName = arUser[1];
+            gLName = arUser[2];
+            gSuperUser = arUser[3];
+
+            SessionID = arUser[4];
+
+            // load dati paziente
+            Paziente = await PatientMngService.GetPatient(id);
+
+            FName = Paziente.FName;
+            LName = Paziente.LName;
+
+            TitlePage = "Privacy " + Paziente.FName + " " + Paziente.LName;
+
+            Console.WriteLine($"\n📌 Load dati paziente ");
+            Console.WriteLine($"🔷\t Paziente.IdPatient: {Paziente.IdPatient}");
+            Console.WriteLine($"🔷\t Paziente.FName: {Paziente.FName}");
+            Console.WriteLine($"🔷\t Paziente.LName: {Paziente.LName}");
+            Console.WriteLine($"🔷\t TitlePage: {TitlePage}");
+
+            Console.WriteLine($"🔷\t SignGUID: {SignGUID}\n");
+
+            datafirma = DateTime.Now.ToShortDateString(); // ToString("dd/MM/yyyy")
+            datafirmaT = DateTime.Now.ToShortDateString(); // ToString("dd/MM/yyyy")
+
+            nomecompleto = Paziente.FName + " " + Paziente.LName;
+            datanascita = SetObjNullToStr(Paziente.BirthDate);
+
+            cittaresidenza = SetObjNullToStr(Paziente.City);
+            indirizzo = SetObjNullToStr(Paziente.Address);
+            cap = SetObjNullToStr(Paziente.ZipCode);
+
+            if (datanascita != "")
+            {
+                Anni = Eta(datanascita, DateTime.Now.ToShortDateString());
+            }
+            else
+            {
+                Anni = "";
+            }
+
+            int numeroAnni;
+
+            bool success = int.TryParse(Anni, out numeroAnni);
+
+            if (success)
+            {
+                if (numeroAnni < 18)
+                {
+                    IsTutorChecked = true;
+                    EnableTutor = true;
+                }
+            }
+
+            // inserisco i dati necessari per l'app per l'acquisizione della firma del paziente e recupero l'id genenerato
+            tmpPrivacySign.ptIdPatient = Paziente.IdPatient;
+            tmpPrivacySign.SignGuid = SignGUID;
+
+            var createdPrivacySign = await PrivacySignService.AddPrivacySign(tmpPrivacySign);
+            tmpIdPrivacySign = createdPrivacySign.IdSign;
+
+            Console.WriteLine($"\n🔷\t tmpIdPrivacySign: {tmpIdPrivacySign}");
+        }
+
+        Console.WriteLine($"\n📌 Cerca in area FTP file png firma paziente");
+
+        try
+        {
+            // files = await Http.GetFromJsonAsync<List<FtpFileInfo>>("https://localhost:7214/api/PdfFirma/png-list/" + id.ToString());
+            files = await Http.GetFromJsonAsync<List<FtpFileInfo>>("https://ophthalapi02-dcafg8d7hhekfkb0.italynorth-01.azurewebsites.net/api/PdfFirma/png-list/" + id.ToString());
+            Console.WriteLine($"✅ files.Count: {files.Count}");
+
+            foreach (var f in files)
+            {
+                Console.WriteLine($"✅\t{f.ModifiedDate:yyyy-MM-dd HH:mm} - {f.Name}");
+            }
+
+            srcFile = AttachHyperPath(files[0].Name);
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine("Errore nel recupero file: " + ex.Message);
+        }
+
+        StateHasChanged();
+    }
+
+    #region Privacy Pazienti
+    public class FileExistResult
+    {
+        public bool exists { get; set; }
+    }
+
+    public async Task CheckDatiPrivacy()
+    {
+        Boolean result = true;
+        bool FirmaExist = false;
+
+        DatiValidi = true;
+
+        DialogHeader = "";
+        DialogIcon = "";
+        DialogText = "";
+        DialogDetail = "";
+
+        // verifica privacy per paziente senza / con tutore
+        if (!IsTutorChecked)
+        {
+            if (!fSpe)
+            {
+                result &= false;
+                DatiValidi &= false;
+
+                DialogHeader = " Attenzione ";
+                DialogIcon = "e-icons e-circle-close col-lg-2";
+                DialogText = "Il Consenso al trattamento dei Dati Personali del paziente per finalità di visita specialistica è obbligatorio";
+                DialogDetail = "Dare il Consenso per procedere.";
+            }
+            else
+            {
+                if (String.IsNullOrEmpty(luogo))
+                {
+                    result &= false;
+                    DatiValidi &= false;
+
+                    DialogHeader = " Attenzione ";
+                    DialogIcon = "e-icons e-circle-close col-lg-2";
+                    DialogText = "Luogo obbligatorio";
+                    DialogDetail = "Inserire il Luogo";
+                }
+
+                if (String.IsNullOrEmpty(datafirma) && result)
+                {
+                    result &= false;
+                    DatiValidi &= false;
+
+                    DialogHeader = " Attenzione ";
+                    DialogIcon = "e-icons e-circle-close col-lg-2";
+                    DialogText = "Data obbligatoria";
+                    DialogDetail = "Inserire la Data";
+                }
+            }
+        }
+        else
+        {
+            if (!fSpe)
+            {
+                result &= false;
+                DatiValidi &= false;
+
+                DialogHeader = " Attenzione ";
+                DialogIcon = "e-icons e-circle-close col-lg-2";
+                DialogText = "Il Consenso al trattamento dei Dati Personali del paziente per finalità di visita specialistica è obbligatorio";
+                DialogDetail = "Dare il Consenso per procedere.";
+            }
+            else
+            {
+                if (String.IsNullOrEmpty(nomecompletoT))
+                {
+                    result &= false;
+                    DatiValidi &= false;
+
+                    DialogHeader = " Attenzione ";
+                    DialogIcon = "e-icons e-circle-close col-lg-2";
+                    DialogText = "Nome e Cognome genitore/tutore obbligatorio";
+                    DialogDetail = "Inserire il Nome e Cognome del genitore/tutore";
+                }
+
+                if (String.IsNullOrEmpty(luogonascitaT) && result)
+                {
+                    result &= false;
+                    DatiValidi &= false;
+
+                    DialogHeader = " Attenzione ";
+                    DialogIcon = "e-icons e-circle-close col-lg-2";
+                    DialogText = "Luogo di nascita del genitore/tutore obbligatorio";
+                    DialogDetail = "Inserire Luogo di nascita del genitore/tutore";
+                }
+
+                if (String.IsNullOrEmpty(datanascitaT) && result)
+                {
+                    result &= false;
+                    DatiValidi &= false;
+
+                    DialogHeader = " Attenzione ";
+                    DialogIcon = "e-icons e-circle-close col-lg-2";
+                    DialogText = "Data di nascita del genitore/tutore obbligatorio";
+                    DialogDetail = "Inserire Data di nascita del genitore/tutore";
+                }
+
+                if (String.IsNullOrEmpty(cittaresidenzaT) && result)
+                {
+                    result &= false;
+                    DatiValidi &= false;
+
+                    DialogHeader = " Attenzione ";
+                    DialogIcon = "e-icons e-circle-close col-lg-2";
+                    DialogText = "Città di residenza del genitore/tutore obbligatorio";
+                    DialogDetail = "Inserire la Città di residenza del genitore/tutore";
+                }
+
+                if (String.IsNullOrEmpty(indirizzoT) && result)
+                {
+                    result &= false;
+                    DatiValidi &= false;
+
+                    DialogHeader = " Attenzione ";
+                    DialogIcon = "e-icons e-circle-close col-lg-2";
+                    DialogText = "Indirizzo del genitore/tutore obbligatorio";
+                    DialogDetail = "Inserire l'Indirizzo' del genitore/tutore";
+                }
+
+                if (String.IsNullOrEmpty(civicoT) && result)
+                {
+                    result &= false;
+                    DatiValidi &= false;
+
+                    DialogHeader = " Attenzione ";
+                    DialogIcon = "e-icons e-circle-close col-lg-2";
+                    DialogText = "N° civico del genitore/tutore obbligatorio";
+                    DialogDetail = "Inserire il N° civico del genitore/tutore";
+                }
+
+                if (String.IsNullOrEmpty(capT) && result)
+                {
+                    result &= false;
+                    DatiValidi &= false;
+
+                    DialogHeader = " Attenzione ";
+                    DialogIcon = "e-icons e-circle-close col-lg-2";
+                    DialogText = "C.A.P. del genitore/tutore obbligatorio";
+                    DialogDetail = "Inserire il C.A.P. del genitore/tutore";
+                }
+
+                if (String.IsNullOrEmpty(luogonascita) && result)
+                {
+                    result &= false;
+                    DatiValidi &= false;
+
+                    DialogHeader = " Attenzione ";
+                    DialogIcon = "e-icons e-circle-close col-lg-2";
+                    DialogText = "Luogo di nascita del paziente obbligatorio";
+                    DialogDetail = "Inserire il Luogo di nascita del paziente";
+                }
+
+                if (String.IsNullOrEmpty(datanascita) && result)
+                {
+                    result &= false;
+                    DatiValidi &= false;
+
+                    DialogHeader = " Attenzione ";
+                    DialogIcon = "e-icons e-circle-close col-lg-2";
+                    DialogText = "Data di nascita del paziente obbligatorio";
+                    DialogDetail = "Inserire la Data di nascita del paziente";
+                }
+
+                if (String.IsNullOrEmpty(cittaresidenza) && result)
+                {
+                    result &= false;
+                    DatiValidi &= false;
+
+                    DialogHeader = " Attenzione ";
+                    DialogIcon = "e-icons e-circle-close col-lg-2";
+                    DialogText = "Città di residenza del paziente obbligatoria";
+                    DialogDetail = "Inserire la Città di residenza del paziente";
+                }
+
+                if (String.IsNullOrEmpty(indirizzo) && result)
+                {
+                    result &= false;
+                    DatiValidi &= false;
+
+                    DialogHeader = " Attenzione ";
+                    DialogIcon = "e-icons e-circle-close col-lg-2";
+                    DialogText = "Indirizzo di residenza del paziente obbligatoria";
+                    DialogDetail = "Inserire l'Indirizzo di residenza del paziente";
+                }
+
+                if (String.IsNullOrEmpty(civico) && result)
+                {
+                    result &= false;
+                    DatiValidi &= false;
+
+                    DialogHeader = " Attenzione ";
+                    DialogIcon = "e-icons e-circle-close col-lg-2";
+                    DialogText = "N° civico del paziente obbligatoria";
+                    DialogDetail = "Inserire il N° civico del paziente";
+                }
+
+                if (String.IsNullOrEmpty(cap) && result)
+                {
+                    result &= false;
+                    DatiValidi &= false;
+
+                    DialogHeader = " Attenzione ";
+                    DialogIcon = "e-icons e-circle-close col-lg-2";
+                    DialogText = "C.A.P. del paziente obbligatoria";
+                    DialogDetail = "Inserire il C.A.P. del paziente";
+                }
+
+                if (String.IsNullOrEmpty(luogoT) && result)
+                {
+                    result &= false;
+                    DatiValidi &= false;
+
+                    DialogHeader = " Attenzione ";
+                    DialogIcon = "e-icons e-circle-close col-lg-2";
+                    DialogText = "Luogo obbligatorio";
+                    DialogDetail = "Inserire il Luogo";
+                }
+
+                if (String.IsNullOrEmpty(datafirmaT) && result)
+                {
+                    result &= false;
+                    DatiValidi &= false;
+
+                    DialogHeader = " Attenzione ";
+                    DialogIcon = "e-icons e-circle-close col-lg-2";
+                    DialogText = "Data obbligatoria";
+                    DialogDetail = "Inserire la Data";
+                }
+            }
+        }
+
+        // ⚠️ Controllo finale: verifica esistenza file PNG
+        if (result)
+        {
+            string fileToSearch = $"firma_" + SignGUID + ".png";        // nome firma file previsto
+            // string requestUrl = $"https://localhost:7214/api/PdfFirma/png-exists/{id}/{fileToSearch}";
+            string requestUrl = $"https://ophthalapi02-dcafg8d7hhekfkb0.italynorth-01.azurewebsites.net/api/PdfFirma/png-exists/{id}/{fileToSearch}";
+            Console.WriteLine($"✅ fileToSearch: {fileToSearch}");
+            Console.WriteLine($"✅ requestUrl: {requestUrl}");
+
+            try
+            {
+                var response = await Http.GetAsync(requestUrl);
+                if (response.IsSuccessStatusCode)
+                {
+                    var json = await response.Content.ReadFromJsonAsync<FileExistResult>();
+                    if (json is { exists: false })
+                    {
+                        result = false;
+                        DatiValidi = false;
+                        DialogHeader = " Attenzione ";
+                        DialogIcon = "e-icons e-circle-close col-lg-2";
+                        DialogText = "Firma mancante";
+                        DialogDetail = "Acquisire la firma del paziente prima di procedere.";
+                    }
+                }
+                else
+                {
+                    result = false;
+                    DatiValidi = false;
+                    DialogHeader = " Attenzione ";
+                    DialogIcon = "e-icons e-circle-close col-lg-2";
+                    DialogText = "Firma mancante";
+                    DialogDetail = "Acquisire la firma del paziente prima di procedere.";
+                }
+            }
+            catch (Exception ex)
+            {
+                result = false;
+                DatiValidi = false;
+                DialogHeader = " Errore ";
+                DialogIcon = "e-icons e-warning col-lg-2";
+                DialogText = "Errore di rete";
+                DialogDetail = $"Errore: {ex.Message}";
+            }
+        }
+
+        StateHasChanged();
+    }
+
+    public async void CreaPrivacy()
+    {
+        await CheckDatiPrivacy();
+
+        if (!DatiValidi)
+        {
+            DialogVisible = true;
+        }
+        else
+        {
+            Console.WriteLine($"\n📌 ChangePrivacyDocsValue: {ChangePrivacyDocsValue}");
+            Console.WriteLine($"📌 DropDownPrivacyDocsValue: {DropDownPrivacyDocsValue}");
+
+            if (!IsTutorChecked)
+            {
+                Console.WriteLine($"\n📌 Paziente senza Tutore");
+
+                Console.WriteLine($"\n📌 Dati paziente ");
+                Console.WriteLine($"🔷\t Paziente.IdPatient: {Paziente.IdPatient}");
+                Console.WriteLine($"🔷\t Paziente.FName: {Paziente.FName}\t Paziente.LName: {Paziente.LName}");
+                Console.WriteLine($"🔷\t Paziente.BirthDate: {Paziente.BirthDate}\t Paziente.BirthCity: {Paziente.BirthCity}");
+                Console.WriteLine($"🔷\t Paziente.Address: {Paziente.Address}\t Paziente.City: {Paziente.City}\t Paziente.ZipCode: {Paziente.ZipCode}");
+                Console.WriteLine($"🔷\t Paziente.fPrivacy: {Paziente.fPrivacy}\n");
+
+                Console.WriteLine($"\n📌 Dati privacy ");
+                Console.WriteLine($"🔷\t nomecompleto: {nomecompleto}");
+                Console.WriteLine($"🔷\t Acconsente trattamento Dati: {fSpe}\t Acconsente com. dati a medico curante: {fMedico}\t Acconsente promo: {fPromo}");
+
+                Console.WriteLine($"\n📌 Preferenze di contatto");
+                Console.WriteLine($"🔷\t Posta cartacea: {IsPostaChecked}\t Telefono: {IsPhoneChecked}\t E-mail: {IsEmailChecked}\t SMS: {IsSmsChecked}\t Social: {IsSocialChecked}");
+
+                Console.WriteLine($"\n📌 Firma");
+                Console.WriteLine($"🔷\t Luogo: {luogo}\t lì: {datafirma}");
+            }
+            else
+            {
+                Console.WriteLine($"\n📌 Paziente con Tutore");
+
+                Console.WriteLine($"\n📌 Dati Tutore ");
+                Console.WriteLine($"🔷\t Nome completo: {nomecompletoT}");
+                Console.WriteLine($"🔷\t luogo nascita: {luogonascitaT}\t data nascita: {datanascitaT}");
+                Console.WriteLine($"🔷\t citta residenza: {cittaresidenzaT}\t indirizzo: {indirizzoT}\t civico: {civicoT}\t cap: {capT}");
+
+                Console.WriteLine($"\n📌 Dati paziente con Tutore ");
+                Console.WriteLine($"🔷\t Nome completo: {nomecompleto}");
+                Console.WriteLine($"🔷\t luogo nascita: {luogonascita}\t data nascita: {datanascita}");
+                Console.WriteLine($"🔷\t citta residenza: {cittaresidenza}\t indirizzo: {indirizzo}\t civico: {civico}\t cap: {cap}");
+
+                Console.WriteLine($"\n📌 Firma");
+                Console.WriteLine($"🔷\t Luogo: {luogoT}\t lì: {datafirmaT}");
+            }
+
+            await EseguiFirma();
+        }
+
+        StateHasChanged();
+    }
+    #endregion
+
+    public class FirmaPdfRequest
+    {
+        public string PdfUrl { get; set; } = string.Empty;
+        public string FirmaUrl { get; set; } = string.Empty;
+        public int Pagina { get; set; } = 0;
+        public int X { get; set; } = 100;
+        public int Y { get; set; } = 700;
+        public int Larghezza { get; set; } = 150;
+
+        public decimal IdPaziente { get; set; } = 0;
+        public string NomeCompletoPaziente { get; set; } = string.Empty;
+        public string LuogoNascitaPaziente { get; set; } = string.Empty;
+        public string DataNascitaPaziente { get; set; } = string.Empty;
+        public string ResidenzaPaziente { get; set; } = string.Empty;
+        public string IndirizzoPaziente { get; set; } = string.Empty;
+        public string CivicoPaziente { get; set; } = string.Empty;
+        public string CAPPaziente { get; set; } = string.Empty;
+
+        public int TutorePresente { get; set; } = 0;
+        public string NomeCompletoTutore { get; set; } = string.Empty;
+        public string LuogoNascitaTutore { get; set; } = string.Empty;
+        public string DataNascitaTutore { get; set; } = string.Empty;
+        public string ResidenzaTutore { get; set; } = string.Empty;
+        public string IndirizzoTutore { get; set; } = string.Empty;
+        public string CivicoTutore { get; set; } = string.Empty;
+        public string CAPTutore { get; set; } = string.Empty;
+
+        public int AssensoPerVisitaSpecialistica { get; set; } = 0;
+        public int AssensoPerComunicazioneMedico { get; set; } = 0;
+        public int AssensoPerPromozioni { get; set; } = 0;
+
+        public int AssensoPerComunicazioneMedicoT { get; set; } = 0;
+
+        public int ContattoViaPosta { get; set; } = 0;
+        public int ContattoViaTelefono { get; set; } = 0;
+        public int ContattoViaEmail { get; set; } = 0;
+        public int ContattoViaSMS { get; set; } = 0;
+        public int ContattoViaSocial { get; set; } = 0;
+
+        public string LuogoFirmaPaziente { get; set; } = string.Empty;
+        public string DataFirmaPaziente { get; set; } = string.Empty;
+
+        public string LuogoFirmaTutore { get; set; } = string.Empty;
+        public string DataFirmaTutore { get; set; } = string.Empty;
+
+        public string PrivacyFileName { get; set; } = string.Empty;
+    }
+
+    private async Task EseguiFirma()
+    {
+        spinnerRef.ShowAsync();
+
+        bool goToPaziente = false;
+
+        var tr = new FirmaPdfRequest();
+
+        if (DropDownPrivacyDocsValue == "1")
+        {
+            // tr.PdfUrl = "https://demo.gmvcloud.com/pdft/INFORMATIVA_PRIVACY_CENTRO_MEDICO.pdf";
+            tr.PdfUrl = "https://demo.gmvcloud.com/pdft/INFORMATIVA_PRIVACY_CORRETTA_CENTRO_MEDICO.pdf";
+            tr.PrivacyFileName = "PrivacyA1_" + nomecompleto.Replace(" ", "_") + ".pdf";
+        }
+        else
+        {
+            // tr.PdfUrl = "https://demo.gmvcloud.com/pdft/INFORMATIVA_PRIVACY_STUDIO_OCULISTICO.pdf";
+            tr.PdfUrl = "https://demo.gmvcloud.com/pdft/INFORMATIVA_PRIVACY_CORRETTA_STUDIO_OCULISTICO.pdf";
+            tr.PrivacyFileName = "PrivacyA2_" + nomecompleto.Replace(" ", "_") + ".pdf";
+        }
+
+        // da modificare per cercare la firma nella cartella data dall'Id del paziente
+        // tr.FirmaUrl = "https://localhost:44363/img/firma.png";
+        tr.FirmaUrl = "https://demo.gmvcloud.com/pdft/" + Paziente.IdPatient.ToString() + "/firma_" + SignGUID + ".png";
+
+        tr.Pagina = 2;
+        tr.X = 320;
+        tr.Y = 245;
+        tr.Larghezza = 150;
+
+        tr.IdPaziente = Paziente.IdPatient;
+        tr.NomeCompletoPaziente = nomecompleto;
+        tr.LuogoNascitaPaziente = luogonascita;
+        tr.DataNascitaPaziente = NormDate(datanascita);
+        tr.ResidenzaPaziente = cittaresidenza;
+        tr.IndirizzoPaziente = indirizzo;
+        tr.CivicoPaziente = civico;
+        tr.CAPPaziente = cap;
+
+        if (IsTutorChecked)
+        {
+            tr.TutorePresente = 1;
+        }
+        tr.NomeCompletoTutore = nomecompletoT;
+        tr.LuogoNascitaTutore = luogonascitaT;
+        tr.DataNascitaTutore = NormDate(datanascitaT);
+        tr.ResidenzaTutore = cittaresidenzaT;
+        tr.IndirizzoTutore = indirizzoT;
+        tr.CivicoTutore = civicoT;
+        tr.CAPTutore = capT;
+
+        if (fSpe)
+        {
+            tr.AssensoPerVisitaSpecialistica = 1;
+        }
+        else
+        {
+            tr.AssensoPerVisitaSpecialistica = 0;
+        }
+        if (fMedico)
+        {
+            tr.AssensoPerComunicazioneMedico = 1;
+        }
+        else
+        {
+            tr.AssensoPerComunicazioneMedico = 0;
+        }
+        if (fPromo)
+        {
+            tr.AssensoPerPromozioni = 1;
+        }
+        else
+        {
+            tr.AssensoPerPromozioni = 0;
+        }
+
+        if (fMedicoT)
+        {
+            tr.AssensoPerComunicazioneMedicoT = 1;
+        }
+        else
+        {
+            tr.AssensoPerComunicazioneMedicoT = 0;
+        }
+
+        if (IsPostaChecked)
+        {
+            tr.ContattoViaPosta = 1;
+        }
+        else
+        {
+            tr.ContattoViaPosta = 0;
+        }
+        if (IsPhoneChecked)
+        {
+            tr.ContattoViaTelefono = 1;
+        }
+        else
+        {
+            tr.ContattoViaTelefono = 0;
+        }
+        if (IsEmailChecked)
+        {
+            tr.ContattoViaEmail = 1;
+        }
+        else
+        {
+            tr.ContattoViaEmail = 0;
+        }
+        if (IsSmsChecked)
+        {
+            tr.ContattoViaSMS = 1;
+        }
+        else
+        {
+            tr.ContattoViaSMS = 0;
+        }
+        if (IsSocialChecked)
+        {
+            tr.ContattoViaSocial = 1;
+        }
+        else
+        {
+            tr.ContattoViaSocial = 0;
+        }
+
+        tr.LuogoFirmaPaziente = luogo;
+        tr.DataFirmaPaziente = NormDate(datafirma);
+
+        tr.LuogoFirmaTutore = luogoT;
+        tr.DataFirmaTutore = NormDate(datafirmaT);
+
+        try
+        {
+            var response = await Http.PostAsJsonAsync("https://ophthalapi02-dcafg8d7hhekfkb0.italynorth-01.azurewebsites.net/api/PdfFirma/FirmaDaUrl", tr);
+            // var response = await Http.PostAsJsonAsync("https://localhost:7214/api/PdfFirma/FirmaDaUrl", tr);
+
+            if (response.IsSuccessStatusCode)
+            {
+                var bytes = await response.Content.ReadAsByteArrayAsync();
+                pdfFirmatoUrl = $"data:application/pdf;base64,{Convert.ToBase64String(bytes)}";
+                Console.WriteLine($"📄 PDF firmato ricevuto: {bytes.Length} byte");
+
+                Paziente.fPrivacy = true;
+
+                await PatientMngService.UpdPatient(id, Paziente);
+
+                spinnerRef.HideAsync();
+
+                Navigation.NavigateTo("/patientmanage/" + id.ToString());
+            }
+            else
+            {
+                errore = $"Errore server: {response.StatusCode} - {await response.Content.ReadAsStringAsync()}";
+            }
+        }
+        catch (Exception ex)
+        {
+            errore = $"Errore chiamata: {ex.Message}";
+        }
+    }
+}

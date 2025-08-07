@@ -43,6 +43,9 @@
 @using Syncfusion.Pdf.Graphics;
 @inject Microsoft.JSInterop.IJSRuntime JS
 @using System.IO;
+@using System.Net;
+@using System.Collections.Generic;
+@using System.Globalization;
 
 @inject IWebAssemblyHostEnvironment Env
 
@@ -57,8 +60,13 @@
     </span>
 
     <span style="float: right;">
-        <SfButton IconCss="e-icons e-circle-remove icon-red" CssClass="e-flat btn-light" Content="Rimuovi Paziente" OnClick="() => DeletePatient()"></SfButton>
-        &nbsp;&nbsp;&nbsp;
+        <span style="@PrivacyVisible">
+            <SfButton IconCss="e-icons e-signature icon-red" CssClass="e-flat btn-light" Content="Privacy" OnClick="() => GoToPrivacy(id)"></SfButton>
+            &nbsp;&nbsp;&nbsp; @* Disabled="fPrivacy"  *@
+            <SfButton IconCss="e-icons e-circle-remove icon-red" CssClass="e-flat btn-light" Content="Rimuovi Paziente" OnClick="() => DeletePatient()"></SfButton>
+            &nbsp;&nbsp;&nbsp;
+        </span>
+
         <SfButton IconCss="e-icons e-save icon-navy" CssClass="e-flat btn-light" Content="@SaveText" OnClick="() => SavePatient()"></SfButton>
         &nbsp;&nbsp;&nbsp;
         <SfButton IconCss="e-icons e-chevron-left icon-green" CssClass="e-flat btn-light" Content="Elenco Pazienti" OnClick="() => GoToPatientList(0)"></SfButton>
@@ -128,17 +136,27 @@
         </div>
 
         <div class="row" style="margin-top: 5px;">
-            <div class="col-sm-7">
+            <div class="col-sm-4">
                 <SfTextBox ID="email" @bind-Value="@Email" Placeholder="Email" FloatLabelType="@FloatLabelType.Always"></SfTextBox>
             </div>
 
-            <div class="col-sm-4">
-                <span style="color: rgba(0, 0, 0, 0.54); font-size: 13px;line-height: 1.4; display:block; margin-bottom:2px;">Privacy</span>
-                <div class="col-sm-4">
-                    <label style="font-size: 11pt; padding: 0 8px 8px 0; vertical-align: super;">@switchPrivacy</label>
-                    <SfSwitch @bind-Checked="@fPrivacy" ValueChange="ManagePrivacy" TChecked="bool"></SfSwitch>
-                </div>
+            <div class="col-sm-2 privacy" style="text-align: right;">
+                <span>Privacy:&nbsp;</span><span>@sPrivacy</span>
             </div>
+
+            @if (fPrivacy)
+            {
+                <div class="col-sm-4 privacy">
+                    <ul>
+                        @foreach (var file in files)
+                        {
+                            string hyperPath = AttachHyperPath(@file.Name);
+
+                            <li>@file.ModifiedDate.ToString("yyyy-MM-dd HH:mm") - <a href="@hyperPath" target="_blank">@file.Name</a></li>
+                        }
+                    </ul>
+                </div>
+            }
         </div>
 
         <div class="row" style="margin-top: 5px; display: none;">
@@ -1240,164 +1258,183 @@
 </SfDialog>
 
 <style>
-    .vstepper{
-    display: inline-block;
-    margin: 0 10px 0 8px;
-    border: 1px solid #ccc;
-    width: 80px;
-    text-align: center;
-    font-size: 13px;
-    padding-top: 3px;
+    .vstepper {
+        display: inline-block;
+        margin: 0 10px 0 8px;
+        border: 1px solid #ccc;
+        width: 80px;
+        text-align: center;
+        font-size: 13px;
+        padding-top: 3px;
     }
 
     .default-tab {
-    border: 1px solid #d7d7d7;
+        border: 1px solid #d7d7d7;
     }
 
-    .default-tab .e-content .e-item {
-    padding: 10px;
-    text-align: justify;
-    }
+        .default-tab .e-content .e-item {
+            padding: 10px;
+            text-align: justify;
+        }
 
     .default-tab-control-section {
-    margin: 20px 20% 20px 20%;
+        margin: 20px 20% 20px 20%;
     }
 
     @@media screen and (max-width: 480px) {
-    .default-tab-control-section {
-    margin: 20px 0 20px 0;
-    }
+        .default-tab-control-section {
+            margin: 20px 0 20px 0;
+        }
     }
 
     .bootstrap5 .default-tab,
     .bootstrap .default-tab,
     .bootstrap4 .default-tab {
-    border: none;
+        border: none;
     }
 
-    .bootstrap5 .default-tab .e-content > .e-item.e-active,
-    .bootstrap4 .default-tab .e-content > .e-item.e-active,
-    .bootstrap .default-tab .e-content > .e-item.e-active {
-    background: #FAF9F8;
-    }
+        .bootstrap5 .default-tab .e-content > .e-item.e-active,
+        .bootstrap4 .default-tab .e-content > .e-item.e-active,
+        .bootstrap .default-tab .e-content > .e-item.e-active {
+            background: #FAF9F8;
+        }
 
     .e-tab .e-tab-header .e-toolbar-items .e-active .e-tab-wrap {
-    border-bottom: 4px solid #0d6efd;
+        border-bottom: 4px solid #0d6efd;
     }
 
-    .e-tab .e-tab-header .e-toolbar-items .e-active .e-tab-wrap:hover {
-    border-bottom: 4px solid #0d6efd;
-    }
+        .e-tab .e-tab-header .e-toolbar-items .e-active .e-tab-wrap:hover {
+            border-bottom: 4px solid #0d6efd;
+        }
 
     .e-tab .e-tab-header .e-toolbar-item:not(.e-active) {
-    border-bottom: 0px;
+        border-bottom: 0px;
     }
 
     .e-btn.e-flat.e-primary, .e-btn.e-flat.e-primary:focus {
-    background-color: #317ab9;
-    border-color: #265f91;
-    color: #fff;
+        background-color: #317ab9;
+        border-color: #265f91;
+        color: #fff;
     }
 
-    .e-btn.e-flat.e-primary:hover, .e-btn.e-flat.e-primary:active {
-    background-color: #21527d;
-    border-color: #163854;
-    color: #fff;
-    }
+        .e-btn.e-flat.e-primary:hover, .e-btn.e-flat.e-primary:active {
+            background-color: #21527d;
+            border-color: #163854;
+            color: #fff;
+        }
 
     .e-circle-close {
-    width: 24px;
-    height: 24px;
-    position: relative;
-    display: inline-block;
+        width: 24px;
+        height: 24px;
+        position: relative;
+        display: inline-block;
     }
 
     .e-circle-info {
-    width: 24px;
-    height: 24px;
-    position: relative;
-    display: inline-block;
+        width: 24px;
+        height: 24px;
+        position: relative;
+        display: inline-block;
     }
 
     .error-msg {
-    color: #021b2e;
-    display: inline-block;
-    position: relative;
-    top: -20px;
-    left: 10px;
+        color: #021b2e;
+        display: inline-block;
+        position: relative;
+        top: -20px;
+        left: 10px;
     }
 
     .error-detail {
-    position: relative;
-    left: 36px;
-    margin: 0 0 21px;
+        position: relative;
+        left: 36px;
+        margin: 0 0 21px;
     }
 
     .e-icons.e-circle-close.col-lg-2:before {
-    font-size: 20px;
-    color: #d9534f;
-    position: relative;
-    left: 4px;
-    bottom: 18px;
+        font-size: 20px;
+        color: #d9534f;
+        position: relative;
+        left: 4px;
+        bottom: 18px;
     }
 
     .e-icons.e-circle-info.col-lg-2:before {
-    font-size: 20px;
-    color: #228e1f;
-    position: relative;
-    left: 4px;
-    bottom: 18px;
+        font-size: 20px;
+        color: #228e1f;
+        position: relative;
+        left: 4px;
+        bottom: 18px;
     }
 
     .e-dialog .e-footer-content {
-    background-color: #f8f8f8;
+        background-color: #f8f8f8;
     }
 
     .e-dialog.e-control.e-popup, .e-dialog.e-control.e-popup .e-dlg-header-content {
-    background-color: #d9edf7;
+        background-color: #d9edf7;
     }
 
     .e-dialog.e-control.e-popup {
-    padding: 3px;
+        padding: 3px;
     }
 
     .e-dialog.e-control .e-dlg-header-content {
-    padding: 10px;
+        padding: 10px;
     }
 
     .e-dialog.e-control .e-footer-content {
-    padding: 8px 12px;
+        padding: 8px 12px;
     }
 
     .e-dialog.e-control .e-dlg-content {
-    padding: 15px 0 0;
-    padding-right: 6px;
+        padding: 15px 0 0;
+        padding-right: 6px;
     }
 
     .msg-wrapper.col-lg-12 {
-    margin-top: 20px;
+        margin-top: 20px;
     }
 
     .customtooltip.e-tooltip-wrap.e-popup {
-    background-color: #ededed;
-    border: 1px solid #d9d9d9;
+        background-color: #ededed;
+        border: 1px solid #d9d9d9;
     }
 
     .e-tooltip-wrap .e-tip-content {
-    color: #3d3d3d;
+        color: #3d3d3d;
     }
 
     .customtooltip.e-tooltip-wrap .e-arrow-tip-outer {
-    border-bottom: 12px solid transparent;
-    border-left: 12px solid transparent;
-    border-top: 12px solid transparent;
-    border-right: 12px solid transparent;
+        border-bottom: 12px solid transparent;
+        border-left: 12px solid transparent;
+        border-top: 12px solid transparent;
+        border-right: 12px solid transparent;
     }
 
     .customtooltip.e-tooltip-wrap .e-arrow-tip-inner {
-    color: #ededed;
-    font-size: 25.9px;
+        color: #ededed;
+        font-size: 25.9px;
     }
+
+    .privacy {
+        padding-top: 30px;
+        font-size: 90%;
+    }
+
+        .privacy a:link, .privacy a:visited {
+            text-decoration: none;
+        }
+
+        .privacy ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .privacy a:hover, .privacy a:active {
+            text-decoration: underline;
+        }
 </style>
 
 
@@ -1431,6 +1468,30 @@
     bool FirstPage;
 
     Boolean ShowVisits = false;
+
+    string PrivacyVisible = "";
+
+    #region FTP
+    public class FtpFileInfo
+    {
+        public string Name { get; set; }
+        public DateTime ModifiedDate { get; set; }
+    }
+
+    List<FtpFileInfo>? files;
+
+    private string AttachHyperPath(string filename)
+    {
+        string fullpath = "";
+
+        if (id != 0)
+        {
+            fullpath = "https://demo.gmvcloud.com/pdft/" + id.ToString() + "/" + filename;
+        }
+
+        return fullpath;
+    }
+    #endregion
 
     #region dialog
     private bool DialogVisible { get; set; } = false;
@@ -1509,8 +1570,8 @@
 
     public string Anni = "";
 
-    private string switchPrivacy = "Da firmare";
     private bool fPrivacy = false;
+    private string sPrivacy = "Da firmare";
     #endregion
 
     #region binding OneSave
@@ -1695,18 +1756,6 @@
     #endregion
 
     #region Funzioni di supporto
-    private void ManagePrivacy(Syncfusion.Blazor.Buttons.ChangeEventArgs<bool> obj)
-    {
-        if (fPrivacy)
-        {
-            switchPrivacy = "Firmata";
-        }
-        else
-        {
-            switchPrivacy = "Da firmare";
-        }
-    }
-
     private void SwapView(string view)
     {
         if (view == "less")
@@ -1927,11 +1976,12 @@
                 fShowMoreBtn = "none";
 
                 fPrivacy = false;
-                switchPrivacy = "Da firmare";
 
                 SaveText = "Inserisci dati Paziente";
 
                 ShowVisits = false;
+
+                PrivacyVisible = "display: none;";
             }
             else
             {
@@ -2090,6 +2140,24 @@
                     // Console.WriteLine($"✅ RelazioniDisabled: {RelazioniDisabled}");
                 }
 
+                Console.WriteLine($"\n📌 Cerca in area FTP file pdf sulla privacy");
+
+                try
+                {
+                    // files = await Http.GetFromJsonAsync<List<FtpFileInfo>>("https://localhost:7214/api/PdfFirma/pdf-list/" + id.ToString());
+                    files = await Http.GetFromJsonAsync<List<FtpFileInfo>>("https://ophthalapi02-dcafg8d7hhekfkb0.italynorth-01.azurewebsites.net/api/PdfFirma/png-list/" + id.ToString());
+                    Console.WriteLine($"✅ files.Count: {files.Count}");
+
+                    foreach (var f in files)
+                    {
+                        Console.WriteLine($"✅\t{f.ModifiedDate:yyyy-MM-dd HH:mm} - {f.Name}");
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine("Errore nel recupero file: " + ex.Message);
+                }
+
                 StateHasChanged();
             }
         }
@@ -2232,6 +2300,14 @@
     }
     #endregion
 
+    #region privacy
+    public async void GoToPrivacy(decimal id)
+    {
+        await Task.Delay(10);
+        Navigation.NavigateTo("/privacy/" + id.ToString());
+    }
+    #endregion
+
     #region Pazienti
     public async void LoadPatient()
     {
@@ -2259,6 +2335,7 @@
         Note = SetObjNullToStr(Paziente.Note);
 
         fPrivacy = Paziente.fPrivacy;
+        sPrivacy = (fPrivacy) ? "Firmata" : "Da firmare";
 
         Studio = SetObjNullToStr(Paziente.Studio);
 
@@ -2275,11 +2352,6 @@
             Anni = "";
         }
         Console.WriteLine($"🔷 Anni: {Anni}");
-
-        if (fPrivacy)
-        {
-            switchPrivacy = "Firmata";
-        }
     }
 
     // async
@@ -12204,8 +12276,6 @@
             Console.WriteLine($"⏳ saving docx");
             await JS.SaveAs("Relazione " + LName + " " + FName + "_" + relData + ".docx", stream.ToArray());
             Console.WriteLine($"📝 docx saved");
-
-            // joke
         }
     }
     #endregion
