@@ -2145,7 +2145,7 @@
                 try
                 {
                     // files = await Http.GetFromJsonAsync<List<FtpFileInfo>>("https://localhost:7214/api/PdfFirma/pdf-list/" + id.ToString());
-                    files = await Http.GetFromJsonAsync<List<FtpFileInfo>>("https://ophthalapi02-dcafg8d7hhekfkb0.italynorth-01.azurewebsites.net/api/PdfFirma/png-list/" + id.ToString());
+                    files = await Http.GetFromJsonAsync<List<FtpFileInfo>>("https://ophthalapi02-dcafg8d7hhekfkb0.italynorth-01.azurewebsites.net/api/PdfFirma/pdf-list/" + id.ToString());
                     Console.WriteLine($"✅ files.Count: {files.Count}");
 
                     foreach (var f in files)

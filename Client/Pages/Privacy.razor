@@ -798,23 +798,23 @@
 
         Console.WriteLine($"\n📌 Cerca in area FTP file png firma paziente");
 
-        try
-        {
-            // files = await Http.GetFromJsonAsync<List<FtpFileInfo>>("https://localhost:7214/api/PdfFirma/png-list/" + id.ToString());
-            files = await Http.GetFromJsonAsync<List<FtpFileInfo>>("https://ophthalapi02-dcafg8d7hhekfkb0.italynorth-01.azurewebsites.net/api/PdfFirma/png-list/" + id.ToString());
-            Console.WriteLine($"✅ files.Count: {files.Count}");
+        // try
+        // {
+        //     // files = await Http.GetFromJsonAsync<List<FtpFileInfo>>("https://localhost:7214/api/PdfFirma/png-list/" + id.ToString());
+        //     files = await Http.GetFromJsonAsync<List<FtpFileInfo>>("https://ophthalapi02-dcafg8d7hhekfkb0.italynorth-01.azurewebsites.net/api/PdfFirma/png-list/" + id.ToString());
+        //     Console.WriteLine($"✅ files.Count: {files.Count}");
 
-            foreach (var f in files)
-            {
-                Console.WriteLine($"✅\t{f.ModifiedDate:yyyy-MM-dd HH:mm} - {f.Name}");
-            }
+        //     foreach (var f in files)
+        //     {
+        //         Console.WriteLine($"✅\t{f.ModifiedDate:yyyy-MM-dd HH:mm} - {f.Name}");
+        //     }
 
-            srcFile = AttachHyperPath(files[0].Name);
-        }
-        catch (Exception ex)
-        {
-            Console.WriteLine("Errore nel recupero file: " + ex.Message);
-        }
+        //     srcFile = AttachHyperPath(files[0].Name);
+        // }
+        // catch (Exception ex)
+        // {
+        //     Console.WriteLine("Errore nel recupero file: " + ex.Message);
+        // }
 
         StateHasChanged();
     }
