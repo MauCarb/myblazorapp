@@ -54,6 +54,8 @@ builder.Services.AddScoped<FarmaciUsoListService>();
 
 builder.Services.AddScoped<FarmaciUsoManageService>();
 
+builder.Services.AddScoped<PrivacySignService>();
+
 builder.Services.AddSyncfusionBlazor();
 
 await builder.Build().RunAsync();
