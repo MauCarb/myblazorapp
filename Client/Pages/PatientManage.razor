@@ -948,7 +948,7 @@
                                             <ContentTemplate>
                                                 <div class="container-fluid form-farmfilter" style="padding: 4px 10px 0px 10px; margin-bottom:0px;">
                                                     <div class="col">
-                                                        <SfTextBox ID="notevisita" @bind-Value="@Visita.Note" Placeholder="NOTE" FloatLabelType="@FloatLabelType.Always" Multiline="true" CssClass="sftext" style="height: 48px; background-color: white;" Readonly=true></SfTextBox>
+                                                        <SfTextBox ID="notevisita" @bind-Value="@Visita.Note" Placeholder="NOTE" FloatLabelType="@FloatLabelType.Always" Multiline="true" CssClass="sftext" style="height: 96px; background-color: white;" Readonly=true></SfTextBox>
                                                     </div>
                                                 </div>
 
@@ -1970,7 +1970,7 @@
             {
                 TitlePage = "Inserimento Nuovo Paziente";
 
-                ShowMore = true;
+                // ShowMore = true;
 
                 fShowLessBtn = "inline-block";
                 fShowMoreBtn = "none";
@@ -1987,10 +1987,10 @@
             {
                 TitlePage = "Dati Paziente";
 
-                ShowMore = false;
+                // ShowMore = false;
 
-                fShowLessBtn = "none";
-                fShowMoreBtn = "inline-block";
+                fShowLessBtn = "inline-block";
+                fShowMoreBtn = "none";
 
                 SaveText = "Aggiorna dati Paziente";
 
