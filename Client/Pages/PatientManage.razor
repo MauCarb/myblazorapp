@@ -148,11 +148,14 @@
             {
                 <div class="col-sm-4 privacy">
                     <ul>
-                        @foreach (var file in files)
+                        @if(files != null)
                         {
-                            string hyperPath = AttachHyperPath(@file.Name);
+                            @foreach (var file in files)
+                            {
+                                string hyperPath = AttachHyperPath(@file.Name);
 
-                            <li>@file.ModifiedDate.ToString("yyyy-MM-dd HH:mm") - <a href="@hyperPath" target="_blank">@file.Name</a></li>
+                                <li>@file.ModifiedDate.ToString("yyyy-MM-dd HH:mm") - <a href="@hyperPath" target="_blank">@file.Name</a></li>
+                            }
                         }
                     </ul>
                 </div>
@@ -2311,6 +2314,9 @@
     #region Pazienti
     public async void LoadPatient()
     {
+        Console.WriteLine($"\n📌 LoadPatient");
+        Console.WriteLine($"\n🔷 GetPatient(id): {id}");
+
         Paziente = await PatientMngService.GetPatient(id);
 
         FName = Paziente.FName;
